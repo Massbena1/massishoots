@@ -129,6 +129,28 @@ body {
   transition: color 0.4s ease;
 }
 
+/* ── Light mode : force le texte sombre sur toutes les sections ── */
+html[data-theme="light"] section h1,
+html[data-theme="light"] section h2,
+html[data-theme="light"] section h3,
+html[data-theme="light"] section h4,
+html[data-theme="light"] section p,
+html[data-theme="light"] section span,
+html[data-theme="light"] section a,
+html[data-theme="light"] section li,
+html[data-theme="light"] footer h1,
+html[data-theme="light"] footer h2,
+html[data-theme="light"] footer p,
+html[data-theme="light"] footer span,
+html[data-theme="light"] footer a {
+  color: #1a1a1a !important;
+}
+
+html[data-theme="light"] section .text-accent,
+html[data-theme="light"] footer .text-accent {
+  color: #3a3a3c !important;
+}
+
 /* ── Grain overlay ── */
 /* Grain overlay */
 .grain::after {
