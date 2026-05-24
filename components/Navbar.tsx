@@ -6,15 +6,17 @@ import { usePathname } from "next/navigation";
 import { AnimatedThemeToggler } from "@/components/ui/animated-theme-toggler";
 
 const links = [
-  { label: "Services",  href: "/services" },
-  { label: "Portfolio", href: "/portfolio" },
-  { label: "À propos",  href: "/about" },
+  { label: "Services",  href: "/services",  sectionId: "services"  },
+  { label: "Portfolio", href: "/portfolio", sectionId: "portfolio" },
+  { label: "À propos",  href: "/about",     sectionId: "apropos"   },
 ];
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState<string | null>(null);
   const pathname = usePathname();
+  const isHome = pathname === "/";
 
   useEffect(() => {
     const fn = () => setScrolled(window.scrollY > 80);
@@ -22,8 +24,31 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", fn);
   }, []);
 
-  const isActive = (href: string) =>
-    href === "/" ? pathname === "/" : pathname.startsWith(href);
+  // IntersectionObserver — active uniquement sur la home
+  useEffect(() => {
+    if (!isHome) { setActiveSection(null); return; }
+
+    const ids = links.map(l => l.sectionId);
+    const observers: IntersectionObserver[] = [];
+
+    ids.forEach(id => {
+      const el = document.getElementById(id);
+      if (!el) return;
+      const obs = new IntersectionObserver(
+        ([entry]) => { if (entry.isIntersecting) setActiveSection(id); },
+        { threshold: 0.3 }
+      );
+      obs.observe(el);
+      observers.push(obs);
+    });
+
+    return () => observers.forEach(o => o.disconnect());
+  }, [isHome]);
+
+  const isActive = (href: string, sectionId: string) => {
+    if (isHome && activeSection) return activeSection === sectionId;
+    return href === "/" ? pathname === "/" : pathname.startsWith(href);
+  };
 
   return (
     <>
@@ -83,14 +108,15 @@ export default function Navbar() {
               className="font-dm"
               style={{
                 fontSize: 12.5,
-                color: isActive(l.href) ? "#fff" : "rgba(255,255,255,0.5)",
+                color: isActive(l.href, l.sectionId) ? "#fff" : "rgba(255,255,255,0.5)",
                 textDecoration: "none",
                 letterSpacing: "0.03em",
-                padding: "6px 11px",
+                padding: "6px 14px",
                 borderRadius: 9999,
                 transition: "color 0.2s, background 0.2s",
                 whiteSpace: "nowrap",
-                background: isActive(l.href) ? "rgba(255,255,255,0.07)" : "transparent",
+                fontWeight: isActive(l.href, l.sectionId) ? 600 : 400,
+                background: isActive(l.href, l.sectionId) ? "rgba(255,255,255,0.13)" : "transparent",
               }}
             >
               {l.label}
@@ -169,11 +195,11 @@ export default function Navbar() {
                     className="font-dm"
                     style={{
                       padding: "12px 16px",
-                      color: isActive(l.href) ? "#fff" : "rgba(255,255,255,0.65)",
+                      color: isActive(l.href, l.sectionId) ? "#fff" : "rgba(255,255,255,0.65)",
                       textDecoration: "none",
                       fontSize: 15,
                       borderRadius: 14,
-                      background: isActive(l.href) ? "rgba(255,255,255,0.06)" : "transparent",
+                      background: isActive(l.href, l.sectionId) ? "rgba(255,255,255,0.06)" : "transparent",
                     }}
                   >
                     {l.label}
