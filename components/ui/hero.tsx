@@ -81,14 +81,27 @@ export default function ShaderHero() {
             <span className="block italic" style={{ color: "#c4cdd6", fontStyle: "italic" }}>SHOOTS</span>
           </motion.h1>
 
-          {/* Subtitle */}
+          {/* Emotional tagline */}
           <motion.p
-            className="font-dm text-lg font-light text-white/60 mb-8 leading-relaxed max-w-xl"
+            className="font-dm font-light mb-3 leading-snug max-w-lg"
+            style={{ fontSize: "clamp(18px, 2.2vw, 24px)", color: "#c4cdd6", letterSpacing: "-0.01em" }}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.8 }}
+            transition={{ duration: 0.6, delay: 0.75 }}
           >
-            Du personal branding au mariage — chaque projet est une œuvre cinématique. 50+ clients satisfaits à Montréal.
+            On ne crée pas juste du contenu.{" "}
+            <em style={{ color: "rgba(255,255,255,0.5)", fontStyle: "italic" }}>On construit des marques.</em>
+          </motion.p>
+
+          {/* Subtitle */}
+          <motion.p
+            className="font-dm font-light text-white/45 mb-8 leading-relaxed max-w-xl"
+            style={{ fontSize: "clamp(13px, 1.3vw, 15px)" }}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.9 }}
+          >
+            Du personal branding au mariage — chaque plan est une décision créative. 50+ clients à Montréal.
           </motion.p>
 
           {/* CTAs */}
@@ -125,6 +138,39 @@ export default function ShaderHero() {
           </motion.div>
         </div>
       </main>
+
+      {/* Cinematic image reel — right side */}
+      <motion.div
+        className="absolute right-0 top-0 bottom-0 z-10 hero-reel"
+        initial={{ opacity: 0, x: 40 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 1.2, delay: 0.6, ease: [0.22, 1, 0.36, 1] }}
+        style={{ width: "42%", display: "grid", gridTemplateColumns: "1fr 1fr", gridTemplateRows: "1fr 1fr 1fr", gap: 4, padding: "4px 0 4px 4px" }}
+      >
+        {[
+          { src: "https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?w=600&q=80", row: "span 2", bright: 0.7 },
+          { src: "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=600&q=80", row: "span 1", bright: 0.6 },
+          { src: "https://images.unsplash.com/photo-1504703395950-b89145a5425b?w=600&q=80", row: "span 1", bright: 0.65 },
+          { src: "https://images.unsplash.com/photo-1519741497674-611481863552?w=600&q=80", row: "span 1", bright: 0.55 },
+          { src: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=600&q=80", row: "span 2", bright: 0.6 },
+        ].map((img, i) => (
+          <div key={i} style={{ gridRow: img.row, overflow: "hidden", borderRadius: 4, position: "relative" }}>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={img.src}
+              alt=""
+              style={{ width: "100%", height: "100%", objectFit: "cover", filter: `brightness(${img.bright}) saturate(0.7)`, transition: "transform 8s ease", display: "block" }}
+              onMouseEnter={e => (e.currentTarget.style.transform = "scale(1.04)")}
+              onMouseLeave={e => (e.currentTarget.style.transform = "scale(1)")}
+            />
+            <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, transparent 60%, rgba(7,9,13,0.5))" }} />
+          </div>
+        ))}
+        {/* Right fade gradient */}
+        <div style={{ position: "absolute", top: 0, right: 0, bottom: 0, width: 80, background: "linear-gradient(to left, transparent, rgba(7,9,13,0))", pointerEvents: "none" }} />
+        {/* Left fade gradient */}
+        <div style={{ position: "absolute", top: 0, left: 0, bottom: 0, width: 120, background: "linear-gradient(to right, var(--bg, #0a0a0a), transparent)", pointerEvents: "none" }} />
+      </motion.div>
 
       {/* Pulsing border + rotating text — bottom right */}
       <div className="absolute bottom-8 right-8 z-30">

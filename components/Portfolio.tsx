@@ -187,6 +187,7 @@ export default function Portfolio() {
             {filtered.map((item, i) => (
               <div
                 key={`${item.src}-${i}`}
+                className="portfolio-item"
                 style={{
                   gridColumn: item.wide ? "span 2" : "span 1",
                   borderRadius: 20,
@@ -195,40 +196,72 @@ export default function Portfolio() {
                   border: "1px solid rgba(255,255,255,0.07)",
                   position: "relative",
                   cursor: "none",
-                  transition: "border-color 0.3s, transform 0.3s",
+                  transition: "border-color 0.4s, box-shadow 0.4s, transform 0.4s",
                 }}
                 onMouseEnter={e => {
-                  e.currentTarget.style.borderColor = "rgba(196,205,214,0.25)";
+                  e.currentTarget.style.borderColor = "rgba(196,205,214,0.3)";
                   e.currentTarget.style.transform = "scale(1.02)";
+                  e.currentTarget.style.boxShadow = "0 0 40px rgba(196,205,214,0.08)";
+                  const overlay = e.currentTarget.querySelector(".hover-overlay") as HTMLElement;
+                  const img = e.currentTarget.querySelector("img") as HTMLElement;
+                  if (overlay) overlay.style.opacity = "1";
+                  if (img) img.style.transform = "scale(1.07)";
                 }}
                 onMouseLeave={e => {
                   e.currentTarget.style.borderColor = "rgba(255,255,255,0.07)";
                   e.currentTarget.style.transform = "scale(1)";
+                  e.currentTarget.style.boxShadow = "none";
+                  const overlay = e.currentTarget.querySelector(".hover-overlay") as HTMLElement;
+                  const img = e.currentTarget.querySelector("img") as HTMLElement;
+                  if (overlay) overlay.style.opacity = "0";
+                  if (img) img.style.transform = "scale(1)";
                 }}
               >
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={item.src}
                   alt={item.alt}
-                  style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", transition: "transform 0.6s ease", filter: "brightness(0.85)" }}
-                  onMouseEnter={e => (e.currentTarget.style.transform = "scale(1.06)")}
-                  onMouseLeave={e => (e.currentTarget.style.transform = "scale(1)")}
+                  style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", transition: "transform 0.7s ease", filter: "brightness(0.82)" }}
                 />
 
                 {/* Play button for videos */}
                 {mediaType === "video" && <PlayIcon />}
 
-                {/* Badge */}
+                {/* Premium hover overlay */}
+                <div className="hover-overlay" style={{
+                  position: "absolute", inset: 0,
+                  background: "linear-gradient(to top, rgba(7,9,13,0.85) 0%, rgba(7,9,13,0.3) 50%, transparent 100%)",
+                  opacity: 0,
+                  transition: "opacity 0.4s ease",
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "flex-end",
+                  padding: 20,
+                }}>
+                  <span className="font-dm" style={{ fontSize: 10, color: "#c4cdd6", letterSpacing: "0.2em", textTransform: "uppercase", marginBottom: 6 }}>
+                    {item.sub} · {item.alt}
+                  </span>
+                  <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                    <span className="font-bebas" style={{ fontSize: 22, color: "#fff", letterSpacing: "0.05em" }}>
+                      {item.alt}
+                    </span>
+                    <span className="font-dm" style={{ fontSize: 11, color: "#c4cdd6", letterSpacing: "0.1em" }}>
+                      Voir →
+                    </span>
+                  </div>
+                </div>
+
+                {/* Static badge (always visible) */}
                 <div style={{
-                  position: "absolute", bottom: 10, left: 10,
-                  padding: "4px 12px",
-                  background: "rgba(7,9,13,0.7)",
+                  position: "absolute", top: 12, left: 12,
+                  padding: "3px 10px",
+                  background: "rgba(7,9,13,0.65)",
                   backdropFilter: "blur(12px)",
-                  border: "1px solid rgba(255,255,255,0.1)",
+                  border: "1px solid rgba(255,255,255,0.08)",
                   borderRadius: 9999,
                 }}>
-                  <span className="font-dm" style={{ fontSize: 10, color: "#c4cdd6", letterSpacing: "0.12em", textTransform: "uppercase" }}>
-                    {item.alt}
+                  <span className="font-dm" style={{ fontSize: 9, color: "rgba(255,255,255,0.45)", letterSpacing: "0.12em", textTransform: "uppercase" }}>
+                    {item.sub}
                   </span>
                 </div>
               </div>

@@ -3,10 +3,10 @@ import { motion, useInView, useMotionValue, useTransform, animate } from "framer
 import { useRef, useEffect } from "react";
 
 const stats = [
-  { value: 50,  suffix: "+",   label: "Clients satisfaits", icon: "◆" },
-  { value: 200, suffix: "+",   label: "Projets livrés",     icon: "◆" },
-  { value: 20,  suffix: "K+",  label: "Abonnés Instagram",  icon: "◆" },
-  { value: 5,   suffix: " ans",label: "D'expérience",       icon: "◆" },
+  { value: 50,  suffix: "+",   label: "Clients satisfaits", sub: "De startups aux grandes marques" },
+  { value: 200, suffix: "+",   label: "Projets livrés",     sub: "Branding, événements & campagnes" },
+  { value: 20,  suffix: "K+",  label: "Audience cumulée",   sub: "À travers Instagram & Reels" },
+  { value: 5,   suffix: " ans",label: "D'expérience",       sub: "Accompagnement photo & vidéo" },
 ];
 
 function Counter({ value, suffix }: { value: number; suffix: string }) {
@@ -69,12 +69,22 @@ export default function Stats() {
               <Counter value={s.value} suffix={s.suffix} />
               <p className="font-dm" style={{
                 fontSize: 11,
-                color: "rgba(255,255,255,0.32)",
-                marginTop: 10,
+                color: "rgba(255,255,255,0.45)",
+                marginTop: 8,
                 letterSpacing: "0.12em",
                 textTransform: "uppercase",
+                fontWeight: 600,
               }}>
                 {s.label}
+              </p>
+              <p className="font-dm" style={{
+                fontSize: 10,
+                color: "rgba(255,255,255,0.22)",
+                marginTop: 4,
+                letterSpacing: "0.06em",
+                fontStyle: "italic",
+              }}>
+                {s.sub}
               </p>
             </motion.div>
           ))}

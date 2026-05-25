@@ -39,64 +39,69 @@ export default function Footer() {
         </p>
       </div>
 
-      {/* Bottom bar */}
+      {/* Bottom area — 3 columns */}
       <div style={{
         maxWidth: 1280, margin: "0 auto",
-        padding: "28px 24px 44px",
-        display: "flex", flexWrap: "wrap",
-        alignItems: "center", justifyContent: "space-between", gap: 20,
-      }}>
-        <Link href="/" className="font-bebas" style={{
-          fontSize: 17, letterSpacing: "0.15em",
-          color: "rgba(255,255,255,0.8)", textDecoration: "none",
-        }}>
-          MASSISHOOTS
-        </Link>
+        padding: "32px 24px 48px",
+        display: "grid",
+        gridTemplateColumns: "1fr auto 1fr",
+        alignItems: "start",
+        gap: 32,
+      }} className="footer-grid">
 
-        <nav style={{ display: "flex", flexWrap: "wrap", gap: "6px 8px", justifyContent: "center" }}>
+        {/* Left — brand + contact */}
+        <div>
+          <Link href="/" className="font-bebas" style={{ fontSize: 17, letterSpacing: "0.15em", color: "rgba(255,255,255,0.8)", textDecoration: "none", display: "block", marginBottom: 14 }}>
+            MASSISHOOTS
+          </Link>
+          <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+            <a href="mailto:massi@massishoots.com" className="font-dm" style={{ fontSize: 12, color: "rgba(255,255,255,0.35)", textDecoration: "none", letterSpacing: "0.04em", transition: "color 0.2s" }}
+              onMouseEnter={e => (e.currentTarget.style.color = "#c4cdd6")}
+              onMouseLeave={e => (e.currentTarget.style.color = "rgba(255,255,255,0.35)")}>
+              massi@massishoots.com
+            </a>
+            <span className="font-dm" style={{ fontSize: 12, color: "rgba(255,255,255,0.25)", letterSpacing: "0.04em" }}>
+              Montréal, Québec
+            </span>
+            <span className="font-dm" style={{ fontSize: 11, color: "#c4cdd6", letterSpacing: "0.08em", opacity: 0.7 }}>
+              ✈ Disponible pour voyages internationaux
+            </span>
+          </div>
+        </div>
+
+        {/* Center — nav */}
+        <nav style={{ display: "flex", flexDirection: "column", gap: 4, alignItems: "center" }}>
           {links.map(l => (
-            <Link
-              key={l.href}
-              href={l.href}
-              className="font-dm"
-              style={{
-                fontSize: 12,
-                color: "rgba(255,255,255,0.3)",
-                textDecoration: "none",
-                letterSpacing: "0.06em",
-                padding: "5px 12px",
-                borderRadius: 9999,
-                transition: "color 0.2s, background 0.2s",
-              }}
+            <Link key={l.href} href={l.href} className="font-dm" style={{ fontSize: 12, color: "rgba(255,255,255,0.3)", textDecoration: "none", letterSpacing: "0.06em", padding: "4px 12px", borderRadius: 9999, transition: "color 0.2s, background 0.2s" }}
               onMouseEnter={e => { e.currentTarget.style.color = "#fff"; e.currentTarget.style.background = "rgba(255,255,255,0.06)"; }}
-              onMouseLeave={e => { e.currentTarget.style.color = "rgba(255,255,255,0.3)"; e.currentTarget.style.background = "transparent"; }}
-            >
+              onMouseLeave={e => { e.currentTarget.style.color = "rgba(255,255,255,0.3)"; e.currentTarget.style.background = "transparent"; }}>
               {l.label}
             </Link>
           ))}
         </nav>
 
-        <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
-          <a
-            href="https://instagram.com/massishoots"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="font-dm text-accent"
-            style={{
-              fontSize: 12, letterSpacing: "0.1em",
-              textDecoration: "none", transition: "opacity 0.2s",
-            }}
+        {/* Right — social + copyright */}
+        <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: 8 }}>
+          <a href="https://instagram.com/massishoots" target="_blank" rel="noopener noreferrer" className="font-dm text-accent" style={{ fontSize: 12, letterSpacing: "0.1em", textDecoration: "none", transition: "opacity 0.2s" }}
             onMouseEnter={e => (e.currentTarget.style.opacity = "0.6")}
-            onMouseLeave={e => (e.currentTarget.style.opacity = "1")}
-          >
+            onMouseLeave={e => (e.currentTarget.style.opacity = "1")}>
             @massishoots
           </a>
-          <span style={{ width: 1, height: 12, background: "rgba(255,255,255,0.1)" }} />
-          <span className="font-dm" style={{ fontSize: 11, color: "rgba(255,255,255,0.2)" }}>
-            © 2026 Massishoots · Montréal
+          <span className="font-dm" style={{ fontSize: 11, color: "rgba(255,255,255,0.18)", textAlign: "right" }}>
+            © 2026 Massishoots · Tous droits réservés
+          </span>
+          <span className="font-dm" style={{ fontSize: 10, color: "rgba(255,255,255,0.12)", letterSpacing: "0.08em" }}>
+            MONTRÉAL · CANADA · INTERNATIONAL
           </span>
         </div>
       </div>
+
+      <style>{`
+        @media (max-width: 640px) {
+          .footer-grid { grid-template-columns: 1fr !important; }
+          .footer-grid > div:last-child { align-items: flex-start !important; }
+        }
+      `}</style>
     </footer>
   );
 }
