@@ -1,7 +1,6 @@
 "use client";
 import { useState, useRef } from "react";
 import { motion, useInView, AnimatePresence } from "framer-motion";
-import { PixelCanvas, type PixelCanvasHandle } from "@/components/ui/pixel-canvas";
 
 type MediaType = "photo" | "video";
 type Sub = "all" | "branding" | "corporate" | "mariage" | "events";
@@ -46,36 +45,6 @@ const SUB_FILTERS: { value: Sub; label: string }[] = [
   { value: "mariage",   label: "Mariage" },
   { value: "events",    label: "Événements" },
 ];
-
-function PixelButton({ label, active, onClick }: { label: string; active: boolean; onClick: () => void }) {
-  const pixelRef = useRef<PixelCanvasHandle>(null);
-  return (
-    <button
-      onClick={onClick}
-      onMouseEnter={() => pixelRef.current?.appear()}
-      onMouseLeave={() => pixelRef.current?.disappear()}
-      className="font-bebas"
-      style={{
-        position: "relative",
-        overflow: "hidden",
-        padding: "10px 32px",
-        borderRadius: 9999,
-        fontSize: 18,
-        letterSpacing: "0.12em",
-        border: "1px solid",
-        cursor: "none",
-        transition: "all 0.25s",
-        background: active ? "#c4cdd6" : "rgba(255,255,255,0.04)",
-        color: active ? "#0a0a0a" : "rgba(255,255,255,0.5)",
-        borderColor: active ? "#c4cdd6" : "rgba(255,255,255,0.1)",
-        fontWeight: 700,
-      }}
-    >
-      <PixelCanvas ref={pixelRef} colors={["#ffffff", "#c4cdd6", "#aaaaaa"]} gap={4} speed={40} zIndex={1} />
-      <span style={{ position: "relative", zIndex: 2 }}>{label}</span>
-    </button>
-  );
-}
 
 function PlayIcon() {
   return (
@@ -142,12 +111,26 @@ export default function Portfolio() {
           style={{ marginBottom: 20, display: "flex", gap: 8 }}
         >
           {(["photo", "video"] as MediaType[]).map((type) => (
-            <PixelButton
+            <button
               key={type}
-              label={type === "photo" ? "Photo" : "Vidéo"}
-              active={mediaType === type}
               onClick={() => switchMedia(type)}
-            />
+              className="font-bebas"
+              style={{
+                padding: "10px 32px",
+                borderRadius: 9999,
+                fontSize: 18,
+                letterSpacing: "0.12em",
+                border: "1px solid",
+                cursor: "none",
+                transition: "all 0.25s",
+                background: mediaType === type ? "#c4cdd6" : "rgba(255,255,255,0.04)",
+                color: mediaType === type ? "#0a0a0a" : "rgba(255,255,255,0.5)",
+                borderColor: mediaType === type ? "#c4cdd6" : "rgba(255,255,255,0.1)",
+                fontWeight: 700,
+              }}
+            >
+              {type === "photo" ? "Photo" : "Vidéo"}
+            </button>
           ))}
         </motion.div>
 

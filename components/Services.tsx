@@ -2,7 +2,6 @@
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import Link from "next/link";
-import { PixelCanvas, type PixelCanvasHandle } from "@/components/ui/pixel-canvas";
 
 const services = [
   {
@@ -42,7 +41,6 @@ const services = [
 
 function ServiceCard({ s, index }: { s: typeof services[0]; index: number }) {
   const ref = useRef(null);
-  const pixelRef = useRef<PixelCanvasHandle>(null);
   const inView = useInView(ref, { once: true, margin: "-60px" });
 
   return (
@@ -64,12 +62,10 @@ function ServiceCard({ s, index }: { s: typeof services[0]; index: number }) {
       onMouseEnter={e => {
         e.currentTarget.style.borderColor = "rgba(196,205,214,0.35)";
         e.currentTarget.style.boxShadow = "0 0 48px rgba(196,205,214,0.07)";
-        pixelRef.current?.appear();
       }}
       onMouseLeave={e => {
         e.currentTarget.style.borderColor = s.star ? "rgba(196,205,214,0.2)" : "rgba(255,255,255,0.08)";
         e.currentTarget.style.boxShadow = "none";
-        pixelRef.current?.disappear();
       }}
     >
       {/* BG image */}
@@ -91,15 +87,6 @@ function ServiceCard({ s, index }: { s: typeof services[0]; index: number }) {
         position: "absolute", inset: 0,
         background: "linear-gradient(135deg, rgba(7,9,13,0.92) 0%, rgba(7,9,13,0.5) 60%, transparent 100%)",
       }} />
-
-      {/* Pixel hover effect — above background layers */}
-      <PixelCanvas
-        ref={pixelRef}
-        colors={["#ffffff", "#c4cdd6", "#8892a0", "#ffffff"]}
-        gap={4}
-        speed={40}
-        zIndex={8}
-      />
 
       {/* Top highlight */}
       <div style={{
