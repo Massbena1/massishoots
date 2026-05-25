@@ -2,7 +2,7 @@
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import Link from "next/link";
-import { PixelCanvas } from "@/components/ui/pixel-canvas";
+import { PixelCanvas, type PixelCanvasHandle } from "@/components/ui/pixel-canvas";
 
 const services = [
   {
@@ -42,6 +42,7 @@ const services = [
 
 function ServiceCard({ s, index }: { s: typeof services[0]; index: number }) {
   const ref = useRef(null);
+  const pixelRef = useRef<PixelCanvasHandle>(null);
   const inView = useInView(ref, { once: true, margin: "-60px" });
 
   return (
@@ -63,10 +64,12 @@ function ServiceCard({ s, index }: { s: typeof services[0]; index: number }) {
       onMouseEnter={e => {
         e.currentTarget.style.borderColor = "rgba(196,205,214,0.35)";
         e.currentTarget.style.boxShadow = "0 0 48px rgba(196,205,214,0.07)";
+        pixelRef.current?.appear();
       }}
       onMouseLeave={e => {
         e.currentTarget.style.borderColor = s.star ? "rgba(196,205,214,0.2)" : "rgba(255,255,255,0.08)";
         e.currentTarget.style.boxShadow = "none";
+        pixelRef.current?.disappear();
       }}
     >
       {/* BG image */}
@@ -91,6 +94,7 @@ function ServiceCard({ s, index }: { s: typeof services[0]; index: number }) {
 
       {/* Pixel hover effect — above background layers */}
       <PixelCanvas
+        ref={pixelRef}
         colors={["#ffffff", "#c4cdd6", "#8892a0", "#ffffff"]}
         gap={4}
         speed={40}

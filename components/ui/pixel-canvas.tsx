@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useRef } from "react";
+import { forwardRef, useCallback, useEffect, useImperativeHandle, useRef } from "react";
 
 type Pixel = {
   x: number; y: number; color: string;
@@ -54,91 +54,95 @@ function createPixel(
   return p;
 }
 
+export type PixelCanvasHandle = {
+  appear: () => void;
+  disappear: () => void;
+};
+
 type PixelCanvasProps = {
   colors?: string[];
   gap?: number;
   speed?: number;
   zIndex?: number;
-  opacity?: number;
 };
 
-export function PixelCanvas({
-  colors = ["#c4cdd6", "#8892a0", "#ffffff"],
-  gap = 6,
-  speed = 25,
-  zIndex = 2,
-  opacity = 1,
-}: PixelCanvasProps) {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  const wrapRef = useRef<HTMLDivElement>(null);
-  const pixelsRef = useRef<Pixel[]>([]);
-  const animRef = useRef<number>(0);
-  const lastFrameRef = useRef(performance.now());
+export const PixelCanvas = forwardRef<PixelCanvasHandle, PixelCanvasProps>(
+  function PixelCanvas({
+    colors = ["#c4cdd6", "#8892a0", "#ffffff"],
+    gap = 6,
+    speed = 25,
+    zIndex = 2,
+  }, ref) {
+    const canvasRef = useRef<HTMLCanvasElement>(null);
+    const wrapRef = useRef<HTMLDivElement>(null);
+    const pixelsRef = useRef<Pixel[]>([]);
+    const animRef = useRef<number>(0);
+    const lastFrameRef = useRef(performance.now());
 
-  const init = useCallback(() => {
-    const canvas = canvasRef.current;
-    const wrap = wrapRef.current;
-    if (!canvas || !wrap) return;
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
-    const { width, height } = wrap.getBoundingClientRect();
-    const w = Math.floor(width);
-    const h = Math.floor(height);
-    canvas.width = w; canvas.height = h;
-    canvas.style.width = `${w}px`; canvas.style.height = `${h}px`;
-    const effectiveSpeed = Math.min(speed, 100) * 0.001;
-    const pixels: Pixel[] = [];
-    for (let x = 0; x < w; x += gap) {
-      for (let y = 0; y < h; y += gap) {
-        const color = colors[Math.floor(Math.random() * colors.length)];
-        const dx = x - w / 2; const dy = y - h / 2;
-        const delay = Math.sqrt(dx * dx + dy * dy);
-        pixels.push(createPixel(ctx, canvas, x, y, color, effectiveSpeed, delay));
-      }
-    }
-    pixelsRef.current = pixels;
-  }, [colors, gap, speed]);
-
-  const animate = useCallback((mode: "appear" | "disappear") => {
-    cancelAnimationFrame(animRef.current);
-    const frameInterval = 1000 / 60;
-    const loop = () => {
-      animRef.current = requestAnimationFrame(loop);
-      const now = performance.now();
-      const elapsed = now - lastFrameRef.current;
-      if (elapsed < frameInterval) return;
-      lastFrameRef.current = now - (elapsed % frameInterval);
+    const init = useCallback(() => {
       const canvas = canvasRef.current;
-      const ctx = canvas?.getContext("2d");
-      if (!canvas || !ctx) return;
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      const pixels = pixelsRef.current;
-      for (const pixel of pixels) pixel[mode]();
-      if (pixels.every((p) => p.isIdle)) cancelAnimationFrame(animRef.current);
-    };
-    animRef.current = requestAnimationFrame(loop);
-  }, []);
+      const wrap = wrapRef.current;
+      if (!canvas || !wrap) return;
+      const ctx = canvas.getContext("2d");
+      if (!ctx) return;
+      const { width, height } = wrap.getBoundingClientRect();
+      const w = Math.floor(width);
+      const h = Math.floor(height);
+      if (w === 0 || h === 0) return;
+      canvas.width = w; canvas.height = h;
+      canvas.style.width = `${w}px`; canvas.style.height = `${h}px`;
+      const effectiveSpeed = Math.min(speed, 100) * 0.001;
+      const pixels: Pixel[] = [];
+      for (let x = 0; x < w; x += gap) {
+        for (let y = 0; y < h; y += gap) {
+          const color = colors[Math.floor(Math.random() * colors.length)];
+          const dx = x - w / 2; const dy = y - h / 2;
+          const delay = Math.sqrt(dx * dx + dy * dy);
+          pixels.push(createPixel(ctx, canvas, x, y, color, effectiveSpeed, delay));
+        }
+      }
+      pixelsRef.current = pixels;
+    }, [colors, gap, speed]);
 
-  useEffect(() => {
-    init();
-    const resizeObserver = new ResizeObserver(() => init());
-    if (wrapRef.current) resizeObserver.observe(wrapRef.current);
-    const card = wrapRef.current?.parentElement;
-    const onEnter = () => animate("appear");
-    const onLeave = () => animate("disappear");
-    card?.addEventListener("mouseenter", onEnter);
-    card?.addEventListener("mouseleave", onLeave);
-    return () => {
-      resizeObserver.disconnect();
+    const animate = useCallback((mode: "appear" | "disappear") => {
       cancelAnimationFrame(animRef.current);
-      card?.removeEventListener("mouseenter", onEnter);
-      card?.removeEventListener("mouseleave", onLeave);
-    };
-  }, [init, animate]);
+      const frameInterval = 1000 / 60;
+      const loop = () => {
+        animRef.current = requestAnimationFrame(loop);
+        const now = performance.now();
+        const elapsed = now - lastFrameRef.current;
+        if (elapsed < frameInterval) return;
+        lastFrameRef.current = now - (elapsed % frameInterval);
+        const canvas = canvasRef.current;
+        const ctx = canvas?.getContext("2d");
+        if (!canvas || !ctx) return;
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        const pixels = pixelsRef.current;
+        for (const pixel of pixels) pixel[mode]();
+        if (mode === "disappear" && pixels.every((p) => p.isIdle)) cancelAnimationFrame(animRef.current);
+      };
+      animRef.current = requestAnimationFrame(loop);
+    }, []);
 
-  return (
-    <div ref={wrapRef} className="absolute inset-0 overflow-hidden rounded-[inherit]" style={{ zIndex, opacity, pointerEvents: "none" }}>
-      <canvas ref={canvasRef} className="block" style={{ mixBlendMode: "screen" }} />
-    </div>
-  );
-}
+    useImperativeHandle(ref, () => ({
+      appear: () => animate("appear"),
+      disappear: () => animate("disappear"),
+    }), [animate]);
+
+    useEffect(() => {
+      init();
+      const ro = new ResizeObserver(() => init());
+      if (wrapRef.current) ro.observe(wrapRef.current);
+      return () => {
+        ro.disconnect();
+        cancelAnimationFrame(animRef.current);
+      };
+    }, [init]);
+
+    return (
+      <div ref={wrapRef} className="absolute inset-0 overflow-hidden rounded-[inherit]" style={{ zIndex, pointerEvents: "none" }}>
+        <canvas ref={canvasRef} className="block" />
+      </div>
+    );
+  }
+);
