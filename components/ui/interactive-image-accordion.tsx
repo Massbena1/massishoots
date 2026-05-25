@@ -36,9 +36,9 @@ function AccordionItem({
         borderRadius: 20,
         overflow: "hidden",
         cursor: "none",
-        flexShrink: 0,
-        width: isActive ? 480 : 64,
-        transition: "width 0.6s cubic-bezier(0.22, 1, 0.36, 1)",
+        flex: isActive ? "1 1 0" : "0 0 64px",
+        minWidth: isActive ? 0 : 64,
+        transition: "flex 0.6s cubic-bezier(0.22, 1, 0.36, 1)",
         border: isActive
           ? "1px solid rgba(196,205,214,0.25)"
           : "1px solid rgba(255,255,255,0.07)",
@@ -198,7 +198,7 @@ export function ImageAccordion({ items, defaultActive = 0 }: ImageAccordionProps
   const [activeIndex, setActiveIndex] = useState(defaultActive);
 
   return (
-    <div style={{ display: "flex", flexDirection: "row", gap: 8, alignItems: "stretch" }}>
+    <div style={{ display: "flex", flexDirection: "row", gap: 8, alignItems: "stretch", width: "100%" }}>
       {items.map((item, index) => (
         <AccordionItem
           key={item.id}
