@@ -139,38 +139,39 @@ export default function ShaderHero() {
         </div>
       </main>
 
-      {/* Cinematic image reel — right side */}
-      <motion.div
-        className="absolute right-0 top-0 bottom-0 z-10 hero-reel"
-        initial={{ opacity: 0, x: 40 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: 1.2, delay: 0.6, ease: [0.22, 1, 0.36, 1] }}
-        style={{ width: "42%", display: "grid", gridTemplateColumns: "1fr 1fr", gridTemplateRows: "1fr 1fr 1fr", gap: 4, padding: "4px 0 4px 4px" }}
-      >
-        {[
-          { src: "https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?w=600&q=80", row: "span 2", bright: 0.7 },
-          { src: "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=600&q=80", row: "span 1", bright: 0.6 },
-          { src: "https://images.unsplash.com/photo-1504703395950-b89145a5425b?w=600&q=80", row: "span 1", bright: 0.65 },
-          { src: "https://images.unsplash.com/photo-1519741497674-611481863552?w=600&q=80", row: "span 1", bright: 0.55 },
-          { src: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=600&q=80", row: "span 2", bright: 0.6 },
-        ].map((img, i) => (
-          <div key={i} style={{ gridRow: img.row, overflow: "hidden", borderRadius: 4, position: "relative" }}>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={img.src}
-              alt=""
-              style={{ width: "100%", height: "100%", objectFit: "cover", filter: `brightness(${img.bright}) saturate(0.7)`, transition: "transform 8s ease", display: "block" }}
-              onMouseEnter={e => (e.currentTarget.style.transform = "scale(1.04)")}
-              onMouseLeave={e => (e.currentTarget.style.transform = "scale(1)")}
-            />
-            <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, transparent 60%, rgba(7,9,13,0.5))" }} />
-          </div>
-        ))}
-        {/* Right fade gradient */}
-        <div style={{ position: "absolute", top: 0, right: 0, bottom: 0, width: 80, background: "linear-gradient(to left, transparent, rgba(7,9,13,0))", pointerEvents: "none" }} />
-        {/* Left fade gradient */}
-        <div style={{ position: "absolute", top: 0, left: 0, bottom: 0, width: 120, background: "linear-gradient(to right, var(--bg, #0a0a0a), transparent)", pointerEvents: "none" }} />
-      </motion.div>
+      {/* Hero video — full background */}
+      <div className="absolute inset-0 z-0">
+        <video
+          autoPlay
+          muted
+          loop
+          playsInline
+          style={{
+            position: "absolute",
+            inset: 0,
+            width: "100%",
+            height: "100%",
+            objectFit: "cover",
+            filter: "brightness(0.45) saturate(0.8)",
+          }}
+        >
+          {/* ↓ Place ton fichier dans public/video/hero.mp4 */}
+          <source src="/video/hero.mp4" type="video/mp4" />
+        </video>
+        {/* Gradient overlay pour lisibilité du texte */}
+        <div style={{
+          position: "absolute",
+          inset: 0,
+          background: "linear-gradient(105deg, rgba(7,9,13,0.85) 0%, rgba(7,9,13,0.5) 45%, rgba(7,9,13,0.2) 100%)",
+        }} />
+        {/* Bottom fade */}
+        <div style={{
+          position: "absolute",
+          bottom: 0, left: 0, right: 0,
+          height: "35%",
+          background: "linear-gradient(to top, rgba(7,9,13,0.9), transparent)",
+        }} />
+      </div>
 
       {/* Pulsing border + rotating text — bottom right */}
       <div className="absolute bottom-8 right-8 z-30">
