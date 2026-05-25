@@ -30,12 +30,12 @@ function BentoGrid({ items, className }: BentoGridProps) {
           onClick={item.onClick}
           className={cn(
             "group relative p-4 rounded-xl overflow-hidden transition-all duration-300",
-            "border bg-black/40 backdrop-blur-sm",
+            "border backdrop-blur-sm bento-card",
             "hover:-translate-y-0.5 will-change-transform",
             item.colSpan === 2 ? "col-span-2" : "col-span-1",
             item.active || item.hasPersistentHover
-              ? "border-white/20 shadow-[0_2px_12px_rgba(255,255,255,0.05)] -translate-y-0.5"
-              : "border-white/8 hover:border-white/15",
+              ? "bento-card-active -translate-y-0.5"
+              : "bento-card-idle",
             item.onClick && "cursor-none"
           )}
         >

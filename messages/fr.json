@@ -1,0 +1,529 @@
+{
+  "metadata": {
+    "home": {
+      "title": "Massishoots | Photographe & Vidéaste Premium — Montréal",
+      "description": "Massi Bena, photographe et vidéaste freelance premium à Montréal. Personal branding, corporate B2B, mariages & événements."
+    },
+    "about": {
+      "title": "À propos | Massishoots — Photographe & Vidéaste Montréal",
+      "description": "L'histoire de Massi Bena, son équipement, sa vision artistique et ses valeurs."
+    },
+    "services": {
+      "title": "Services | Massishoots — Photographe & Vidéaste Montréal",
+      "description": "Découvrez les offres Personal Branding, Corporate B2B et Events & Weddings avec forfaits et tarifs."
+    },
+    "contact": {
+      "title": "Contact | Massishoots — Réserver une séance à Montréal",
+      "description": "Formulaire de contact, réservation en ligne et réseaux sociaux — réponse sous 24h."
+    },
+    "portfolio": {
+      "title": "Portfolio | Massishoots — Photographe & Vidéaste Montréal",
+      "description": "Galerie complète — Personal Branding, Corporate, Mariages & Événements à Montréal."
+    }
+  },
+  "hero": {
+    "subtitle": "Photographe & Vidéaste",
+    "tagline": "On ne crée pas juste du contenu.",
+    "taglineEm": "On construit des marques.",
+    "desc": "Du personal branding au mariage — chaque plan est une décision créative. 50+ clients à Montréal.",
+    "portfolio": "Voir le portfolio",
+    "book": "Réserver une séance"
+  },
+  "nav": {
+    "services": "Services",
+    "portfolio": "Portfolio",
+    "about": "À propos",
+    "book": "Réserver",
+    "bookMobile": "Réserver une séance"
+  },
+  "clients": {
+    "heading1": "Ils nous font confiance.",
+    "heading2": "Marques & entrepreneurs à Montréal."
+  },
+  "stats": [
+    {
+      "num": 50,
+      "suffix": "+",
+      "label": "Clients satisfaits",
+      "sub": "De startups aux grandes marques"
+    },
+    {
+      "num": 200,
+      "suffix": "+",
+      "label": "Projets livrés",
+      "sub": "Branding, événements & campagnes"
+    },
+    {
+      "num": 2,
+      "suffix": "M+",
+      "label": "Audience cumulée",
+      "sub": "À travers Instagram & Reels"
+    },
+    {
+      "num": 5,
+      "suffix": " ans",
+      "label": "D'expérience",
+      "sub": "Accompagnement photo & vidéo"
+    }
+  ],
+  "services": {
+    "label": "— Ce que je fais",
+    "heading": "MES SERVICES",
+    "subtitle": "Survole chaque service pour découvrir les détails. De la création mensuelle au film de mariage, chaque projet est traité comme une œuvre.",
+    "cta": "Réserver une séance",
+    "otherLabel": "Tu as un projet différent ? Portrait, corporate, séance sur mesure...",
+    "otherCta": "Parlons-en",
+    "items": [
+      {
+        "title": "Contenu Mensuel",
+        "shortLabel": "Mensuel",
+        "desc": "Personal branding, face caméra, Reels, photos — un package complet livré chaque mois pour les entrepreneurs qui veulent une présence forte en ligne.",
+        "price": "À partir de 2 500 $/mois",
+        "tags": [
+          "Personal Branding",
+          "Reels",
+          "Face Caméra",
+          "Photo"
+        ]
+      },
+      {
+        "title": "Couverture d'Événements",
+        "shortLabel": "Événements",
+        "desc": "Soirées, lancements, galas, conférences — photo + vidéo complète. Tu gardes tout, je livre vite.",
+        "price": "À partir de 2 900 $",
+        "tags": [
+          "Soirées",
+          "Galas",
+          "Conférences",
+          "Lancements"
+        ]
+      },
+      {
+        "title": "Publicité",
+        "shortLabel": "Publicité",
+        "desc": "Contenu pour les ads Meta & Instagram — vidéo courte, accroches visuelles, formats adaptés aux campagnes qui convertissent.",
+        "price": "À partir de 599 $",
+        "tags": [
+          "Meta Ads",
+          "Instagram",
+          "Vidéo Courte",
+          "UGC"
+        ]
+      },
+      {
+        "title": "Mariage",
+        "shortLabel": "Mariage",
+        "desc": "Chaque instant capturé avec une précision émotionnelle rare. De la préparation à la soirée — photo et film cinématique.",
+        "price": "Sur devis",
+        "tags": [
+          "Cérémonie",
+          "Préparatifs",
+          "Film",
+          "Album"
+        ]
+      }
+    ],
+    "page": {
+      "label": "Ce que je fais",
+      "title": "MES SERVICES",
+      "subtitle": "Trois offres taillées sur mesure — du personal branding au mariage cinématique."
+    }
+  },
+  "portfolio": {
+    "label": "— Mes réalisations",
+    "heading": "PORTFOLIO",
+    "photoTitle": "Photo",
+    "photoDesc": "Branding, corporate, mariage & événements",
+    "videoTitle": "Vidéo",
+    "videoDesc": "Brand films, reels, couverture d'événements",
+    "projects": "projets",
+    "filterAll": "Tous",
+    "filterBranding": "Branding",
+    "filterCorporate": "Corporate",
+    "filterMariage": "Mariage",
+    "filterEvents": "Événements",
+    "altBranding": "Personal Branding",
+    "altCorporate": "Corporate",
+    "altMariage": "Mariage",
+    "altEvents": "Événements",
+    "altBrandFilm": "Brand Film",
+    "altCorpVideo": "Corporate Video",
+    "altWeddingFilm": "Film de Mariage",
+    "altEvent": "Événement",
+    "page": {
+      "label": "La galerie",
+      "title": "PORTFOLIO",
+      "subtitle": "50+ projets — filtrez par catégorie pour explorer l'univers visuel Massishoots."
+    },
+    "moreCta": "Plus d'exemples photos",
+    "moreCtaSub": "Voir la galerie complète"
+  },
+  "process": {
+    "label": "— Comment ça marche",
+    "heading": "LE PROCESSUS",
+    "steps": [
+      {
+        "title": "Consultation",
+        "desc": "On discute de ta vision, tes objectifs et ton univers. On définit le concept créatif parfait pour ton projet.",
+        "detail": "Appel gratuit · 30 min"
+      },
+      {
+        "title": "Tournage",
+        "desc": "Direction artistique complète. Lumière maîtrisée, mise en scène soignée. Sony A7 III + DJI Mini 5 Pro.",
+        "detail": "1–2 jours · sur site"
+      },
+      {
+        "title": "Montage",
+        "desc": "Post-production cinématique : colorimétrie, retouches, montage vidéo avec musique et motion design.",
+        "detail": "3–5 jours ouvrables"
+      },
+      {
+        "title": "Livraison",
+        "desc": "Fichiers HD livrés clés en main. Révisions incluses jusqu'à ta satisfaction totale. Garantie qualité.",
+        "detail": "Fichiers HD · révisions incluses"
+      }
+    ]
+  },
+  "whyUs": {
+    "label": "— Notre différence",
+    "introText": "L'image moderne demande plus qu'une caméra.",
+    "heading": "Création cinématique propulsée par stratégie, montage avancé & intelligence artificielle.",
+    "quote": "Nous combinons créativité humaine, direction artistique et technologies modernes pour créer du contenu qui se démarque réellement.",
+    "cards": [
+      {
+        "label": "01 · Production",
+        "title": "Production Haut de Gamme",
+        "equipment": [
+          "Sony A7 III",
+          "DJI Mini 5 Pro",
+          "Éclairage professionnel",
+          "Audio haute qualité"
+        ],
+        "desc": "Chaque projet est filmé avec une approche cinématique pensée pour les réseaux sociaux modernes et les marques premium."
+      },
+      {
+        "label": "02 · Post-production",
+        "title": "Montage & Color Grading",
+        "software": [
+          "Premiere Pro",
+          "DaVinci Resolve",
+          "After Effects",
+          "Photoshop",
+          "Lightroom"
+        ],
+        "desc": "Chaque vidéo est montée avec une attention extrême au rythme, à l'émotion et à l'impact visuel."
+      },
+      {
+        "label": "03 · Animation",
+        "title": "Motion Design & Animation",
+        "features": [
+          "Animation graphique",
+          "Typographie dynamique",
+          "Transitions modernes",
+          "Motion design premium",
+          "Effets cinématiques"
+        ],
+        "desc": "Des vidéos pensées pour capter l'attention dès les premières secondes."
+      },
+      {
+        "label": "04 · Intelligence artificielle",
+        "badge": "NEW GEN",
+        "title": "Creative Direction\nPowered by AI",
+        "aiLabel": "IA utilisée pour :",
+        "aiUses": [
+          "Transitions avancées",
+          "Effets visuels",
+          "Génération créative",
+          "Sound design",
+          "Amélioration vidéo",
+          "Concepts visuels",
+          "Automatisation créative"
+        ],
+        "desc": "MassiShoots intègre les outils IA modernes pour créer des visuels plus dynamiques, immersifs et innovants."
+      }
+    ]
+  },
+  "testimonials": {
+    "label": "— Ce qu'ils disent",
+    "heading": "TÉMOIGNAGES",
+    "subtitle": "50+ clients satisfaits — glissez les cartes pour les parcourir.",
+    "items": [
+      {
+        "name": "Sarah Morin",
+        "role": "Coach & Entrepreneur",
+        "text": "Massi a totalement transformé l'image de ma marque. Les photos sont à couper le souffle — exactement ce que je cherchais pour mon personal branding."
+      },
+      {
+        "name": "Thomas Lacroix",
+        "role": "CEO InnovateMTL",
+        "text": "Professionnalisme irréprochable. Notre événement corporate a été capturé avec une précision artistique rare. Je recommande vivement."
+      },
+      {
+        "name": "Amira & David Côté",
+        "role": "Mariage 2025",
+        "text": "Notre mariage immortalisé avec une beauté et une émotion incroyables. Chaque photo raconte notre histoire. Merci Massi !"
+      },
+      {
+        "name": "Karim Benali",
+        "role": "Fondateur Stüdio Brand",
+        "text": "Un vrai collaborateur créatif. Il comprend la vision avant même qu'on finisse de l'expliquer. Du contenu de luxe, livré en temps et en heure."
+      }
+    ]
+  },
+  "faq": {
+    "label": "— Questions fréquentes",
+    "heading1": "Tout ce",
+    "heading2": "que vous",
+    "headingAccent": "voulez savoir.",
+    "intro": "Une question qui n'est pas listée ici ? Je réponds personnellement à chaque message sous 24h.",
+    "cta": "Réserver un appel gratuit →",
+    "items": [
+      {
+        "q": "Aidez-vous avec les idées et le concept ?",
+        "a": "Oui. Nous accompagnons nos clients dans la direction créative, le storytelling et la stratégie de contenu."
+      },
+      {
+        "q": "Proposez-vous du contenu mensuel ?",
+        "a": "Oui. Nous proposons des collaborations mensuelles pour les marques, entreprises et entrepreneurs souhaitant développer une présence constante et professionnelle sur les réseaux sociaux.\n\nCes collaborations permettent de créer du contenu régulier, cohérent et optimisé pour renforcer votre image de marque sur le long terme."
+      },
+      {
+        "q": "Vous déplacez-vous hors de Montréal ?",
+        "a": "Oui, je suis disponible pour des projets partout au Québec, au Canada et à l'international. Les frais de déplacement (transport, hébergement) sont calculés au coût réel et inclus dans le devis final."
+      },
+      {
+        "q": "Puis-je voir votre travail avant de décider ?",
+        "a": "Absolument. Mon portfolio est disponible sur ce site et sur Instagram (@massishoots). Je propose aussi un appel découverte gratuit de 30 minutes pour discuter de votre projet et vous montrer des exemples similaires à votre brief."
+      },
+      {
+        "q": "Quels sont vos délais de livraison ?",
+        "a": "Les photos retouchées sont livrées sous 7 à 10 jours ouvrables. Les vidéos montées prennent 2 à 3 semaines selon la complexité. Un aperçu est souvent disponible plus tôt pour les événements urgents."
+      },
+      {
+        "q": "Comment fonctionne le paiement ?",
+        "a": "Un acompte de 50 % est demandé à la signature du contrat pour confirmer votre réservation. Le solde est réglé à la livraison finale du contenu. J'accepte virement bancaire, carte de crédit et e-Transfer."
+      },
+      {
+        "q": "Quelle est votre politique d'annulation ?",
+        "a": "L'acompte est non remboursable en cas d'annulation à moins de 14 jours. Pour les annulations anticipées, je propose généralement un report de date sans frais. Les imprévus arrivent — je m'adapte toujours avec flexibilité et respect."
+      },
+      {
+        "q": "Utilisez-vous l'intelligence artificielle ?",
+        "a": "Oui. MassiShoots intègre certains outils IA modernes pour enrichir les transitions, les effets visuels et certaines animations créatives afin d'apporter une touche plus moderne et immersive au contenu.\n\nCependant, tout le montage principal, la colorimétrie et la direction artistique sont réalisés manuellement avec des logiciels professionnels comme Adobe Premiere Pro, DaVinci Resolve et After Effects.\n\nNotre objectif est de conserver un rendu haut de gamme, cinématique et authentique."
+      }
+    ]
+  },
+  "cta": {
+    "label": "— Prêt à passer au niveau supérieur ?",
+    "heading1": "VOTRE IMAGE",
+    "heading2": "MÉRITE MIEUX.",
+    "subtext": "Chaque jour sans contenu premium est un jour où votre concurrence prend de l'avance. Créons quelque chose d'exceptionnel ensemble.",
+    "primaryBtn": "Réserver un appel",
+    "secondaryBtn": "Voir Instagram",
+    "footnote": "Disponible pour voyages · Réponse sous 24h · Premier appel gratuit"
+  },
+  "footer": {
+    "tagline": "Photo & vidéo cinématique pour marques et entrepreneurs à Montréal.",
+    "travel": "✈ Disponible pour voyages internationaux",
+    "copyright": "Massishoots. Tous droits réservés.",
+    "sServices": "Services",
+    "sNavigation": "Navigation",
+    "sSocial": "Réseaux",
+    "lMonthly": "Contenu Mensuel",
+    "lEvents": "Événements",
+    "lAds": "Publicité",
+    "lWedding": "Mariage",
+    "lPortfolio": "Portfolio",
+    "lAbout": "À propos",
+    "lProcess": "Processus",
+    "lFaq": "FAQ",
+    "lContact": "Contact"
+  },
+  "about": {
+    "label": "— À propos",
+    "heading1": "QUI EST",
+    "heading2": "MASSI ?",
+    "para1": "Passionné par la narration visuelle, Massi Bena transforme chaque projet en contenu cinématique qui marque les esprits. Basé à Montréal, il collabore avec des entrepreneurs, des entreprises et des couples pour créer des images qui ont de l'impact.",
+    "para2": "Son approche : direction artistique rigoureuse, technique maîtrisée, et une sensibilité humaine qui transparaît dans chaque image.",
+    "nameBadge": "MASSI BENA",
+    "roleBadge": "Photographe & Vidéaste — Montréal",
+    "equipmentLabel": "Équipement",
+    "equipment": [
+      {
+        "name": "Sony A7 III",
+        "role": "Boîtier principal"
+      },
+      {
+        "name": "DJI Mini 5 Pro",
+        "role": "Drone cinématique"
+      },
+      {
+        "name": "DJI RS 4 Mini",
+        "role": "Stabilisateur gimbal"
+      },
+      {
+        "name": "Aputure MC Pro",
+        "role": "Éclairage LED"
+      }
+    ],
+    "page": {
+      "label": "Qui suis-je",
+      "title": "À PROPOS",
+      "subtitle": "Photographe, vidéaste et directeur artistique basé à Montréal — derrière chaque image, une vision."
+    }
+  },
+  "contact": {
+    "badge": "Réservations 2026",
+    "heading1": "Réservez",
+    "heading2": "votre projet",
+    "subtitle": "Chaque projet commence par une vision.",
+    "subtitleAccent": "Construisons la vôtre.",
+    "strategicPhrase": "Les projets sont sélectionnés selon leur vision et leur potentiel créatif.",
+    "scrollCta": "Réserver mon appel gratuit",
+    "callBadge": "100% gratuit · sans engagement",
+    "callHeading1": "Appel découverte",
+    "callHeading2": "30 minutes.",
+    "callDesc": "Avant tout projet, on prend 30 minutes pour discuter de votre vision, vos objectifs et voir si on est le bon match créatif.",
+    "callPoints": [
+      "On écoute votre vision et vos objectifs",
+      "On évalue le potentiel créatif du projet",
+      "On vous propose une direction artistique",
+      "Aucun engagement — juste une vraie conversation"
+    ],
+    "orSeparator": "OU",
+    "preferForm": "Préférer remplir le formulaire",
+    "dateLabel": "Choisissez une date & heure",
+    "formLabel": "— Formulaire de demande",
+    "formHeading": "Parlez-nous de votre vision",
+    "formDesc": "Remplissez ce formulaire avec le plus de détails possible. Nous vous répondons sous 24h.",
+    "nomPlaceholder": "Nom complet *",
+    "entreprisePlaceholder": "Entreprise / Marque",
+    "emailPlaceholder": "Email *",
+    "telPlaceholder": "Téléphone",
+    "instagramPlaceholder": "Instagram ou site web (ex: @massishoots)",
+    "typeLabel": "Type de projet *",
+    "budgetLabel": "Budget estimé *",
+    "messagePlaceholder": "Parlez-nous de votre vision. Plus vous êtes précis(e), mieux on peut vous aider...",
+    "charCounter": "car.",
+    "projectTypes": [
+      {
+        "value": "branding",
+        "label": "Branding personnel"
+      },
+      {
+        "value": "evenement",
+        "label": "Événement"
+      },
+      {
+        "value": "mariage",
+        "label": "Mariage"
+      },
+      {
+        "value": "restaurant",
+        "label": "Restaurant"
+      },
+      {
+        "value": "immobilier",
+        "label": "Immobilier"
+      },
+      {
+        "value": "publicite",
+        "label": "Publicité"
+      },
+      {
+        "value": "reseaux",
+        "label": "Réseaux sociaux"
+      },
+      {
+        "value": "autre",
+        "label": "Autre"
+      }
+    ],
+    "budgets": [
+      {
+        "value": "500-1000",
+        "label": "500 $ – 1 000 $"
+      },
+      {
+        "value": "1000-2500",
+        "label": "1 000 $ – 2 500 $"
+      },
+      {
+        "value": "2500-5000",
+        "label": "2 500 $ – 5 000 $"
+      },
+      {
+        "value": "5000+",
+        "label": "5 000 $+"
+      }
+    ],
+    "submitBtn": "Envoyer ma demande",
+    "sentConfirmation": "✓ Demande envoyée — réponse sous 24h",
+    "privacy": "Vos informations sont confidentielles et ne seront jamais partagées.",
+    "sidebarRole": "Photographe & Vidéaste · Montréal",
+    "responseTime": "Réponse sous 24h",
+    "location": "Montréal, QC",
+    "sidebarStats": [
+      {
+        "val": "50+",
+        "label": "Clients"
+      },
+      {
+        "val": "200+",
+        "label": "Projets"
+      },
+      {
+        "val": "5 ans",
+        "label": "Expérience"
+      },
+      {
+        "val": "24h",
+        "label": "Délai réponse"
+      }
+    ],
+    "guaranteesLabel": "Nos garanties",
+    "guarantees": [
+      "Réponse sous 24h garantie",
+      "Accompagnement créatif personnalisé",
+      "Livraison optimisée réseaux sociaux",
+      "Direction artistique moderne"
+    ],
+    "processLabel": "— Notre processus",
+    "processHeading": "Comment ça fonctionne",
+    "processSteps": [
+      {
+        "n": "01",
+        "title": "Appel découverte",
+        "desc": "On discute de vos objectifs, de votre image et de ce qui vous différencie."
+      },
+      {
+        "n": "02",
+        "title": "Direction créative",
+        "desc": "On prépare le concept, la stratégie visuelle et le plan de tournage."
+      },
+      {
+        "n": "03",
+        "title": "Production",
+        "desc": "Tournage cinématique premium avec une attention extrême au détail."
+      },
+      {
+        "n": "04",
+        "title": "Livraison",
+        "desc": "Contenu prêt à publier, optimisé pour chaque plateforme."
+      }
+    ],
+    "availabilityLabel": "Disponibilité",
+    "availabilityTitle": "Places limitées\nchaque mois",
+    "availabilityDesc": "Nous acceptons un nombre limité de projets afin de garantir une qualité premium sur chaque création. Réservez tôt pour assurer votre créneau.",
+    "availabilityStatus": "Actuellement disponible pour de nouveaux projets",
+    "quickLabel": "Contact rapide",
+    "quickHeading": "Une question rapide ?",
+    "whatsappSub": "Réponse rapide garantie",
+    "ctaClients": "50+ clients · Montréal & international",
+    "ctaHeading1": "Construisons quelque chose",
+    "ctaHeading2": "d'unique.",
+    "ctaDesc": "Votre image mérite une attention créative sans compromis.",
+    "ctaSendBtn": "Envoyer ma demande",
+    "ctaInstagramBtn": "Voir l'Instagram",
+    "ctaFootnote": "Disponible pour voyages · Réponse sous 24h · Premier appel gratuit"
+  }
+}

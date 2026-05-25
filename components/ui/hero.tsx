@@ -1,8 +1,11 @@
 "use client";
 import { PulsingBorder } from "@paper-design/shaders-react";
 import { motion } from "framer-motion";
+import { useTranslations } from "next-intl";
 
 export default function ShaderHero() {
+  const t = useTranslations("hero");
+
   return (
     <div className="min-h-screen relative overflow-hidden" style={{ background: "transparent" }}>
       <svg className="absolute inset-0 w-0 h-0">
@@ -75,7 +78,7 @@ export default function ShaderHero() {
                 textTransform: "uppercase",
               }}
             >
-              Photographe & Vidéaste
+              {t("subtitle")}
             </motion.span>
             <span className="block" style={{ color: "#ffffff" }}>MASSI</span>
             <span className="block italic" style={{ color: "#c4cdd6", fontStyle: "italic" }}>SHOOTS</span>
@@ -89,8 +92,8 @@ export default function ShaderHero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.75 }}
           >
-            On ne crée pas juste du contenu.{" "}
-            <em style={{ color: "rgba(255,255,255,0.5)", fontStyle: "italic" }}>On construit des marques.</em>
+            {t("tagline")}{" "}
+            <em style={{ color: "rgba(255,255,255,0.5)", fontStyle: "italic" }}>{t("taglineEm")}</em>
           </motion.p>
 
           {/* Subtitle */}
@@ -101,7 +104,7 @@ export default function ShaderHero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.9 }}
           >
-            Du personal branding au mariage — chaque plan est une décision créative. 50+ clients à Montréal.
+            {t("desc")}
           </motion.p>
 
           {/* CTAs */}
@@ -118,7 +121,7 @@ export default function ShaderHero() {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
-              Voir le portfolio
+              {t("portfolio")}
             </motion.a>
             <motion.a
               href="/contact"
@@ -133,7 +136,7 @@ export default function ShaderHero() {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
-              Réserver une séance
+              {t("book")}
             </motion.a>
           </motion.div>
         </div>
@@ -158,13 +161,11 @@ export default function ShaderHero() {
           <source src="/video/hero.mp4" type="video/mp4" />
           <source src="/video/hero.mov" type="video/quicktime" />
         </video>
-        {/* Gradient overlay pour lisibilité du texte */}
         <div style={{
           position: "absolute",
           inset: 0,
           background: "linear-gradient(105deg, rgba(7,9,13,0.85) 0%, rgba(7,9,13,0.5) 45%, rgba(7,9,13,0.2) 100%)",
         }} />
-        {/* Bottom fade */}
         <div style={{
           position: "absolute",
           bottom: 0, left: 0, right: 0,

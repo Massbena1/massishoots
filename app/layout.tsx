@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import { Bebas_Neue, DM_Sans } from "next/font/google";
 import "./globals.css";
-import CustomCursor from "@/components/CustomCursor";
-import GlobalBackground from "@/components/GlobalBackground";
+
 const bebasNeue = Bebas_Neue({
   weight: "400",
   variable: "--font-bebas-neue",
@@ -24,14 +23,8 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="fr" className={`${bebasNeue.variable} ${dmSans.variable} grain`}>
-      <body>
-        <GlobalBackground />
-        <CustomCursor />
-        <div style={{ position: "relative", zIndex: 1 }}>
-          {children}
-        </div>
-      </body>
+    <html className={`${bebasNeue.variable} ${dmSans.variable} grain`}>
+      <body>{children}</body>
     </html>
   );
 }

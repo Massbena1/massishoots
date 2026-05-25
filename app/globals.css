@@ -1,3 +1,4 @@
+@import url("https://assets.calendly.com/assets/external/widget.css");
 @import "tailwindcss";
 
 /* shadcn CSS variables — required by Badge, Button, Card */
@@ -43,7 +44,7 @@
 
 *, *::before, *::after { cursor: none; }
 
-html { scroll-behavior: smooth; }
+html { scroll-behavior: auto; }
 
 html {
   background: transparent;
@@ -149,6 +150,140 @@ html[data-theme="light"] footer a {
 html[data-theme="light"] section .text-accent,
 html[data-theme="light"] footer .text-accent {
   color: #3a3a3c !important;
+}
+
+/* ── Light mode: tous les textes (global) ── */
+html[data-theme="light"] h1, html[data-theme="light"] h2,
+html[data-theme="light"] h3, html[data-theme="light"] h4,
+html[data-theme="light"] h5, html[data-theme="light"] h6,
+html[data-theme="light"] p, html[data-theme="light"] span,
+html[data-theme="light"] a, html[data-theme="light"] li,
+html[data-theme="light"] label, html[data-theme="light"] em,
+html[data-theme="light"] strong, html[data-theme="light"] small {
+  color: #1a1a1a !important;
+}
+
+/* ── Light mode: inputs / textarea / select ── */
+html[data-theme="light"] input,
+html[data-theme="light"] textarea,
+html[data-theme="light"] select {
+  background: rgba(0,0,0,0.05) !important;
+  color: #1a1a1a !important;
+  border-color: rgba(0,0,0,0.15) !important;
+}
+html[data-theme="light"] input::placeholder,
+html[data-theme="light"] textarea::placeholder {
+  color: rgba(0,0,0,0.38) !important;
+}
+html[data-theme="light"] select option {
+  background: #f2f0ec !important;
+  color: #1a1a1a !important;
+}
+
+/* ── Light mode: cartes / surfaces ── */
+html[data-theme="light"] .glass {
+  background: rgba(255,255,255,0.6) !important;
+  border-color: rgba(0,0,0,0.09) !important;
+}
+html[data-theme="light"] .glass-sm {
+  background: rgba(255,255,255,0.5) !important;
+  border-color: rgba(0,0,0,0.09) !important;
+}
+html[data-theme="light"] .glass-pill {
+  background: rgba(242,240,236,0.92) !important;
+  border-color: rgba(0,0,0,0.12) !important;
+}
+
+/* ── Light mode: calendrier (card + time slots) ── */
+html[data-theme="light"] .time-col {
+  border-color: rgba(0,0,0,0.08) !important;
+  background: transparent !important;
+}
+html[data-theme="light"] .time-col button {
+  border-color: rgba(0,0,0,0.1) !important;
+  background: rgba(0,0,0,0.03) !important;
+  color: rgba(0,0,0,0.6) !important;
+}
+html[data-theme="light"] .time-col p {
+  color: rgba(0,0,0,0.35) !important;
+}
+
+/* ── Light mode: boutons de navigation ── */
+html[data-theme="light"] button[class*="day_button"] {
+  color: #1a1a1a !important;
+}
+html[data-theme="light"] .footer-link { color: rgba(0,0,0,0.5) !important; }
+html[data-theme="light"] .footer-link:hover { color: #1a1a1a !important; }
+html[data-theme="light"] .footer-icon { opacity: 0.5 !important; }
+
+/* ── Light mode: separateurs / traits ── */
+html[data-theme="light"] .process-num { color: rgba(0,0,0,0.08) !important; }
+
+/* ── Light mode: scrollbar ── */
+html[data-theme="light"] ::-webkit-scrollbar-track { background: #f2f0ec !important; }
+html[data-theme="light"] ::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.2) !important; }
+
+/* ── Light mode: Tailwind bg-black/X → fond clair ── */
+html[data-theme="light"] .bg-black\/40,
+html[data-theme="light"] .bg-black\/30,
+html[data-theme="light"] .bg-black\/20 {
+  background-color: rgba(0,0,0,0.04) !important;
+}
+
+/* ── Light mode: Tailwind bg-white/X → teinte sombre subtile ── */
+html[data-theme="light"] .bg-white\/6,
+html[data-theme="light"] .bg-white\/8,
+html[data-theme="light"] .bg-white\/10,
+html[data-theme="light"] .bg-white\/12,
+html[data-theme="light"] .bg-white\/15 {
+  background-color: rgba(0,0,0,0.07) !important;
+}
+
+/* ── Light mode: Tailwind border-white/X → bordure sombre ── */
+html[data-theme="light"] .border-white\/8,
+html[data-theme="light"] .border-white\/15,
+html[data-theme="light"] .border-white\/20 {
+  border-color: rgba(0,0,0,0.12) !important;
+}
+
+/* ── Light mode: Tailwind text-white/X → texte sombre ── */
+html[data-theme="light"] .text-white,
+html[data-theme="light"] .text-white\/90,
+html[data-theme="light"] .text-white\/70,
+html[data-theme="light"] .text-white\/55,
+html[data-theme="light"] .text-white\/50,
+html[data-theme="light"] .text-white\/40,
+html[data-theme="light"] .text-white\/35,
+html[data-theme="light"] .text-white\/30 {
+  color: #1a1a1a !important;
+}
+
+/* ── Light mode: BentoGrid shadow ── */
+html[data-theme="light"] .shadow-\[0_2px_12px_rgba\(255\,255\,255\,0\.05\)\] {
+  box-shadow: 0 2px 12px rgba(0,0,0,0.08) !important;
+}
+
+/* ── Light mode: Portfolio filtres & heading ── */
+html[data-theme="light"] #portfolio h2 { color: #1a1a1a !important; }
+html[data-theme="light"] #portfolio > div > div + div button {
+  color: rgba(0,0,0,0.5) !important;
+  border-color: rgba(0,0,0,0.14) !important;
+}
+
+/* ── BentoGrid : dark mode ── */
+.bento-card { background: rgba(0,0,0,0.4); }
+.bento-card-active { border-color: rgba(255,255,255,0.2); box-shadow: 0 2px 12px rgba(255,255,255,0.05); }
+.bento-card-idle { border-color: rgba(255,255,255,0.08); }
+.bento-card-idle:hover { border-color: rgba(255,255,255,0.15); }
+
+/* ── BentoGrid : light mode ── */
+html[data-theme="light"] .bento-card { background: rgba(255,255,255,0.65) !important; border-color: rgba(0,0,0,0.1) !important; box-shadow: 0 2px 16px rgba(0,0,0,0.06); }
+html[data-theme="light"] .bento-card-active { border-color: rgba(0,0,0,0.2) !important; box-shadow: 0 4px 20px rgba(0,0,0,0.1) !important; }
+html[data-theme="light"] .bento-card-idle:hover { border-color: rgba(0,0,0,0.18) !important; }
+
+/* ── Light mode: dot grid radial transparent ── */
+html[data-theme="light"] .bg-\[radial-gradient\(circle_at_center\,rgba\(255\,255\,255\,0\.04\)_1px\,transparent_1px\)\] {
+  opacity: 0 !important;
 }
 
 /* ── Grain overlay ── */
