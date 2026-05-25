@@ -132,7 +132,7 @@ export default function Portfolio() {
                 fontWeight: 700,
               }}
             >
-              <PixelCanvas colors={["#c4cdd6", "#8892a0", "#ffffff"]} gap={5} speed={30} zIndex={1} />
+              <PixelCanvas colors={["#ffffff", "#c4cdd6", "#aaaaaa"]} gap={4} speed={40} zIndex={1} />
               <span style={{ position: "relative", zIndex: 2 }}>{type === "photo" ? "Photo" : "Vidéo"}</span>
             </button>
           ))}

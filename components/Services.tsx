@@ -91,9 +91,9 @@ function ServiceCard({ s, index }: { s: typeof services[0]; index: number }) {
 
       {/* Pixel hover effect — above background layers */}
       <PixelCanvas
-        colors={["#c4cdd6", "#8892a0", "#ffffff", "#4a5058"]}
-        gap={6}
-        speed={25}
+        colors={["#ffffff", "#c4cdd6", "#8892a0", "#ffffff"]}
+        gap={4}
+        speed={40}
         zIndex={8}
       />
 

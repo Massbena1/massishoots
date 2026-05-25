@@ -23,8 +23,8 @@ function createPixel(
   const p: Pixel = {
     x, y, color, ctx,
     speed: rand(0.1, 0.9) * baseSpeed,
-    size: 0, sizeStep: Math.random() * 0.4,
-    minSize: 0.5, maxSizeInt: 2, maxSize: rand(0.5, 2),
+    size: 0, sizeStep: Math.random() * 0.6 + 0.2,
+    minSize: 1, maxSizeInt: 4, maxSize: rand(2, 4),
     delay, counter: 0,
     counterStep: Math.random() * 4 + (canvas.width + canvas.height) * 0.01,
     isIdle: false, isReverse: false, isShimmer: false,
@@ -138,7 +138,7 @@ export function PixelCanvas({
 
   return (
     <div ref={wrapRef} className="absolute inset-0 overflow-hidden rounded-[inherit]" style={{ zIndex, opacity, pointerEvents: "none" }}>
-      <canvas ref={canvasRef} className="block" />
+      <canvas ref={canvasRef} className="block" style={{ mixBlendMode: "screen" }} />
     </div>
   );
 }
