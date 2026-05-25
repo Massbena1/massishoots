@@ -1,3 +1,6 @@
+import type { Metadata } from "next";
+import { getTranslations } from "next-intl/server";
+import { getAlternates } from "@/lib/hreflang";
 import Hero from "@/components/Hero";
 import Clients from "@/components/Clients";
 import Stats from "@/components/Stats";
@@ -9,6 +12,16 @@ import Testimonials from "@/components/Testimonials";
 import Faq from "@/components/Faq";
 import CtaFinal from "@/components/CtaFinal";
 import Footer from "@/components/Footer";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "metadata.home" });
+  return { title: t("title"), description: t("description"), alternates: getAlternates("") };
+}
 
 export default function Home() {
   return (

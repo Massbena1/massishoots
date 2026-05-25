@@ -1,4 +1,5 @@
 import { getTranslations } from "next-intl/server";
+import { getAlternates } from "@/lib/hreflang";
 import Portfolio from "@/components/Portfolio";
 import Footer from "@/components/Footer";
 import PageHeader from "@/components/PageHeader";
@@ -11,7 +12,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "metadata.portfolio" });
-  return { title: t("title"), description: t("description") };
+  return { title: t("title"), description: t("description"), alternates: getAlternates("/portfolio") };
 }
 
 export default async function PortfolioPage({
