@@ -155,8 +155,8 @@ export default function ShaderHero() {
             filter: "brightness(0.45) saturate(0.8)",
           }}
         >
-          {/* ↓ Place ton fichier dans public/video/hero.mp4 */}
           <source src="/video/hero.mp4" type="video/mp4" />
+          <source src="/video/hero.mov" type="video/quicktime" />
         </video>
         {/* Gradient overlay pour lisibilité du texte */}
         <div style={{
