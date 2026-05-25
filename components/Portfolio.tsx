@@ -1,6 +1,8 @@
 "use client";
 import { useState, useRef } from "react";
 import { motion, useInView, AnimatePresence } from "framer-motion";
+import { Camera, Video as VideoIcon } from "lucide-react";
+import { BentoGrid } from "@/components/ui/bento-grid";
 
 type MediaType = "photo" | "video";
 type Sub = "all" | "branding" | "corporate" | "mariage" | "events";
@@ -103,35 +105,38 @@ export default function Portfolio() {
           </h2>
         </motion.div>
 
-        {/* Media type tabs — Photo / Vidéo */}
+        {/* Media type tabs — BentoGrid Photo / Vidéo */}
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6, delay: 0.1 }}
-          style={{ marginBottom: 20, display: "flex", gap: 8 }}
+          style={{ marginBottom: 24 }}
         >
-          {(["photo", "video"] as MediaType[]).map((type) => (
-            <button
-              key={type}
-              onClick={() => switchMedia(type)}
-              className="font-bebas"
-              style={{
-                padding: "10px 32px",
-                borderRadius: 9999,
-                fontSize: 18,
-                letterSpacing: "0.12em",
-                border: "1px solid",
-                cursor: "none",
-                transition: "all 0.25s",
-                background: mediaType === type ? "#c4cdd6" : "rgba(255,255,255,0.04)",
-                color: mediaType === type ? "#0a0a0a" : "rgba(255,255,255,0.5)",
-                borderColor: mediaType === type ? "#c4cdd6" : "rgba(255,255,255,0.1)",
-                fontWeight: 700,
-              }}
-            >
-              {type === "photo" ? "Photo" : "Vidéo"}
-            </button>
-          ))}
+          <BentoGrid
+            className="grid-cols-2 max-w-sm"
+            items={[
+              {
+                title: "Photo",
+                description: "Branding, corporate, mariage & événements",
+                icon: <Camera className="w-4 h-4 text-white/70" />,
+                meta: `${PHOTOS.length} projets`,
+                tags: ["Branding", "Corporate"],
+                cta: "Voir →",
+                active: mediaType === "photo",
+                onClick: () => switchMedia("photo"),
+              },
+              {
+                title: "Vidéo",
+                description: "Brand films, reels, couverture d'événements",
+                icon: <VideoIcon className="w-4 h-4 text-white/70" />,
+                meta: `${VIDEOS.length} projets`,
+                tags: ["Reels", "Films"],
+                cta: "Voir →",
+                active: mediaType === "video",
+                onClick: () => switchMedia("video"),
+              },
+            ]}
+          />
         </motion.div>
 
         {/* Sub-filters */}
