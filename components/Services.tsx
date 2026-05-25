@@ -2,6 +2,7 @@
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import Link from "next/link";
+import { PixelCanvas } from "@/components/ui/pixel-canvas";
 
 const services = [
   {
@@ -87,6 +88,15 @@ function ServiceCard({ s, index }: { s: typeof services[0]; index: number }) {
         position: "absolute", inset: 0,
         background: "linear-gradient(135deg, rgba(7,9,13,0.92) 0%, rgba(7,9,13,0.5) 60%, transparent 100%)",
       }} />
+
+      {/* Pixel hover effect — above background layers */}
+      <PixelCanvas
+        colors={["#c4cdd6", "#8892a0", "#ffffff", "#4a5058"]}
+        gap={6}
+        speed={25}
+        zIndex={8}
+      />
+
       {/* Top highlight */}
       <div style={{
         position: "absolute", top: 0, left: 0, right: 0, height: 1,

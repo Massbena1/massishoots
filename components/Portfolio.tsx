@@ -1,6 +1,7 @@
 "use client";
 import { useState, useRef } from "react";
 import { motion, useInView, AnimatePresence } from "framer-motion";
+import { PixelCanvas } from "@/components/ui/pixel-canvas";
 
 type MediaType = "photo" | "video";
 type Sub = "all" | "branding" | "corporate" | "mariage" | "events";
@@ -116,6 +117,8 @@ export default function Portfolio() {
               onClick={() => switchMedia(type)}
               className="font-bebas"
               style={{
+                position: "relative",
+                overflow: "hidden",
                 padding: "10px 32px",
                 borderRadius: 9999,
                 fontSize: 18,
@@ -129,7 +132,8 @@ export default function Portfolio() {
                 fontWeight: 700,
               }}
             >
-              {type === "photo" ? "Photo" : "Vidéo"}
+              <PixelCanvas colors={["#c4cdd6", "#8892a0", "#ffffff"]} gap={5} speed={30} zIndex={1} />
+              <span style={{ position: "relative", zIndex: 2 }}>{type === "photo" ? "Photo" : "Vidéo"}</span>
             </button>
           ))}
         </motion.div>
