@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
-import { getAlternates } from "@/lib/hreflang";
+import { getAlternates, getOpenGraph, getTwitter } from "@/lib/hreflang";
 import Hero from "@/components/Hero";
 import Clients from "@/components/Clients";
 import Stats from "@/components/Stats";
@@ -20,7 +20,15 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "metadata.home" });
-  return { title: t("title"), description: t("description"), alternates: getAlternates("") };
+  const title = t("title");
+  const description = t("description");
+  return {
+    title,
+    description,
+    alternates: getAlternates(""),
+    openGraph: getOpenGraph(locale, "", title, description),
+    twitter: getTwitter(title, description),
+  };
 }
 
 export default function Home() {

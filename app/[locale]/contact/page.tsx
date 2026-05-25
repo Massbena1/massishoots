@@ -1,5 +1,5 @@
 import { getTranslations } from "next-intl/server";
-import { getAlternates } from "@/lib/hreflang";
+import { getAlternates, getOpenGraph, getTwitter } from "@/lib/hreflang";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import type { Metadata } from "next";
@@ -11,7 +11,15 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "metadata.contact" });
-  return { title: t("title"), description: t("description"), alternates: getAlternates("/contact") };
+  const title = t("title");
+  const description = t("description");
+  return {
+    title,
+    description,
+    alternates: getAlternates("/contact"),
+    openGraph: getOpenGraph(locale, "/contact", title, description),
+    twitter: getTwitter(title, description),
+  };
 }
 
 export default function ContactPage() {

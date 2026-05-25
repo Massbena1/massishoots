@@ -1,5 +1,5 @@
 import { getTranslations } from "next-intl/server";
-import { getAlternates } from "@/lib/hreflang";
+import { getAlternates, getOpenGraph, getTwitter } from "@/lib/hreflang";
 import Services from "@/components/Services";
 import Process from "@/components/Process";
 import Footer from "@/components/Footer";
@@ -13,7 +13,15 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "metadata.services" });
-  return { title: t("title"), description: t("description"), alternates: getAlternates("/services") };
+  const title = t("title");
+  const description = t("description");
+  return {
+    title,
+    description,
+    alternates: getAlternates("/services"),
+    openGraph: getOpenGraph(locale, "/services", title, description),
+    twitter: getTwitter(title, description),
+  };
 }
 
 export default async function ServicesPage({
