@@ -36,7 +36,7 @@ export default function TopBar() {
         href="/"
         className="font-bebas"
         style={{
-          fontSize: 16,
+          fontSize: 20,
           letterSpacing: "0.22em",
           color: "#fff",
           textDecoration: "none",
