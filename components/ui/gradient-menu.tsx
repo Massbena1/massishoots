@@ -60,108 +60,65 @@ export default function GradientMenu() {
       aria-label="Main navigation"
       style={{
         position: "fixed",
-        bottom: 28,
-        left: "50%",
-        transform: "translateX(-50%)",
+        bottom: 0,
+        left: 0,
+        right: 0,
         zIndex: 100,
         display: "flex",
         alignItems: "center",
-        gap: 10,
+        justifyContent: "space-around",
+        padding: "10px 8px 20px",
+        background: "rgba(6,8,12,0.92)",
+        backdropFilter: "blur(20px)",
+        WebkitBackdropFilter: "blur(20px)",
+        borderTop: "1px solid rgba(255,255,255,0.08)",
       }}
     >
       {ITEMS.map(({ label, icon: Icon, href, from, to }) => {
         const active = isActive(href);
         return (
-          <motion.div
+          <Link
             key={href}
-            className="relative"
-            initial={false}
-            whileHover="hovered"
-            animate={active ? "hovered" : "idle"}
+            href={href}
+            aria-label={label}
+            style={{ textDecoration: "none" }}
+            onClick={(e) => handleClick(e, href)}
           >
-            {/* Item pill */}
-            <Link href={href} aria-label={label} style={{ textDecoration: "none" }} onClick={(e) => handleClick(e, href)}>
-              <motion.div
-                variants={{
-                  idle:    { width: 60, borderRadius: 9999 },
-                  hovered: { width: 160, borderRadius: 30 },
-                }}
-                transition={{ type: "spring", stiffness: 280, damping: 28 }}
+            <motion.div
+              whileTap={{ scale: 0.88 }}
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                gap: 4,
+                padding: "8px 12px",
+                borderRadius: 16,
+                background: active ? `linear-gradient(135deg, ${from}33, ${to}33)` : "transparent",
+                border: active ? `1px solid ${from}44` : "1px solid transparent",
+                transition: "background 0.25s, border 0.25s",
+                minWidth: 56,
+              }}
+            >
+              <Icon
+                size={20}
+                color={active ? "#fff" : "rgba(255,255,255,0.4)"}
+                style={{ transition: "color 0.25s" }}
+              />
+              <span
+                className="font-dm"
                 style={{
-                  position: "relative",
-                  height: 60,
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  overflow: "hidden",
+                  fontSize: 10,
+                  fontWeight: active ? 600 : 400,
+                  color: active ? "#fff" : "rgba(255,255,255,0.4)",
+                  letterSpacing: "0.04em",
+                  whiteSpace: "nowrap",
+                  transition: "color 0.25s",
                 }}
               >
-                {/* Glass base */}
-                <span style={{
-                  position: "absolute", inset: 0,
-                  background: "rgba(255,255,255,0.07)",
-                  backdropFilter: "blur(20px)",
-                  WebkitBackdropFilter: "blur(20px)",
-                  border: "1px solid rgba(255,255,255,0.12)",
-                }} />
-
-                {/* Gradient fill */}
-                <motion.span
-                  variants={{ idle: { opacity: 0 }, hovered: { opacity: 1 } }}
-                  transition={{ duration: 0.25 }}
-                  style={{
-                    position: "absolute", inset: 0,
-                    background: `linear-gradient(135deg, ${from}, ${to})`,
-                  }}
-                />
-
-                {/* Icon */}
-                <motion.span
-                  variants={{ idle: { scale: 1, opacity: 1 }, hovered: { scale: 0, opacity: 0 } }}
-                  transition={{ duration: 0.15 }}
-                  style={{ position: "relative", zIndex: 1, display: "flex", alignItems: "center" }}
-                >
-                  <Icon size={22} color="#fff" />
-                </motion.span>
-
-                {/* Label */}
-                <motion.span
-                  variants={{ idle: { scale: 0, opacity: 0 }, hovered: { scale: 1, opacity: 1 } }}
-                  transition={{ duration: 0.2, delay: 0.12 }}
-                  className="font-dm"
-                  style={{
-                    position: "absolute",
-                    zIndex: 1,
-                    color: "#fff",
-                    fontSize: 14,
-                    fontWeight: 600,
-                    whiteSpace: "nowrap",
-                    letterSpacing: "0.02em",
-                  }}
-                >
-                  {label}
-                </motion.span>
-              </motion.div>
-            </Link>
-
-            {/* Glow */}
-            <motion.span
-              variants={{ idle: { opacity: 0 }, hovered: { opacity: 0.55 } }}
-              transition={{ duration: 0.3 }}
-              style={{
-                position: "absolute",
-                bottom: -8,
-                left: "50%",
-                transform: "translateX(-50%)",
-                width: 36,
-                height: 10,
-                borderRadius: 9999,
-                filter: "blur(8px)",
-                background: `linear-gradient(90deg, ${from}, ${to})`,
-                pointerEvents: "none",
-              }}
-            />
-          </motion.div>
+                {label}
+              </span>
+            </motion.div>
+          </Link>
         );
       })}
     </nav>
