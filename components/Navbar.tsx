@@ -10,6 +10,7 @@ const NAV_LINKS = [
   { key: "services",  href: "/services",  sectionId: "services",  homeScroll: true  },
   { key: "portfolio", href: "/portfolio", sectionId: "portfolio", homeScroll: true  },
   { key: "about",     href: "/about",     sectionId: null,        homeScroll: false },
+  { key: "galleries", href: "/galleries", sectionId: null,        homeScroll: false },
 ] as const;
 
 function easeInOutCubic(t: number): number {
