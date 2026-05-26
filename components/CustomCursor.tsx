@@ -11,7 +11,11 @@ export default function CustomCursor() {
   const [isTouch, setIsTouch] = useState(true);
 
   useEffect(() => {
-    setIsTouch(window.matchMedia("(hover: none)").matches);
+    setIsTouch(
+      "ontouchstart" in window ||
+      navigator.maxTouchPoints > 0 ||
+      window.matchMedia("(pointer: coarse)").matches
+    );
     const move = (e: MouseEvent) => { x.set(e.clientX - 16); y.set(e.clientY - 16); };
     const over = (e: MouseEvent) => {
       const t = e.target as HTMLElement;
