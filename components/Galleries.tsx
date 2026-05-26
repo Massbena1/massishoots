@@ -3,23 +3,21 @@ import { useState, useRef } from "react";
 import { motion, useInView, AnimatePresence } from "framer-motion";
 import { Lock, Images, Calendar, ArrowRight, Search, ExternalLink } from "lucide-react";
 import { Link } from "@/i18n/navigation";
-import { GALLERIES, type GalleryType } from "@/lib/galleries";
+import type { Gallery } from "@/lib/galleries";
 
-const FILTERS = ["Tous", "Mariage", "Wedding", "Événement", "Event", "Corporate", "Portrait"] as const;
-
-export default function Galleries() {
+export default function Galleries({ initialGalleries = [] }: { initialGalleries?: Gallery[] }) {
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState<string>("Tous");
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-60px" });
 
-  const filtered = GALLERIES.filter(g => {
+  const filtered = initialGalleries.filter(g => {
     const matchSearch = g.name.toLowerCase().includes(search.toLowerCase());
     const matchFilter = filter === "Tous" || g.type === filter;
     return matchSearch && matchFilter;
   });
 
-  const isEmpty = GALLERIES.length === 0;
+  const isEmpty = initialGalleries.length === 0;
 
   return (
     <section style={{ maxWidth: 1280, margin: "0 auto", padding: "0 24px 120px" }} ref={ref}>

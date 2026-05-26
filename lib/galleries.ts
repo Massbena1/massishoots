@@ -16,14 +16,14 @@ export const GALLERIES: Gallery[] = [
   // Ajoute tes galeries ici après les avoir créées sur Pixieset
   // Exemple :
   // {
-  //   id: "socialitemtl-2026",
-  //   name: "SocialiteMTL",
-  //   date: "2026-04-20",
-  //   type: "Événement",
-  //   photos: 142,
-  //   cover: "https://massishoots.pixieset.com/...",
-  //   pixiesetUrl: "https://massishoots.pixieset.com/socialitemtl/",
-  //   password: true,
-  //   featured: true,
+//  id: "socialitemtl-2026",           // identifiant unique (sans espaces)
+//     name: "SocialiteMTL",              // nom affiché
+//     date: "2026-06-15",                // date de l'événement
+//     type: "Événement",                 // Mariage | Événement | Corporate | Portrait
+//     photos: 142,                       // nombre de photos
+//     cover: "https://...",              // URL de l'image de couverture
+//     pixiesetUrl: "https://massishoots.pixieset.com/socialitemtl/",
+//     password: true,                    // true = cadenas affiché
+//     // featured: true,                    // optionnel — badge ⭐
   // },
 ];
