@@ -187,7 +187,7 @@ export default function Portfolio() {
               return (
                 <div
                   key={`${item.src}-${i}`}
-                  className="portfolio-item"
+                  className={`portfolio-item${item.wide ? " portfolio-item-wide" : ""}`}
                   style={{
                     gridColumn: item.wide ? "span 2" : "span 1",
                     borderRadius: 20,
@@ -349,7 +349,11 @@ export default function Portfolio() {
 
       <style>{`
         @media (max-width: 1024px) { .portfolio-grid { grid-template-columns: repeat(2, 1fr) !important; } }
-        @media (max-width: 640px)  { .portfolio-grid { grid-template-columns: repeat(1, 1fr) !important; } }
+        @media (max-width: 640px)  {
+          .portfolio-grid { grid-template-columns: repeat(2, 1fr) !important; gap: 6px !important; }
+          .portfolio-item { border-radius: 12px !important; aspect-ratio: 1/1 !important; }
+          .portfolio-item-wide { grid-column: span 2 !important; aspect-ratio: 16/9 !important; }
+        }
         @media (hover: none) { .hover-overlay { opacity: 1 !important; } }
       `}</style>
     </section>
