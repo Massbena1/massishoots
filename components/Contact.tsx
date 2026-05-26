@@ -535,36 +535,10 @@ export default function Contact() {
         </div>
       </div>
 
-      {/* ── MOBILE STICKY BAR ── */}
-      <div className="mobile-contact-bar">
-        {[
-          { icon: Phone,  href: "https://wa.me/14384640607",         label: "WhatsApp", color: "#25D366" },
-          { icon: Mail,   href: "mailto:massishot.ca@gmail.com",      label: "Email",    color: "#c4cdd6" },
-          { icon: AtSign, href: "https://instagram.com/massishoots",  label: "Instagram", color: "#E1306C" },
-        ].map(({ icon: Icon, href, label, color }) => (
-          <a
-            key={label}
-            href={href}
-            target={href.startsWith("http") ? "_blank" : undefined}
-            rel="noopener noreferrer"
-            className="mobile-bar-btn"
-          >
-            <div className="mobile-bar-icon" style={{ background: `${color}18`, border: `1px solid ${color}33` }}>
-              <Icon size={20} color={color} />
-            </div>
-            <span className="font-dm mobile-bar-label">{label}</span>
-          </a>
-        ))}
-      </div>
-
-      <style>{`
+<style>{`
         .contact-main-grid { display: grid; }
         .quick-link:hover { background: rgba(255,255,255,0.06) !important; border-color: rgba(196,205,214,0.2) !important; }
         select option { background: #111; color: #fff; }
-
-        .mobile-contact-bar {
-          display: none;
-        }
 
         @media (max-width: 1024px) {
           .contact-main-grid { grid-template-columns: 1fr !important; }
@@ -573,48 +547,6 @@ export default function Contact() {
         @media (max-width: 768px) {
           .process-steps { grid-template-columns: 1fr 1fr !important; }
           .form-row-2 { grid-template-columns: 1fr !important; }
-
-          .mobile-contact-bar {
-            display: flex;
-            position: fixed;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 100;
-            gap: 12px;
-            background: rgba(10,10,10,0.85);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 9999px;
-            padding: 10px 20px;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.4);
-          }
-
-          .mobile-bar-btn {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 4px;
-            text-decoration: none;
-            padding: 4px 8px;
-          }
-
-          .mobile-bar-icon {
-            width: 44px;
-            height: 44px;
-            border-radius: 14px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-          }
-
-          .mobile-bar-label {
-            font-size: 9px;
-            color: rgba(255,255,255,0.45);
-            letter-spacing: 0.06em;
-            text-transform: uppercase;
-          }
         }
         @media (max-width: 480px) {
           .process-steps { grid-template-columns: 1fr !important; }
