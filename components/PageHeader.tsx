@@ -9,7 +9,7 @@ interface PageHeaderProps {
 
 export default function PageHeader({ label, title, subtitle }: PageHeaderProps) {
   return (
-    <section style={{
+    <section className="page-header-section" style={{
       paddingTop: "160px",
       paddingBottom: "80px",
       paddingLeft: "24px",
@@ -66,6 +66,11 @@ export default function PageHeader({ label, title, subtitle }: PageHeaderProps) 
           transformOrigin: "left",
         }}
       />
+      <style>{`
+        @media (max-width: 768px) {
+          .page-header-section { padding-top: 100px !important; padding-bottom: 48px !important; }
+        }
+      `}</style>
     </section>
   );
 }

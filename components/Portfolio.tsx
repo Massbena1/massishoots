@@ -350,6 +350,7 @@ export default function Portfolio() {
       <style>{`
         @media (max-width: 1024px) { .portfolio-grid { grid-template-columns: repeat(2, 1fr) !important; } }
         @media (max-width: 640px)  { .portfolio-grid { grid-template-columns: repeat(1, 1fr) !important; } }
+        @media (hover: none) { .hover-overlay { opacity: 1 !important; } }
       `}</style>
     </section>
   );

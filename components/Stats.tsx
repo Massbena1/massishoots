@@ -77,7 +77,13 @@ export default function Stats() {
           ))}
         </div>
       </div>
-      <style>{`@media (max-width: 640px) { .stats-grid { grid-template-columns: repeat(2,1fr) !important; } .stats-grid > *:nth-child(2) { border-right: none !important; } }`}</style>
+      <style>{`
+        @media (max-width: 1024px) {
+          .stats-grid { grid-template-columns: repeat(2,1fr) !important; }
+          .stats-grid > *:nth-child(2) { border-right: none !important; }
+          .stats-grid > * { padding: 32px 16px !important; }
+        }
+      `}</style>
     </section>
   );
 }

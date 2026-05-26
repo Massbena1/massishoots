@@ -105,7 +105,7 @@ export default function Contact() {
           alignItems: "center",
           justifyContent: "center",
           textAlign: "center",
-          padding: "140px 24px 64px",
+          padding: "clamp(100px, 18vw, 140px) 24px 64px",
           position: "relative",
         }}
       >
