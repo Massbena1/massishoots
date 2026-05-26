@@ -17,6 +17,8 @@ export async function POST(req: NextRequest) {
   const { password, gallery } = await req.json();
   if (!auth(password)) return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
 
+  if (!gallery) return NextResponse.json({ ok: true });
+
   const galleries = (await kv.get<Gallery[]>(KEY)) ?? [];
   const updated = [gallery, ...galleries];
   await kv.set(KEY, updated);
