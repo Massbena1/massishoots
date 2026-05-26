@@ -30,7 +30,7 @@ export default function Stats() {
   const inView = useInView(ref, { once: true, margin: "-80px" });
 
   return (
-    <section style={{ padding: "60px 0" }}>
+    <section style={{ padding: "100px 0" }}>
       <div ref={ref} style={{ maxWidth: 1280, margin: "0 auto", padding: "0 24px" }}>
         <div style={{
           display: "grid", gridTemplateColumns: "repeat(4, 1fr)",

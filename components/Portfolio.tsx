@@ -179,7 +179,7 @@ export default function Portfolio() {
             style={{
               display: "grid",
               gridTemplateColumns: "repeat(4, 1fr)",
-              gap: 12,
+              gap: "clamp(8px, 1.2vw, 20px)",
             }}
           >
             {filtered.map((item, i) => {

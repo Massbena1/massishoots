@@ -77,7 +77,7 @@ export default function Footer() {
       <div style={{ position: "absolute", top: 0, left: "50%", transform: "translateX(-50%)", width: "33%", height: 1, background: "rgba(196,205,214,0.18)", filter: "blur(2px)", borderRadius: 9999, pointerEvents: "none" }} />
 
       <div style={{ padding: "48px 24px 0", textAlign: "center", overflow: "hidden" }}>
-        <p className="font-bebas" style={{ fontSize: "clamp(64px, 14vw, 180px)", letterSpacing: "-0.01em", lineHeight: 0.85, color: "rgba(255,255,255,0.025)", userSelect: "none", whiteSpace: "nowrap" }}>
+        <p className="font-bebas" style={{ fontSize: "clamp(64px, 14vw, 180px)", letterSpacing: "-0.01em", lineHeight: 0.85, color: "rgba(255,255,255,0.055)", userSelect: "none", whiteSpace: "nowrap" }}>
           MASSISHOOTS
         </p>
       </div>

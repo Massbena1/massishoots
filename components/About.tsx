@@ -20,17 +20,19 @@ export default function About() {
           transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
           onMouseEnter={e => {
             const img = e.currentTarget.querySelector("img");
-            if (img) { img.style.transform = "scale(1.06)"; img.style.filter = "brightness(0.9)"; }
-            e.currentTarget.style.borderColor = "rgba(196,205,214,0.25)";
-            e.currentTarget.style.boxShadow = "0 24px 60px rgba(0,0,0,0.4)";
+            if (img) { img.style.transform = "scale(1.1)"; img.style.filter = "brightness(0.85)"; }
+            e.currentTarget.style.borderColor = "rgba(196,205,214,0.35)";
+            e.currentTarget.style.boxShadow = "0 32px 80px rgba(0,0,0,0.55)";
+            e.currentTarget.style.transform = "translateY(-4px)";
           }}
           onMouseLeave={e => {
             const img = e.currentTarget.querySelector("img");
             if (img) { img.style.transform = "scale(1)"; img.style.filter = "brightness(1)"; }
             e.currentTarget.style.borderColor = "rgba(255,255,255,0.09)";
             e.currentTarget.style.boxShadow = "none";
+            e.currentTarget.style.transform = "translateY(0)";
           }}
-          style={{ position: "relative", aspectRatio: "3/4", borderRadius: 28, overflow: "hidden", maxWidth: 460, border: "1px solid rgba(255,255,255,0.09)", transition: "border-color 0.4s ease, box-shadow 0.4s ease", cursor: "none" }}
+          style={{ position: "relative", aspectRatio: "3/4", borderRadius: 28, overflow: "hidden", maxWidth: 460, border: "1px solid rgba(255,255,255,0.09)", transition: "border-color 0.4s ease, box-shadow 0.4s ease, transform 0.4s ease", cursor: "none" }}
         >
           <Image
             src="https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=900&q=80"
