@@ -1,5 +1,5 @@
 const BASE = "https://massishoots.com";
-const OG_IMAGE = `${BASE}/og-image.jpg`;
+const OG_IMAGE = `${BASE}/opengraph-image`;
 
 export function getAlternates(path: string) {
   const fr = `${BASE}/fr${path}`;
