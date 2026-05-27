@@ -23,7 +23,7 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function GalleriesPage() {
   let galleries: Gallery[] = [];
   try {
-    galleries = (await kv.get<Gallery[]>("galleries")) ?? [];
+    galleries = ((await kv.get<Gallery[]>("galleries")) ?? []).filter(Boolean);
   } catch {
     galleries = [];
   }
