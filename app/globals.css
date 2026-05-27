@@ -263,6 +263,30 @@ html[data-theme="light"] .shadow-\[0_2px_12px_rgba\(255\,255\,255\,0\.05\)\] {
   box-shadow: 0 2px 12px rgba(0,0,0,0.08) !important;
 }
 
+/* ── Light mode: FAQ ── */
+html[data-theme="light"] .faq-list  { border-color: rgba(0,0,0,0.1) !important; }
+html[data-theme="light"] .faq-item  { border-color: rgba(0,0,0,0.1) !important; }
+html[data-theme="light"] .faq-toggle {
+  border-color: rgba(0,0,0,0.14) !important;
+  background: rgba(0,0,0,0.04) !important;
+}
+html[data-theme="light"] .faq-toggle svg { stroke: rgba(0,0,0,0.45) !important; }
+html[data-theme="light"] .faq-num   { color: rgba(0,0,0,0.2) !important; }
+html[data-theme="light"] .faq-cta-link {
+  border-color: rgba(0,0,0,0.14) !important;
+  color: rgba(0,0,0,0.5) !important;
+}
+html[data-theme="light"] .faq-cta-link:hover {
+  border-color: rgba(0,0,0,0.28) !important;
+  color: #1a1a1a !important;
+}
+
+/* ── Light mode: Testimonials ── */
+html[data-theme="light"] .testimonial-card {
+  background: rgba(0,0,0,0.04) !important;
+  border-color: rgba(0,0,0,0.1) !important;
+}
+
 /* ── Light mode: Portfolio filtres & heading ── */
 html[data-theme="light"] #portfolio h2 { color: #1a1a1a !important; }
 html[data-theme="light"] #portfolio > div > div + div button {

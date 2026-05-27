@@ -81,6 +81,7 @@ export default function Testimonials() {
                   const avatar = e.currentTarget.querySelector("img") as HTMLElement;
                   if (avatar) avatar.style.borderColor = "rgba(196,205,214,0.2)";
                 }}
+                className="testimonial-card"
                 style={{
                   padding: "20px 24px",
                   background: "rgba(255,255,255,0.03)",

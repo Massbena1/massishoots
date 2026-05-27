@@ -15,6 +15,7 @@ function FaqItemRow({ item, index, inView }: { item: FaqItem; index: number; inV
       initial={{ opacity: 0, y: 20 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.5, delay: index * 0.07, ease: [0.22, 1, 0.36, 1] }}
+      className="faq-item"
       style={{ borderBottom: "1px solid rgba(255,255,255,0.07)", overflow: "hidden" }}
     >
       <button
@@ -26,7 +27,7 @@ function FaqItemRow({ item, index, inView }: { item: FaqItem; index: number; inV
         }}
       >
         <div style={{ display: "flex", alignItems: "baseline", gap: 16, flex: 1 }}>
-          <span className="font-bebas" style={{ fontSize: 12, color: "rgba(196,205,214,0.4)", letterSpacing: "0.2em", flexShrink: 0, minWidth: 24 }}>
+          <span className="font-bebas faq-num" style={{ fontSize: 12, color: "rgba(196,205,214,0.4)", letterSpacing: "0.2em", flexShrink: 0, minWidth: 24 }}>
             {String(index + 1).padStart(2, "0")}
           </span>
           <span className="font-dm" style={{ fontSize: "clamp(14px, 1.8vw, 17px)", color: open ? "#fff" : "rgba(255,255,255,0.75)", fontWeight: open ? 600 : 400, lineHeight: 1.45, transition: "color 0.25s" }}>
@@ -36,6 +37,7 @@ function FaqItemRow({ item, index, inView }: { item: FaqItem; index: number; inV
         <motion.div
           animate={{ rotate: open ? 45 : 0 }}
           transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+          className="faq-toggle"
           style={{
             width: 32, height: 32, borderRadius: "50%",
             border: open ? "1px solid rgba(196,205,214,0.4)" : "1px solid rgba(255,255,255,0.1)",
@@ -97,7 +99,7 @@ export default function Faq() {
             </p>
             <Link
               href="/contact#appel-decouverte"
-              className="font-dm"
+              className="font-dm faq-cta-link"
               style={{
                 display: "inline-flex", alignItems: "center", gap: 8,
                 padding: "12px 24px", borderRadius: 9999,
@@ -113,7 +115,7 @@ export default function Faq() {
           </motion.div>
         </div>
 
-        <div style={{ borderTop: "1px solid rgba(255,255,255,0.07)" }}>
+        <div className="faq-list" style={{ borderTop: "1px solid rgba(255,255,255,0.07)" }}>
           {items.map((item, i) => (
             <FaqItemRow key={i} item={item} index={i} inView={inView} />
           ))}
