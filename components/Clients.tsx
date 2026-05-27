@@ -1,5 +1,6 @@
 "use client";
 
+import React from "react";
 import { InfiniteSlider } from "@/components/ui/infinite-slider";
 import { ProgressiveBlur } from "@/components/ui/progressive-blur";
 import { Sparkles } from "@/components/ui/sparkles";
@@ -20,7 +21,7 @@ const EstaEvent = () => (
 );
 
 type LogoItem =
-  | { id: string; type: "svg"; component: () => JSX.Element; className: string }
+  | { id: string; type: "svg"; component: () => React.ReactElement; className: string }
   | { id: string; type: "img"; src: string; alt: string; className: string };
 
 const logos: LogoItem[] = [
