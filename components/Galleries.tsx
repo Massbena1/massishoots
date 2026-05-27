@@ -1,7 +1,7 @@
 "use client";
 import { useState, useRef } from "react";
 import { motion, useInView, AnimatePresence } from "framer-motion";
-import { Lock, Images, Calendar, ArrowRight, Search, ExternalLink } from "lucide-react";
+import { Lock, Images, Calendar, ArrowRight, Search, ExternalLink, MapPin } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import type { Gallery } from "@/lib/galleries";
 
@@ -202,13 +202,18 @@ export default function Galleries({ initialGalleries = [] }: { initialGalleries?
                   <h3 className="font-bebas" style={{ fontSize: 22, color: "#fff", letterSpacing: "0.04em", marginBottom: 6, lineHeight: 1 }}>
                     {gallery.name}
                   </h3>
-                  <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 16 }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 16, flexWrap: "wrap" }}>
                     <span className="font-dm" style={{ display: "flex", alignItems: "center", gap: 5, fontSize: 11, color: "rgba(255,255,255,0.3)" }}>
                       <Calendar size={10} /> {new Date(gallery.date).toLocaleDateString("fr-CA", { day: "numeric", month: "long", year: "numeric" })}
                     </span>
                     <span className="font-dm" style={{ display: "flex", alignItems: "center", gap: 5, fontSize: 11, color: "rgba(255,255,255,0.3)" }}>
                       <Images size={10} /> {gallery.photos} photos
                     </span>
+                    {gallery.location && (
+                      <span className="font-dm" style={{ display: "flex", alignItems: "center", gap: 5, fontSize: 11, color: "rgba(255,255,255,0.3)" }}>
+                        <MapPin size={10} /> {gallery.location}
+                      </span>
+                    )}
                   </div>
                   <a
                     href={gallery.pixiesetUrl}

@@ -9,6 +9,7 @@ export interface Gallery {
   cover: string;
   pixiesetUrl: string;
   password: boolean;
+  location?: string;
   featured?: boolean;
 }
 
