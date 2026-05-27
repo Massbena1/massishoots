@@ -101,7 +101,7 @@ export default function Testimonials() {
                 <img
                   src={t.avatar}
                   alt={t.author}
-                  style={{ width: 42, height: 42, borderRadius: "50%", objectFit: "cover", flexShrink: 0, border: "1px solid rgba(196,205,214,0.2)" }}
+                  style={{ width: 42, height: 42, borderRadius: "50%", objectFit: "cover", objectPosition: "center top", flexShrink: 0, border: "1px solid rgba(196,205,214,0.2)" }}
                 />
                 <div>
                   <p className="font-dm" style={{ fontSize: 12, fontStyle: "italic", color: "rgba(255,255,255,0.5)", lineHeight: 1.6, marginBottom: 4 }}>
