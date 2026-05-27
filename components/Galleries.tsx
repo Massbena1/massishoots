@@ -5,9 +5,153 @@ import { Lock, Images, Calendar, ArrowRight, Search, ExternalLink, MapPin } from
 import { Link } from "@/i18n/navigation";
 import type { Gallery } from "@/lib/galleries";
 
+function PinModal({ gallery, onClose }: { gallery: Gallery; onClose: () => void }) {
+  const [pin, setPin] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+    setError("");
+    try {
+      const res = await fetch("/api/gallery/unlock", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id: gallery.id, pin }),
+      });
+      const data = await res.json();
+      if (res.ok && data.url) {
+        window.open(data.url, "_blank", "noopener,noreferrer");
+        onClose();
+      } else {
+        setError(data.error ?? "PIN incorrect");
+      }
+    } catch {
+      setError("Erreur de connexion");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      onClick={onClose}
+      style={{
+        position: "fixed", inset: 0, zIndex: 9999,
+        background: "rgba(0,0,0,0.85)",
+        backdropFilter: "blur(12px)",
+        display: "flex", alignItems: "center", justifyContent: "center",
+        padding: 24,
+      }}
+    >
+      <motion.div
+        initial={{ scale: 0.94, opacity: 0, y: 16 }}
+        animate={{ scale: 1, opacity: 1, y: 0 }}
+        exit={{ scale: 0.94, opacity: 0, y: 16 }}
+        transition={{ duration: 0.22 }}
+        onClick={e => e.stopPropagation()}
+        style={{
+          background: "#0d0f12",
+          border: "1px solid rgba(255,255,255,0.1)",
+          borderRadius: 24,
+          padding: "40px 36px",
+          width: "100%",
+          maxWidth: 380,
+          textAlign: "center",
+        }}
+      >
+        <div style={{
+          width: 52, height: 52, borderRadius: "50%",
+          background: "rgba(196,205,214,0.08)",
+          border: "1px solid rgba(196,205,214,0.15)",
+          display: "flex", alignItems: "center", justifyContent: "center",
+          margin: "0 auto 20px",
+        }}>
+          <Lock size={20} color="#c4cdd6" />
+        </div>
+
+        <h3 className="font-bebas" style={{ fontSize: 28, color: "#fff", letterSpacing: "0.06em", marginBottom: 6 }}>
+          {gallery.name}
+        </h3>
+        <p className="font-dm" style={{ fontSize: 12, color: "rgba(255,255,255,0.35)", marginBottom: 28 }}>
+          Entrez le PIN pour accéder aux photos
+        </p>
+
+        <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+          <input
+            type="password"
+            inputMode="numeric"
+            placeholder="• • • •"
+            value={pin}
+            onChange={e => { setPin(e.target.value); setError(""); }}
+            autoFocus
+            style={{
+              padding: "14px 18px",
+              background: "rgba(255,255,255,0.05)",
+              border: `1px solid ${error ? "rgba(239,68,68,0.5)" : "rgba(255,255,255,0.1)"}`,
+              borderRadius: 12,
+              color: "#fff",
+              fontSize: 20,
+              textAlign: "center",
+              letterSpacing: "0.3em",
+              outline: "none",
+              fontFamily: "var(--font-dm-sans), sans-serif",
+              transition: "border-color 0.2s",
+            }}
+          />
+          {error && (
+            <p className="font-dm" style={{ fontSize: 12, color: "rgba(239,68,68,0.8)", margin: 0 }}>
+              {error}
+            </p>
+          )}
+          <button
+            type="submit"
+            disabled={loading || pin.length === 0}
+            className="font-dm"
+            style={{
+              padding: "13px",
+              background: pin.length > 0 ? "#f2f0ec" : "rgba(255,255,255,0.08)",
+              color: pin.length > 0 ? "#0a0a0a" : "rgba(255,255,255,0.3)",
+              borderRadius: 12,
+              border: "none",
+              fontSize: 13,
+              fontWeight: 700,
+              letterSpacing: "0.06em",
+              cursor: pin.length > 0 ? "pointer" : "default",
+              transition: "all 0.2s",
+            }}
+          >
+            {loading ? "Vérification..." : "Accéder aux photos"}
+          </button>
+        </form>
+
+        <button
+          onClick={onClose}
+          className="font-dm"
+          style={{
+            marginTop: 16,
+            background: "none",
+            border: "none",
+            color: "rgba(255,255,255,0.25)",
+            fontSize: 12,
+            cursor: "pointer",
+          }}
+        >
+          Annuler
+        </button>
+      </motion.div>
+    </motion.div>
+  );
+}
+
 export default function Galleries({ initialGalleries = [] }: { initialGalleries?: Gallery[] }) {
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState<string>("Tous");
+  const [pinGallery, setPinGallery] = useState<Gallery | null>(null);
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-60px" });
 
@@ -19,6 +163,14 @@ export default function Galleries({ initialGalleries = [] }: { initialGalleries?
 
   const isEmpty = initialGalleries.length === 0;
 
+  const handleAccess = (gallery: Gallery) => {
+    if (gallery.password) {
+      setPinGallery(gallery);
+    } else {
+      window.open(gallery.pixiesetUrl, "_blank", "noopener,noreferrer");
+    }
+  };
+
   return (
     <section style={{ maxWidth: 1280, margin: "0 auto", padding: "0 24px 120px" }} ref={ref}>
 
@@ -29,7 +181,6 @@ export default function Galleries({ initialGalleries = [] }: { initialGalleries?
         transition={{ duration: 0.5, delay: 0.1 }}
         style={{ marginBottom: 48, display: "flex", flexDirection: "column", gap: 16 }}
       >
-        {/* Search */}
         <div style={{ position: "relative", maxWidth: 480 }}>
           <Search size={14} color="rgba(255,255,255,0.3)" style={{ position: "absolute", left: 16, top: "50%", transform: "translateY(-50%)", pointerEvents: "none" }} />
           <input
@@ -52,7 +203,6 @@ export default function Galleries({ initialGalleries = [] }: { initialGalleries?
           />
         </div>
 
-        {/* Filter pills */}
         <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
           {["Tous", "Événement", "Corporate", "Portrait", "Mariage"].map(f => (
             <button
@@ -179,7 +329,6 @@ export default function Galleries({ initialGalleries = [] }: { initialGalleries?
                       <Images size={32} color="rgba(255,255,255,0.1)" />
                     </div>
                   )}
-                  {/* Badges */}
                   <div style={{ position: "absolute", top: 12, left: 12, display: "flex", gap: 6 }}>
                     <span className="font-dm" style={{ fontSize: 9, color: "#0a0a0a", fontWeight: 700, padding: "3px 10px", background: "#c4cdd6", borderRadius: 9999, letterSpacing: "0.08em", textTransform: "uppercase" }}>
                       {gallery.type}
@@ -215,30 +364,35 @@ export default function Galleries({ initialGalleries = [] }: { initialGalleries?
                       </span>
                     )}
                   </div>
-                  <a
-                    href={gallery.pixiesetUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                  <button
+                    onClick={() => handleAccess(gallery)}
                     className="font-dm"
                     style={{
+                      width: "100%",
                       display: "flex", alignItems: "center", justifyContent: "space-between",
                       padding: "11px 16px",
                       background: "#f2f0ec", color: "#0a0a0a",
-                      borderRadius: 12, textDecoration: "none",
+                      borderRadius: 12, border: "none",
                       fontSize: 12, fontWeight: 700, letterSpacing: "0.06em",
+                      cursor: "pointer",
                       transition: "opacity 0.2s",
                     }}
                     onMouseEnter={e => (e.currentTarget.style.opacity = "0.85")}
                     onMouseLeave={e => (e.currentTarget.style.opacity = "1")}
                   >
-                    Accéder aux photos
+                    {gallery.password ? <><Lock size={11} /> Accéder avec PIN</> : "Accéder aux photos"}
                     <ArrowRight size={13} />
-                  </a>
+                  </button>
                 </div>
               </motion.div>
             ))}
           </motion.div>
         )}
+      </AnimatePresence>
+
+      {/* PIN Modal */}
+      <AnimatePresence>
+        {pinGallery && <PinModal gallery={pinGallery} onClose={() => setPinGallery(null)} />}
       </AnimatePresence>
 
       {/* Bottom CTA */}
