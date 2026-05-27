@@ -35,10 +35,10 @@ export default function About() {
           style={{ position: "relative", aspectRatio: "3/4", borderRadius: 28, overflow: "hidden", maxWidth: 460, border: "1px solid rgba(255,255,255,0.09)", transition: "border-color 0.4s ease, box-shadow 0.4s ease, transform 0.4s ease", cursor: "none" }}
         >
           <Image
-            src="https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=900&q=80"
+            src="/moi.jpg"
             alt="Massi Bena – Massishoots"
             fill
-            style={{ objectFit: "cover", transition: "transform 0.7s cubic-bezier(0.22,1,0.36,1), filter 0.5s ease" }}
+            style={{ objectFit: "cover", objectPosition: "center top", transition: "transform 0.7s cubic-bezier(0.22,1,0.36,1), filter 0.5s ease" }}
           />
           <div style={{
             position: "absolute", bottom: 0, left: 0, right: 0, height: "45%",
