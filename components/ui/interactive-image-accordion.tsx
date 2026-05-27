@@ -10,6 +10,7 @@ export interface AccordionService {
   price: string;
   tags: string[];
   imageUrl: string;
+  imagePosition?: string;
   star?: boolean;
 }
 
@@ -60,6 +61,7 @@ function AccordionItem({
             width: "100%",
             height: "100%",
             objectFit: "cover",
+            objectPosition: item.imagePosition ?? "center center",
             filter: isActive
               ? "brightness(0.35) saturate(0.5)"
               : "brightness(0.18) saturate(0.2)",
@@ -212,6 +214,7 @@ function AccordionItem({
           width: "100%",
           height: "100%",
           objectFit: "cover",
+          objectPosition: item.imagePosition ?? "center center",
           filter: isActive
             ? "brightness(0.35) saturate(0.5)"
             : "brightness(0.22) saturate(0.3)",

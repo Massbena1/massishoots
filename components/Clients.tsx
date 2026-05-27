@@ -5,65 +5,36 @@ import { ProgressiveBlur } from "@/components/ui/progressive-blur";
 import { Sparkles } from "@/components/ui/sparkles";
 import { useTranslations } from "next-intl";
 
-// ─── Client wordmarks as SVG text (style proche du modèle) ──────────────────
-
-const Palma = () => (
-  <svg viewBox="0 0 160 48" fill="currentColor" className="w-full">
-    <text x="8" y="34" fontFamily="Georgia, serif" fontSize="26" letterSpacing="4" fontWeight="400">PALMA</text>
+const TechGuys = () => (
+  <svg viewBox="0 0 220 52" fill="currentColor" className="w-full">
+    <text x="8" y="32" fontFamily="Arial, sans-serif" fontSize="20" letterSpacing="4" fontWeight="700">TECHGUYS</text>
+    <text x="8" y="48" fontFamily="Arial, sans-serif" fontSize="10" letterSpacing="5" fontWeight="300">CONSULTING</text>
   </svg>
 );
 
-const StudioNoir = () => (
-  <svg viewBox="0 0 200 48" fill="currentColor" className="w-full">
-    <text x="8" y="34" fontFamily="Georgia, serif" fontSize="20" letterSpacing="6" fontWeight="300">STUDIO NOIR</text>
+const EstaEvent = () => (
+  <svg viewBox="0 0 200 52" fill="currentColor" className="w-full">
+    <text x="8" y="32" fontFamily="Georgia, serif" fontSize="24" letterSpacing="4" fontWeight="400">ESTA</text>
+    <text x="8" y="48" fontFamily="Georgia, serif" fontSize="13" letterSpacing="6" fontWeight="300">EVENT</text>
   </svg>
 );
 
-const ModeFlux = () => (
-  <svg viewBox="0 0 200 48" fill="currentColor" className="w-full">
-    <text x="8" y="34" fontFamily="Arial, sans-serif" fontSize="22" letterSpacing="5" fontWeight="700">MODEFLUX</text>
-  </svg>
-);
+type LogoItem =
+  | { id: string; type: "svg"; component: () => JSX.Element; className: string }
+  | { id: string; type: "img"; src: string; alt: string; className: string };
 
-const LuxeVie = () => (
-  <svg viewBox="0 0 160 48" fill="currentColor" className="w-full">
-    <text x="8" y="36" fontFamily="Georgia, serif" fontSize="28" letterSpacing="3" fontStyle="italic">LuxeVie</text>
-  </svg>
-);
-
-const Atelier = () => (
-  <svg viewBox="0 0 220 48" fill="currentColor" className="w-full">
-    <text x="8" y="34" fontFamily="Georgia, serif" fontSize="19" letterSpacing="5" fontWeight="300">ATELIER LUMIÈRE</text>
-  </svg>
-);
-
-const Apex = () => (
-  <svg viewBox="0 0 130 48" fill="currentColor" className="w-full">
-    <text x="8" y="36" fontFamily="Arial, sans-serif" fontSize="30" letterSpacing="4" fontWeight="900">APEX</text>
-  </svg>
-);
-
-const Nomad = () => (
-  <svg viewBox="0 0 200 48" fill="currentColor" className="w-full">
-    <text x="8" y="34" fontFamily="Arial, sans-serif" fontSize="20" letterSpacing="6" fontWeight="400">NOMAD CO.</text>
-  </svg>
-);
-
-const Revlr = () => (
-  <svg viewBox="0 0 140 48" fill="currentColor" className="w-full">
-    <text x="8" y="36" fontFamily="Arial, sans-serif" fontSize="28" letterSpacing="3" fontWeight="800">RÉVLR</text>
-  </svg>
-);
-
-const logos = [
-  { id: "palma",    component: Palma,     className: "w-28" },
-  { id: "studio",   component: StudioNoir, className: "w-36" },
-  { id: "modeflux", component: ModeFlux,  className: "w-36" },
-  { id: "luxevie",  component: LuxeVie,   className: "w-28" },
-  { id: "atelier",  component: Atelier,   className: "w-44" },
-  { id: "apex",     component: Apex,      className: "w-24" },
-  { id: "nomad",    component: Nomad,     className: "w-36" },
-  { id: "revlr",    component: Revlr,     className: "w-28" },
+const logos: LogoItem[] = [
+  { id: "techguys",     type: "svg", component: TechGuys,              className: "w-40" },
+  { id: "omnigo",       type: "img", src: "/clients/omnigo.png",       alt: "Omnigo",            className: "w-28" },
+  { id: "blackswan",    type: "img", src: "/clients/blackswan.svg",    alt: "Manoir Black Swan", className: "w-44" },
+  { id: "tagekarting",  type: "img", src: "/clients/tage.png",         alt: "Tage Karting",      className: "w-28" },
+  { id: "estaevent",    type: "svg", component: EstaEvent,              className: "w-32" },
+  // duplicate pour le slider infini
+  { id: "techguys2",    type: "svg", component: TechGuys,              className: "w-40" },
+  { id: "omnigo2",      type: "img", src: "/clients/omnigo.png",       alt: "Omnigo",            className: "w-28" },
+  { id: "blackswan2",   type: "img", src: "/clients/blackswan.svg",    alt: "Manoir Black Swan", className: "w-44" },
+  { id: "tagekarting2", type: "img", src: "/clients/tage.png",         alt: "Tage Karting",      className: "w-28" },
+  { id: "estaevent2",   type: "svg", component: EstaEvent,              className: "w-32" },
 ];
 
 export default function Clients() {
@@ -86,9 +57,14 @@ export default function Clients() {
             duration={30}
             gap={48}
           >
-            {logos.map(({ id, component: Logo, className }) => (
-              <div key={id} className={className} style={{ opacity: 0.55, color: "#fff" }}>
-                <Logo />
+            {logos.map((logo) => (
+              <div key={logo.id} className={logo.className} style={{ opacity: 0.55, color: "#fff", display: "flex", alignItems: "center" }}>
+                {logo.type === "svg" ? (
+                  <logo.component />
+                ) : (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img src={logo.src} alt={logo.alt} style={{ width: "100%", height: "auto", filter: "brightness(0) invert(1)" }} />
+                )}
               </div>
             ))}
           </InfiniteSlider>

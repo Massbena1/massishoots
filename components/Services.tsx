@@ -5,11 +5,11 @@ import { Link } from "@/i18n/navigation";
 import { ImageAccordion, type AccordionService } from "@/components/ui/interactive-image-accordion";
 import { useTranslations } from "next-intl";
 
-const SERVICE_IMAGES = [
-  "https://images.unsplash.com/photo-1504703395950-b89145a5425b?w=900&q=80",
-  "https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=900&q=80",
-  "https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?w=900&q=80",
-  "https://images.unsplash.com/photo-1519741497674-611481863552?w=900&q=80",
+const SERVICE_IMAGES: { url: string; position?: string }[] = [
+  { url: "/portfolio/professionel/1.JPG", position: "center top" },
+  { url: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=900&q=80" },
+  { url: "https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?w=900&q=80" },
+  { url: "https://images.unsplash.com/photo-1519741497674-611481863552?w=900&q=80" },
 ];
 
 export default function Services() {
@@ -23,7 +23,8 @@ export default function Services() {
     desc: item.desc,
     price: item.price,
     tags: item.tags,
-    imageUrl: SERVICE_IMAGES[i],
+    imageUrl: SERVICE_IMAGES[i].url,
+    imagePosition: SERVICE_IMAGES[i].position,
     star: i === 0,
   }));
 
