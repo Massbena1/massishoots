@@ -106,6 +106,7 @@ export default function Navbar() {
           initial={{ opacity: 0, y: -16, scale: 0.95 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
           transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+          className="navbar-pill"
           style={{
             display: "flex", alignItems: "center", gap: 2,
             padding: "5px 5px 5px 18px", borderRadius: 9999,
@@ -118,16 +119,16 @@ export default function Navbar() {
           }}
         >
           {/* Logo */}
-          <Link href="/" className="font-bebas" style={{
+          <Link href="/" className="font-bebas navbar-logo" style={{
             fontSize: 15, letterSpacing: "0.2em", color: "#fff",
             textDecoration: "none", marginRight: 6, whiteSpace: "nowrap",
           }}>
             MASSISHOOTS
           </Link>
 
-          <div style={{ width: 1, height: 14, background: "rgba(255,255,255,0.1)", margin: "0 6px" }} />
+          <div className="navbar-divider" style={{ width: 1, height: 14, background: "rgba(255,255,255,0.1)", margin: "0 6px" }} />
           <AnimatedThemeToggler />
-          <div style={{ width: 1, height: 14, background: "rgba(255,255,255,0.1)", margin: "0 6px" }} />
+          <div className="navbar-divider" style={{ width: 1, height: 14, background: "rgba(255,255,255,0.1)", margin: "0 6px" }} />
 
           {/* Nav links */}
           {NAV_LINKS.map((l) => (
@@ -135,7 +136,7 @@ export default function Navbar() {
               key={l.href}
               href={l.href}
               onClick={(e) => handleNavClick(e, l)}
-              className="font-dm"
+              className={`font-dm ${isActive(l) ? "navbar-link-active" : "navbar-link"}`}
               style={{
                 fontSize: 12.5,
                 color: isActive(l) ? "#fff" : "rgba(255,255,255,0.5)",
@@ -150,12 +151,12 @@ export default function Navbar() {
             </Link>
           ))}
 
-          <div style={{ width: 1, height: 14, background: "rgba(255,255,255,0.1)", margin: "0 2px 0 4px" }} />
+          <div className="navbar-divider" style={{ width: 1, height: 14, background: "rgba(255,255,255,0.1)", margin: "0 2px 0 4px" }} />
 
           {/* Locale switcher */}
           <button
             onClick={switchLocale}
-            className="font-dm"
+            className="font-dm navbar-locale"
             style={{
               fontSize: 11, letterSpacing: "0.12em", fontWeight: 600,
               color: "rgba(255,255,255,0.45)",
