@@ -1,17 +1,25 @@
 "use client";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import { motion, useInView, AnimatePresence } from "framer-motion";
 import { Lock, Images, Calendar, ArrowRight, Search, ExternalLink, MapPin } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import type { Gallery } from "@/lib/galleries";
 
 function PinModal({ gallery, onClose }: { gallery: Gallery; onClose: () => void }) {
-  const [pin, setPin] = useState("");
+  const [digits, setDigits] = useState(["", "", "", ""]);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [shake, setShake] = useState(false);
+  const inputRefs = [
+    useRef<HTMLInputElement>(null),
+    useRef<HTMLInputElement>(null),
+    useRef<HTMLInputElement>(null),
+    useRef<HTMLInputElement>(null),
+  ];
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  useEffect(() => { setTimeout(() => inputRefs[0].current?.focus(), 80); }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+  const submit = useCallback(async (pin: string) => {
     setLoading(true);
     setError("");
     try {
@@ -26,11 +34,49 @@ function PinModal({ gallery, onClose }: { gallery: Gallery; onClose: () => void 
         onClose();
       } else {
         setError(data.error ?? "PIN incorrect");
+        setShake(true);
+        setDigits(["", "", "", ""]);
+        setTimeout(() => { setShake(false); inputRefs[0].current?.focus(); }, 500);
       }
     } catch {
       setError("Erreur de connexion");
     } finally {
       setLoading(false);
+    }
+  }, [gallery.id, onClose]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  const handleDigit = (index: number, value: string) => {
+    const digit = value.replace(/\D/g, "").slice(-1);
+    const next = [...digits];
+    next[index] = digit;
+    setDigits(next);
+    setError("");
+    if (digit && index < 3) {
+      inputRefs[index + 1].current?.focus();
+    }
+    if (digit && index === 3) {
+      const pin = next.join("");
+      if (pin.length === 4) submit(pin);
+    }
+  };
+
+  const handleKeyDown = (index: number, e: React.KeyboardEvent) => {
+    if (e.key === "Backspace" && !digits[index] && index > 0) {
+      inputRefs[index - 1].current?.focus();
+    }
+    if (e.key === "Enter") {
+      const pin = digits.join("");
+      if (pin.length === 4) submit(pin);
+    }
+  };
+
+  const handlePaste = (e: React.ClipboardEvent) => {
+    e.preventDefault();
+    const pasted = e.clipboardData.getData("text").replace(/\D/g, "").slice(0, 4);
+    if (pasted.length === 4) {
+      setDigits(pasted.split(""));
+      inputRefs[3].current?.focus();
+      submit(pasted);
     }
   };
 
@@ -42,103 +88,117 @@ function PinModal({ gallery, onClose }: { gallery: Gallery; onClose: () => void 
       onClick={onClose}
       style={{
         position: "fixed", inset: 0, zIndex: 9999,
-        background: "rgba(0,0,0,0.85)",
-        backdropFilter: "blur(12px)",
+        background: "rgba(0,0,0,0.75)",
+        backdropFilter: "blur(20px)",
         display: "flex", alignItems: "center", justifyContent: "center",
         padding: 24,
       }}
     >
       <motion.div
-        initial={{ scale: 0.94, opacity: 0, y: 16 }}
-        animate={{ scale: 1, opacity: 1, y: 0 }}
-        exit={{ scale: 0.94, opacity: 0, y: 16 }}
-        transition={{ duration: 0.22 }}
+        initial={{ scale: 0.96, opacity: 0, y: 12 }}
+        animate={shake ? { x: [0, -8, 8, -6, 6, 0] } : { scale: 1, opacity: 1, y: 0 }}
+        exit={{ scale: 0.96, opacity: 0, y: 12 }}
+        transition={shake ? { duration: 0.4 } : { duration: 0.2, ease: "easeOut" }}
         onClick={e => e.stopPropagation()}
         style={{
-          background: "#0d0f12",
-          border: "1px solid rgba(255,255,255,0.1)",
-          borderRadius: 24,
-          padding: "40px 36px",
+          background: "rgba(10,10,12,0.95)",
+          border: "1px solid rgba(255,255,255,0.08)",
+          borderRadius: 28,
+          padding: "44px 40px 36px",
           width: "100%",
-          maxWidth: 380,
+          maxWidth: 360,
           textAlign: "center",
         }}
       >
-        <div style={{
-          width: 52, height: 52, borderRadius: "50%",
-          background: "rgba(196,205,214,0.08)",
-          border: "1px solid rgba(196,205,214,0.15)",
-          display: "flex", alignItems: "center", justifyContent: "center",
-          margin: "0 auto 20px",
-        }}>
-          <Lock size={20} color="#c4cdd6" />
-        </div>
+        {/* Cover thumbnail */}
+        {gallery.cover && (
+          <div style={{
+            width: 56, height: 56, borderRadius: 16,
+            overflow: "hidden", margin: "0 auto 20px",
+            border: "1px solid rgba(255,255,255,0.1)",
+          }}>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={gallery.cover} alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+          </div>
+        )}
 
-        <h3 className="font-bebas" style={{ fontSize: 28, color: "#fff", letterSpacing: "0.06em", marginBottom: 6 }}>
+        <h3 className="font-bebas" style={{ fontSize: 26, color: "#fff", letterSpacing: "0.06em", marginBottom: 4, lineHeight: 1 }}>
           {gallery.name}
         </h3>
-        <p className="font-dm" style={{ fontSize: 12, color: "rgba(255,255,255,0.35)", marginBottom: 28 }}>
-          Entrez le PIN pour accéder aux photos
+        <p className="font-dm" style={{ fontSize: 12, color: "rgba(255,255,255,0.3)", marginBottom: 32 }}>
+          Entrez le code PIN pour accéder
         </p>
 
-        <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-          <input
-            type="password"
-            inputMode="numeric"
-            placeholder="• • • •"
-            value={pin}
-            onChange={e => { setPin(e.target.value); setError(""); }}
-            autoFocus
-            style={{
-              padding: "14px 18px",
-              background: "rgba(255,255,255,0.05)",
-              border: `1px solid ${error ? "rgba(239,68,68,0.5)" : "rgba(255,255,255,0.1)"}`,
-              borderRadius: 12,
-              color: "#fff",
-              fontSize: 20,
-              textAlign: "center",
-              letterSpacing: "0.3em",
-              outline: "none",
-              fontFamily: "var(--font-dm-sans), sans-serif",
-              transition: "border-color 0.2s",
-            }}
-          />
+        {/* 4-digit boxes */}
+        <div style={{ display: "flex", justifyContent: "center", gap: 10, marginBottom: 28 }}>
+          {digits.map((d, i) => (
+            <input
+              key={i}
+              ref={inputRefs[i]}
+              type="password"
+              inputMode="numeric"
+              maxLength={1}
+              value={d}
+              onChange={e => handleDigit(i, e.target.value)}
+              onKeyDown={e => handleKeyDown(i, e)}
+              onPaste={handlePaste}
+              disabled={loading}
+              style={{
+                width: 56, height: 64,
+                textAlign: "center",
+                fontSize: 24,
+                fontWeight: 600,
+                background: d ? "rgba(196,205,214,0.08)" : "rgba(255,255,255,0.04)",
+                border: `1.5px solid ${error ? "rgba(239,68,68,0.45)" : d ? "rgba(196,205,214,0.3)" : "rgba(255,255,255,0.1)"}`,
+                borderRadius: 14,
+                color: "#fff",
+                outline: "none",
+                caretColor: "transparent",
+                fontFamily: "var(--font-dm-sans), sans-serif",
+                transition: "border-color 0.15s, background 0.15s",
+              }}
+              onFocus={e => {
+                if (!error) e.currentTarget.style.borderColor = "rgba(196,205,214,0.5)";
+              }}
+              onBlur={e => {
+                e.currentTarget.style.borderColor = error
+                  ? "rgba(239,68,68,0.45)"
+                  : d ? "rgba(196,205,214,0.3)" : "rgba(255,255,255,0.1)";
+              }}
+            />
+          ))}
+        </div>
+
+        {/* Error */}
+        <AnimatePresence>
           {error && (
-            <p className="font-dm" style={{ fontSize: 12, color: "rgba(239,68,68,0.8)", margin: 0 }}>
+            <motion.p
+              initial={{ opacity: 0, y: -4 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0 }}
+              className="font-dm"
+              style={{ fontSize: 12, color: "rgba(239,68,68,0.75)", marginBottom: 16 }}
+            >
               {error}
-            </p>
+            </motion.p>
           )}
-          <button
-            type="submit"
-            disabled={loading || pin.length === 0}
-            className="font-dm"
-            style={{
-              padding: "13px",
-              background: pin.length > 0 ? "#f2f0ec" : "rgba(255,255,255,0.08)",
-              color: pin.length > 0 ? "#0a0a0a" : "rgba(255,255,255,0.3)",
-              borderRadius: 12,
-              border: "none",
-              fontSize: 13,
-              fontWeight: 700,
-              letterSpacing: "0.06em",
-              cursor: pin.length > 0 ? "pointer" : "default",
-              transition: "all 0.2s",
-            }}
-          >
-            {loading ? "Vérification..." : "Accéder aux photos"}
-          </button>
-        </form>
+        </AnimatePresence>
+
+        {/* Loading state */}
+        {loading && (
+          <p className="font-dm" style={{ fontSize: 12, color: "rgba(255,255,255,0.3)", marginBottom: 16 }}>
+            Vérification...
+          </p>
+        )}
 
         <button
           onClick={onClose}
           className="font-dm"
           style={{
-            marginTop: 16,
-            background: "none",
-            border: "none",
-            color: "rgba(255,255,255,0.25)",
-            fontSize: 12,
-            cursor: "pointer",
+            background: "none", border: "none",
+            color: "rgba(255,255,255,0.2)",
+            fontSize: 12, cursor: "pointer",
+            letterSpacing: "0.04em",
           }}
         >
           Annuler
