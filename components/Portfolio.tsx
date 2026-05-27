@@ -323,7 +323,7 @@ export default function Portfolio() {
                     <img
                       src={item.src}
                       alt={altText}
-                      style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: item.pos ?? "center center", display: "block", transition: "transform 0.7s ease", filter: "brightness(0.82)" }}
+                      style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: item.pos ?? (item.wide ? "center center" : "center top"), display: "block", transition: "transform 0.7s ease", filter: "brightness(0.82)" }}
                     />
                   )}
 
@@ -549,7 +549,7 @@ export default function Portfolio() {
         @media (max-width: 1024px) { .portfolio-grid { grid-template-columns: repeat(2, 1fr) !important; } }
         @media (max-width: 640px)  {
           .portfolio-grid { grid-template-columns: repeat(2, 1fr) !important; gap: 6px !important; }
-          .portfolio-item { border-radius: 12px !important; aspect-ratio: 1/1 !important; }
+          .portfolio-item { border-radius: 12px !important; aspect-ratio: 4/5 !important; }
           .portfolio-item-wide { grid-column: span 2 !important; aspect-ratio: 16/9 !important; }
         }
         @media (hover: none) { .hover-overlay { opacity: 1 !important; } }
