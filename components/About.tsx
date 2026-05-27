@@ -74,8 +74,11 @@ export default function About() {
           <p className="font-dm" style={{ fontSize: 15, color: "rgba(255,255,255,0.5)", lineHeight: 1.9, marginBottom: 18 }}>
             {t("para2")}
           </p>
-          <p className="font-dm" style={{ fontSize: 15, color: "rgba(255,255,255,0.65)", lineHeight: 1.9, marginBottom: 40, fontStyle: "italic" }}>
+          <p className="font-dm" style={{ fontSize: 15, color: "rgba(255,255,255,0.5)", lineHeight: 1.9, marginBottom: 18 }}>
             {t("para3")}
+          </p>
+          <p className="font-dm" style={{ fontSize: 14, color: "rgba(255,255,255,0.6)", lineHeight: 1.9, marginBottom: 40, fontStyle: "italic" }}>
+            {t("para4")}
           </p>
 
           <div style={{
