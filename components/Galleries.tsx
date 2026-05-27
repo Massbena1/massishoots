@@ -54,7 +54,7 @@ export default function Galleries({ initialGalleries = [] }: { initialGalleries?
 
         {/* Filter pills */}
         <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
-          {["Tous", "Mariage", "Événement", "Corporate", "Portrait"].map(f => (
+          {["Tous", "Événement", "Corporate", "Portrait", "Mariage"].map(f => (
             <button
               key={f}
               onClick={() => setFilter(f)}
