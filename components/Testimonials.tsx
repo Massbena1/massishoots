@@ -5,10 +5,10 @@ import { ShuffleCards } from "@/components/ui/testimonial-cards";
 import { useTranslations } from "next-intl";
 
 const AVATARS = [
-  "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=256&h=256&fit=crop&q=80",
-  "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=256&h=256&fit=crop&q=80",
-  "https://images.unsplash.com/photo-1519741497674-611481863552?w=256&h=256&fit=crop&q=80",
-  "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=256&h=256&fit=crop&q=80",
+  "/testimonials/carle.jpg",
+  "/testimonials/christine.jpg",
+  "/testimonials/stephanie.jpg",
+  "/testimonials/emmanuel.jpg",
 ];
 
 export default function Testimonials() {
