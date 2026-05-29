@@ -1,6 +1,6 @@
 "use client";
-import { useState, useEffect } from "react";
-import { Trash2, Plus, Lock, Images, ExternalLink } from "lucide-react";
+import { useState, useRef } from "react";
+import { Trash2, Plus, Lock, Images, ExternalLink, Upload } from "lucide-react";
 import type { Gallery, GalleryType } from "@/lib/galleries";
 
 const TYPES: GalleryType[] = ["Événement", "Mariage", "Corporate", "Portrait", "Wedding", "Event"];
@@ -17,8 +17,10 @@ export default function AdminPage() {
   const [galleries, setGalleries] = useState<Gallery[]>([]);
   const [form, setForm] = useState(empty());
   const [loading, setLoading] = useState(false);
+  const [uploading, setUploading] = useState(false);
   const [success, setSuccess] = useState("");
   const [error, setError] = useState("");
+  const fileRef = useRef<HTMLInputElement>(null);
 
   const fetchGalleries = async (pwd: string) => {
     const res = await fetch("/api/admin/galleries");
@@ -80,6 +82,23 @@ export default function AdminPage() {
 
   const set = (key: keyof typeof form) => (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) =>
     setForm(f => ({ ...f, [key]: key === "photos" ? Number(e.target.value) : key === "password" || key === "featured" ? (e.target as HTMLInputElement).checked : e.target.value }));
+
+  const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setUploading(true);
+    const formData = new FormData();
+    formData.append("file", file);
+    const res = await fetch("/api/admin/upload", {
+      method: "POST",
+      headers: { "x-admin-password": password },
+      body: formData,
+    });
+    const data = await res.json();
+    if (data.url) setForm(f => ({ ...f, cover: data.url }));
+    else setError("Erreur upload image");
+    setUploading(false);
+  };
 
   const inputStyle: React.CSSProperties = {
     width: "100%", padding: "12px 16px",
@@ -143,7 +162,14 @@ export default function AdminPage() {
               </select>
               <input required type="number" placeholder="Nombre de photos *" value={form.photos || ""} onChange={set("photos")} style={inputStyle} />
               <input required placeholder="URL Pixieset * (ex: https://massishoots.pixieset.com/nom/)" value={form.pixiesetUrl} onChange={set("pixiesetUrl")} style={inputStyle} />
-              <input placeholder="URL image couverture (optionnel)" value={form.cover} onChange={set("cover")} style={inputStyle} />
+              <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
+                <input placeholder="URL image couverture" value={form.cover} onChange={set("cover")} style={{ ...inputStyle, flex: 1 }} />
+                <input ref={fileRef} type="file" accept="image/*" onChange={handleUpload} style={{ display: "none" }} />
+                <button type="button" onClick={() => fileRef.current?.click()} disabled={uploading} style={{ ...inputStyle, width: "auto", padding: "12px 14px", cursor: "pointer", flexShrink: 0, display: "flex", alignItems: "center", gap: 6, whiteSpace: "nowrap" }}>
+                  <Upload size={13} /> {uploading ? "..." : "Choisir"}
+                </button>
+                {form.cover && <img src={form.cover} alt="" style={{ width: 44, height: 44, borderRadius: 8, objectFit: "cover", border: "1px solid rgba(255,255,255,0.1)", flexShrink: 0 }} />}
+              </div>
               <input placeholder="Code PIN (4 chiffres)" value={form.pin ?? ""} onChange={set("pin")} maxLength={4} inputMode="numeric" style={inputStyle} />
               <input placeholder="Lieu / endroit (optionnel)" value={form.location ?? ""} onChange={set("location")} style={inputStyle} />
             </div>
