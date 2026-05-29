@@ -7,7 +7,7 @@ const TYPES: GalleryType[] = ["Événement", "Mariage", "Corporate", "Portrait",
 
 const empty = (): Omit<Gallery, "id"> => ({
   name: "", date: "", type: "Événement", photos: 0,
-  cover: "", pixiesetUrl: "", password: true, featured: false,
+  cover: "", pixiesetUrl: "", password: true, pin: "", featured: false,
 });
 
 export default function AdminPage() {
@@ -144,6 +144,7 @@ export default function AdminPage() {
               <input required type="number" placeholder="Nombre de photos *" value={form.photos || ""} onChange={set("photos")} style={inputStyle} />
               <input required placeholder="URL Pixieset * (ex: https://massishoots.pixieset.com/nom/)" value={form.pixiesetUrl} onChange={set("pixiesetUrl")} style={inputStyle} />
               <input placeholder="URL image couverture (optionnel)" value={form.cover} onChange={set("cover")} style={inputStyle} />
+              <input placeholder="Code PIN (4 chiffres)" value={form.pin ?? ""} onChange={set("pin")} maxLength={4} inputMode="numeric" style={inputStyle} />
             </div>
             <div style={{ display: "flex", gap: 24, marginBottom: 20, alignItems: "center" }}>
               <label className="font-dm" style={{ display: "flex", alignItems: "center", gap: 8, fontSize: 13, color: "rgba(255,255,255,0.5)", cursor: "pointer" }}>
