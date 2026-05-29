@@ -8,8 +8,10 @@ export default function CustomCursor() {
   const sx = useSpring(x, { stiffness: 500, damping: 40 });
   const sy = useSpring(y, { stiffness: 500, damping: 40 });
   const [hovered, setHovered] = useState(false);
+  const [isTouch, setIsTouch] = useState(true);
 
   useEffect(() => {
+    setIsTouch(window.matchMedia("(pointer: coarse)").matches);
     const move = (e: MouseEvent) => { x.set(e.clientX - 16); y.set(e.clientY - 16); };
     const over = (e: MouseEvent) => {
       const t = e.target as HTMLElement;
@@ -19,6 +21,8 @@ export default function CustomCursor() {
     window.addEventListener("mouseover", over);
     return () => { window.removeEventListener("mousemove", move); window.removeEventListener("mouseover", over); };
   }, [x, y]);
+
+  if (isTouch) return null;
 
   return (
     <motion.div
