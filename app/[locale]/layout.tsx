@@ -3,7 +3,6 @@ import { NextIntlClientProvider, hasLocale } from "next-intl";
 import { getMessages, getTranslations } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
-import CustomCursor from "@/components/CustomCursor";
 import GlobalBackground from "@/components/GlobalBackground";
 import PageTransition from "@/components/PageTransition";
 import NavigationBar from "@/components/NavigationBar";
@@ -143,7 +142,6 @@ export default async function LocaleLayout({
       <body>
         <NextIntlClientProvider messages={messages}>
           <GlobalBackground />
-          <CustomCursor />
           <NavigationBar />
           <NavigationEvents />
           {/* Desktop navigation */}
