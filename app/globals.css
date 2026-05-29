@@ -42,7 +42,6 @@
 .bg-accent     { background-color: #c4cdd6; }
 .border-accent { border-color: #c4cdd6; }
 
-*, *::before, *::after { cursor: none; }
 
 html { scroll-behavior: auto; }
 
