@@ -44,9 +44,10 @@ const QUESTIONS: Record<ProjectId, Question[]> = {
       id: "equipe",
       label: "Combien de personnes sur place ?",
       options: [
-        { id: "1",  label: "Solo (1 personne)",  sub: "Moi seul" },
+        { id: "1",  label: "Solo (1 personne)",   sub: "Moi seul" },
         { id: "2",  label: "Duo (2 personnes)",  sub: "Photographe + vidéaste" },
-        { id: "3+", label: "Équipe (3+)",         sub: "Couverture maximale" },
+        { id: "3",  label: "Équipe (3 personnes)", sub: "Couverture maximale" },
+        { id: "3+", label: "4 personnes et plus", sub: "Sur devis" },
       ],
     },
     {
@@ -230,17 +231,19 @@ function computePrice(projectId: ProjectId, answers: Answers): { low: number; hi
 
   let base = 0;
 
-  // Événements — fourchette large, non committal
+  // Événements
   if (projectId === "evenement") {
-    const dureeBase: Record<string, number> = { "4h": 1500, "6h": 2100, "8h": 2900, "12h": 4200 };
+    const dureeBase: Record<string, number> = { "4h": 1500, "6h": 2200, "8h": 2900, "12h": 4000 };
     base = dureeBase[get("duree")] ?? 1500;
-    const equipeM: Record<string, number> = { "1": 1, "2": 1.65, "3+": 2.2 };
-    base *= equipeM[get("equipe")] ?? 1;
-    const livrableM: Record<string, number> = { photo: 1, video: 1.25, "photo+video": 1.85 };
+    const equipe = get("equipe");
+    if (equipe === "3+") return null; // sur devis
+    const equipeM: Record<string, number> = { "1": 1, "2": 1.45, "3": 2 };
+    base *= equipeM[equipe] ?? 1;
+    const livrableM: Record<string, number> = { photo: 1, video: 1.2, "photo+video": 1.6 };
     base *= livrableM[get("livrable")] ?? 1;
-    if (get("delai") === "express") base *= 1.2;
+    if (get("delai") === "express") base *= 1.25;
     const low = Math.round(base / 100) * 100;
-    const high = Math.round(low * 1.5 / 100) * 100; // wider range for events
+    const high = Math.round(low * 1.4 / 100) * 100;
     return { low, high };
   }
 
