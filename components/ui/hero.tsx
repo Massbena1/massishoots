@@ -44,6 +44,22 @@ export default function ShaderHero() {
       {/* Main content — bottom left */}
       <main className="absolute bottom-8 left-8 z-20 max-w-2xl">
         <div className="text-left">
+          {/* Spots disponibles badge */}
+          <motion.div
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 backdrop-blur-sm mb-4 relative border border-white/10"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.15 }}
+          >
+            <span style={{ position: "relative", width: 8, height: 8, flexShrink: 0 }}>
+              <span style={{ position: "absolute", inset: 0, borderRadius: "50%", background: "#4ade80", animation: "spotPulse 2s ease-in-out infinite" }} />
+              <span style={{ position: "absolute", inset: 1, borderRadius: "50%", background: "#4ade80" }} />
+            </span>
+            <span className="font-dm text-white/70 relative z-10 tracking-wide" style={{ fontSize: 12 }}>
+              2 spots disponibles ce mois-ci
+            </span>
+          </motion.div>
+
           {/* Badge */}
           <motion.div
             className="inline-flex items-center px-4 py-2 rounded-full bg-white/5 backdrop-blur-sm mb-6 relative border border-white/10"
@@ -56,6 +72,13 @@ export default function ShaderHero() {
               ✦ Montréal · Photo & Vidéo
             </span>
           </motion.div>
+
+          <style>{`
+            @keyframes spotPulse {
+              0%, 100% { transform: scale(1); opacity: 0.8; }
+              50% { transform: scale(2.2); opacity: 0; }
+            }
+          `}</style>
 
           {/* Headline */}
           <motion.h1

@@ -4,6 +4,7 @@ import { getMessages, getTranslations } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
 import GlobalBackground from "@/components/GlobalBackground";
+import WhatsAppButton from "@/components/WhatsAppButton";
 import PageTransition from "@/components/PageTransition";
 import NavigationBar from "@/components/NavigationBar";
 import NavigationEvents from "@/components/NavigationEvents";
@@ -152,6 +153,7 @@ export default async function LocaleLayout({
             <GradientMenu />
           </div>
           <PageTransition>{children}</PageTransition>
+          <WhatsAppButton />
         </NextIntlClientProvider>
       </body>
     </html>
