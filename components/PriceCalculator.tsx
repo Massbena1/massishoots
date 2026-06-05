@@ -243,7 +243,7 @@ function computePrice(projectId: ProjectId, answers: Answers): { low: number; hi
     base *= equipeM[equipe] ?? 1;
     const livrableM: Record<string, number> = { photo: 1, video: 1.15, "photo+video": 1.25 };
     base *= livrableM[get("livrable")] ?? 1;
-    if (get("delai") === "express") base *= 1.15;
+    if (get("delai") === "express") base *= 1.2;
     const low = Math.round(base / 100) * 100;
     const high = Math.round(low * 1.2 / 100) * 100;
     if (high > 9500) return null;
