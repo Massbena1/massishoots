@@ -6,6 +6,28 @@ import { Check, Minus, ArrowRight, Star } from "lucide-react";
 
 const PACKAGES = [
   {
+    id: "express",
+    name: "Contenu Express",
+    tagline: "Pour démarrer sans risque",
+    price: "800 $",
+    priceHigh: null,
+    unit: "/ mois",
+    popular: false,
+    color: "rgba(255,255,255,0.04)",
+    border: "rgba(255,255,255,0.08)",
+    livrables: [
+      "1h30 de tournage / mois",
+      "2 vidéos / Reels montés",
+      "8 photos retouchées",
+      "Livraison en 2 semaines",
+    ],
+    nonInclus: [
+      "Droits commerciaux",
+      "Stratégie contenu",
+      "Priorité agenda",
+    ],
+  },
+  {
     id: "essentiel",
     name: "Essentiel",
     tagline: "Pour démarrer fort",
@@ -76,14 +98,14 @@ const PACKAGES = [
 ];
 
 const COMPARE_ROWS = [
-  { label: "Jours de tournage / mois", values: ["1 jour", "2 jours", "4 jours"] },
-  { label: "Reels montés", values: ["4", "8", "12+"] },
-  { label: "Photos retouchées", values: ["10", "25", "50"] },
-  { label: "Droits commerciaux", values: [false, true, true] },
-  { label: "Stratégie contenu", values: [false, false, true] },
-  { label: "Révisions", values: ["1", "2", "Illimitées"] },
-  { label: "Délai de livraison", values: ["2 semaines", "10 jours", "7 jours"] },
-  { label: "Priorité agenda", values: [false, false, true] },
+  { label: "Tournage / mois", values: ["1h30", "1 jour", "2 jours", "4 jours"] },
+  { label: "Vidéos / Reels", values: ["2", "4", "8", "12+"] },
+  { label: "Photos retouchées", values: ["8", "10", "25", "50"] },
+  { label: "Droits commerciaux", values: [false, false, true, true] },
+  { label: "Stratégie contenu", values: [false, false, false, true] },
+  { label: "Révisions", values: ["1", "1", "2", "Illimitées"] },
+  { label: "Délai de livraison", values: ["2 semaines", "2 semaines", "10 jours", "7 jours"] },
+  { label: "Priorité agenda", values: [false, false, false, true] },
 ];
 
 export default function ServicePackages() {
@@ -184,7 +206,7 @@ export default function ServicePackages() {
                       {pkg.price}
                     </span>
                     <span className="font-dm" style={{ fontSize: 12, color: "rgba(255,255,255,0.3)" }}>
-                      — {pkg.priceHigh}
+                      {pkg.priceHigh ? `— ${pkg.priceHigh}` : ""}
                     </span>
                     <span className="font-dm" style={{ fontSize: 12, color: "rgba(255,255,255,0.3)" }}>
                       {pkg.unit}
@@ -283,7 +305,7 @@ export default function ServicePackages() {
                     <td key={pkg.id} style={{ padding: "20px", textAlign: "center" }}>
                       <div style={{ marginBottom: 8 }}>
                         <span className="font-bebas" style={{ fontSize: 20, color: "#fff", letterSpacing: "0.03em" }}>{pkg.price}</span>
-                        <span className="font-dm" style={{ fontSize: 11, color: "rgba(255,255,255,0.3)", display: "block" }}>— {pkg.priceHigh} / mois</span>
+                        {pkg.priceHigh && <span className="font-dm" style={{ fontSize: 11, color: "rgba(255,255,255,0.3)", display: "block" }}>— {pkg.priceHigh} / mois</span>}
                       </div>
                       <Link href="/contact" className="font-dm" style={{ display: "inline-flex", alignItems: "center", gap: 6, padding: "10px 18px", background: pkg.popular ? "#f2f0ec" : "rgba(255,255,255,0.06)", color: pkg.popular ? "#0a0a0a" : "rgba(255,255,255,0.6)", borderRadius: 9999, textDecoration: "none", fontSize: 12, fontWeight: 700, border: pkg.popular ? "none" : "1px solid rgba(255,255,255,0.08)" }}>
                         Choisir <ArrowRight size={11} />
