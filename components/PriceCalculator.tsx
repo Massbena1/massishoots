@@ -230,62 +230,68 @@ function computePrice(projectId: ProjectId, answers: Answers): { low: number; hi
 
   let base = 0;
 
+  // Événements — fourchette large, non committal
   if (projectId === "evenement") {
-    const dureeBase: Record<string, number> = { "4h": 1500, "6h": 2200, "8h": 2900, "12h": 4500 };
+    const dureeBase: Record<string, number> = { "4h": 1500, "6h": 2100, "8h": 2900, "12h": 4200 };
     base = dureeBase[get("duree")] ?? 1500;
-    const equipeM: Record<string, number> = { "1": 1, "2": 1.7, "3+": 2.3 };
+    const equipeM: Record<string, number> = { "1": 1, "2": 1.65, "3+": 2.2 };
     base *= equipeM[get("equipe")] ?? 1;
-    const livrableM: Record<string, number> = { photo: 1, video: 1.2, "photo+video": 1.8 };
+    const livrableM: Record<string, number> = { photo: 1, video: 1.25, "photo+video": 1.85 };
     base *= livrableM[get("livrable")] ?? 1;
     if (get("delai") === "express") base *= 1.2;
+    const low = Math.round(base / 100) * 100;
+    const high = Math.round(low * 1.5 / 100) * 100; // wider range for events
+    return { low, high };
   }
 
+  // Contenu mensuel — fourchette vague (total du contrat)
   if (projectId === "mensuel") {
-    const joursBase: Record<string, number> = { "1j": 2500, "2j": 4000, "4j": 6500 };
+    const joursBase: Record<string, number> = { "1j": 2500, "2j": 3800, "4j": 6000 };
     base = joursBase[get("jours")] ?? 2500;
-    const reelsM: Record<string, number> = { "4": 1, "8": 1.35, "12+": 1.7 };
+    const reelsM: Record<string, number> = { "4": 1, "8": 1.3, "12+": 1.65 };
     base *= reelsM[get("reels")] ?? 1;
-    const contenuM: Record<string, number> = { video: 1, photo: 0.85, "photo+video": 1.4 };
+    const contenuM: Record<string, number> = { video: 1, photo: 0.85, "photo+video": 1.35 };
     base *= contenuM[get("contenu")] ?? 1;
     if (get("client") === "entreprise") base *= 1.3;
     const dureeDiscount: Record<string, number> = { "1": 1, "3": 0.92, "6": 0.87, "12": 0.82 };
     const months = parseInt(get("duree") || "1");
     base = base * months * (dureeDiscount[get("duree")] ?? 1);
+    const low = Math.round(base / 100) * 100;
+    const high = Math.round(low * 1.25 / 100) * 100;
+    return { low, high };
   }
 
+  // Publicité — prix actuels
   if (projectId === "pub") {
     const nombreBase: Record<string, number> = { "1": 599, "3": 1597, "5": 2495, "10+": 4499 };
     base = nombreBase[get("nombre")] ?? 599;
     const formatM: Record<string, number> = { ugc: 1, reel: 1.3, long: 1.6 };
     base *= formatM[get("format")] ?? 1;
     if (get("strategie") === "oui") base *= 1.35;
+    const low = Math.round(base / 50) * 50;
+    const high = Math.round(low * 1.25 / 50) * 50;
+    return { low, high };
   }
 
+  // Mariage — sur devis
   if (projectId === "mariage") {
-    const heuresBase: Record<string, number> = { "6h": 3200, "8h": 4200, "10h": 5200, "12h": 6500 };
-    base = heuresBase[get("heures")] ?? 4200;
-    const livrableM: Record<string, number> = { photo: 1, film: 1.15, both: 1.7 };
-    base *= livrableM[get("livrable")] ?? 1;
-    const lieuM: Record<string, number> = { montreal: 1, "qc-on": 1.15, intl: 1.4 };
-    base *= lieuM[get("lieu")] ?? 1;
-    if (has("extras", "album")) base += 800;
-    if (has("extras", "drone")) base += 600;
-    if (has("extras", "2nd")) base += 900;
+    return null;
   }
 
+  // Portrait / Corporate
   if (projectId === "portrait") {
-    const dureeBase: Record<string, number> = { "1h": 450, "2h": 750, demi: 1400 };
-    base = dureeBase[get("duree")] ?? 450;
-    const looksM: Record<string, number> = { "1": 1, "2": 1.2, "3": 1.4 };
+    const dureeBase: Record<string, number> = { "1h": 280, "2h": 480, demi: 850 };
+    base = dureeBase[get("duree")] ?? 280;
+    const looksM: Record<string, number> = { "1": 1, "2": 1.15, "3": 1.3 };
     base *= looksM[get("looks")] ?? 1;
-    const photosM: Record<string, number> = { "10": 1, "25": 1.3, "50": 1.6 };
+    const photosM: Record<string, number> = { "10": 1, "25": 1.2, "50": 1.4 };
     base *= photosM[get("photos")] ?? 1;
+    const low = Math.round(base / 25) * 25;
+    const high = Math.round(low * 1.2 / 25) * 25;
+    return { low, high };
   }
 
-  if (!base) return null;
-  const low = Math.round(base / 50) * 50;
-  const high = Math.round(low * 1.3 / 50) * 50;
-  return { low, high };
+  return null;
 }
 
 // ─── Component ────────────────────────────────────────────────────────────────
