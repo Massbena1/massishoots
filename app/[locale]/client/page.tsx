@@ -103,7 +103,8 @@ export default function ClientPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [portal, setPortal] = useState<SafePortal | null>(null);
-  const [activeTab, setActiveTab] = useState<"service" | "livrables" | "factures">("service");
+  const [activeTab, setActiveTab] = useState<"services" | "contenu" | "factures">("services");
+  const [serviceExpanded, setServiceExpanded] = useState(true);
   const [note, setNote] = useState("");
   const [noteSent, setNoteSent] = useState(false);
   const [sendingNote, setSendingNote] = useState(false);
@@ -230,9 +231,9 @@ export default function ClientPage() {
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.15 }}
           style={{ display: "flex", gap: 4, marginBottom: 16, background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 14, padding: 4 }}>
           {([
-            { id: "service", label: "Mon service", icon: Package },
-            { id: "livrables", label: "Livrables", icon: Download },
-            { id: "factures", label: "Factures", icon: Receipt },
+            { id: "services", label: "Mes services", icon: Package },
+            { id: "contenu",  label: "Mon contenu",  icon: Folder },
+            { id: "factures", label: "Factures",      icon: Receipt },
           ] as const).map(tab => {
             const TabIcon = tab.icon;
             return (
@@ -247,39 +248,57 @@ export default function ClientPage() {
         {/* TAB CONTENT */}
         <AnimatePresence mode="wait">
 
-          {/* SERVICE */}
-          {activeTab === "service" && (
-            <motion.div key="service" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} transition={{ duration: 0.2 }}
-              style={{ padding: "24px 28px", background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 20, marginBottom: 16 }}>
-              <div style={{ marginBottom: 20 }}>
-                <p className="font-dm" style={{ fontSize: 10, color: "rgba(255,255,255,0.25)", letterSpacing: "0.15em", textTransform: "uppercase", marginBottom: 4 }}>Package souscrit</p>
-                <h3 className="font-bebas" style={{ fontSize: 28, color: "#c4cdd6", letterSpacing: "0.06em" }}>{portal.packageName}</h3>
-                {(portal.contractStart || portal.contractEnd) && (
-                  <p className="font-dm" style={{ fontSize: 12, color: "rgba(255,255,255,0.3)", marginTop: 4 }}>
-                    {portal.contractStart}{portal.contractEnd ? ` → ${portal.contractEnd}` : ""}
-                  </p>
+          {/* SERVICES */}
+          {activeTab === "services" && (
+            <motion.div key="services" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} transition={{ duration: 0.2 }}>
+              {/* Service card clicable */}
+              <div style={{ borderRadius: 20, overflow: "hidden", border: "1px solid rgba(196,205,214,0.2)", marginBottom: 12 }}>
+                <button onClick={() => setServiceExpanded(!serviceExpanded)} className="font-dm"
+                  style={{ width: "100%", display: "flex", alignItems: "center", justifyContent: "space-between", padding: "20px 24px", background: "rgba(196,205,214,0.05)", border: "none", cursor: "pointer", textAlign: "left" }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
+                    <div style={{ width: 44, height: 44, borderRadius: 12, background: "rgba(196,205,214,0.1)", border: "1px solid rgba(196,205,214,0.15)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                      <Package size={20} color="#c4cdd6" />
+                    </div>
+                    <div>
+                      <span className="font-bebas" style={{ fontSize: 22, color: "#fff", letterSpacing: "0.05em", display: "block", lineHeight: 1 }}>{portal.packageName}</span>
+                      {(portal.contractStart || portal.contractEnd) && (
+                        <span className="font-dm" style={{ fontSize: 11, color: "rgba(255,255,255,0.35)" }}>
+                          {portal.contractStart}{portal.contractEnd ? ` → ${portal.contractEnd}` : ""}
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                  <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+                    <span className="font-dm" style={{ fontSize: 10, color: "#4ade80", background: "rgba(74,222,128,0.1)", padding: "3px 10px", borderRadius: 9999, letterSpacing: "0.08em" }}>ACTIF</span>
+                    <span style={{ color: "rgba(255,255,255,0.3)", fontSize: 16 }}>{serviceExpanded ? "▲" : "▼"}</span>
+                  </div>
+                </button>
+
+                {serviceExpanded && portal.serviceIncludes?.length > 0 && (
+                  <div style={{ padding: "0 24px 20px", borderTop: "1px solid rgba(255,255,255,0.06)" }}>
+                    <p className="font-dm" style={{ fontSize: 10, color: "rgba(255,255,255,0.25)", letterSpacing: "0.15em", textTransform: "uppercase", margin: "16px 0 12px" }}>CE QUI EST INCLUS</p>
+                    <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+                      {portal.serviceIncludes.map(item => (
+                        <div key={item} style={{ display: "flex", alignItems: "center", gap: 10 }}>
+                          <div style={{ width: 18, height: 18, borderRadius: "50%", background: "rgba(74,222,128,0.12)", border: "1px solid rgba(74,222,128,0.25)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                            <Check size={10} color="#4ade80" />
+                          </div>
+                          <span className="font-dm" style={{ fontSize: 13, color: "rgba(255,255,255,0.65)" }}>{item}</span>
+                        </div>
+                      ))}
+                    </div>
+                    <button onClick={() => setActiveTab("contenu")} className="font-dm"
+                      style={{ marginTop: 20, display: "inline-flex", alignItems: "center", gap: 6, padding: "9px 18px", background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 9999, color: "rgba(255,255,255,0.55)", fontSize: 12, fontWeight: 600, cursor: "pointer" }}>
+                      <Folder size={12} /> Voir mon contenu →
+                    </button>
+                  </div>
                 )}
               </div>
-              {portal.serviceIncludes?.length > 0 && (
-                <div>
-                  <p className="font-dm" style={{ fontSize: 10, color: "rgba(255,255,255,0.25)", letterSpacing: "0.15em", textTransform: "uppercase", marginBottom: 12 }}>Ce qui est inclus</p>
-                  <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-                    {portal.serviceIncludes.map(item => (
-                      <div key={item} style={{ display: "flex", alignItems: "center", gap: 10 }}>
-                        <div style={{ width: 18, height: 18, borderRadius: "50%", background: "rgba(74,222,128,0.12)", border: "1px solid rgba(74,222,128,0.25)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
-                          <Check size={10} color="#4ade80" />
-                        </div>
-                        <span className="font-dm" style={{ fontSize: 13, color: "rgba(255,255,255,0.65)" }}>{item}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
             </motion.div>
           )}
 
-          {/* LIVRABLES — groupés par dossier/mois */}
-          {activeTab === "livrables" && (
+          {/* CONTENU — groupés par dossier/mois */}
+          {activeTab === "contenu" && (
             <motion.div key="livrables" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} transition={{ duration: 0.2 }}>
               {portal.deliverables?.length > 0 ? (
                 <FolderView deliverables={portal.deliverables} />
