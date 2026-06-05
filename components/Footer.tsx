@@ -43,6 +43,7 @@ export default function Footer() {
         { title: t("lEvents"),  href: "/services" },
         { title: t("lAds"),     href: "/services" },
         { title: t("lWedding"), href: "/services" },
+        { title: "Partenariats agences", href: "/partenaires" },
       ],
     },
     {
