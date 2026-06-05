@@ -359,6 +359,21 @@ export default function PriceCalculator() {
   const globalStep = !projectId ? 0 : done ? totalSteps + 1 : questionStep + 1;
   const totalGlobal = totalSteps + 2;
 
+  // Build summary of answered questions
+  const summary: { label: string; value: string }[] = [];
+  if (projectId) {
+    const project = PROJECTS.find(p => p.id === projectId);
+    if (project) summary.push({ label: "Projet", value: project.label });
+    const qs = QUESTIONS[projectId];
+    for (const q of qs) {
+      const ans = answers[q.id];
+      if (!ans) break;
+      const vals = Array.isArray(ans) ? ans : [ans];
+      const labels = vals.map(v => q.options.find(o => o.id === v)?.label ?? v).join(" + ");
+      summary.push({ label: q.label.replace(" ?", ""), value: labels });
+    }
+  }
+
   return (
     <section style={{ padding: "80px 0 120px" }}>
       <div style={{ maxWidth: 760, margin: "0 auto", padding: "0 24px" }}>
@@ -386,6 +401,54 @@ export default function PriceCalculator() {
             />
           </div>
         )}
+
+        {/* Real-time summary */}
+        <AnimatePresence>
+          {summary.length > 0 && (
+            <motion.div
+              initial={{ opacity: 0, y: -8 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -8 }}
+              transition={{ duration: 0.25 }}
+              style={{
+                marginBottom: 16,
+                padding: "16px 20px",
+                background: "rgba(196,205,214,0.04)",
+                border: "1px solid rgba(196,205,214,0.1)",
+                borderRadius: 14,
+                display: "flex",
+                flexWrap: "wrap",
+                gap: 8,
+                alignItems: "center",
+              }}
+            >
+              <span className="font-dm" style={{ fontSize: 10, color: "rgba(255,255,255,0.25)", letterSpacing: "0.15em", textTransform: "uppercase", flexShrink: 0 }}>
+                Sélection :
+              </span>
+              {summary.map((s, i) => (
+                <motion.span
+                  key={s.label}
+                  initial={{ opacity: 0, scale: 0.85 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.2, delay: i * 0.05 }}
+                  className="font-dm"
+                  style={{
+                    display: "inline-flex", alignItems: "center", gap: 5,
+                    padding: "4px 12px",
+                    background: "rgba(196,205,214,0.08)",
+                    border: "1px solid rgba(196,205,214,0.15)",
+                    borderRadius: 9999,
+                    fontSize: 11,
+                    color: "rgba(255,255,255,0.7)",
+                  }}
+                >
+                  <span style={{ color: "rgba(255,255,255,0.3)" }}>{s.label} :</span>
+                  <span style={{ fontWeight: 600 }}>{s.value}</span>
+                </motion.span>
+              ))}
+            </motion.div>
+          )}
+        </AnimatePresence>
 
         {/* Card */}
         <div style={{
