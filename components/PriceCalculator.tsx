@@ -288,7 +288,7 @@ function computePrice(projectId: ProjectId, answers: Answers): { low: number; hi
   if (projectId === "portrait") {
     const dureeBase: Record<string, number> = { "1h": 280, "2h": 480, demi: 850 };
     base = dureeBase[get("duree")] ?? 280;
-    const looksM: Record<string, number> = { "1": 1, "2": 1.15, "3": 1.3 };
+    const looksM: Record<string, number> = { "1": 1, "2": 1.1, "3": 1.2 };
     base *= looksM[get("looks")] ?? 1;
     const photosM: Record<string, number> = { "10": 1, "25": 1.2, "50": 1.4 };
     base *= photosM[get("photos")] ?? 1;
