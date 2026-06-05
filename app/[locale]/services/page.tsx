@@ -1,6 +1,7 @@
 import { getTranslations } from "next-intl/server";
 import { getAlternates, getOpenGraph, getTwitter } from "@/lib/hreflang";
 import Services from "@/components/Services";
+import ServicePackages from "@/components/ServicePackages";
 import Process from "@/components/Process";
 import PriceCalculator from "@/components/PriceCalculator";
 import Footer from "@/components/Footer";
@@ -41,6 +42,7 @@ export default async function ServicesPage({
         subtitle={t("subtitle")}
       />
       <Services />
+      <ServicePackages />
       <PriceCalculator />
       <Process />
       <Footer />
