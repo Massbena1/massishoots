@@ -122,10 +122,12 @@ const QUESTIONS: Record<ProjectId, Question[]> = {
       id: "nombre",
       label: "Combien de vidéos publicitaires ?",
       options: [
-        { id: "1",   label: "1 vidéo" },
-        { id: "3",   label: "3 vidéos",   sub: "−11%" },
-        { id: "5",   label: "5 vidéos",   sub: "−17%" },
-        { id: "10+", label: "10 vidéos +",sub: "−25%" },
+        { id: "1",  label: "1 vidéo",      sub: "300 $" },
+        { id: "3",  label: "3 vidéos",     sub: "800 $" },
+        { id: "5",  label: "5 vidéos",     sub: "1 300 $" },
+        { id: "10", label: "10 vidéos",    sub: "2 400 $" },
+        { id: "15", label: "15 vidéos",    sub: "3 400 $" },
+        { id: "20", label: "20 vidéos",    sub: "4 200 $" },
       ],
     },
     {
@@ -247,32 +249,32 @@ function computePrice(projectId: ProjectId, answers: Answers): { low: number; hi
     return { low, high };
   }
 
-  // Contenu mensuel — fourchette vague (total du contrat)
+  // Contenu mensuel
   if (projectId === "mensuel") {
-    const joursBase: Record<string, number> = { "1j": 2500, "2j": 3800, "4j": 6000 };
+    const joursBase: Record<string, number> = { "1j": 2500, "2j": 4200, "4j": 7100 };
     base = joursBase[get("jours")] ?? 2500;
     const reelsM: Record<string, number> = { "4": 1, "8": 1.3, "12+": 1.65 };
     base *= reelsM[get("reels")] ?? 1;
-    const contenuM: Record<string, number> = { video: 1, photo: 0.85, "photo+video": 1.35 };
+    const contenuM: Record<string, number> = { video: 1, photo: 0.5, "photo+video": 1.35 };
     base *= contenuM[get("contenu")] ?? 1;
     if (get("client") === "entreprise") base *= 1.3;
     const dureeDiscount: Record<string, number> = { "1": 1, "3": 0.92, "6": 0.87, "12": 0.82 };
     const months = parseInt(get("duree") || "1");
     base = base * months * (dureeDiscount[get("duree")] ?? 1);
     const low = Math.round(base / 100) * 100;
-    const high = Math.round(low * 1.25 / 100) * 100;
+    const high = Math.round(low * 1.2 / 100) * 100;
     return { low, high };
   }
 
-  // Publicité — prix actuels
+  // Publicité
   if (projectId === "pub") {
-    const nombreBase: Record<string, number> = { "1": 599, "3": 1597, "5": 2495, "10+": 4499 };
-    base = nombreBase[get("nombre")] ?? 599;
+    const nombreBase: Record<string, number> = { "1": 300, "3": 800, "5": 1300, "10": 2400, "15": 3400, "20": 4200 };
+    base = nombreBase[get("nombre")] ?? 300;
     const formatM: Record<string, number> = { ugc: 1, reel: 1.3, long: 1.6 };
     base *= formatM[get("format")] ?? 1;
-    if (get("strategie") === "oui") base *= 1.35;
+    if (get("strategie") === "oui") base *= 1.25;
     const low = Math.round(base / 50) * 50;
-    const high = Math.round(low * 1.25 / 50) * 50;
+    const high = Math.round(low * 1.2 / 50) * 50;
     return { low, high };
   }
 
@@ -289,8 +291,8 @@ function computePrice(projectId: ProjectId, answers: Answers): { low: number; hi
     base *= looksM[get("looks")] ?? 1;
     const photosM: Record<string, number> = { "10": 1, "25": 1.2, "50": 1.4 };
     base *= photosM[get("photos")] ?? 1;
-    const low = Math.round(base / 25) * 25;
-    const high = Math.round(low * 1.2 / 25) * 25;
+    const low = Math.round(base / 10) * 10;
+    const high = Math.round(low * 1.15 / 10) * 10;
     return { low, high };
   }
 
