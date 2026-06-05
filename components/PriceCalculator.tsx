@@ -83,9 +83,9 @@ const QUESTIONS: Record<ProjectId, Question[]> = {
       id: "reels",
       label: "Combien de vidéos / Reels par mois ?",
       options: [
-        { id: "4",   label: "4 vidéos / mois" },
-        { id: "8",   label: "8 vidéos / mois" },
-        { id: "12+", label: "12+ vidéos / mois" },
+        { id: "10",  label: "10 vidéos / mois" },
+        { id: "15",  label: "15 vidéos / mois", sub: "+30%" },
+        { id: "20+", label: "20+ vidéos / mois", sub: "+60%" },
       ],
     },
     {
@@ -254,7 +254,7 @@ function computePrice(projectId: ProjectId, answers: Answers): { low: number; hi
   if (projectId === "mensuel") {
     const joursBase: Record<string, number> = { "1j": 2500, "2j": 4200, "4j": 7100 };
     base = joursBase[get("jours")] ?? 2500;
-    const reelsM: Record<string, number> = { "4": 1, "8": 1.3, "12+": 1.65 };
+    const reelsM: Record<string, number> = { "10": 1, "15": 1.3, "20+": 1.6 };
     base *= reelsM[get("reels")] ?? 1;
     const contenuM: Record<string, number> = { video: 1, photo: 0.5, "photo+video": 1.35 };
     base *= contenuM[get("contenu")] ?? 1;
