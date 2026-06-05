@@ -222,7 +222,7 @@ export default function Galleries({ initialGalleries = [] }: { initialGalleries?
             style={{ width: "100%", padding: "14px 16px 14px 42px", background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.09)", borderRadius: 14, color: "#fff", fontSize: 14, outline: "none", fontFamily: "var(--font-dm-sans), sans-serif", boxSizing: "border-box" }} />
         </div>
         <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
-          {["Tous", "Événement", "Corporate", "Portrait", "Mariage"].map(f => (
+          {["Tous", "Événement", "Corporate"].map(f => (
             <button key={f} onClick={() => setFilter(f)} className="font-dm"
               style={{ padding: "6px 16px", borderRadius: 9999, border: `1px solid ${filter === f ? "rgba(196,205,214,0.4)" : "rgba(255,255,255,0.1)"}`, background: filter === f ? "rgba(196,205,214,0.1)" : "transparent", color: filter === f ? "#c4cdd6" : "rgba(255,255,255,0.4)", fontSize: 12, cursor: "pointer", transition: "all 0.2s", letterSpacing: "0.04em" }}>
               {f}
