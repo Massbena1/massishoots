@@ -18,7 +18,7 @@ const PACKAGES = [
     livrables: [
       "1h30 de tournage / mois",
       "2 vidéos / Reels montés",
-      "8 photos retouchées",
+      "5 photos retouchées",
       "Livraison en 2 semaines",
     ],
     nonInclus: [
@@ -100,7 +100,7 @@ const PACKAGES = [
 const COMPARE_ROWS = [
   { label: "Tournage / mois", values: ["1h30", "1 jour", "2 jours", "4 jours"] },
   { label: "Vidéos / Reels", values: ["2", "4", "8", "12+"] },
-  { label: "Photos retouchées", values: ["8", "10", "25", "50"] },
+  { label: "Photos retouchées", values: ["5", "10", "25", "50"] },
   { label: "Droits commerciaux", values: [false, false, true, true] },
   { label: "Stratégie contenu", values: [false, false, false, true] },
   { label: "Révisions", values: ["1", "1", "2", "Illimitées"] },
