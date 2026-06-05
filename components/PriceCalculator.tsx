@@ -239,14 +239,14 @@ function computePrice(projectId: ProjectId, answers: Answers): { low: number; hi
     base = dureeBase[get("duree")] ?? 1500;
     const equipe = get("equipe");
     if (equipe === "3+") return null; // sur devis
-    const equipeM: Record<string, number> = { "1": 1, "2": 1.45, "3": 2 };
+    const equipeM: Record<string, number> = { "1": 1, "2": 1.25, "3": 1.5 };
     base *= equipeM[equipe] ?? 1;
-    const livrableM: Record<string, number> = { photo: 1, video: 1.2, "photo+video": 1.6 };
+    const livrableM: Record<string, number> = { photo: 1, video: 1.15, "photo+video": 1.25 };
     base *= livrableM[get("livrable")] ?? 1;
-    if (get("delai") === "express") base *= 1.25;
+    if (get("delai") === "express") base *= 1.15;
     const low = Math.round(base / 100) * 100;
-    const high = Math.round(low * 1.3 / 100) * 100;
-    if (high > 8500) return null;
+    const high = Math.round(low * 1.2 / 100) * 100;
+    if (high > 9500) return null;
     return { low, high };
   }
 
