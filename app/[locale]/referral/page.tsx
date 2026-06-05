@@ -1,7 +1,8 @@
 "use client";
-import { motion } from "framer-motion";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "@/i18n/navigation";
-import { ArrowRight, Gift, Users, DollarSign, Check } from "lucide-react";
+import { ArrowRight, Gift, Users, DollarSign, Check, CheckCircle } from "lucide-react";
 import Footer from "@/components/Footer";
 
 const STEPS = [
@@ -34,6 +35,29 @@ const CONDITIONS = [
 ];
 
 export default function ReferralPage() {
+  const [form, setForm] = useState({ yourName: "", yourEmail: "", friendName: "", friendContact: "" });
+  const [loading, setLoading] = useState(false);
+  const [sent, setSent] = useState(false);
+
+  const set = (k: keyof typeof form) => (e: React.ChangeEvent<HTMLInputElement>) => setForm(f => ({ ...f, [k]: e.target.value }));
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+    await fetch("/api/contact", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        nom: form.yourName,
+        email: form.yourEmail,
+        message: `RÉFÉRENCEMENT\n\nRéférent: ${form.yourName} (${form.yourEmail})\nAmi à référer: ${form.friendName}\nContact de l'ami: ${form.friendContact}`,
+        type: "Référencement",
+      }),
+    });
+    setSent(true);
+    setLoading(false);
+  };
+
   return (
     <main style={{ background: "#0a0a0a", minHeight: "100vh" }}>
 
@@ -97,18 +121,47 @@ export default function ReferralPage() {
         </div>
       </section>
 
-      {/* CTA */}
-      <section style={{ maxWidth: 700, margin: "0 auto", padding: "0 24px 120px", textAlign: "center" }}>
-        <h3 className="font-bebas" style={{ fontSize: "clamp(28px, 4vw, 44px)", color: "#fff", letterSpacing: "0.03em", marginBottom: 12 }}>
+      {/* Formulaire */}
+      <section style={{ maxWidth: 600, margin: "0 auto", padding: "0 24px 120px" }}>
+        <h3 className="font-bebas" style={{ fontSize: "clamp(28px, 4vw, 40px)", color: "#fff", letterSpacing: "0.03em", marginBottom: 8, textAlign: "center" }}>
           PRÊT À RÉFÉRER ?
         </h3>
-        <p className="font-dm" style={{ fontSize: 14, color: "rgba(255,255,255,0.4)", marginBottom: 28 }}>
-          Envoie-nous le nom et le contact de ton ami — on s&apos;occupe du reste.
+        <p className="font-dm" style={{ fontSize: 13, color: "rgba(255,255,255,0.4)", marginBottom: 28, textAlign: "center" }}>
+          Remplis le formulaire — on s&apos;occupe du reste.
         </p>
-        <a href="mailto:massi@massishoots.com?subject=Référencement — je connais quelqu'un&body=Bonjour Massi, je veux référer quelqu'un. Voici ses coordonnées : " className="font-dm"
-          style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "14px 28px", background: "#f2f0ec", color: "#0a0a0a", borderRadius: 9999, textDecoration: "none", fontSize: 13, fontWeight: 700, letterSpacing: "0.06em" }}>
-          Envoyer une référence <ArrowRight size={13} />
-        </a>
+
+        <AnimatePresence mode="wait">
+          {sent ? (
+            <motion.div key="success" initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.4 }}
+              style={{ padding: "48px 32px", background: "rgba(74,222,128,0.06)", border: "1px solid rgba(74,222,128,0.2)", borderRadius: 20, textAlign: "center" }}>
+              <CheckCircle size={40} color="#4ade80" style={{ marginBottom: 16 }} />
+              <h4 className="font-bebas" style={{ fontSize: 24, color: "#fff", letterSpacing: "0.06em", marginBottom: 8 }}>RÉFÉRENCE ENVOYÉE !</h4>
+              <p className="font-dm" style={{ fontSize: 13, color: "rgba(255,255,255,0.45)", lineHeight: 1.7 }}>
+                Merci ! On contacte ton ami sous 24h.<br />Ton crédit de 1 000 $ sera activé après signature.
+              </p>
+            </motion.div>
+          ) : (
+            <motion.form key="form" onSubmit={handleSubmit}
+              style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 20, padding: "32px 28px" }}>
+              {[
+                { key: "yourName", label: "Ton nom *", placeholder: "Ton prénom et nom" },
+                { key: "yourEmail", label: "Ton email *", placeholder: "ton@email.com" },
+                { key: "friendName", label: "Nom de ton ami *", placeholder: "Prénom et nom de l'ami" },
+                { key: "friendContact", label: "Contact de l'ami *", placeholder: "Email ou téléphone" },
+              ].map(f => (
+                <div key={f.key} style={{ marginBottom: 16 }}>
+                  <label className="font-dm" style={{ fontSize: 11, color: "rgba(255,255,255,0.35)", letterSpacing: "0.15em", textTransform: "uppercase", display: "block", marginBottom: 6 }}>{f.label}</label>
+                  <input required value={form[f.key as keyof typeof form]} onChange={set(f.key as keyof typeof form)} placeholder={f.placeholder}
+                    style={{ width: "100%", padding: "13px 16px", background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 12, color: "#fff", fontSize: 13, outline: "none", fontFamily: "var(--font-dm-sans), sans-serif", boxSizing: "border-box" }} />
+                </div>
+              ))}
+              <button type="submit" disabled={loading} className="font-dm"
+                style={{ width: "100%", display: "flex", alignItems: "center", justifyContent: "center", gap: 8, padding: "14px", background: "#f2f0ec", color: "#0a0a0a", border: "none", borderRadius: 12, fontSize: 13, fontWeight: 700, cursor: "pointer", letterSpacing: "0.06em", marginTop: 8 }}>
+                {loading ? "Envoi..." : <><Gift size={14} /> Envoyer ma référence — 1 000 $ de crédit</>}
+              </button>
+            </motion.form>
+          )}
+        </AnimatePresence>
       </section>
 
       <Footer />
