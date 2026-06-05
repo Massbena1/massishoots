@@ -171,6 +171,23 @@ export default function Navbar() {
             {locale === "fr" ? "EN" : "FR"}
           </button>
 
+          {/* Espace client */}
+          <Link
+            href="/client"
+            className="font-dm"
+            style={{
+              padding: "8px 16px",
+              background: "rgba(255,255,255,0.05)",
+              border: "1px solid rgba(255,255,255,0.1)",
+              color: "rgba(255,255,255,0.55)",
+              borderRadius: 9999, fontSize: 12, fontWeight: 600,
+              textDecoration: "none", letterSpacing: "0.04em",
+              whiteSpace: "nowrap", display: "inline-flex", alignItems: "center", gap: 5,
+            }}
+          >
+            🔒 Espace client
+          </Link>
+
           {/* CTA */}
           <Link
             href="/contact"

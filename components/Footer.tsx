@@ -56,6 +56,7 @@ export default function Footer() {
         { title: t("lFaq"),       href: "/#faq" },
         { title: t("lContact"),   href: "/contact" },
         { title: "Référer un ami 🎁", href: "/referral" },
+        { title: "Espace client 🔒", href: "/client" },
       ],
     },
     {
