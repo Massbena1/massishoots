@@ -1,10 +1,88 @@
 "use client";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Lock, Download, CheckCircle, Clock, Camera, Scissors, Package, MessageSquare, Receipt, Send, Check } from "lucide-react";
+import { Lock, Download, CheckCircle, Clock, Camera, Scissors, Package, MessageSquare, Receipt, Send, Check, Folder, FolderOpen } from "lucide-react";
 import type { ClientPortal } from "@/lib/clientPortal";
 
 type SafePortal = Omit<ClientPortal, "password" | "internalNote">;
+
+function FolderView({ deliverables }: { deliverables: ClientPortal["deliverables"] }) {
+  const [openFolders, setOpenFolders] = useState<string[]>([]);
+
+  // Grouper par folder
+  const grouped: Record<string, typeof deliverables> = {};
+  const noFolder: typeof deliverables = [];
+  for (const d of deliverables) {
+    if (d.folder) {
+      if (!grouped[d.folder]) grouped[d.folder] = [];
+      grouped[d.folder].push(d);
+    } else {
+      noFolder.push(d);
+    }
+  }
+
+  const toggleFolder = (name: string) =>
+    setOpenFolders(prev => prev.includes(name) ? prev.filter(f => f !== name) : [...prev, name]);
+
+  const DeliverableRow = ({ d }: { d: typeof deliverables[0] }) => {
+    const cfg = DELIVERABLE_STATUS[d.status];
+    return (
+      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "12px 16px", background: "rgba(255,255,255,0.02)", borderRadius: 10, flexWrap: "wrap", gap: 8 }}>
+        <div>
+          <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 2 }}>
+            <span className="font-dm" style={{ fontSize: 13, color: "#fff", fontWeight: 500 }}>{d.label}</span>
+            <span className="font-dm" style={{ fontSize: 10, color: cfg.color, background: `${cfg.color}15`, padding: "2px 8px", borderRadius: 9999 }}>{cfg.label}</span>
+          </div>
+          {d.deliveredDate && <p className="font-dm" style={{ fontSize: 11, color: "rgba(255,255,255,0.3)" }}>Livré le {d.deliveredDate}</p>}
+          {d.note && <p className="font-dm" style={{ fontSize: 11, color: "rgba(255,255,255,0.35)", marginTop: 2 }}>{d.note}</p>}
+        </div>
+        {d.downloadUrl && (
+          <a href={d.downloadUrl} target="_blank" rel="noopener noreferrer" className="font-dm"
+            style={{ display: "inline-flex", alignItems: "center", gap: 6, padding: "7px 14px", background: "rgba(74,222,128,0.1)", border: "1px solid rgba(74,222,128,0.2)", borderRadius: 9999, color: "#4ade80", textDecoration: "none", fontSize: 11, fontWeight: 600, whiteSpace: "nowrap" }}>
+            <Download size={11} /> Télécharger
+          </a>
+        )}
+      </div>
+    );
+  };
+
+  const allDelivered = (items: typeof deliverables) => items.every(d => d.status === "delivered");
+
+  return (
+    <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+      {/* Dossiers par mois */}
+      {Object.entries(grouped).map(([folder, items]) => {
+        const isOpen = openFolders.includes(folder);
+        const done = allDelivered(items);
+        return (
+          <div key={folder} style={{ background: "rgba(255,255,255,0.03)", border: `1px solid ${done ? "rgba(74,222,128,0.15)" : "rgba(255,255,255,0.07)"}`, borderRadius: 16, overflow: "hidden" }}>
+            <button onClick={() => toggleFolder(folder)} className="font-dm"
+              style={{ width: "100%", display: "flex", alignItems: "center", justifyContent: "space-between", padding: "16px 20px", background: "transparent", border: "none", cursor: "pointer", textAlign: "left" }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+                {isOpen
+                  ? <FolderOpen size={18} color={done ? "#4ade80" : "#c4cdd6"} />
+                  : <Folder size={18} color={done ? "#4ade80" : "#c4cdd6"} />
+                }
+                <div>
+                  <span className="font-bebas" style={{ fontSize: 17, color: "#fff", letterSpacing: "0.05em" }}>{folder}</span>
+                  <span className="font-dm" style={{ fontSize: 11, color: "rgba(255,255,255,0.3)", marginLeft: 10 }}>{items.length} fichier{items.length > 1 ? "s" : ""}</span>
+                </div>
+              </div>
+              <span style={{ color: "rgba(255,255,255,0.3)", fontSize: 18 }}>{isOpen ? "▲" : "▼"}</span>
+            </button>
+            {isOpen && (
+              <div style={{ padding: "0 12px 12px", display: "flex", flexDirection: "column", gap: 6 }}>
+                {items.map(d => <DeliverableRow key={d.id} d={d} />)}
+              </div>
+            )}
+          </div>
+        );
+      })}
+      {/* Livrables sans dossier */}
+      {noFolder.map(d => <DeliverableRow key={d.id} d={d} />)}
+    </div>
+  );
+}
 
 const PHASES = [
   { id: "preparation", label: "Préparation", icon: Clock, color: "#f59e0b" },
@@ -200,33 +278,11 @@ export default function ClientPage() {
             </motion.div>
           )}
 
-          {/* LIVRABLES */}
+          {/* LIVRABLES — groupés par dossier/mois */}
           {activeTab === "livrables" && (
             <motion.div key="livrables" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} transition={{ duration: 0.2 }}>
               {portal.deliverables?.length > 0 ? (
-                <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-                  {portal.deliverables.map(d => {
-                    const cfg = DELIVERABLE_STATUS[d.status];
-                    return (
-                      <div key={d.id} style={{ padding: "18px 22px", background: "rgba(255,255,255,0.03)", border: `1px solid ${d.status === "delivered" ? "rgba(74,222,128,0.15)" : "rgba(255,255,255,0.07)"}`, borderRadius: 16, display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: 12 }}>
-                        <div>
-                          <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 3 }}>
-                            <span className="font-dm" style={{ fontSize: 13, color: "#fff", fontWeight: 600 }}>{d.label}</span>
-                            <span className="font-dm" style={{ fontSize: 10, color: cfg.color, background: `${cfg.color}15`, padding: "2px 8px", borderRadius: 9999, letterSpacing: "0.08em" }}>{cfg.label}</span>
-                          </div>
-                          {d.deliveredDate && <p className="font-dm" style={{ fontSize: 11, color: "rgba(255,255,255,0.3)" }}>Livré le {d.deliveredDate}</p>}
-                          {d.note && <p className="font-dm" style={{ fontSize: 11, color: "rgba(255,255,255,0.35)", marginTop: 2 }}>{d.note}</p>}
-                        </div>
-                        {d.downloadUrl && (
-                          <a href={d.downloadUrl} target="_blank" rel="noopener noreferrer" className="font-dm"
-                            style={{ display: "inline-flex", alignItems: "center", gap: 6, padding: "8px 16px", background: "rgba(74,222,128,0.1)", border: "1px solid rgba(74,222,128,0.2)", borderRadius: 9999, color: "#4ade80", textDecoration: "none", fontSize: 12, fontWeight: 600, whiteSpace: "nowrap" }}>
-                            <Download size={12} /> Télécharger
-                          </a>
-                        )}
-                      </div>
-                    );
-                  })}
-                </div>
+                <FolderView deliverables={portal.deliverables} />
               ) : (
                 <div style={{ padding: "48px 24px", textAlign: "center", background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.06)", borderRadius: 20 }}>
                   <p className="font-dm" style={{ fontSize: 13, color: "rgba(255,255,255,0.25)" }}>Vos livrables apparaîtront ici dès la première livraison.</p>

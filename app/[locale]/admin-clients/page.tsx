@@ -140,8 +140,9 @@ export default function AdminClientsPage() {
 
       <p className="font-dm" style={{ fontSize: 10, color: "rgba(255,255,255,0.3)", letterSpacing: "0.15em", textTransform: "uppercase", margin: "14px 0 10px" }}>— Livrables</p>
       {(data.deliverables ?? []).map((d: Deliverable, i: number) => (
-        <div key={d.id} style={{ display: "grid", gridTemplateColumns: "2fr 1fr 1fr 2fr auto", gap: 6, marginBottom: 6, alignItems: "center" }}>
-          <input placeholder="Label (ex: Mois 1)" value={d.label} onChange={e => updateDeliverable(data, setData, i, "label", e.target.value)} style={inputStyle} />
+        <div key={d.id} style={{ display: "grid", gridTemplateColumns: "1.5fr 2fr 1fr 1fr 2fr auto", gap: 6, marginBottom: 6, alignItems: "center" }}>
+          <input placeholder="Dossier/Mois (ex: Mois 1 — Juin)" value={d.folder ?? ""} onChange={e => updateDeliverable(data, setData, i, "folder", e.target.value)} style={inputStyle} />
+          <input placeholder="Fichier (ex: 2 Reels montés)" value={d.label} onChange={e => updateDeliverable(data, setData, i, "label", e.target.value)} style={inputStyle} />
           <select value={d.status} onChange={e => updateDeliverable(data, setData, i, "status", e.target.value)} style={{ ...inputStyle, appearance: "none" }}>
             <option value="pending">À venir</option>
             <option value="in_progress">En cours</option>

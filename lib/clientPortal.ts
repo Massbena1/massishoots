@@ -4,6 +4,7 @@ export type InvoiceStatus = "en_attente" | "payee";
 
 export interface Deliverable {
   id: string;
+  folder?: string;
   label: string;
   status: DeliverableStatus;
   deliveredDate?: string;
