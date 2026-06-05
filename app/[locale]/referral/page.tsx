@@ -35,11 +35,11 @@ const CONDITIONS = [
 ];
 
 export default function ReferralPage() {
-  const [form, setForm] = useState({ yourName: "", yourEmail: "", friendName: "", friendContact: "" });
+  const [form, setForm] = useState({ yourName: "", yourEmail: "", friendName: "", friendContact: "", friendBusiness: "", friendProject: "", friendBudget: "" });
   const [loading, setLoading] = useState(false);
   const [sent, setSent] = useState(false);
 
-  const set = (k: keyof typeof form) => (e: React.ChangeEvent<HTMLInputElement>) => setForm(f => ({ ...f, [k]: e.target.value }));
+  const set = (k: keyof typeof form) => (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => setForm(f => ({ ...f, [k]: e.target.value }));
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -50,7 +50,7 @@ export default function ReferralPage() {
       body: JSON.stringify({
         nom: form.yourName,
         email: form.yourEmail,
-        message: `RÉFÉRENCEMENT\n\nRéférent: ${form.yourName} (${form.yourEmail})\nAmi à référer: ${form.friendName}\nContact de l'ami: ${form.friendContact}`,
+        message: `RÉFÉRENCEMENT\n\nRéférent: ${form.yourName} (${form.yourEmail})\n\nAmi à référer:\nNom: ${form.friendName}\nContact: ${form.friendContact}\nEntreprise/Marque: ${form.friendBusiness}\nType de projet: ${form.friendProject}\nBudget approximatif: ${form.friendBudget}`,
         type: "Référencement",
       }),
     });
@@ -143,18 +143,57 @@ export default function ReferralPage() {
           ) : (
             <motion.form key="form" onSubmit={handleSubmit}
               style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 20, padding: "32px 28px" }}>
+              <p className="font-dm" style={{ fontSize: 11, color: "rgba(255,255,255,0.3)", letterSpacing: "0.15em", textTransform: "uppercase", marginBottom: 16 }}>— Tes infos</p>
               {[
                 { key: "yourName", label: "Ton nom *", placeholder: "Ton prénom et nom" },
                 { key: "yourEmail", label: "Ton email *", placeholder: "ton@email.com" },
-                { key: "friendName", label: "Nom de ton ami *", placeholder: "Prénom et nom de l'ami" },
-                { key: "friendContact", label: "Contact de l'ami *", placeholder: "Email ou téléphone" },
               ].map(f => (
-                <div key={f.key} style={{ marginBottom: 16 }}>
-                  <label className="font-dm" style={{ fontSize: 11, color: "rgba(255,255,255,0.35)", letterSpacing: "0.15em", textTransform: "uppercase", display: "block", marginBottom: 6 }}>{f.label}</label>
+                <div key={f.key} style={{ marginBottom: 14 }}>
+                  <label className="font-dm" style={{ fontSize: 11, color: "rgba(255,255,255,0.35)", letterSpacing: "0.12em", textTransform: "uppercase", display: "block", marginBottom: 6 }}>{f.label}</label>
                   <input required value={form[f.key as keyof typeof form]} onChange={set(f.key as keyof typeof form)} placeholder={f.placeholder}
                     style={{ width: "100%", padding: "13px 16px", background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 12, color: "#fff", fontSize: 13, outline: "none", fontFamily: "var(--font-dm-sans), sans-serif", boxSizing: "border-box" }} />
                 </div>
               ))}
+
+              <p className="font-dm" style={{ fontSize: 11, color: "rgba(255,255,255,0.3)", letterSpacing: "0.15em", textTransform: "uppercase", margin: "24px 0 16px" }}>— Infos sur ton ami</p>
+              {[
+                { key: "friendName", label: "Nom de ton ami *", placeholder: "Prénom et nom" },
+                { key: "friendContact", label: "Email ou téléphone *", placeholder: "contact@email.com ou +1 514..." },
+                { key: "friendBusiness", label: "Entreprise / Marque", placeholder: "Nom de son entreprise ou marque" },
+              ].map(f => (
+                <div key={f.key} style={{ marginBottom: 14 }}>
+                  <label className="font-dm" style={{ fontSize: 11, color: "rgba(255,255,255,0.35)", letterSpacing: "0.12em", textTransform: "uppercase", display: "block", marginBottom: 6 }}>{f.label}</label>
+                  <input required={f.key !== "friendBusiness"} value={form[f.key as keyof typeof form]} onChange={set(f.key as keyof typeof form)} placeholder={f.placeholder}
+                    style={{ width: "100%", padding: "13px 16px", background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 12, color: "#fff", fontSize: 13, outline: "none", fontFamily: "var(--font-dm-sans), sans-serif", boxSizing: "border-box" }} />
+                </div>
+              ))}
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12, marginBottom: 14 }}>
+                <div>
+                  <label className="font-dm" style={{ fontSize: 11, color: "rgba(255,255,255,0.35)", letterSpacing: "0.12em", textTransform: "uppercase", display: "block", marginBottom: 6 }}>Type de projet</label>
+                  <select value={form.friendProject} onChange={set("friendProject")}
+                    style={{ width: "100%", padding: "13px 16px", background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 12, color: "#fff", fontSize: 13, outline: "none", fontFamily: "var(--font-dm-sans), sans-serif", appearance: "none" }}>
+                    <option value="">Choisir...</option>
+                    <option>Contenu mensuel</option>
+                    <option>Événement</option>
+                    <option>Corporate</option>
+                    <option>Mariage</option>
+                    <option>Publicité</option>
+                    <option>Portrait</option>
+                    <option>Autre</option>
+                  </select>
+                </div>
+                <div>
+                  <label className="font-dm" style={{ fontSize: 11, color: "rgba(255,255,255,0.35)", letterSpacing: "0.12em", textTransform: "uppercase", display: "block", marginBottom: 6 }}>Budget approximatif</label>
+                  <select value={form.friendBudget} onChange={set("friendBudget")}
+                    style={{ width: "100%", padding: "13px 16px", background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 12, color: "#fff", fontSize: 13, outline: "none", fontFamily: "var(--font-dm-sans), sans-serif", appearance: "none" }}>
+                    <option value="">Choisir...</option>
+                    <option>Moins de 1 000 $</option>
+                    <option>1 000 $ — 3 000 $</option>
+                    <option>3 000 $ — 5 000 $</option>
+                    <option>5 000 $ +</option>
+                  </select>
+                </div>
+              </div>
               <button type="submit" disabled={loading} className="font-dm"
                 style={{ width: "100%", display: "flex", alignItems: "center", justifyContent: "center", gap: 8, padding: "14px", background: "#f2f0ec", color: "#0a0a0a", border: "none", borderRadius: 12, fontSize: 13, fontWeight: 700, cursor: "pointer", letterSpacing: "0.06em", marginTop: 8 }}>
                 {loading ? "Envoi..." : <><Gift size={14} /> Envoyer ma référence — 1 000 $ de crédit</>}
