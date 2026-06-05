@@ -8,6 +8,7 @@ import {
   Video, Calendar,
 } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { useRouter } from "@/i18n/navigation";
 
 const inputBase: React.CSSProperties = {
   width: "100%",
@@ -34,6 +35,7 @@ const onBlur = (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement | HTM
 
 export default function Contact() {
   const t = useTranslations("contact");
+  const router = useRouter();
   const processSteps = t.raw("processSteps") as Array<{ n: string; title: string; desc: string }>;
   const projectTypes = t.raw("projectTypes") as Array<{ value: string; label: string }>;
   const budgets = t.raw("budgets") as Array<{ value: string; label: string }>;
@@ -79,7 +81,7 @@ export default function Contact() {
       });
       const data = await res.json();
       if (data.ok) {
-        setSubmitted(true);
+        router.push("/merci");
       } else {
         setError("Erreur lors de l'envoi. Contacte-moi directement sur Instagram ou par email.");
       }

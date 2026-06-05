@@ -3,25 +3,25 @@ import { ReactLenis } from 'lenis/react';
 import React, { forwardRef } from 'react';
 
 const leftCol = [
-  'https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=600&auto=format&fit=crop',
-  'https://images.unsplash.com/photo-1542744094-3a31f272c490?w=600&auto=format&fit=crop',
-  'https://images.unsplash.com/photo-1519741497674-611481863552?w=600&auto=format&fit=crop',
-  'https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?w=600&auto=format&fit=crop',
-  'https://images.unsplash.com/photo-1601233718955-b3b2ab79d37c?w=600&auto=format&fit=crop',
+  '/portfolio/eventt/1.jpg',
+  '/portfolio/corpo/3.jpg',
+  '/portfolio/mariage/3.jpg',
+  '/portfolio/brand/1.jpg',
+  '/portfolio/lyfestyle/1.jpg',
 ];
 
 const centerCol = [
-  'https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=600&auto=format&fit=crop',
-  'https://images.unsplash.com/photo-1473968512647-3e447244af8f?w=600&auto=format&fit=crop',
-  'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=600&auto=format&fit=crop',
+  '/portfolio/professionel/1.JPG',
+  '/portfolio/eventt/5.jpg',
+  '/portfolio/corpo/5.jpg',
 ];
 
 const rightCol = [
-  'https://images.unsplash.com/photo-1519741347686-c1e0aadf4611?w=600&auto=format&fit=crop',
-  'https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=600&auto=format&fit=crop',
-  'https://images.unsplash.com/photo-1488509082528-cefbba5ad692?w=600&auto=format&fit=crop',
-  'https://images.unsplash.com/photo-1605296867304-46d5465a13f1?w=600&auto=format&fit=crop',
-  'https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=600&auto=format&fit=crop',
+  '/portfolio/mariage/5.jpg',
+  '/portfolio/brand/3.jpg',
+  '/portfolio/eventt/7.jpg',
+  '/portfolio/lyfestyle/3.jpg',
+  '/portfolio/corpo/7.jpg',
 ];
 
 const StickyScrollGallery = forwardRef<HTMLElement>((_, ref) => {

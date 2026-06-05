@@ -7,9 +7,9 @@ import { useTranslations } from "next-intl";
 
 const SERVICE_IMAGES: { url: string; position?: string }[] = [
   { url: "/portfolio/professionel/1.JPG", position: "center top" },
-  { url: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=900&q=80" },
-  { url: "https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?w=900&q=80" },
-  { url: "https://images.unsplash.com/photo-1519741497674-611481863552?w=900&q=80" },
+  { url: "/portfolio/eventt/1.jpg" },
+  { url: "/portfolio/corpo/1.1.jpg" },
+  { url: "/portfolio/mariage/1.jpg" },
 ];
 
 export default function Services() {

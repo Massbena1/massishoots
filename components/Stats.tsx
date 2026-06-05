@@ -63,7 +63,6 @@ export default function Stats() {
                 textAlign: "center", padding: "40px 20px",
                 borderRight: i < stats.length - 1 ? "1px solid rgba(255,255,255,0.06)" : "none",
                 transition: "background 0.3s ease",
-                cursor: "none",
               }}
             >
               <Counter value={s.num} suffix={s.suffix} />

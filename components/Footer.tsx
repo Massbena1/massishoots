@@ -50,6 +50,7 @@ export default function Footer() {
       links: [
         { title: t("lPortfolio"), href: "/portfolio" },
         { title: t("lAbout"),     href: "/about" },
+        { title: "Galeries",      href: "/galleries" },
         { title: t("lProcess"),   href: "/#processus" },
         { title: t("lFaq"),       href: "/#faq" },
         { title: t("lContact"),   href: "/contact" },
@@ -97,6 +98,12 @@ export default function Footer() {
             <p className="font-dm" style={{ fontSize: 11, color: "rgba(255,255,255,0.18)" }}>
               © {new Date().getFullYear()} {t("copyright")}
             </p>
+            <Link href="/confidentialite" className="font-dm" style={{ fontSize: 11, color: "rgba(255,255,255,0.18)", textDecoration: "none", marginTop: 6, display: "block", transition: "color 0.2s" }}
+              onMouseEnter={e => (e.currentTarget.style.color = "rgba(255,255,255,0.45)")}
+              onMouseLeave={e => (e.currentTarget.style.color = "rgba(255,255,255,0.18)")}
+            >
+              Politique de confidentialité
+            </Link>
           </AnimatedContainer>
 
           <div className="footer-links-grid">

@@ -60,7 +60,7 @@ const jsonLd = {
         "https://instagram.com/massishoots",
         "https://www.tiktok.com/@massishoots",
         "https://www.linkedin.com/in/massishoots",
-        "https://massishot.myportfolio.com/"
+        "https://massishoots.pixieset.com/"
       ],
       "hasOfferCatalog": {
         "@type": "OfferCatalog",
