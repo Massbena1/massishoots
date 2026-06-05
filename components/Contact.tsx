@@ -2,6 +2,7 @@
 import { useState, useRef } from "react";
 import { motion, useInView, AnimatePresence } from "framer-motion";
 import { CalendarWithTime } from "@/components/ui/calendar-with-time-pressets";
+import CalendlyButton from "@/components/ui/CalendlyButton";
 import {
   Mail, MapPin, Clock, AtSign,
   CheckCircle2, ArrowRight, Phone, BadgeCheck,
@@ -323,6 +324,19 @@ export default function Contact() {
                   setSelectedTime(time);
                 }}
               />
+
+              {/* Calendly link */}
+              <div style={{ marginTop: 16, textAlign: "center" }}>
+                <a
+                  href="https://calendly.com/massishot-ca/consultation-gratuite"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="font-dm"
+                  style={{ fontSize: 12, color: "rgba(196,205,214,0.5)", textDecoration: "none", letterSpacing: "0.06em" }}
+                >
+                  Ou voir mes vraies disponibilités →
+                </a>
+              </div>
 
               {/* Selected summary */}
               <AnimatePresence>
