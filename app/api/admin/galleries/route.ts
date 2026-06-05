@@ -25,6 +25,15 @@ export async function POST(req: NextRequest) {
   return NextResponse.json({ ok: true });
 }
 
+export async function PATCH(req: NextRequest) {
+  const { password, gallery } = await req.json();
+  if (!auth(password)) return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
+
+  const galleries = ((await kv.get<Gallery[]>(KEY)) ?? []).filter(Boolean);
+  await kv.set(KEY, galleries.map(g => g.id === gallery.id ? gallery : g));
+  return NextResponse.json({ ok: true });
+}
+
 export async function DELETE(req: NextRequest) {
   const { password, id } = await req.json();
   if (!auth(password)) return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
