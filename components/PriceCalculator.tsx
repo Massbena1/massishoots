@@ -97,6 +97,14 @@ const QUESTIONS: Record<ProjectId, Question[]> = {
       ],
     },
     {
+      id: "client",
+      label: "C'est pour qui ?",
+      options: [
+        { id: "personne", label: "Personne / Entrepreneur",   sub: "Personal branding, créateur de contenu" },
+        { id: "entreprise", label: "Entreprise / Marque",     sub: "PME, startup, grande entreprise" },
+      ],
+    },
+    {
       id: "duree",
       label: "Durée du contrat ?",
       options: [
@@ -239,6 +247,7 @@ function computePrice(projectId: ProjectId, answers: Answers): { low: number; hi
     base *= reelsM[get("reels")] ?? 1;
     const contenuM: Record<string, number> = { video: 1, photo: 0.85, "photo+video": 1.4 };
     base *= contenuM[get("contenu")] ?? 1;
+    if (get("client") === "entreprise") base *= 1.3;
     const dureeDiscount: Record<string, number> = { "1": 1, "3": 0.92, "6": 0.87, "12": 0.82 };
     const months = parseInt(get("duree") || "1");
     base = base * months * (dureeDiscount[get("duree")] ?? 1);
