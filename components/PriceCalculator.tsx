@@ -2,441 +2,511 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "@/i18n/navigation";
-import { ArrowRight, Camera, Video, Zap, Heart, Users, ChevronRight } from "lucide-react";
+import { ArrowRight, Camera, Video, Zap, Heart, Users, ChevronRight, RotateCcw } from "lucide-react";
 
-// ─── Pricing config ───────────────────────────────────────────────────────────
+// ─── Types ────────────────────────────────────────────────────────────────────
 
-const PROJECT_TYPES = [
-  {
-    id: "mensuel",
-    label: "Contenu Mensuel",
-    sub: "Personal branding, Reels, Face caméra",
-    icon: Zap,
-    base: 2500,
-    unit: "/ mois",
-  },
-  {
-    id: "evenement",
-    label: "Événement",
-    sub: "Soirée, gala, lancement, conférence",
-    icon: Users,
-    base: 1800,
-    unit: "",
-  },
-  {
-    id: "mariage",
-    label: "Mariage",
-    sub: "Cérémonie, préparatifs, réception",
-    icon: Heart,
-    base: 3500,
-    unit: "",
-  },
-  {
-    id: "publicite",
-    label: "Publicité",
-    sub: "Meta Ads, Instagram, UGC vidéo",
-    icon: Video,
-    base: 599,
-    unit: "/ vidéo",
-  },
-  {
-    id: "portrait",
-    label: "Portrait / Corporate",
-    sub: "Session pro, headshots, branding",
-    icon: Camera,
-    base: 450,
-    unit: "/ session",
-  },
+type Answers = Record<string, string | string[]>;
+type Question = {
+  id: string;
+  label: string;
+  multi?: boolean;
+  options: { id: string; label: string; sub?: string }[];
+};
+
+// ─── Project config ───────────────────────────────────────────────────────────
+
+const PROJECTS = [
+  { id: "evenement", label: "Événement", sub: "Soirée, gala, lancement, conférence", icon: Users },
+  { id: "mensuel",   label: "Contenu Mensuel", sub: "Personal branding, Reels, face caméra", icon: Zap },
+  { id: "pub",       label: "Publicité",  sub: "Meta Ads, Instagram, UGC vidéo", icon: Video },
+  { id: "mariage",   label: "Mariage",    sub: "Cérémonie, préparatifs, réception", icon: Heart },
+  { id: "portrait",  label: "Portrait / Corporate", sub: "Headshots, session pro, branding", icon: Camera },
 ] as const;
 
-type ProjectId = typeof PROJECT_TYPES[number]["id"];
+type ProjectId = typeof PROJECTS[number]["id"];
 
-const DURATIONS: Record<ProjectId, { id: string; label: string; multiplier: number }[]> = {
-  mensuel: [
-    { id: "1", label: "1 mois", multiplier: 1 },
-    { id: "3", label: "3 mois", multiplier: 2.75 },
-    { id: "6", label: "6 mois", multiplier: 5.1 },
-    { id: "12", label: "12 mois", multiplier: 9.6 },
-  ],
+// ─── Questions per project ────────────────────────────────────────────────────
+
+const QUESTIONS: Record<ProjectId, Question[]> = {
   evenement: [
-    { id: "4h", label: "Demi-journée (4h)", multiplier: 1 },
-    { id: "8h", label: "Journée complète (8h)", multiplier: 1.7 },
-    { id: "2j", label: "2 jours", multiplier: 2.9 },
-    { id: "3j+", label: "3 jours et plus", multiplier: 4 },
+    {
+      id: "duree",
+      label: "Quelle est la durée de l'événement ?",
+      options: [
+        { id: "4h",  label: "4 heures",        sub: "Cocktail, lancement" },
+        { id: "6h",  label: "6 heures",        sub: "Soirée standard" },
+        { id: "8h",  label: "8 heures",        sub: "Journée complète" },
+        { id: "12h", label: "12 heures +",     sub: "Gala, événement multi-scènes" },
+      ],
+    },
+    {
+      id: "equipe",
+      label: "Combien de personnes sur place ?",
+      options: [
+        { id: "1",  label: "Solo (1 personne)",  sub: "Moi seul" },
+        { id: "2",  label: "Duo (2 personnes)",  sub: "Photographe + vidéaste" },
+        { id: "3+", label: "Équipe (3+)",         sub: "Couverture maximale" },
+      ],
+    },
+    {
+      id: "livrable",
+      label: "Qu'est-ce que vous voulez comme livrable ?",
+      options: [
+        { id: "photo",       label: "Photo seulement" },
+        { id: "video",       label: "Vidéo seulement" },
+        { id: "photo+video", label: "Photo + Vidéo",  sub: "Couverture complète" },
+      ],
+    },
+    {
+      id: "delai",
+      label: "Délai de livraison souhaité ?",
+      options: [
+        { id: "standard", label: "Standard (2–3 semaines)" },
+        { id: "express",  label: "Express (48–72h)", sub: "+20%" },
+      ],
+    },
   ],
+
+  mensuel: [
+    {
+      id: "jours",
+      label: "Nombre de jours de tournage par mois ?",
+      options: [
+        { id: "1j", label: "1 jour / mois",   sub: "Essentiel" },
+        { id: "2j", label: "2 jours / mois",  sub: "Croissance" },
+        { id: "4j", label: "4 jours / mois",  sub: "Présence maximale" },
+      ],
+    },
+    {
+      id: "reels",
+      label: "Combien de vidéos / Reels par mois ?",
+      options: [
+        { id: "4",   label: "4 vidéos / mois" },
+        { id: "8",   label: "8 vidéos / mois" },
+        { id: "12+", label: "12+ vidéos / mois" },
+      ],
+    },
+    {
+      id: "contenu",
+      label: "Type de contenu souhaité ?",
+      options: [
+        { id: "video",       label: "Vidéo seulement",     sub: "Reels, face caméra" },
+        { id: "photo",       label: "Photo seulement",     sub: "Branding, catalogue" },
+        { id: "photo+video", label: "Photo + Vidéo",       sub: "Package complet" },
+      ],
+    },
+    {
+      id: "duree",
+      label: "Durée du contrat ?",
+      options: [
+        { id: "1",  label: "1 mois",   sub: "Essai" },
+        { id: "3",  label: "3 mois",   sub: "Réduction 8%" },
+        { id: "6",  label: "6 mois",   sub: "Réduction 13%" },
+        { id: "12", label: "12 mois",  sub: "Réduction 18%" },
+      ],
+    },
+  ],
+
+  pub: [
+    {
+      id: "nombre",
+      label: "Combien de vidéos publicitaires ?",
+      options: [
+        { id: "1",   label: "1 vidéo" },
+        { id: "3",   label: "3 vidéos",   sub: "−11%" },
+        { id: "5",   label: "5 vidéos",   sub: "−17%" },
+        { id: "10+", label: "10 vidéos +",sub: "−25%" },
+      ],
+    },
+    {
+      id: "format",
+      label: "Format de la vidéo ?",
+      options: [
+        { id: "ugc",   label: "UGC style brut",         sub: "Authentique, sans montage complexe" },
+        { id: "reel",  label: "Reel monté",              sub: "Montage pro, sous-titres, effets" },
+        { id: "long",  label: "Vidéo longue (30–60s)",   sub: "Brand film, ad cinématique" },
+      ],
+    },
+    {
+      id: "strategie",
+      label: "Stratégie & script inclus ?",
+      options: [
+        { id: "non", label: "Non — juste le tournage / montage" },
+        { id: "oui", label: "Oui — script, accroches, stratégie", sub: "+35%" },
+      ],
+    },
+  ],
+
   mariage: [
-    { id: "ceremonie", label: "Cérémonie seulement", multiplier: 0.65 },
-    { id: "journee", label: "Journée complète", multiplier: 1 },
-    { id: "journee-soiree", label: "Journée + Soirée", multiplier: 1.4 },
-    { id: "destination", label: "Mariage destination", multiplier: 2.2 },
+    {
+      id: "heures",
+      label: "Nombre d'heures de couverture ?",
+      options: [
+        { id: "6h",  label: "6 heures",    sub: "Cérémonie + cocktail" },
+        { id: "8h",  label: "8 heures",    sub: "Journée standard" },
+        { id: "10h", label: "10 heures",   sub: "Journée + début soirée" },
+        { id: "12h", label: "12 heures +", sub: "Journée complète" },
+      ],
+    },
+    {
+      id: "livrable",
+      label: "Livrable souhaité ?",
+      options: [
+        { id: "photo", label: "Photo seulement" },
+        { id: "film",  label: "Film seulement",         sub: "Court-métrage cinématique" },
+        { id: "both",  label: "Photo + Film",           sub: "Couverture complète" },
+      ],
+    },
+    {
+      id: "lieu",
+      label: "Où se déroule le mariage ?",
+      options: [
+        { id: "montreal",   label: "Montréal & région" },
+        { id: "qc-on",      label: "Québec / Ontario",  sub: "+15%" },
+        { id: "intl",       label: "International",     sub: "+40% + frais voyage" },
+      ],
+    },
+    {
+      id: "extras",
+      label: "Options supplémentaires ?",
+      multi: true,
+      options: [
+        { id: "none",   label: "Aucun extra" },
+        { id: "album",  label: "Album photo premium",  sub: "+800 $" },
+        { id: "drone",  label: "Drone",                sub: "+600 $" },
+        { id: "2nd",    label: "2e photographe",       sub: "+900 $" },
+      ],
+    },
   ],
-  publicite: [
-    { id: "1", label: "1 vidéo", multiplier: 1 },
-    { id: "3", label: "Pack 3 vidéos", multiplier: 2.7 },
-    { id: "5", label: "Pack 5 vidéos", multiplier: 4.2 },
-    { id: "10", label: "Pack 10 vidéos", multiplier: 7.5 },
-  ],
+
   portrait: [
-    { id: "1h", label: "Session 1h", multiplier: 1 },
-    { id: "2h", label: "Session 2h", multiplier: 1.7 },
-    { id: "demi", label: "Demi-journée (4h)", multiplier: 2.8 },
+    {
+      id: "duree",
+      label: "Durée de la session ?",
+      options: [
+        { id: "1h",   label: "1 heure" },
+        { id: "2h",   label: "2 heures" },
+        { id: "demi", label: "Demi-journée (4h)", sub: "Branding complet" },
+      ],
+    },
+    {
+      id: "looks",
+      label: "Nombre de looks / tenues ?",
+      options: [
+        { id: "1", label: "1 look" },
+        { id: "2", label: "2 looks" },
+        { id: "3", label: "3 looks +" },
+      ],
+    },
+    {
+      id: "photos",
+      label: "Nombre de photos retouchées livrées ?",
+      options: [
+        { id: "10",  label: "10 photos" },
+        { id: "25",  label: "25 photos" },
+        { id: "50",  label: "50 photos +" },
+      ],
+    },
   ],
 };
 
-const DELIVERABLES = [
-  { id: "photo", label: "Photos retouchées", addPercent: 0 },
-  { id: "video", label: "Vidéo / Reel monté", addPercent: 35 },
-  { id: "rush", label: "Livraison express (48h)", addPercent: 20 },
-  { id: "droits", label: "Droits commerciaux inclus", addPercent: 15 },
-];
+// ─── Pricing engine ───────────────────────────────────────────────────────────
+
+function computePrice(projectId: ProjectId, answers: Answers): { low: number; high: number } | null {
+  const get = (id: string) => answers[id] as string;
+  const has = (id: string, val: string) => {
+    const a = answers[id];
+    return Array.isArray(a) ? a.includes(val) : a === val;
+  };
+
+  let base = 0;
+
+  if (projectId === "evenement") {
+    const dureeBase: Record<string, number> = { "4h": 1500, "6h": 2200, "8h": 2900, "12h": 4500 };
+    base = dureeBase[get("duree")] ?? 1500;
+    const equipeM: Record<string, number> = { "1": 1, "2": 1.7, "3+": 2.3 };
+    base *= equipeM[get("equipe")] ?? 1;
+    const livrableM: Record<string, number> = { photo: 1, video: 1.2, "photo+video": 1.8 };
+    base *= livrableM[get("livrable")] ?? 1;
+    if (get("delai") === "express") base *= 1.2;
+  }
+
+  if (projectId === "mensuel") {
+    const joursBase: Record<string, number> = { "1j": 2500, "2j": 4000, "4j": 6500 };
+    base = joursBase[get("jours")] ?? 2500;
+    const reelsM: Record<string, number> = { "4": 1, "8": 1.35, "12+": 1.7 };
+    base *= reelsM[get("reels")] ?? 1;
+    const contenuM: Record<string, number> = { video: 1, photo: 0.85, "photo+video": 1.4 };
+    base *= contenuM[get("contenu")] ?? 1;
+    const dureeDiscount: Record<string, number> = { "1": 1, "3": 0.92, "6": 0.87, "12": 0.82 };
+    const months = parseInt(get("duree") || "1");
+    base = base * months * (dureeDiscount[get("duree")] ?? 1);
+  }
+
+  if (projectId === "pub") {
+    const nombreBase: Record<string, number> = { "1": 599, "3": 1597, "5": 2495, "10+": 4499 };
+    base = nombreBase[get("nombre")] ?? 599;
+    const formatM: Record<string, number> = { ugc: 1, reel: 1.3, long: 1.6 };
+    base *= formatM[get("format")] ?? 1;
+    if (get("strategie") === "oui") base *= 1.35;
+  }
+
+  if (projectId === "mariage") {
+    const heuresBase: Record<string, number> = { "6h": 3200, "8h": 4200, "10h": 5200, "12h": 6500 };
+    base = heuresBase[get("heures")] ?? 4200;
+    const livrableM: Record<string, number> = { photo: 1, film: 1.15, both: 1.7 };
+    base *= livrableM[get("livrable")] ?? 1;
+    const lieuM: Record<string, number> = { montreal: 1, "qc-on": 1.15, intl: 1.4 };
+    base *= lieuM[get("lieu")] ?? 1;
+    if (has("extras", "album")) base += 800;
+    if (has("extras", "drone")) base += 600;
+    if (has("extras", "2nd")) base += 900;
+  }
+
+  if (projectId === "portrait") {
+    const dureeBase: Record<string, number> = { "1h": 450, "2h": 750, demi: 1400 };
+    base = dureeBase[get("duree")] ?? 450;
+    const looksM: Record<string, number> = { "1": 1, "2": 1.2, "3": 1.4 };
+    base *= looksM[get("looks")] ?? 1;
+    const photosM: Record<string, number> = { "10": 1, "25": 1.3, "50": 1.6 };
+    base *= photosM[get("photos")] ?? 1;
+  }
+
+  if (!base) return null;
+  const low = Math.round(base / 50) * 50;
+  const high = Math.round(low * 1.3 / 50) * 50;
+  return { low, high };
+}
 
 // ─── Component ────────────────────────────────────────────────────────────────
 
 export default function PriceCalculator() {
-  const [step, setStep] = useState(1);
   const [projectId, setProjectId] = useState<ProjectId | null>(null);
-  const [durationId, setDurationId] = useState<string | null>(null);
-  const [deliverables, setDeliverables] = useState<string[]>(["photo"]);
+  const [questionStep, setQuestionStep] = useState(0);
+  const [answers, setAnswers] = useState<Answers>({});
+  const [done, setDone] = useState(false);
 
-  const project = PROJECT_TYPES.find(p => p.id === projectId);
-  const durations = projectId ? DURATIONS[projectId] : [];
-  const duration = durations.find(d => d.id === durationId);
+  const questions = projectId ? QUESTIONS[projectId] : [];
+  const currentQ = questions[questionStep];
+  const totalSteps = questions.length;
+  const isLast = questionStep === totalSteps - 1;
 
-  const calcPrice = () => {
-    if (!project || !duration) return null;
-    let base = project.base * duration.multiplier;
-    let addPct = 0;
-    for (const d of DELIVERABLES) {
-      if (deliverables.includes(d.id) && d.id !== "photo") addPct += d.addPercent;
+  const answer = answers[currentQ?.id ?? ""];
+  const hasAnswer = answer !== undefined && (Array.isArray(answer) ? answer.length > 0 : true);
+
+  const price = done && projectId ? computePrice(projectId, answers) : null;
+
+  const selectProject = (id: ProjectId) => {
+    setProjectId(id);
+    setQuestionStep(0);
+    setAnswers({});
+    setDone(false);
+  };
+
+  const setAnswer = (qId: string, value: string, multi?: boolean) => {
+    if (multi) {
+      setAnswers(prev => {
+        const arr = (prev[qId] as string[] | undefined) ?? [];
+        if (value === "none") return { ...prev, [qId]: ["none"] };
+        const withoutNone = arr.filter(v => v !== "none");
+        return {
+          ...prev,
+          [qId]: withoutNone.includes(value)
+            ? withoutNone.filter(v => v !== value)
+            : [...withoutNone, value],
+        };
+      });
+    } else {
+      setAnswers(prev => ({ ...prev, [qId]: value }));
     }
-    base = base * (1 + addPct / 100);
-    const low = Math.round(base / 100) * 100;
-    const high = Math.round(low * 1.35 / 100) * 100;
-    return { low, high };
   };
 
-  const price = step === 3 ? calcPrice() : null;
-
-  const toggleDeliverable = (id: string) => {
-    if (id === "photo") return;
-    setDeliverables(prev =>
-      prev.includes(id) ? prev.filter(d => d !== id) : [...prev, id]
-    );
+  const goNext = () => {
+    if (isLast) { setDone(true); }
+    else setQuestionStep(s => s + 1);
   };
 
-  const goNext = () => setStep(s => Math.min(s + 1, 3));
-  const goBack = () => setStep(s => Math.max(s - 1, 1));
-  const reset = () => { setStep(1); setProjectId(null); setDurationId(null); setDeliverables(["photo"]); };
+  const goBack = () => {
+    if (done) { setDone(false); }
+    else if (questionStep === 0) { setProjectId(null); }
+    else setQuestionStep(s => s - 1);
+  };
+
+  const reset = () => { setProjectId(null); setQuestionStep(0); setAnswers({}); setDone(false); };
+
+  const globalStep = !projectId ? 0 : done ? totalSteps + 1 : questionStep + 1;
+  const totalGlobal = totalSteps + 2;
 
   return (
-    <section style={{ padding: "80px 0 120px", background: "transparent" }}>
-      <div style={{ maxWidth: 800, margin: "0 auto", padding: "0 24px" }}>
+    <section style={{ padding: "80px 0 120px" }}>
+      <div style={{ maxWidth: 760, margin: "0 auto", padding: "0 24px" }}>
 
         {/* Header */}
-        <div style={{ textAlign: "center", marginBottom: 56 }}>
+        <div style={{ textAlign: "center", marginBottom: 48 }}>
           <span className="font-dm" style={{ fontSize: 11, letterSpacing: "0.3em", textTransform: "uppercase", color: "#c4cdd6" }}>
             — Estimez votre budget
           </span>
           <h2 className="font-bebas" style={{ fontSize: "clamp(40px, 6vw, 64px)", color: "#fff", letterSpacing: "0.03em", marginTop: 12, lineHeight: 0.95 }}>
             CALCULATEUR<br />DE PRIX
           </h2>
-          <p className="font-dm" style={{ fontSize: 13, color: "rgba(255,255,255,0.4)", marginTop: 16, lineHeight: 1.7 }}>
-            Obtenez une fourchette instantanée — sans engagement.
+          <p className="font-dm" style={{ fontSize: 13, color: "rgba(255,255,255,0.4)", marginTop: 16 }}>
+            Répondez à quelques questions — obtenez une fourchette instantanée, sans engagement.
           </p>
         </div>
 
-        {/* Steps indicator */}
-        <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 0, marginBottom: 48 }}>
-          {[1, 2, 3].map((s, i) => (
-            <div key={s} style={{ display: "flex", alignItems: "center" }}>
-              <div style={{
-                width: 32, height: 32, borderRadius: "50%",
-                background: step >= s ? "#f2f0ec" : "rgba(255,255,255,0.06)",
-                border: `1px solid ${step >= s ? "#f2f0ec" : "rgba(255,255,255,0.12)"}`,
-                display: "flex", alignItems: "center", justifyContent: "center",
-                transition: "all 0.3s",
-              }}>
-                <span className="font-dm" style={{ fontSize: 12, fontWeight: 700, color: step >= s ? "#0a0a0a" : "rgba(255,255,255,0.3)" }}>
-                  {s}
-                </span>
-              </div>
-              {i < 2 && (
-                <div style={{ width: 60, height: 1, background: step > s ? "rgba(242,240,236,0.4)" : "rgba(255,255,255,0.08)", transition: "background 0.3s" }} />
-              )}
-            </div>
-          ))}
-        </div>
+        {/* Progress bar */}
+        {projectId && (
+          <div style={{ height: 2, background: "rgba(255,255,255,0.06)", borderRadius: 9999, marginBottom: 32, overflow: "hidden" }}>
+            <motion.div
+              animate={{ width: `${(globalStep / totalGlobal) * 100}%` }}
+              transition={{ duration: 0.4 }}
+              style={{ height: "100%", background: "#c4cdd6", borderRadius: 9999 }}
+            />
+          </div>
+        )}
 
-        {/* Steps */}
+        {/* Card */}
         <div style={{
           background: "rgba(255,255,255,0.025)",
           border: "1px solid rgba(255,255,255,0.08)",
           borderRadius: 24,
           overflow: "hidden",
+          minHeight: 320,
         }}>
           <AnimatePresence mode="wait">
-            {step === 1 && (
-              <motion.div
-                key="step1"
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -20 }}
-                transition={{ duration: 0.25 }}
-                style={{ padding: "36px 32px" }}
-              >
-                <p className="font-dm" style={{ fontSize: 12, color: "rgba(255,255,255,0.3)", letterSpacing: "0.15em", textTransform: "uppercase", marginBottom: 24 }}>
-                  Étape 1 — Type de projet
+
+            {/* Step 0 — choose project */}
+            {!projectId && (
+              <motion.div key="project" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -12 }} transition={{ duration: 0.25 }} style={{ padding: "36px 28px" }}>
+                <p className="font-dm" style={{ fontSize: 11, color: "rgba(255,255,255,0.3)", letterSpacing: "0.2em", textTransform: "uppercase", marginBottom: 24 }}>
+                  Quel type de projet ?
                 </p>
-                <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))", gap: 12 }}>
-                  {PROJECT_TYPES.map(pt => {
-                    const Icon = pt.icon;
-                    const selected = projectId === pt.id;
+                <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))", gap: 10 }}>
+                  {PROJECTS.map(p => {
+                    const Icon = p.icon;
                     return (
-                      <button
-                        key={pt.id}
-                        onClick={() => { setProjectId(pt.id); setDurationId(null); }}
-                        className="font-dm"
-                        style={{
-                          padding: "18px 20px",
-                          background: selected ? "rgba(242,240,236,0.08)" : "rgba(255,255,255,0.03)",
-                          border: `1px solid ${selected ? "rgba(242,240,236,0.35)" : "rgba(255,255,255,0.08)"}`,
-                          borderRadius: 14,
-                          cursor: "pointer",
-                          textAlign: "left",
-                          transition: "all 0.2s",
-                        }}
+                      <button key={p.id} onClick={() => selectProject(p.id)} className="font-dm"
+                        style={{ padding: "18px 16px", background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 14, cursor: "pointer", textAlign: "left", transition: "all 0.2s" }}
+                        onMouseEnter={e => { e.currentTarget.style.borderColor = "rgba(196,205,214,0.3)"; e.currentTarget.style.background = "rgba(255,255,255,0.06)"; }}
+                        onMouseLeave={e => { e.currentTarget.style.borderColor = "rgba(255,255,255,0.08)"; e.currentTarget.style.background = "rgba(255,255,255,0.03)"; }}
                       >
-                        <Icon size={18} color={selected ? "#f2f0ec" : "rgba(255,255,255,0.3)"} style={{ marginBottom: 10 }} />
-                        <div style={{ fontSize: 13, fontWeight: 600, color: selected ? "#fff" : "rgba(255,255,255,0.65)", marginBottom: 4 }}>
-                          {pt.label}
-                        </div>
-                        <div style={{ fontSize: 11, color: "rgba(255,255,255,0.28)" }}>
-                          {pt.sub}
-                        </div>
+                        <Icon size={18} color="rgba(196,205,214,0.7)" style={{ marginBottom: 10 }} />
+                        <div style={{ fontSize: 13, fontWeight: 600, color: "rgba(255,255,255,0.85)", marginBottom: 4 }}>{p.label}</div>
+                        <div style={{ fontSize: 11, color: "rgba(255,255,255,0.28)" }}>{p.sub}</div>
                       </button>
                     );
                   })}
                 </div>
-                <div style={{ marginTop: 28, display: "flex", justifyContent: "flex-end" }}>
-                  <button
-                    onClick={goNext}
-                    disabled={!projectId}
-                    className="font-dm"
-                    style={{
-                      display: "inline-flex", alignItems: "center", gap: 8,
-                      padding: "12px 24px",
-                      background: projectId ? "#f2f0ec" : "rgba(255,255,255,0.06)",
-                      color: projectId ? "#0a0a0a" : "rgba(255,255,255,0.2)",
-                      border: "none", borderRadius: 9999,
-                      fontSize: 13, fontWeight: 700, cursor: projectId ? "pointer" : "not-allowed",
-                      transition: "all 0.2s",
-                    }}
-                  >
-                    Continuer <ChevronRight size={14} />
-                  </button>
-                </div>
               </motion.div>
             )}
 
-            {step === 2 && (
-              <motion.div
-                key="step2"
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -20 }}
-                transition={{ duration: 0.25 }}
-                style={{ padding: "36px 32px" }}
-              >
-                <p className="font-dm" style={{ fontSize: 12, color: "rgba(255,255,255,0.3)", letterSpacing: "0.15em", textTransform: "uppercase", marginBottom: 24 }}>
-                  Étape 2 — {project?.id === "mensuel" ? "Durée du contrat" : project?.id === "publicite" ? "Nombre de vidéos" : "Durée / formule"}
+            {/* Questions */}
+            {projectId && !done && currentQ && (
+              <motion.div key={`q-${questionStep}`} initial={{ opacity: 0, x: 16 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -16 }} transition={{ duration: 0.22 }} style={{ padding: "36px 28px" }}>
+                <p className="font-dm" style={{ fontSize: 11, color: "rgba(255,255,255,0.3)", letterSpacing: "0.2em", textTransform: "uppercase", marginBottom: 8 }}>
+                  Question {questionStep + 1} / {totalSteps}
                 </p>
-                <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-                  {durations.map(d => {
-                    const selected = durationId === d.id;
-                    const estPrice = Math.round(project!.base * d.multiplier / 100) * 100;
+                <p className="font-dm" style={{ fontSize: 16, color: "#fff", fontWeight: 600, marginBottom: 24, lineHeight: 1.4 }}>
+                  {currentQ.label}
+                </p>
+                <div style={{ display: "flex", flexDirection: "column", gap: 8, marginBottom: 28 }}>
+                  {currentQ.options.map(opt => {
+                    const sel = currentQ.multi
+                      ? ((answers[currentQ.id] as string[]) ?? []).includes(opt.id)
+                      : answers[currentQ.id] === opt.id;
                     return (
-                      <button
-                        key={d.id}
-                        onClick={() => setDurationId(d.id)}
-                        className="font-dm"
-                        style={{
-                          display: "flex", alignItems: "center", justifyContent: "space-between",
-                          padding: "16px 20px",
-                          background: selected ? "rgba(242,240,236,0.08)" : "rgba(255,255,255,0.02)",
-                          border: `1px solid ${selected ? "rgba(242,240,236,0.35)" : "rgba(255,255,255,0.07)"}`,
-                          borderRadius: 12, cursor: "pointer",
-                          transition: "all 0.2s", textAlign: "left",
-                        }}
+                      <button key={opt.id} onClick={() => setAnswer(currentQ.id, opt.id, currentQ.multi)} className="font-dm"
+                        style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "14px 18px", background: sel ? "rgba(242,240,236,0.07)" : "rgba(255,255,255,0.02)", border: `1px solid ${sel ? "rgba(242,240,236,0.3)" : "rgba(255,255,255,0.07)"}`, borderRadius: 12, cursor: "pointer", textAlign: "left", transition: "all 0.18s" }}
                       >
                         <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-                          <div style={{
-                            width: 18, height: 18, borderRadius: "50%",
-                            border: `2px solid ${selected ? "#f2f0ec" : "rgba(255,255,255,0.2)"}`,
-                            background: selected ? "#f2f0ec" : "transparent",
-                            flexShrink: 0, transition: "all 0.2s",
-                            display: "flex", alignItems: "center", justifyContent: "center",
-                          }}>
-                            {selected && <div style={{ width: 6, height: 6, borderRadius: "50%", background: "#0a0a0a" }} />}
+                          <div style={{ width: currentQ.multi ? 16 : 16, height: currentQ.multi ? 16 : 16, borderRadius: currentQ.multi ? 4 : "50%", border: `2px solid ${sel ? "#f2f0ec" : "rgba(255,255,255,0.2)"}`, background: sel ? "#f2f0ec" : "transparent", flexShrink: 0, display: "flex", alignItems: "center", justifyContent: "center", transition: "all 0.18s" }}>
+                            {sel && <span style={{ fontSize: 9, color: "#0a0a0a", fontWeight: 900 }}>✓</span>}
                           </div>
-                          <span style={{ fontSize: 14, color: selected ? "#fff" : "rgba(255,255,255,0.6)" }}>
-                            {d.label}
-                          </span>
+                          <div>
+                            <span style={{ fontSize: 13, color: sel ? "#fff" : "rgba(255,255,255,0.65)" }}>{opt.label}</span>
+                            {opt.sub && <span style={{ fontSize: 11, color: "rgba(255,255,255,0.28)", display: "block", marginTop: 2 }}>{opt.sub}</span>}
+                          </div>
                         </div>
-                        <span className="font-bebas" style={{ fontSize: 18, color: selected ? "#c4cdd6" : "rgba(255,255,255,0.2)", letterSpacing: "0.06em" }}>
-                          ~{estPrice.toLocaleString()} ${project?.unit}
-                        </span>
                       </button>
                     );
                   })}
                 </div>
-                <div style={{ marginTop: 28, display: "flex", justifyContent: "space-between" }}>
-                  <button onClick={goBack} className="font-dm" style={{ padding: "12px 20px", background: "none", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 9999, color: "rgba(255,255,255,0.35)", fontSize: 13, cursor: "pointer" }}>
-                    Retour
+                <div style={{ display: "flex", justifyContent: "space-between" }}>
+                  <button onClick={goBack} className="font-dm" style={{ padding: "11px 18px", background: "none", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 9999, color: "rgba(255,255,255,0.35)", fontSize: 13, cursor: "pointer" }}>
+                    ← Retour
                   </button>
-                  <button
-                    onClick={goNext}
-                    disabled={!durationId}
-                    className="font-dm"
-                    style={{
-                      display: "inline-flex", alignItems: "center", gap: 8,
-                      padding: "12px 24px",
-                      background: durationId ? "#f2f0ec" : "rgba(255,255,255,0.06)",
-                      color: durationId ? "#0a0a0a" : "rgba(255,255,255,0.2)",
-                      border: "none", borderRadius: 9999,
-                      fontSize: 13, fontWeight: 700, cursor: durationId ? "pointer" : "not-allowed",
-                      transition: "all 0.2s",
-                    }}
+                  <button onClick={goNext} disabled={!hasAnswer} className="font-dm"
+                    style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "11px 22px", background: hasAnswer ? "#f2f0ec" : "rgba(255,255,255,0.06)", color: hasAnswer ? "#0a0a0a" : "rgba(255,255,255,0.2)", border: "none", borderRadius: 9999, fontSize: 13, fontWeight: 700, cursor: hasAnswer ? "pointer" : "not-allowed", transition: "all 0.2s" }}
                   >
-                    Voir le prix <ChevronRight size={14} />
+                    {isLast ? "Voir mon estimation" : "Suivant"} <ChevronRight size={14} />
                   </button>
                 </div>
               </motion.div>
             )}
 
-            {step === 3 && (
-              <motion.div
-                key="step3"
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -20 }}
-                transition={{ duration: 0.25 }}
-                style={{ padding: "36px 32px" }}
-              >
-                <p className="font-dm" style={{ fontSize: 12, color: "rgba(255,255,255,0.3)", letterSpacing: "0.15em", textTransform: "uppercase", marginBottom: 24 }}>
-                  Étape 3 — Livrables & options
-                </p>
-
-                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10, marginBottom: 36 }} className="deliverables-grid">
-                  {DELIVERABLES.map(d => {
-                    const selected = deliverables.includes(d.id);
-                    const locked = d.id === "photo";
-                    return (
-                      <button
-                        key={d.id}
-                        onClick={() => toggleDeliverable(d.id)}
-                        className="font-dm"
-                        style={{
-                          display: "flex", alignItems: "center", gap: 12,
-                          padding: "14px 16px",
-                          background: selected ? "rgba(242,240,236,0.07)" : "rgba(255,255,255,0.02)",
-                          border: `1px solid ${selected ? "rgba(242,240,236,0.3)" : "rgba(255,255,255,0.07)"}`,
-                          borderRadius: 12, cursor: locked ? "default" : "pointer",
-                          textAlign: "left", transition: "all 0.2s",
-                        }}
-                      >
-                        <div style={{
-                          width: 18, height: 18, borderRadius: 4, flexShrink: 0,
-                          border: `2px solid ${selected ? "#f2f0ec" : "rgba(255,255,255,0.2)"}`,
-                          background: selected ? "#f2f0ec" : "transparent",
-                          display: "flex", alignItems: "center", justifyContent: "center",
-                          transition: "all 0.2s",
-                        }}>
-                          {selected && <span style={{ fontSize: 10, color: "#0a0a0a", fontWeight: 900 }}>✓</span>}
-                        </div>
-                        <div>
-                          <div style={{ fontSize: 13, color: selected ? "#fff" : "rgba(255,255,255,0.5)" }}>
-                            {d.label}
-                          </div>
-                          {d.addPercent > 0 && (
-                            <div style={{ fontSize: 10, color: "rgba(255,255,255,0.25)", marginTop: 2 }}>
-                              +{d.addPercent}%
-                            </div>
-                          )}
-                        </div>
-                      </button>
-                    );
-                  })}
-                </div>
-
-                {/* Price result */}
-                {price && (
-                  <motion.div
-                    initial={{ opacity: 0, y: 12 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.4 }}
-                    style={{
-                      padding: "28px 28px 24px",
-                      background: "rgba(196,205,214,0.05)",
-                      border: "1px solid rgba(196,205,214,0.15)",
-                      borderRadius: 18,
-                      marginBottom: 24,
-                      position: "relative",
-                      overflow: "hidden",
-                    }}
-                  >
-                    <div style={{ position: "absolute", top: 0, left: 20, right: 20, height: 1, background: "linear-gradient(90deg, transparent, rgba(196,205,214,0.3), transparent)" }} />
-                    <p className="font-dm" style={{ fontSize: 11, letterSpacing: "0.2em", color: "rgba(255,255,255,0.3)", textTransform: "uppercase", marginBottom: 12 }}>
+            {/* Result */}
+            {done && (
+              <motion.div key="result" initial={{ opacity: 0, scale: 0.98 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.3 }} style={{ padding: "36px 28px" }}>
+                {price ? (
+                  <>
+                    <p className="font-dm" style={{ fontSize: 11, color: "rgba(255,255,255,0.3)", letterSpacing: "0.2em", textTransform: "uppercase", marginBottom: 20 }}>
                       Estimation pour votre projet
                     </p>
-                    <div style={{ display: "flex", alignItems: "baseline", gap: 8, marginBottom: 8 }}>
-                      <span className="font-bebas" style={{ fontSize: "clamp(40px, 6vw, 56px)", color: "#fff", letterSpacing: "0.03em", lineHeight: 1 }}>
-                        {price.low.toLocaleString()} $
-                      </span>
-                      <span className="font-bebas" style={{ fontSize: 28, color: "rgba(255,255,255,0.3)", letterSpacing: "0.03em" }}>
-                        — {price.high.toLocaleString()} $
-                      </span>
+                    <motion.div
+                      initial={{ opacity: 0, y: 12 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.1 }}
+                      style={{ marginBottom: 28, padding: "28px 24px", background: "rgba(196,205,214,0.05)", border: "1px solid rgba(196,205,214,0.15)", borderRadius: 18, position: "relative", overflow: "hidden" }}
+                    >
+                      <div style={{ position: "absolute", top: 0, left: 20, right: 20, height: 1, background: "linear-gradient(90deg, transparent, rgba(196,205,214,0.3), transparent)" }} />
+                      <div style={{ display: "flex", alignItems: "baseline", gap: 12, flexWrap: "wrap" }}>
+                        <span className="font-bebas" style={{ fontSize: "clamp(44px, 7vw, 64px)", color: "#fff", letterSpacing: "0.03em", lineHeight: 1 }}>
+                          {price.low.toLocaleString("fr-CA")} $
+                        </span>
+                        <span className="font-bebas" style={{ fontSize: 28, color: "rgba(255,255,255,0.3)", letterSpacing: "0.03em" }}>
+                          — {price.high.toLocaleString("fr-CA")} $
+                        </span>
+                      </div>
+                      <p className="font-dm" style={{ fontSize: 12, color: "rgba(255,255,255,0.3)", marginTop: 12, lineHeight: 1.7 }}>
+                        Fourchette indicative en dollars canadiens, taxes en sus.<br />
+                        Prix exact confirmé lors de votre consultation gratuite.
+                      </p>
+                    </motion.div>
+                    <div style={{ display: "flex", gap: 10, flexWrap: "wrap", alignItems: "center", justifyContent: "space-between" }}>
+                      <button onClick={goBack} className="font-dm" style={{ padding: "11px 18px", background: "none", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 9999, color: "rgba(255,255,255,0.35)", fontSize: 13, cursor: "pointer" }}>
+                        ← Modifier
+                      </button>
+                      <div style={{ display: "flex", gap: 10 }}>
+                        <button onClick={reset} className="font-dm" style={{ display: "flex", alignItems: "center", gap: 6, padding: "11px 16px", background: "none", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 9999, color: "rgba(255,255,255,0.35)", fontSize: 13, cursor: "pointer" }}>
+                          <RotateCcw size={12} /> Recommencer
+                        </button>
+                        <Link href="/contact" className="font-dm" style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "11px 22px", background: "#f2f0ec", color: "#0a0a0a", borderRadius: 9999, textDecoration: "none", fontSize: 13, fontWeight: 700, letterSpacing: "0.05em" }}>
+                          Réserver ma consultation <ArrowRight size={13} />
+                        </Link>
+                      </div>
                     </div>
-                    <p className="font-dm" style={{ fontSize: 12, color: "rgba(255,255,255,0.3)", lineHeight: 1.6 }}>
-                      Fourchette indicative · Prix final confirmé après consultation gratuite.<br />
-                      {project?.id === "mariage" ? "Mariages sur devis — chaque projet est unique." : "Taxes non incluses."}
+                  </>
+                ) : (
+                  <div style={{ textAlign: "center", padding: "20px 0" }}>
+                    <p className="font-dm" style={{ fontSize: 15, color: "rgba(255,255,255,0.5)", marginBottom: 24 }}>
+                      Ce projet nécessite un devis personnalisé.
                     </p>
-                  </motion.div>
-                )}
-
-                <div style={{ display: "flex", gap: 10, flexWrap: "wrap", justifyContent: "space-between", alignItems: "center" }}>
-                  <button onClick={goBack} className="font-dm" style={{ padding: "12px 20px", background: "none", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 9999, color: "rgba(255,255,255,0.35)", fontSize: 13, cursor: "pointer" }}>
-                    Retour
-                  </button>
-                  <div style={{ display: "flex", gap: 10 }}>
-                    <button onClick={reset} className="font-dm" style={{ padding: "12px 18px", background: "none", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 9999, color: "rgba(255,255,255,0.35)", fontSize: 13, cursor: "pointer" }}>
-                      Recommencer
-                    </button>
-                    <Link href="/contact" className="font-dm" style={{
-                      display: "inline-flex", alignItems: "center", gap: 8,
-                      padding: "12px 24px",
-                      background: "#f2f0ec", color: "#0a0a0a",
-                      borderRadius: 9999, textDecoration: "none",
-                      fontSize: 13, fontWeight: 700, letterSpacing: "0.05em",
-                    }}>
-                      Réserver ma consultation <ArrowRight size={13} />
+                    <Link href="/contact" className="font-dm" style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "13px 28px", background: "#f2f0ec", color: "#0a0a0a", borderRadius: 9999, textDecoration: "none", fontSize: 13, fontWeight: 700 }}>
+                      Obtenir un devis <ArrowRight size={13} />
                     </Link>
                   </div>
-                </div>
+                )}
               </motion.div>
             )}
+
           </AnimatePresence>
         </div>
 
-        <p className="font-dm" style={{ textAlign: "center", fontSize: 11, color: "rgba(255,255,255,0.18)", marginTop: 20 }}>
-          * Les prix sont en dollars canadiens et à titre indicatif. Chaque projet est discuté lors d&apos;un appel gratuit.
+        <p className="font-dm" style={{ textAlign: "center", fontSize: 11, color: "rgba(255,255,255,0.18)", marginTop: 16 }}>
+          * Prix indicatifs en CAD. Consultation gratuite pour confirmer le devis exact.
         </p>
       </div>
-
-      <style>{`
-        @media (max-width: 600px) {
-          .deliverables-grid { grid-template-columns: 1fr !important; }
-        }
-      `}</style>
     </section>
   );
 }
