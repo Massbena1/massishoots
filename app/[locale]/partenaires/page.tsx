@@ -25,6 +25,11 @@ const AVANTAGES = [
     title: "Droits commerciaux inclus",
     desc: "Tous les livrables livrés avec droits d'utilisation commerciale complets pour vos clients.",
   },
+  {
+    icon: Handshake,
+    title: "Commission de référencement",
+    desc: "10% du contrat sur chaque client référé. Versé après la signature et le premier paiement.",
+  },
 ];
 
 const SERVICES_B2B = [
