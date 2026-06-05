@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { kv } from "@vercel/kv";
-import type { ClientPortal } from "@/app/api/client/auth/route";
+import type { ClientPortal } from "@/lib/clientPortal";
 
 const KEY = "client-portals";
 
