@@ -232,20 +232,19 @@
         "desc": "Des vidéos pensées pour capter l'attention dès les premières secondes."
       },
       {
-        "label": "04 · Intelligence artificielle",
-        "badge": "NEW GEN",
-        "title": "Creative Direction\nPowered by AI",
-        "aiLabel": "IA utilisée pour :",
+        "label": "04 · IA au service de l'humain",
+        "badge": "100% HUMAIN",
+        "title": "L'IA accélère.\nL'humain crée.",
+        "aiLabel": "IA utilisée pour livrer plus vite :",
         "aiUses": [
-          "Transitions avancées",
-          "Effets visuels",
-          "Génération créative",
-          "Sound design",
-          "Amélioration vidéo",
-          "Concepts visuels",
-          "Automatisation créative"
+          "Sous-titres automatiques",
+          "Retouche intelligente",
+          "Color grading assisté",
+          "Organisation des fichiers",
+          "Transitions fluides",
+          "Sound design rapide"
         ],
-        "desc": "MassiShoots intègre les outils IA modernes pour créer des visuels plus dynamiques, immersifs et innovants."
+        "desc": "Chaque cadrage, chaque émotion, chaque décision créative est 100% humaine. L'IA nous libère du temps technique pour nous concentrer sur ce qui compte : ton histoire."
       }
     ]
   },
@@ -314,7 +313,7 @@
       },
       {
         "q": "Utilisez-vous l'intelligence artificielle ?",
-        "a": "Oui. MassiShoots intègre certains outils IA modernes pour enrichir les transitions, les effets visuels et certaines animations créatives afin d'apporter une touche plus moderne et immersive au contenu.\n\nCependant, tout le montage principal, la colorimétrie et la direction artistique sont réalisés manuellement avec des logiciels professionnels comme Adobe Premiere Pro, DaVinci Resolve et After Effects.\n\nNotre objectif est de conserver un rendu haut de gamme, cinématique et authentique."
+        "a": "Oui, mais de façon très précise. On utilise l'IA pour les tâches techniques : sous-titres automatiques, retouche rapide, organisation des fichiers, color grading assisté. Ça nous permet de livrer plus vite sans sacrifier la qualité.\n\nMais chaque décision créative — le cadrage, la lumière, le rythme du montage, l'émotion capturée — est 100% humaine. L'IA ne remplace pas l'œil ni le jugement artistique. Elle libère du temps pour qu'on se concentre sur ce qui compte vraiment : raconter ton histoire."
       }
     ]
   },
