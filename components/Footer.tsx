@@ -55,6 +55,7 @@ export default function Footer() {
         { title: t("lProcess"),   href: "/#processus" },
         { title: t("lFaq"),       href: "/#faq" },
         { title: t("lContact"),   href: "/contact" },
+        { title: "Référer un ami 🎁", href: "/referral" },
       ],
     },
     {
