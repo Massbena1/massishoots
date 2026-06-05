@@ -9,6 +9,7 @@ import Portfolio from "@/components/Portfolio";
 import Process from "@/components/Process";
 import WhyUs from "@/components/WhyUs";
 import Testimonials from "@/components/Testimonials";
+import ClientResults from "@/components/ClientResults";
 import Faq from "@/components/Faq";
 import CtaFinal from "@/components/CtaFinal";
 import Footer from "@/components/Footer";
@@ -41,6 +42,7 @@ export default function Home() {
       <Portfolio />
       <Process />
       <WhyUs />
+      <ClientResults />
       <Testimonials />
       <Faq />
       <CtaFinal />
