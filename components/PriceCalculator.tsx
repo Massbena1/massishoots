@@ -245,7 +245,8 @@ function computePrice(projectId: ProjectId, answers: Answers): { low: number; hi
     base *= livrableM[get("livrable")] ?? 1;
     if (get("delai") === "express") base *= 1.25;
     const low = Math.round(base / 100) * 100;
-    const high = Math.round(low * 1.4 / 100) * 100;
+    const high = Math.round(low * 1.3 / 100) * 100;
+    if (high > 8500) return null;
     return { low, high };
   }
 
