@@ -83,7 +83,33 @@ function ClientForm({ data, setData, onSubmit, onCancel, submitLabel, loading }:
 
       <p className="font-dm" style={{ fontSize: 10, color: "rgba(255,255,255,0.3)", letterSpacing: "0.15em", textTransform: "uppercase", margin: "14px 0 10px" }}>— Service</p>
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8, marginBottom: 8 }}>
-        <input placeholder="Nom du package (ex: Autorité)" value={data.packageName ?? ""} onChange={e => setData({ ...data, packageName: e.target.value })} style={inputStyle} />
+        <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+          <select
+            value={["Contenu Express", "Essentiel", "Autorité", "Full Brand", "Événement", "Corporate", "Mariage", "Portrait", "Publicité"].includes(data.packageName ?? "") ? data.packageName : data.packageName ? "autre" : ""}
+            onChange={e => {
+              if (e.target.value === "autre") setData({ ...data, packageName: "" });
+              else setData({ ...data, packageName: e.target.value });
+            }}
+            style={{ ...inputStyle, appearance: "none" }}
+          >
+            <option value="">Choisir un service...</option>
+            <option value="Contenu Express">Contenu Express — 800 $/mois</option>
+            <option value="Essentiel">Essentiel — 2 500–4 000 $/mois</option>
+            <option value="Autorité">Autorité — 4 500–6 500 $/mois</option>
+            <option value="Full Brand">Full Brand — 7 100–9 000 $/mois</option>
+            <option disabled>──────────</option>
+            <option value="Événement">Événement</option>
+            <option value="Corporate">Corporate</option>
+            <option value="Mariage">Mariage</option>
+            <option value="Portrait">Portrait / Corporate</option>
+            <option value="Publicité">Publicité (Ads)</option>
+            <option disabled>──────────</option>
+            <option value="autre">Autre (saisir manuellement)</option>
+          </select>
+          {(data.packageName === "" || !["Contenu Express", "Essentiel", "Autorité", "Full Brand", "Événement", "Corporate", "Mariage", "Portrait", "Publicité", ""].includes(data.packageName ?? "")) && (
+            <input placeholder="Nom du service personnalisé" value={data.packageName ?? ""} onChange={e => setData({ ...data, packageName: e.target.value })} style={inputStyle} />
+          )}
+        </div>
         <select value={data.currentPhase ?? "preparation"} onChange={e => setData({ ...data, currentPhase: e.target.value })} style={{ ...inputStyle, appearance: "none" }}>
           {PHASES.map(p => <option key={p.id} value={p.id}>{p.label}</option>)}
         </select>
