@@ -67,12 +67,91 @@ export async function GET() {
   return NextResponse.json(portals);
 }
 
+async function sendWelcomeEmail(portal: ClientPortal) {
+  if (!portal.email) return;
+
+  const includes = (portal.serviceIncludes ?? []).map(item =>
+    `<li style="padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.05);font-size:13px;color:rgba(255,255,255,0.7);">✓ ${item}</li>`
+  ).join("");
+
+  await resend.emails.send({
+    from: "Massishoots <onboarding@resend.dev>",
+    to: [portal.email],
+    subject: `Bienvenue dans votre espace client Massishoots 🎬`,
+    html: `
+      <div style="font-family:sans-serif;max-width:580px;margin:0 auto;padding:40px 24px;background:#0a0a0a;color:#fff;border-radius:16px;">
+
+        <h1 style="font-size:28px;letter-spacing:0.06em;margin:0 0 4px;color:#fff;">MASSISHOOTS</h1>
+        <p style="font-size:11px;color:rgba(255,255,255,0.25);margin:0 0 36px;letter-spacing:0.15em;text-transform:uppercase;">Espace client</p>
+
+        <p style="font-size:18px;font-weight:700;margin:0 0 8px;">Bonjour ${portal.name} 👋</p>
+        <p style="font-size:14px;color:rgba(255,255,255,0.55);line-height:1.7;margin:0 0 32px;">
+          Votre espace client est maintenant actif. Vous pouvez y suivre l'avancement de votre projet, accéder à vos livrables et télécharger votre contenu au fur et à mesure des livraisons.
+        </p>
+
+        <!-- Code d'accès -->
+        <div style="background:rgba(196,205,214,0.07);border:1px solid rgba(196,205,214,0.15);border-radius:14px;padding:22px 24px;margin-bottom:24px;">
+          <p style="font-size:11px;color:rgba(255,255,255,0.3);letter-spacing:0.15em;text-transform:uppercase;margin:0 0 10px;">Votre code d'accès</p>
+          <p style="font-size:28px;font-weight:800;letter-spacing:0.2em;color:#fff;margin:0 0 6px;font-family:monospace;">${portal.password}</p>
+          <p style="font-size:11px;color:rgba(255,255,255,0.25);margin:0;">Gardez ce code confidentiel — il vous donne accès à tous vos fichiers.</p>
+        </div>
+
+        <!-- Service -->
+        ${portal.packageName ? `
+        <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:20px 24px;margin-bottom:24px;">
+          <p style="font-size:11px;color:rgba(255,255,255,0.3);letter-spacing:0.15em;text-transform:uppercase;margin:0 0 6px;">Votre forfait</p>
+          <p style="font-size:20px;font-weight:700;color:#fff;margin:0 0 4px;">${portal.packageName}</p>
+          ${portal.contractStart ? `<p style="font-size:12px;color:rgba(255,255,255,0.3);margin:0;">Début : ${portal.contractStart}${portal.contractEnd ? ` · Fin : ${portal.contractEnd}` : ""}</p>` : ""}
+          ${includes ? `
+          <ul style="list-style:none;padding:0;margin:16px 0 0;">
+            ${includes}
+          </ul>` : ""}
+        </div>` : ""}
+
+        <!-- Ce qui vous attend -->
+        <div style="margin-bottom:32px;">
+          <p style="font-size:11px;color:rgba(255,255,255,0.3);letter-spacing:0.15em;text-transform:uppercase;margin:0 0 14px;">Ce que vous trouverez dans votre espace</p>
+          <div style="display:flex;flex-direction:column;gap:10px;">
+            ${[
+              ["📊", "Suivi en temps réel", "Voyez exactement où en est votre projet : préparation, tournage, montage, retouches, livraison."],
+              ["📁", "Vos livrables organisés", "Photos et vidéos classées par mois, disponibles dès qu'elles sont prêtes."],
+              ["🔔", "Notifications par email", "Vous recevez un email dès qu'un nouveau contenu est livré."],
+              ["💬", "Communication directe", "Envoyez-moi un message ou un retour directement depuis votre espace."],
+            ].map(([icon, title, desc]) => `
+              <div style="display:flex;gap:14px;padding:14px 16px;background:rgba(255,255,255,0.02);border-radius:10px;border:1px solid rgba(255,255,255,0.06);">
+                <span style="font-size:20px;flex-shrink:0;">${icon}</span>
+                <div>
+                  <p style="font-size:13px;font-weight:600;color:#fff;margin:0 0 3px;">${title}</p>
+                  <p style="font-size:12px;color:rgba(255,255,255,0.4);margin:0;line-height:1.5;">${desc}</p>
+                </div>
+              </div>
+            `).join("")}
+          </div>
+        </div>
+
+        <!-- CTA -->
+        <div style="text-align:center;margin-bottom:40px;">
+          <a href="https://massishoots.com/fr/client" style="display:inline-block;padding:15px 36px;background:#f2f0ec;color:#0a0a0a;text-decoration:none;border-radius:9999px;font-size:14px;font-weight:700;letter-spacing:0.06em;">
+            Accéder à mon espace →
+          </a>
+        </div>
+
+        <p style="font-size:12px;color:rgba(255,255,255,0.2);text-align:center;line-height:1.7;">
+          Une question ? Réponds directement à cet email ou écris-moi sur WhatsApp.<br/>
+          <a href="https://massishoots.com" style="color:rgba(196,205,214,0.35);text-decoration:none;">massishoots.com</a> · Montréal, QC
+        </p>
+      </div>
+    `,
+  });
+}
+
 export async function POST(req: NextRequest) {
   const { password, portal } = await req.json();
   if (!auth(password)) return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
   if (!portal) return NextResponse.json({ ok: true });
   const portals = ((await kv.get<ClientPortal[]>(KEY)) ?? []).filter(Boolean);
   await kv.set(KEY, [portal, ...portals]);
+  await sendWelcomeEmail(portal);
   return NextResponse.json({ ok: true });
 }
 
