@@ -98,10 +98,10 @@ function ClientForm({ data, setData, onSubmit, onCancel, submitLabel, loading }:
             style={{ ...inputStyle, appearance: "none" }}
           >
             <option value="">Choisir un service...</option>
-            <option value="Contenu Express">Contenu Express — 800 $/mois</option>
-            <option value="Essentiel">Essentiel — 2 500–4 000 $/mois</option>
-            <option value="Autorité">Autorité — 4 500–6 500 $/mois</option>
-            <option value="Full Brand">Full Brand — 7 100–9 000 $/mois</option>
+            <option value="Contenu Express">Contenu Express</option>
+            <option value="Essentiel">Essentiel</option>
+            <option value="Autorité">Autorité</option>
+            <option value="Full Brand">Full Brand</option>
             <option disabled>──────────</option>
             <option value="Événement">Événement</option>
             <option value="Corporate">Corporate</option>
