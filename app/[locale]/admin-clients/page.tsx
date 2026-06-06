@@ -3,6 +3,11 @@ import { useState } from "react";
 import { Trash2, Plus, Lock, Users, Pencil, X, Check, ChevronDown, ChevronUp } from "lucide-react";
 import type { ClientPortal, Deliverable, Invoice, ProjectPhase } from "@/lib/clientPortal";
 
+const MOIS = ["Janvier","Février","Mars","Avril","Mai","Juin","Juillet","Août","Septembre","Octobre","Novembre","Décembre"];
+const CURRENT_YEAR = new Date().getFullYear();
+const YEARS = [CURRENT_YEAR - 1, CURRENT_YEAR, CURRENT_YEAR + 1];
+const CONTENT_TYPES = ["Photos","Vidéos","Stories","Autre"];
+
 // ─── Constants ────────────────────────────────────────────────────────────────
 
 const PHASES: { id: ProjectPhase; label: string }[] = [
@@ -124,23 +129,70 @@ function ClientForm({ data, setData, onSubmit, onCancel, submitLabel, loading }:
         style={{ ...inputStyle, resize: "vertical", marginBottom: 8 }} />
 
       <p className="font-dm" style={{ fontSize: 10, color: "rgba(255,255,255,0.3)", letterSpacing: "0.15em", textTransform: "uppercase", margin: "14px 0 10px" }}>— Livrables</p>
-      {(data.deliverables ?? []).map((d: Deliverable, i: number) => (
-        <div key={d.id} style={{ display: "grid", gridTemplateColumns: "1.5fr 2fr 1fr 1fr 2fr auto", gap: 6, marginBottom: 6, alignItems: "center" }}>
-          <input placeholder="Dossier/Mois" value={d.folder ?? ""} onChange={e => updateDeliverable(data, setData, i, "folder", e.target.value)} style={inputStyle} />
-          <input placeholder="Fichier (ex: 2 Reels)" value={d.label} onChange={e => updateDeliverable(data, setData, i, "label", e.target.value)} style={inputStyle} />
-          <select value={d.status} onChange={e => updateDeliverable(data, setData, i, "status", e.target.value)} style={{ ...inputStyle, appearance: "none" }}>
-            <option value="pending">À venir</option>
-            <option value="in_progress">En cours</option>
-            <option value="delivered">Livré</option>
-          </select>
-          <input placeholder="Date livraison" value={d.deliveredDate ?? ""} onChange={e => updateDeliverable(data, setData, i, "deliveredDate", e.target.value)} style={inputStyle} />
-          <input placeholder="Lien téléchargement" value={d.downloadUrl ?? ""} onChange={e => updateDeliverable(data, setData, i, "downloadUrl", e.target.value)} style={inputStyle} />
-          <button type="button" onClick={() => removeDeliverable(data, setData, i)}
-            style={{ background: "rgba(248,113,113,0.1)", border: "1px solid rgba(248,113,113,0.2)", borderRadius: 6, padding: "6px 8px", cursor: "pointer", color: "#f87171", flexShrink: 0 }}>
-            <X size={12} />
-          </button>
-        </div>
-      ))}
+      {(data.deliverables ?? []).map((d: Deliverable, i: number) => {
+        // Parse existing folder "Photos · Juin 2025" → type + month + year
+        const folderParts = (d.folder ?? "").split("·").map((s: string) => s.trim());
+        const currentType = folderParts[0] ?? "";
+        const monthYearStr = folderParts[1] ?? "";
+        const [currentMois, currentYear] = monthYearStr.split(" ");
+
+        const setFolder = (type: string, mois: string, year: string) => {
+          if (type && mois && year) {
+            updateDeliverable(data, setData, i, "folder", `${type} · ${mois} ${year}`);
+          }
+        };
+
+        return (
+          <div key={d.id} style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 10, padding: "10px 12px", marginBottom: 8 }}>
+            {/* Row 1: Mois + Type + Statut */}
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr 1fr auto", gap: 6, marginBottom: 6, alignItems: "center" }}>
+              <select
+                value={currentType}
+                onChange={e => setFolder(e.target.value, currentMois ?? "", currentYear ?? String(CURRENT_YEAR))}
+                style={{ ...inputStyle, appearance: "none" }}
+              >
+                <option value="">Type…</option>
+                {CONTENT_TYPES.map(t => <option key={t} value={t}>{t}</option>)}
+              </select>
+              <select
+                value={currentMois ?? ""}
+                onChange={e => setFolder(currentType, e.target.value, currentYear ?? String(CURRENT_YEAR))}
+                style={{ ...inputStyle, appearance: "none" }}
+              >
+                <option value="">Mois…</option>
+                {MOIS.map(m => <option key={m} value={m}>{m}</option>)}
+              </select>
+              <select
+                value={currentYear ?? String(CURRENT_YEAR)}
+                onChange={e => setFolder(currentType, currentMois ?? "", e.target.value)}
+                style={{ ...inputStyle, appearance: "none" }}
+              >
+                {YEARS.map(y => <option key={y} value={y}>{y}</option>)}
+              </select>
+              <select value={d.status} onChange={e => updateDeliverable(data, setData, i, "status", e.target.value)} style={{ ...inputStyle, appearance: "none" }}>
+                <option value="pending">À venir</option>
+                <option value="in_progress">En cours</option>
+                <option value="delivered">Livré ✓</option>
+              </select>
+              <button type="button" onClick={() => removeDeliverable(data, setData, i)}
+                style={{ background: "rgba(248,113,113,0.1)", border: "1px solid rgba(248,113,113,0.2)", borderRadius: 6, padding: "6px 8px", cursor: "pointer", color: "#f87171", flexShrink: 0 }}>
+                <X size={12} />
+              </button>
+            </div>
+            {/* Row 2: Label + Date + Lien */}
+            <div style={{ display: "grid", gridTemplateColumns: "2fr 1fr 2fr", gap: 6 }}>
+              <input placeholder="Ex: 5 photos portrait" value={d.label} onChange={e => updateDeliverable(data, setData, i, "label", e.target.value)} style={inputStyle} />
+              <input placeholder="Date livraison" value={d.deliveredDate ?? ""} onChange={e => updateDeliverable(data, setData, i, "deliveredDate", e.target.value)} style={inputStyle} />
+              <input placeholder="Lien téléchargement" value={d.downloadUrl ?? ""} onChange={e => updateDeliverable(data, setData, i, "downloadUrl", e.target.value)} style={inputStyle} />
+            </div>
+            {d.folder && (
+              <p className="font-dm" style={{ fontSize: 10, color: "rgba(196,205,214,0.35)", marginTop: 5 }}>
+                📁 {d.folder}
+              </p>
+            )}
+          </div>
+        );
+      })}
       <button type="button" onClick={() => addDeliverable(data, setData)} className="font-dm"
         style={{ fontSize: 11, color: "rgba(255,255,255,0.35)", background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 7, padding: "5px 12px", cursor: "pointer", marginBottom: 4 }}>
         + Ajouter un livrable
