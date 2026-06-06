@@ -37,6 +37,8 @@ export interface ClientPortal {
   serviceIncludes: string[];
   contractStart: string;
   contractEnd?: string;
+  photosPerMonth?: number;
+  videosPerMonth?: number;
 
   // Status
   currentPhase: ProjectPhase;

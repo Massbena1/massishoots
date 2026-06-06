@@ -172,6 +172,16 @@ function ClientForm({ data, setData, onSubmit, onCancel, submitLabel, loading }:
             <input placeholder="Nom du service personnalisé" value={data.packageName ?? ""} onChange={e => setData({ ...data, packageName: e.target.value })} style={inputStyle} />
           )}
         </div>
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 6 }}>
+          <select value={data.photosPerMonth ?? ""} onChange={e => setData({ ...data, photosPerMonth: e.target.value ? Number(e.target.value) : undefined })} style={{ ...inputStyle, appearance: "none" }}>
+            <option value="">Photos / mois…</option>
+            {[5,10,15,20,25,30,40,50].map(n => <option key={n} value={n}>{n} photos</option>)}
+          </select>
+          <select value={data.videosPerMonth ?? ""} onChange={e => setData({ ...data, videosPerMonth: e.target.value ? Number(e.target.value) : undefined })} style={{ ...inputStyle, appearance: "none" }}>
+            <option value="">Vidéos / mois…</option>
+            {[2,3,4,5,6,8,10,12,15,20].map(n => <option key={n} value={n}>{n} vidéos</option>)}
+          </select>
+        </div>
         <select value={data.currentPhase ?? "preparation"} onChange={e => setData({ ...data, currentPhase: e.target.value })} style={{ ...inputStyle, appearance: "none" }}>
           {PHASES.map(p => <option key={p.id} value={p.id}>{p.label}</option>)}
         </select>

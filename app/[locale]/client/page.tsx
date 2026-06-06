@@ -357,6 +357,20 @@ export default function ClientPage() {
                           {portal.contractStart}{portal.contractEnd ? ` → ${portal.contractEnd}` : ""}
                         </span>
                       )}
+                    {(portal.photosPerMonth || portal.videosPerMonth) && (
+                      <div style={{ display: "flex", gap: 8, marginTop: 6 }}>
+                        {portal.photosPerMonth && (
+                          <span className="font-dm" style={{ fontSize: 11, color: "#38bdf8", background: "rgba(56,189,248,0.1)", border: "1px solid rgba(56,189,248,0.2)", padding: "2px 10px", borderRadius: 9999 }}>
+                            📸 {portal.photosPerMonth} photos/mois
+                          </span>
+                        )}
+                        {portal.videosPerMonth && (
+                          <span className="font-dm" style={{ fontSize: 11, color: "#818cf8", background: "rgba(129,140,248,0.1)", border: "1px solid rgba(129,140,248,0.2)", padding: "2px 10px", borderRadius: 9999 }}>
+                            🎬 {portal.videosPerMonth} vidéos/mois
+                          </span>
+                        )}
+                      </div>
+                    )}
                     </div>
                   </div>
                   <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
