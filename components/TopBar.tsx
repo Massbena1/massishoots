@@ -3,7 +3,6 @@ import { useState } from "react";
 import { useLocale } from "next-intl";
 import { usePathname } from "next/navigation";
 import { Link, useRouter } from "@/i18n/navigation";
-import { AnimatedThemeToggler } from "@/components/ui/animated-theme-toggler";
 import { motion, AnimatePresence } from "framer-motion";
 
 const NAV_ITEMS = [
@@ -71,7 +70,6 @@ export default function TopBar() {
 
         {/* Right controls */}
         <div style={{ display: "flex", alignItems: "center", gap: 12, pointerEvents: "auto", position: "relative", zIndex: 120 }}>
-          <AnimatedThemeToggler />
           <button
             onClick={switchLocale}
             className="font-dm"

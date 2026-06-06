@@ -4,7 +4,6 @@ import { motion, AnimatePresence } from "framer-motion";
 import { usePathname } from "next/navigation";
 import { useLocale, useTranslations } from "next-intl";
 import { Link, useRouter } from "@/i18n/navigation";
-import { AnimatedThemeToggler } from "@/components/ui/animated-theme-toggler";
 
 const NAV_LINKS = [
   { key: "services",  href: "/services",  sectionId: "services",  homeScroll: true  },
@@ -126,8 +125,6 @@ export default function Navbar() {
             MASSISHOOTS
           </Link>
 
-          <div className="navbar-divider" style={{ width: 1, height: 14, background: "rgba(255,255,255,0.1)", margin: "0 6px" }} />
-          <AnimatedThemeToggler />
           <div className="navbar-divider" style={{ width: 1, height: 14, background: "rgba(255,255,255,0.1)", margin: "0 6px" }} />
 
           {/* Nav links */}
