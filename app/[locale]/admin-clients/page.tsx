@@ -136,19 +136,25 @@ function ClientForm({ data, setData, onSubmit, onCancel, submitLabel, loading }:
         const monthYearStr = folderParts[1] ?? "";
         const [currentMois, currentYear] = monthYearStr.split(" ");
 
+        const resolvedYear = currentYear ?? String(CURRENT_YEAR);
+
         const setFolder = (type: string, mois: string, year: string) => {
-          if (type && mois && year) {
-            updateDeliverable(data, setData, i, "folder", `${type} · ${mois} ${year}`);
+          const folder = [type, mois, year].filter(Boolean).join(" ");
+          // build "Type · Mois Année" only when type and at least mois are set
+          if (type && mois) {
+            updateDeliverable(data, setData, i, "folder", `${type} · ${mois} ${year || CURRENT_YEAR}`);
+          } else if (type) {
+            updateDeliverable(data, setData, i, "folder", folder);
           }
         };
 
         return (
           <div key={d.id} style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 10, padding: "10px 12px", marginBottom: 8 }}>
-            {/* Row 1: Mois + Type + Statut */}
+            {/* Row 1: Type + Mois + Année + Statut */}
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr 1fr auto", gap: 6, marginBottom: 6, alignItems: "center" }}>
               <select
                 value={currentType}
-                onChange={e => setFolder(e.target.value, currentMois ?? "", currentYear ?? String(CURRENT_YEAR))}
+                onChange={e => setFolder(e.target.value, currentMois ?? "", resolvedYear)}
                 style={{ ...inputStyle, appearance: "none" }}
               >
                 <option value="">Type…</option>
@@ -156,14 +162,14 @@ function ClientForm({ data, setData, onSubmit, onCancel, submitLabel, loading }:
               </select>
               <select
                 value={currentMois ?? ""}
-                onChange={e => setFolder(currentType, e.target.value, currentYear ?? String(CURRENT_YEAR))}
+                onChange={e => setFolder(currentType, e.target.value, resolvedYear)}
                 style={{ ...inputStyle, appearance: "none" }}
               >
                 <option value="">Mois…</option>
                 {MOIS.map(m => <option key={m} value={m}>{m}</option>)}
               </select>
               <select
-                value={currentYear ?? String(CURRENT_YEAR)}
+                value={resolvedYear}
                 onChange={e => setFolder(currentType, currentMois ?? "", e.target.value)}
                 style={{ ...inputStyle, appearance: "none" }}
               >
