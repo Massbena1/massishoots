@@ -204,8 +204,8 @@ function ClientForm({ data, setData, onSubmit, onCancel, submitLabel, loading }:
             <option value="Paiement complet">Paiement complet</option>
             <option value="Facture mensuelle">Facture mensuelle</option>
             <option value="Acompte 30%">Acompte 30%</option>
+            <option value="Versement 1">Versement 1</option>
             <option value="Versement 2">Versement 2</option>
-            <option value="Versement 3">Versement 3</option>
           </select>
           <input type="number" placeholder="Montant $" value={inv.amount || ""} onChange={e => updateInvoice(data, setData, i, "amount", Number(e.target.value))} style={inputStyle} />
           <select value={inv.status} onChange={e => updateInvoice(data, setData, i, "status", e.target.value)} style={{ ...inputStyle, appearance: "none" }}>
