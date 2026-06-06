@@ -197,14 +197,23 @@ function ClientForm({ data, setData, onSubmit, onCancel, submitLabel, loading }:
       <p className="font-dm" style={{ fontSize: 10, color: "rgba(255,255,255,0.3)", letterSpacing: "0.15em", textTransform: "uppercase", margin: "14px 0 10px" }}>— Factures</p>
       {(data.invoices ?? []).map((inv: Invoice, i: number) => (
         <div key={inv.id} style={{ display: "grid", gridTemplateColumns: "2fr 1fr 1fr 1fr 2fr auto", gap: 6, marginBottom: 6, alignItems: "center" }}>
-          <input placeholder="Label (ex: Acompte 50%)" value={inv.label} onChange={e => updateInvoice(data, setData, i, "label", e.target.value)} style={inputStyle} />
+          <select value={inv.label} onChange={e => updateInvoice(data, setData, i, "label", e.target.value)} style={{ ...inputStyle, appearance: "none" }}>
+            <option value="">Label…</option>
+            <option value="Acompte 50%">Acompte 50%</option>
+            <option value="Solde final 50%">Solde final 50%</option>
+            <option value="Paiement complet">Paiement complet</option>
+            <option value="Facture mensuelle">Facture mensuelle</option>
+            <option value="Acompte 30%">Acompte 30%</option>
+            <option value="Versement 2">Versement 2</option>
+            <option value="Versement 3">Versement 3</option>
+          </select>
           <input type="number" placeholder="Montant $" value={inv.amount || ""} onChange={e => updateInvoice(data, setData, i, "amount", Number(e.target.value))} style={inputStyle} />
           <select value={inv.status} onChange={e => updateInvoice(data, setData, i, "status", e.target.value)} style={{ ...inputStyle, appearance: "none" }}>
             <option value="en_attente">En attente</option>
             <option value="payee">Payée ✓</option>
           </select>
-          <input placeholder="Date" value={inv.date} onChange={e => updateInvoice(data, setData, i, "date", e.target.value)} style={inputStyle} />
-          <input placeholder="Lien PDF / paiement" value={inv.url ?? ""} onChange={e => updateInvoice(data, setData, i, "url", e.target.value)} style={inputStyle} />
+          <input type="date" value={inv.date} onChange={e => updateInvoice(data, setData, i, "date", e.target.value)} style={{ ...inputStyle, colorScheme: "dark" }} />
+          <input placeholder="Lien PDF facture" value={inv.url ?? ""} onChange={e => updateInvoice(data, setData, i, "url", e.target.value)} style={inputStyle} />
           <button type="button" onClick={() => removeInvoice(data, setData, i)}
             style={{ background: "rgba(248,113,113,0.1)", border: "1px solid rgba(248,113,113,0.2)", borderRadius: 6, padding: "6px 8px", cursor: "pointer", color: "#f87171", flexShrink: 0 }}>
             <X size={12} />
