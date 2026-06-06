@@ -64,7 +64,7 @@ export default function Clients() {
                   <logo.component />
                 ) : (
                   // eslint-disable-next-line @next/next/no-img-element
-                  <img src={logo.src} alt={logo.alt} style={{ width: "100%", height: "auto", filter: "brightness(0) invert(1)" }} />
+                  <img src={logo.src} alt={logo.alt} className="client-logo" style={{ width: "100%", height: "auto", filter: "brightness(0) invert(1)" }} />
                 )}
               </div>
             ))}
