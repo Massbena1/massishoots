@@ -236,12 +236,48 @@ function ClientForm({ data, setData, onSubmit, onCancel, submitLabel, loading }:
       </button>
 
       <p className="font-dm" style={{ fontSize: 10, color: "rgba(255,255,255,0.3)", letterSpacing: "0.15em", textTransform: "uppercase", margin: "14px 0 10px" }}>— Communication</p>
-      <textarea placeholder="Message pour le client (visible)" rows={2} value={data.message ?? ""} onChange={e => setData({ ...data, message: e.target.value })} style={{ ...inputStyle, resize: "vertical", marginBottom: 8 }} />
-      <textarea placeholder="Notes internes (admin seulement)" rows={2} value={data.internalNote ?? ""} onChange={e => setData({ ...data, internalNote: e.target.value })} style={{ ...inputStyle, resize: "vertical", marginBottom: 8 }} />
+
+      {/* Message visible par le client */}
+      <div style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 10, padding: "12px 14px", marginBottom: 8 }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 8 }}>
+          <span style={{ fontSize: 14 }}>💬</span>
+          <span className="font-dm" style={{ fontSize: 11, color: "rgba(255,255,255,0.5)", fontWeight: 600 }}>Message affiché dans l'espace client</span>
+          <span className="font-dm" style={{ fontSize: 9, color: "#4ade80", background: "rgba(74,222,128,0.1)", padding: "1px 7px", borderRadius: 9999, marginLeft: "auto" }}>VISIBLE</span>
+        </div>
+        <textarea
+          placeholder="Ex: Tournage prévu le 15 juin — prépare les tenues discutées. On se retrouve à 9h."
+          rows={3}
+          value={data.message ?? ""}
+          onChange={e => setData({ ...data, message: e.target.value })}
+          style={{ ...inputStyle, resize: "vertical", marginBottom: 0 }}
+        />
+      </div>
+
+      {/* Note interne */}
+      <div style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 10, padding: "12px 14px", marginBottom: 8 }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 8 }}>
+          <span style={{ fontSize: 14 }}>🔒</span>
+          <span className="font-dm" style={{ fontSize: 11, color: "rgba(255,255,255,0.5)", fontWeight: 600 }}>Note interne</span>
+          <span className="font-dm" style={{ fontSize: 9, color: "#f59e0b", background: "rgba(245,158,11,0.1)", padding: "1px 7px", borderRadius: 9999, marginLeft: "auto" }}>ADMIN ONLY</span>
+        </div>
+        <textarea
+          placeholder="Ex: Cliente difficile sur les délais — prévoir buffer de 2 jours. Budget négocié à 3800$."
+          rows={2}
+          value={data.internalNote ?? ""}
+          onChange={e => setData({ ...data, internalNote: e.target.value })}
+          style={{ ...inputStyle, resize: "vertical", marginBottom: 0 }}
+        />
+      </div>
+
+      {/* Note du client */}
       {data.clientNote && (
-        <div style={{ padding: "10px 14px", background: "rgba(196,205,214,0.05)", border: "1px solid rgba(196,205,214,0.12)", borderRadius: 8, marginBottom: 8 }}>
-          <p className="font-dm" style={{ fontSize: 10, color: "rgba(196,205,214,0.4)", letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: 4 }}>Note du client</p>
-          <p className="font-dm" style={{ fontSize: 12, color: "rgba(255,255,255,0.6)" }}>{data.clientNote}</p>
+        <div style={{ background: "rgba(196,205,214,0.04)", border: "1px solid rgba(196,205,214,0.15)", borderRadius: 10, padding: "12px 14px", marginBottom: 8 }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 8 }}>
+            <span style={{ fontSize: 14 }}>✍️</span>
+            <span className="font-dm" style={{ fontSize: 11, color: "rgba(196,205,214,0.6)", fontWeight: 600 }}>Message du client</span>
+            <span className="font-dm" style={{ fontSize: 9, color: "#c4cdd6", background: "rgba(196,205,214,0.1)", padding: "1px 7px", borderRadius: 9999, marginLeft: "auto" }}>REÇU</span>
+          </div>
+          <p className="font-dm" style={{ fontSize: 13, color: "rgba(255,255,255,0.75)", lineHeight: 1.6, margin: 0 }}>{data.clientNote}</p>
         </div>
       )}
 
