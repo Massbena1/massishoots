@@ -29,7 +29,7 @@ async function sendDeliveryEmail(portal: ClientPortal, deliverableLabels: { labe
   `).join("");
 
   await resend.emails.send({
-    from: "Massishoots <onboarding@resend.dev>",
+    from: "Massishoots <noreply@massishoots.com>",
     to: [portal.email],
     subject: `✅ Nouveau contenu livré — ${deliverableLabels.map(d => d.label).join(", ")}`,
     html: `
@@ -75,7 +75,7 @@ async function sendWelcomeEmail(portal: ClientPortal) {
   ).join("");
 
   await resend.emails.send({
-    from: "Massishoots <onboarding@resend.dev>",
+    from: "Massishoots <noreply@massishoots.com>",
     to: [portal.email],
     subject: `Bienvenue dans votre espace client Massishoots 🎬`,
     html: `
