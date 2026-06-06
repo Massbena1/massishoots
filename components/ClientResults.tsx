@@ -84,7 +84,7 @@ export default function ClientResults() {
                     borderRadius: 18,
                   }}
                 >
-                  <div className="font-bebas" style={{ fontSize: "clamp(32px, 4vw, 44px)", color: "#c4cdd6", letterSpacing: "0.02em", lineHeight: 1, marginBottom: 6 }}>
+                  <div className="font-bebas metric-number" style={{ fontSize: "clamp(32px, 4vw, 44px)", color: "#c4cdd6", letterSpacing: "0.02em", lineHeight: 1, marginBottom: 6 }}>
                     {m.value}
                   </div>
                   <p className="font-dm" style={{ fontSize: 13, color: "#fff", fontWeight: 600, marginBottom: 4 }}>

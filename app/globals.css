@@ -262,6 +262,62 @@ html[data-theme="light"] .shadow-\[0_2px_12px_rgba\(255\,255\,255\,0\.05\)\] {
   box-shadow: 0 2px 12px rgba(0,0,0,0.08) !important;
 }
 
+/* ── Light mode: stat counters & metric numbers ── */
+html[data-theme="light"] .stat-counter,
+html[data-theme="light"] .metric-number {
+  color: #1a1a1a !important;
+}
+
+/* ── Light mode: stats grid container ── */
+html[data-theme="light"] .stats-grid {
+  background: rgba(0,0,0,0.04) !important;
+  border-color: rgba(0,0,0,0.1) !important;
+}
+
+/* ── Light mode: galleries grid cards ── */
+html[data-theme="light"] .masonry-item > div {
+  border-color: rgba(0,0,0,0.1) !important;
+  background: rgba(0,0,0,0.03) !important;
+}
+
+/* ── Light mode: service packages grid ── */
+html[data-theme="light"] .packages-grid > div {
+  border-color: rgba(0,0,0,0.12) !important;
+}
+
+/* ── Light mode: process numbers ── */
+html[data-theme="light"] .process-num { color: rgba(0,0,0,0.07) !important; }
+
+/* ── Light mode: fix large metric numbers (ClientResults, etc.) ── */
+html[data-theme="light"] [style*="color: \"#c4cdd6\""],
+html[data-theme="light"] [style*="color:#c4cdd6"] {
+  color: #2a2a2e !important;
+}
+
+/* ── Light mode: accordion service images — keep dark overlay ── */
+html[data-theme="light"] .service-accordion-item {
+  border-color: rgba(0,0,0,0.12) !important;
+}
+
+/* ── Light mode: footer watermark ── */
+html[data-theme="light"] .footer-watermark {
+  color: rgba(0,0,0,0.07) !important;
+  -webkit-text-fill-color: rgba(0,0,0,0.07) !important;
+}
+
+/* ── Light mode: tabs & pills borders ── */
+html[data-theme="light"] button[style*="rgba(255,255,255,0.06)"],
+html[data-theme="light"] button[style*="rgba(255,255,255,0.04)"],
+html[data-theme="light"] button[style*="rgba(255,255,255,0.03)"] {
+  background: rgba(0,0,0,0.04) !important;
+  border-color: rgba(0,0,0,0.1) !important;
+}
+
+/* ── Light mode: WhatsApp button keeps green ── */
+html[data-theme="light"] a[aria-label="Contacter sur WhatsApp"] {
+  background: #25D366 !important;
+}
+
 /* ── Light mode: Navbar pill ── */
 html[data-theme="light"] .navbar-pill {
   background: rgba(242,240,236,0.95) !important;
