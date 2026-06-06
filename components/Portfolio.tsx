@@ -1,5 +1,5 @@
 "use client";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { motion, useInView, AnimatePresence } from "framer-motion";
 import { Camera, Video as VideoIcon } from "lucide-react";
 import { BentoGrid } from "@/components/ui/bento-grid";
@@ -155,6 +155,7 @@ export default function Portfolio() {
   const [sub, setSub] = useState<Sub>("all");
   const [visibleCount, setVisibleCount] = useState(8);
   const [activeVideo, setActiveVideo] = useState<string | null>(null);
+  const [activePhoto, setActivePhoto] = useState<{ src: string; index: number } | null>(null);
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
 
@@ -163,6 +164,23 @@ export default function Portfolio() {
   const filtered = sub === "all" ? items : items.filter(i => i.sub === sub);
   const visible = filtered.slice(0, visibleCount);
   const hasMore = visibleCount < filtered.length;
+
+  useEffect(() => {
+    if (!activePhoto) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setActivePhoto(null);
+      if (e.key === "ArrowLeft" && activePhoto.index > 0) {
+        const prev = activePhoto.index - 1;
+        if (!visible[prev]?.videoSrc) setActivePhoto({ src: visible[prev].src, index: prev });
+      }
+      if (e.key === "ArrowRight" && activePhoto.index < visible.length - 1) {
+        const next = activePhoto.index + 1;
+        if (!visible[next]?.videoSrc) setActivePhoto({ src: visible[next].src, index: next });
+      }
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [activePhoto, visible]);
 
   const switchMedia = (type: MediaType) => {
     setMediaType(type);
@@ -286,7 +304,10 @@ export default function Portfolio() {
                     cursor: "none",
                     transition: "border-color 0.4s, box-shadow 0.4s, transform 0.4s",
                   }}
-                  onClick={() => item.videoSrc && setActiveVideo(item.videoSrc)}
+                  onClick={() => {
+                    if (item.videoSrc) setActiveVideo(item.videoSrc);
+                    else setActivePhoto({ src: item.src, index: i });
+                  }}
                   onMouseEnter={e => {
                     e.currentTarget.style.borderColor = "rgba(196,205,214,0.3)";
                     e.currentTarget.style.transform = "scale(1.02)";
@@ -418,6 +439,82 @@ export default function Portfolio() {
 
 
       </div>
+
+      {/* ── Modal photo ──────────────────────────────────────────────────── */}
+      <AnimatePresence>
+        {activePhoto && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.25 }}
+            onClick={() => setActivePhoto(null)}
+            style={{
+              position: "fixed", inset: 0, zIndex: 9999,
+              background: "rgba(0,0,0,0.95)",
+              display: "flex", alignItems: "center", justifyContent: "center",
+              cursor: "pointer",
+            }}
+          >
+            <motion.div
+              initial={{ scale: 0.92, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.92, opacity: 0 }}
+              transition={{ duration: 0.25 }}
+              onClick={e => e.stopPropagation()}
+              style={{ position: "relative", maxWidth: "90vw", maxHeight: "90vh", display: "flex", alignItems: "center", justifyContent: "center" }}
+            >
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={activePhoto.src}
+                alt=""
+                style={{ maxWidth: "90vw", maxHeight: "90vh", objectFit: "contain", borderRadius: 12, display: "block" }}
+              />
+              {/* Prev */}
+              {activePhoto.index > 0 && (
+                <button
+                  onClick={() => {
+                    const prev = activePhoto.index - 1;
+                    setActivePhoto({ src: visible[prev].src, index: prev });
+                  }}
+                  style={{
+                    position: "absolute", left: -60, top: "50%", transform: "translateY(-50%)",
+                    background: "rgba(255,255,255,0.08)", border: "1px solid rgba(255,255,255,0.15)",
+                    borderRadius: 9999, color: "#fff", fontSize: 20, width: 44, height: 44,
+                    display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer",
+                  }}
+                >‹</button>
+              )}
+              {/* Next */}
+              {activePhoto.index < visible.length - 1 && !visible[activePhoto.index + 1]?.videoSrc && (
+                <button
+                  onClick={() => {
+                    const next = activePhoto.index + 1;
+                    setActivePhoto({ src: visible[next].src, index: next });
+                  }}
+                  style={{
+                    position: "absolute", right: -60, top: "50%", transform: "translateY(-50%)",
+                    background: "rgba(255,255,255,0.08)", border: "1px solid rgba(255,255,255,0.15)",
+                    borderRadius: 9999, color: "#fff", fontSize: 20, width: 44, height: 44,
+                    display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer",
+                  }}
+                >›</button>
+              )}
+              {/* Close */}
+              <button
+                onClick={() => setActivePhoto(null)}
+                style={{
+                  position: "absolute", top: -44, right: 0,
+                  background: "rgba(255,255,255,0.08)",
+                  border: "1px solid rgba(255,255,255,0.15)",
+                  borderRadius: 9999, color: "#fff", fontSize: 13, letterSpacing: "0.08em",
+                  padding: "6px 16px", cursor: "pointer",
+                }}
+              >✕ Fermer</button>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* ── Modal vidéo ──────────────────────────────────────────────────── */}
       <AnimatePresence>
