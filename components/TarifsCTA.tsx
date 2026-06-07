@@ -124,34 +124,35 @@ export default function TarifsCTA() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-40px" }}
           transition={{ duration: 0.5, delay: 0.3 }}
-          style={{ display: "flex", justifyContent: "center", gap: 40, flexWrap: "wrap" }}
+          style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: 24, flexWrap: "wrap" }}
         >
           {[
-            { icon: "📱", label: "438-464-0607", href: "tel:4384640607" },
-            { icon: "📧", label: "massishoots.ca@gmail.com", href: "mailto:massishoots.ca@gmail.com" },
-            { icon: "📸", label: "@massishoots", href: "https://instagram.com/massishoots" },
-          ].map((item) => (
-            <a
-              key={item.label}
-              href={item.href}
-              target={item.href.startsWith("http") ? "_blank" : undefined}
-              rel={item.href.startsWith("http") ? "noopener noreferrer" : undefined}
-              className="font-dm"
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: 8,
-                fontSize: 13,
-                color: "rgba(255,255,255,0.35)",
-                textDecoration: "none",
-                transition: "color 0.2s",
-              }}
-              onMouseEnter={e => ((e.currentTarget as HTMLElement).style.color = "#C9A84C")}
-              onMouseLeave={e => ((e.currentTarget as HTMLElement).style.color = "rgba(255,255,255,0.35)")}
-            >
-              <span style={{ fontSize: 16 }}>{item.icon}</span>
-              {item.label}
-            </a>
+            { label: "438-464-0607", href: "tel:4384640607" },
+            { label: "massishoots.ca@gmail.com", href: "mailto:massishoots.ca@gmail.com" },
+            { label: "@massishoots", href: "https://instagram.com/massishoots" },
+          ].map((item, i, arr) => (
+            <>
+              <a
+                key={item.label}
+                href={item.href}
+                target={item.href.startsWith("http") ? "_blank" : undefined}
+                rel={item.href.startsWith("http") ? "noopener noreferrer" : undefined}
+                className="font-dm"
+                style={{
+                  fontSize: 13,
+                  color: "rgba(255,255,255,0.35)",
+                  textDecoration: "none",
+                  transition: "color 0.2s",
+                }}
+                onMouseEnter={e => ((e.currentTarget as HTMLElement).style.color = "#C9A84C")}
+                onMouseLeave={e => ((e.currentTarget as HTMLElement).style.color = "rgba(255,255,255,0.35)")}
+              >
+                {item.label}
+              </a>
+              {i < arr.length - 1 && (
+                <span style={{ color: "rgba(201,168,76,0.3)", fontSize: 14 }}>|</span>
+              )}
+            </>
           ))}
         </motion.div>
 
