@@ -1,7 +1,80 @@
 "use client";
 
 import * as React from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
+
+interface TestimonialCardProps {
+  handleShuffle: () => void;
+  testimonial: string;
+  position: string;
+  id: number;
+  author: string;
+  avatar: string;
+}
+
+export function TestimonialCard({ handleShuffle, testimonial, position, author, avatar }: TestimonialCardProps) {
+  const dragRef = React.useRef(0);
+  const isFront = position === "front";
+  const contentOpacity = position === "front" ? 1 : position === "middle" ? 0 : 0;
+
+  return (
+    <motion.div
+      style={{
+        zIndex: position === "front" ? 2 : position === "middle" ? 1 : 0,
+        background: "rgba(255,255,255,0.04)",
+        backdropFilter: "blur(24px)",
+        WebkitBackdropFilter: "blur(24px)",
+        border: "1px solid rgba(255,255,255,0.09)",
+        boxShadow: isFront
+          ? "0 24px 60px rgba(0,0,0,0.5), 0 0 0 1px rgba(196,205,214,0.06) inset"
+          : "0 12px 40px rgba(0,0,0,0.3)",
+      }}
+      animate={{
+        rotate: position === "front" ? "-6deg" : position === "middle" ? "0deg" : "6deg",
+        x: position === "front" ? 0 : position === "middle" ? 30 : 60,
+        scale: position === "front" ? 1 : position === "middle" ? 0.97 : 0.94,
+      }}
+      drag={isFront}
+      dragElastic={0.2}
+      dragConstraints={{ top: 0, left: 0, right: 0, bottom: 0 }}
+      onDragStart={(e) => { dragRef.current = (e as PointerEvent).clientX; }}
+      onDragEnd={(e) => {
+        if (dragRef.current - (e as PointerEvent).clientX > 80) handleShuffle();
+        dragRef.current = 0;
+      }}
+      transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+      onClick={isFront ? handleShuffle : undefined}
+      className={`absolute left-0 top-0 h-[420px] w-[320px] select-none rounded-3xl p-8 ${isFront ? "cursor-pointer" : ""}`}
+      style2={{ display: "grid", placeContent: "center" }}
+    >
+      <div style={{
+        position: "absolute", top: 0, left: 24, right: 24, height: 1,
+        background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.13), transparent)",
+        borderRadius: 9999,
+      }} />
+
+      {/* Content fades out on back cards */}
+      <div style={{ opacity: contentOpacity, transition: "opacity 0.4s", display: "flex", flexDirection: "column", alignItems: "center", gap: 20, paddingTop: 40 }}>
+        <img
+          src={avatar}
+          alt={author}
+          style={{ width: 96, height: 96, borderRadius: "50%", objectFit: "cover", objectPosition: "center top", border: "2px solid rgba(196,205,214,0.2)", boxShadow: "0 0 24px rgba(196,205,214,0.08)" }}
+        />
+        <div style={{ display: "flex", justifyContent: "center", gap: 3 }}>
+          {[...Array(5)].map((_, i) => (
+            <span key={i} style={{ color: "#c4cdd6", fontSize: 12 }}>★</span>
+          ))}
+        </div>
+        <p className="font-dm" style={{ textAlign: "center", fontSize: 13, fontStyle: "italic", color: "rgba(255,255,255,0.55)", lineHeight: 1.8 }}>
+          &ldquo;{testimonial}&rdquo;
+        </p>
+        <p className="font-dm" style={{ textAlign: "center", fontSize: 11, fontWeight: 600, color: "#c4cdd6", letterSpacing: "0.1em", textTransform: "uppercase" }}>
+          {author}
+        </p>
+      </div>
+    </motion.div>
+  );
+}
 
 interface Testimonial {
   id: number;
@@ -11,111 +84,59 @@ interface Testimonial {
 }
 
 export function ShuffleCards({ testimonials }: { testimonials: Testimonial[] }) {
-  const [index, setIndex] = React.useState(0);
-  const [dir, setDir] = React.useState(1);
+  const [positions, setPositions] = React.useState<string[]>(
+    testimonials.map((_, i) => (i === 0 ? "front" : i === 1 ? "middle" : "back"))
+  );
+  const [activeIndex, setActiveIndex] = React.useState(0);
 
-  const go = React.useCallback((next: number) => {
-    setDir(next > index ? 1 : -1);
-    setIndex(next);
-  }, [index]);
-
-  const next = React.useCallback(() => {
-    go((index + 1) % testimonials.length);
-  }, [index, go, testimonials.length]);
+  const handleShuffle = React.useCallback(() => {
+    setPositions((prev) => {
+      const next = [...prev];
+      next.unshift(next.pop()!);
+      return next;
+    });
+    setActiveIndex((prev) => (prev + 1) % testimonials.length);
+  }, [testimonials.length]);
 
   React.useEffect(() => {
-    const id = setInterval(next, 5000);
+    const id = setInterval(handleShuffle, 5000);
     return () => clearInterval(id);
-  }, [next]);
-
-  const t = testimonials[index];
+  }, [handleShuffle]);
 
   return (
     <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-start", gap: 28 }}>
-      {/* Single card */}
       <div style={{ position: "relative", height: 420, width: 320 }}>
-        <AnimatePresence mode="wait" custom={dir}>
-          <motion.div
+        {testimonials.map((t, index) => (
+          <TestimonialCard
             key={t.id}
-            custom={dir}
-            initial={{ opacity: 0, x: dir * 40 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: dir * -40 }}
-            transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-            style={{
-              position: "absolute", inset: 0,
-              background: "rgba(255,255,255,0.05)",
-              backdropFilter: "blur(24px)",
-              WebkitBackdropFilter: "blur(24px)",
-              border: "1px solid rgba(255,255,255,0.09)",
-              borderRadius: 24,
-              boxShadow: "0 24px 60px rgba(0,0,0,0.5), 0 0 0 1px rgba(196,205,214,0.06) inset",
-              display: "grid",
-              placeContent: "center",
-              gap: 20,
-              padding: 32,
-            }}
-          >
-            <div style={{
-              position: "absolute", top: 0, left: 24, right: 24, height: 1,
-              background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.13), transparent)",
-            }} />
-
-            <img
-              src={t.avatar}
-              alt={t.author}
-              style={{
-                width: 96, height: 96, borderRadius: "50%",
-                objectFit: "cover", objectPosition: "center top",
-                margin: "0 auto", display: "block",
-                border: "2px solid rgba(196,205,214,0.2)",
-                boxShadow: "0 0 24px rgba(196,205,214,0.08)",
-              }}
-            />
-
-            <div style={{ display: "flex", justifyContent: "center", gap: 3 }}>
-              {[...Array(5)].map((_, i) => (
-                <span key={i} style={{ color: "#C9A84C", fontSize: 14 }}>★</span>
-              ))}
-            </div>
-
-            <p className="font-dm" style={{
-              textAlign: "center", fontSize: 13,
-              fontStyle: "italic", color: "rgba(255,255,255,0.65)", lineHeight: 1.8,
-            }}>
-              &ldquo;{t.testimonial}&rdquo;
-            </p>
-
-            <p className="font-dm" style={{
-              textAlign: "center", fontSize: 11, fontWeight: 600,
-              color: "#c4cdd6", letterSpacing: "0.1em", textTransform: "uppercase",
-            }}>
-              {t.author}
-            </p>
-          </motion.div>
-        </AnimatePresence>
+            {...t}
+            handleShuffle={handleShuffle}
+            position={positions[index]}
+          />
+        ))}
       </div>
 
-      {/* Controls */}
       <div style={{ display: "flex", alignItems: "center", gap: 16, paddingLeft: 8 }}>
         <div style={{ display: "flex", gap: 6 }}>
           {testimonials.map((_, i) => (
             <button
               key={i}
-              onClick={() => go(i)}
+              onClick={() => {
+                const stepsNeeded = (i - activeIndex + testimonials.length) % testimonials.length;
+                for (let s = 0; s < stepsNeeded; s++) setTimeout(() => handleShuffle(), s * 50);
+              }}
               style={{
-                width: i === index ? 20 : 6, height: 6,
+                width: i === activeIndex ? 20 : 6, height: 6,
                 borderRadius: 9999,
-                background: i === index ? "#C9A84C" : "rgba(255,255,255,0.18)",
+                background: i === activeIndex ? "#c4cdd6" : "rgba(255,255,255,0.18)",
                 border: "none", padding: 0,
                 transition: "all 0.3s ease",
               }}
             />
           ))}
         </div>
-
         <button
-          onClick={next}
+          onClick={handleShuffle}
           className="font-dm"
           style={{
             width: 36, height: 36, borderRadius: "50%",
@@ -125,22 +146,11 @@ export function ShuffleCards({ testimonials }: { testimonials: Testimonial[] }) 
             display: "flex", alignItems: "center", justifyContent: "center",
             transition: "all 0.2s", backdropFilter: "blur(8px)",
           }}
-          onMouseEnter={e => {
-            e.currentTarget.style.background = "rgba(201,168,76,0.12)";
-            e.currentTarget.style.borderColor = "rgba(201,168,76,0.4)";
-            e.currentTarget.style.color = "#C9A84C";
-          }}
-          onMouseLeave={e => {
-            e.currentTarget.style.background = "rgba(255,255,255,0.04)";
-            e.currentTarget.style.borderColor = "rgba(255,255,255,0.12)";
-            e.currentTarget.style.color = "rgba(255,255,255,0.6)";
-          }}
-        >
-          →
-        </button>
-
+          onMouseEnter={e => { e.currentTarget.style.background = "rgba(196,205,214,0.12)"; e.currentTarget.style.borderColor = "rgba(196,205,214,0.3)"; e.currentTarget.style.color = "#c4cdd6"; }}
+          onMouseLeave={e => { e.currentTarget.style.background = "rgba(255,255,255,0.04)"; e.currentTarget.style.borderColor = "rgba(255,255,255,0.12)"; e.currentTarget.style.color = "rgba(255,255,255,0.6)"; }}
+        >→</button>
         <p className="font-dm" style={{ fontSize: 10, color: "rgba(255,255,255,0.2)", letterSpacing: "0.15em", textTransform: "uppercase" }}>
-          Cliquer pour naviguer
+          Glisser ou cliquer
         </p>
       </div>
     </div>
