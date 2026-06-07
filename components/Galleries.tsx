@@ -3,11 +3,13 @@ import { useState, useRef, useEffect, useCallback } from "react";
 import { motion, useInView, AnimatePresence } from "framer-motion";
 import { Lock, Images, Calendar, ArrowRight, Search, ExternalLink, MapPin, X, ChevronLeft, ChevronRight } from "lucide-react";
 import { Link } from "@/i18n/navigation";
+import { useTranslations, useLocale } from "next-intl";
 import type { Gallery } from "@/lib/galleries";
 
 // ─── PIN Modal ────────────────────────────────────────────────────────────────
 
 function PinModal({ gallery, onClose }: { gallery: Gallery; onClose: () => void }) {
+  const t = useTranslations("galleries");
   const [digits, setDigits] = useState(["", "", "", ""]);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -23,8 +25,8 @@ function PinModal({ gallery, onClose }: { gallery: Gallery; onClose: () => void 
       const res = await fetch("/api/gallery/unlock", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ id: gallery.id, pin }) });
       const data = await res.json();
       if (res.ok && data.url) { window.open(data.url, "_blank", "noopener,noreferrer"); onClose(); }
-      else { setError(data.error ?? "PIN incorrect"); setShake(true); setDigits(["", "", "", ""]); setTimeout(() => { setShake(false); inputRefs[0].current?.focus(); }, 500); }
-    } catch { setError("Erreur de connexion"); }
+      else { setError(data.error ?? t("pinError")); setShake(true); setDigits(["", "", "", ""]); setTimeout(() => { setShake(false); inputRefs[0].current?.focus(); }, 500); }
+    } catch { setError(t("connError")); }
     finally { setLoading(false); }
   }, [gallery.id, onClose]); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -60,7 +62,7 @@ function PinModal({ gallery, onClose }: { gallery: Gallery; onClose: () => void 
           </div>
         )}
         <h3 className="font-bebas" style={{ fontSize: 26, color: "#fff", letterSpacing: "0.06em", marginBottom: 4, lineHeight: 1 }}>{gallery.name}</h3>
-        <p className="font-dm" style={{ fontSize: 12, color: "rgba(255,255,255,0.3)", marginBottom: 32 }}>Entrez le code PIN pour accéder</p>
+        <p className="font-dm" style={{ fontSize: 12, color: "rgba(255,255,255,0.3)", marginBottom: 32 }}>{t("pinPrompt")}</p>
         <div style={{ display: "flex", justifyContent: "center", gap: 10, marginBottom: 28 }}>
           {digits.map((d, i) => (
             <input key={i} ref={inputRefs[i]} type="password" inputMode="numeric" maxLength={1} value={d}
@@ -74,8 +76,8 @@ function PinModal({ gallery, onClose }: { gallery: Gallery; onClose: () => void 
         <AnimatePresence>
           {error && <motion.p initial={{ opacity: 0, y: -4 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} className="font-dm" style={{ fontSize: 12, color: "rgba(239,68,68,0.75)", marginBottom: 16 }}>{error}</motion.p>}
         </AnimatePresence>
-        {loading && <p className="font-dm" style={{ fontSize: 12, color: "rgba(255,255,255,0.3)", marginBottom: 16 }}>Vérification...</p>}
-        <button onClick={onClose} className="font-dm" style={{ background: "none", border: "none", color: "rgba(255,255,255,0.2)", fontSize: 12, cursor: "pointer", letterSpacing: "0.04em" }}>Annuler</button>
+        {loading && <p className="font-dm" style={{ fontSize: 12, color: "rgba(255,255,255,0.3)", marginBottom: 16 }}>{t("verifying")}</p>}
+        <button onClick={onClose} className="font-dm" style={{ background: "none", border: "none", color: "rgba(255,255,255,0.2)", fontSize: 12, cursor: "pointer", letterSpacing: "0.04em" }}>{t("cancel")}</button>
       </motion.div>
     </motion.div>
   );
@@ -90,6 +92,8 @@ function Lightbox({ gallery, galleries, onClose, onAccess, onNav }: {
   onAccess: (g: Gallery) => void;
   onNav: (g: Gallery) => void;
 }) {
+  const t = useTranslations("galleries");
+  const locale = useLocale();
   const idx = galleries.indexOf(gallery);
   const prev = idx > 0 ? galleries[idx - 1] : null;
   const next = idx < galleries.length - 1 ? galleries[idx + 1] : null;
@@ -145,7 +149,7 @@ function Lightbox({ gallery, galleries, onClose, onAccess, onNav }: {
             <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(10,10,12,0.9) 0%, transparent 50%)" }} />
             <div style={{ position: "absolute", top: 16, left: 16, display: "flex", gap: 6 }}>
               <span className="font-dm" style={{ fontSize: 10, color: "#0a0a0a", fontWeight: 700, padding: "3px 10px", background: "#c4cdd6", borderRadius: 9999, letterSpacing: "0.08em", textTransform: "uppercase" }}>{gallery.type}</span>
-              {gallery.featured && <span className="font-dm" style={{ fontSize: 10, color: "#fff", fontWeight: 700, padding: "3px 10px", background: "rgba(74,222,128,0.2)", border: "1px solid rgba(74,222,128,0.4)", borderRadius: 9999 }}>⭐ Vedette</span>}
+              {gallery.featured && <span className="font-dm" style={{ fontSize: 10, color: "#fff", fontWeight: 700, padding: "3px 10px", background: "rgba(74,222,128,0.2)", border: "1px solid rgba(74,222,128,0.4)", borderRadius: 9999 }}>⭐ {t("featured")}</span>}
             </div>
           </div>
         ) : (
@@ -159,7 +163,7 @@ function Lightbox({ gallery, galleries, onClose, onAccess, onNav }: {
           <h2 className="font-bebas" style={{ fontSize: 32, color: "#fff", letterSpacing: "0.04em", lineHeight: 1, marginBottom: 10 }}>{gallery.name}</h2>
           <div style={{ display: "flex", flexWrap: "wrap", gap: 12, marginBottom: 24 }}>
             <span className="font-dm" style={{ display: "flex", alignItems: "center", gap: 5, fontSize: 12, color: "rgba(255,255,255,0.4)" }}>
-              <Calendar size={11} /> {new Date(gallery.date).toLocaleDateString("fr-CA", { day: "numeric", month: "long", year: "numeric" })}
+              <Calendar size={11} /> {new Date(gallery.date).toLocaleDateString(locale === "fr" ? "fr-CA" : "en-CA", { day: "numeric", month: "long", year: "numeric" })}
             </span>
             <span className="font-dm" style={{ display: "flex", alignItems: "center", gap: 5, fontSize: 12, color: "rgba(255,255,255,0.4)" }}>
               <Images size={11} /> {gallery.photos} photos
@@ -172,7 +176,7 @@ function Lightbox({ gallery, galleries, onClose, onAccess, onNav }: {
           </div>
           <button onClick={() => onAccess(gallery)} className="font-dm"
             style={{ width: "100%", display: "flex", alignItems: "center", justifyContent: "center", gap: 10, padding: "14px 20px", background: "#f2f0ec", color: "#0a0a0a", borderRadius: 12, border: "none", fontSize: 13, fontWeight: 700, letterSpacing: "0.06em", cursor: "pointer" }}>
-            {gallery.password ? <><Lock size={13} /> Accéder avec PIN</> : <>Accéder aux photos <ArrowRight size={13} /></>}
+            {gallery.password ? <><Lock size={13} /> {t("accessPin")}</> : <>{t("accessPhotos")} <ArrowRight size={13} /></>}
           </button>
         </div>
       </motion.div>
@@ -183,16 +187,27 @@ function Lightbox({ gallery, galleries, onClose, onAccess, onNav }: {
 // ─── Main component ───────────────────────────────────────────────────────────
 
 export default function Galleries({ initialGalleries = [] }: { initialGalleries?: Gallery[] }) {
+  const t = useTranslations("galleries");
+  const locale = useLocale();
   const [search, setSearch] = useState("");
-  const [filter, setFilter] = useState<string>("Tous");
+  const [filter, setFilter] = useState<string>("all");
   const [lightbox, setLightbox] = useState<Gallery | null>(null);
   const [pinGallery, setPinGallery] = useState<Gallery | null>(null);
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-60px" });
 
+  const FILTERS = [
+    { id: "all",       label: t("filterAll") },
+    { id: "event",     label: t("filterEvent") },
+    { id: "corporate", label: t("filterCorporate") },
+    { id: "featured",  label: t("filterFeatured") },
+  ];
+
   const filtered = initialGalleries.filter(g => {
     const matchSearch = g.name.toLowerCase().includes(search.toLowerCase());
-    const matchFilter = filter === "Tous" || (filter === "Vedette ⭐" ? g.featured : g.type === filter);
+    const matchFilter =
+      filter === "all" ||
+      (filter === "featured" ? g.featured : (g.type === "Événement" || g.type === "Event") ? filter === "event" : g.type.toLowerCase() === filter);
     return matchSearch && matchFilter;
   });
 
@@ -218,14 +233,14 @@ export default function Galleries({ initialGalleries = [] }: { initialGalleries?
         style={{ marginBottom: 48, display: "flex", flexDirection: "column", gap: 16 }}>
         <div style={{ position: "relative", maxWidth: 480 }}>
           <Search size={14} color="rgba(255,255,255,0.3)" style={{ position: "absolute", left: 16, top: "50%", transform: "translateY(-50%)", pointerEvents: "none" }} />
-          <input type="text" placeholder="Rechercher un événement..." value={search} onChange={e => setSearch(e.target.value)}
+          <input type="text" placeholder={t("searchPlaceholder")} value={search} onChange={e => setSearch(e.target.value)}
             style={{ width: "100%", padding: "14px 16px 14px 42px", background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.09)", borderRadius: 14, color: "#fff", fontSize: 14, outline: "none", fontFamily: "var(--font-dm-sans), sans-serif", boxSizing: "border-box" }} />
         </div>
         <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
-          {["Tous", "Événement", "Corporate", "Vedette ⭐"].map(f => (
-            <button key={f} onClick={() => setFilter(f)} className="font-dm"
-              style={{ padding: "6px 16px", borderRadius: 9999, border: `1px solid ${filter === f ? "rgba(196,205,214,0.4)" : "rgba(255,255,255,0.1)"}`, background: filter === f ? "rgba(196,205,214,0.1)" : "transparent", color: filter === f ? "#c4cdd6" : "rgba(255,255,255,0.4)", fontSize: 12, cursor: "pointer", transition: "all 0.2s", letterSpacing: "0.04em" }}>
-              {f}
+          {FILTERS.map(f => (
+            <button key={f.id} onClick={() => setFilter(f.id)} className="font-dm"
+              style={{ padding: "6px 16px", borderRadius: 9999, border: `1px solid ${filter === f.id ? "rgba(196,205,214,0.4)" : "rgba(255,255,255,0.1)"}`, background: filter === f.id ? "rgba(196,205,214,0.1)" : "transparent", color: filter === f.id ? "#c4cdd6" : "rgba(255,255,255,0.4)", fontSize: 12, cursor: "pointer", transition: "all 0.2s", letterSpacing: "0.04em" }}>
+              {f.label}
             </button>
           ))}
         </div>
@@ -236,13 +251,13 @@ export default function Galleries({ initialGalleries = [] }: { initialGalleries?
         <motion.div initial={{ opacity: 0, y: 20 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.6, delay: 0.2 }}
           style={{ textAlign: "center", padding: "80px 24px", borderRadius: 24, border: "1px solid rgba(255,255,255,0.07)", background: "rgba(255,255,255,0.02)" }}>
           <Images size={36} color="rgba(255,255,255,0.15)" style={{ marginBottom: 20 }} />
-          <h3 className="font-bebas" style={{ fontSize: 32, color: "rgba(255,255,255,0.5)", letterSpacing: "0.04em", marginBottom: 12 }}>GALERIES BIENTÔT DISPONIBLES</h3>
+          <h3 className="font-bebas" style={{ fontSize: 32, color: "rgba(255,255,255,0.5)", letterSpacing: "0.04em", marginBottom: 12 }}>{t("emptyTitle")}</h3>
           <p className="font-dm" style={{ fontSize: 13, color: "rgba(255,255,255,0.25)", marginBottom: 28, lineHeight: 1.7 }}>
-            Tu as assisté à un événement MassiShoots ?<br />Les photos seront disponibles ici après l&apos;événement.
+            {t("emptyText1")}<br />{t("emptyText2")}
           </p>
           <a href="https://massishoots.pixieset.com/" target="_blank" rel="noopener noreferrer" className="font-dm"
             style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "12px 24px", borderRadius: 9999, border: "1px solid rgba(255,255,255,0.12)", color: "rgba(255,255,255,0.5)", textDecoration: "none", fontSize: 13 }}>
-            Voir le site Pixieset <ExternalLink size={12} />
+            {t("emptyPixieset")} <ExternalLink size={12} />
           </a>
         </motion.div>
       )}
@@ -250,7 +265,7 @@ export default function Galleries({ initialGalleries = [] }: { initialGalleries?
       {/* No results */}
       {!isEmpty && filtered.length === 0 && (
         <div style={{ textAlign: "center", padding: "60px 24px" }}>
-          <p className="font-dm" style={{ fontSize: 14, color: "rgba(255,255,255,0.3)" }}>Aucune galerie trouvée pour &ldquo;{search}&rdquo;</p>
+          <p className="font-dm" style={{ fontSize: 14, color: "rgba(255,255,255,0.3)" }}>{t("noResults", { search })}</p>
         </div>
       )}
 
@@ -291,7 +306,7 @@ export default function Galleries({ initialGalleries = [] }: { initialGalleries?
                     {/* Hover overlay */}
                     <div className="gallery-overlay" style={{ position: "absolute", inset: 0, background: "rgba(0,0,0,0.5)", display: "flex", alignItems: "center", justifyContent: "center", opacity: 0, transition: "opacity 0.3s" }}>
                       <span className="font-dm" style={{ fontSize: 12, color: "#fff", fontWeight: 600, letterSpacing: "0.1em", textTransform: "uppercase", border: "1px solid rgba(255,255,255,0.4)", padding: "8px 20px", borderRadius: 9999 }}>
-                        Voir la galerie
+                        {t("viewGallery")}
                       </span>
                     </div>
                   </div>
@@ -300,7 +315,7 @@ export default function Galleries({ initialGalleries = [] }: { initialGalleries?
                     <h3 className="font-bebas" style={{ fontSize: 20, color: "#fff", letterSpacing: "0.04em", marginBottom: 4, lineHeight: 1 }}>{gallery.name}</h3>
                     <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
                       <span className="font-dm" style={{ display: "flex", alignItems: "center", gap: 4, fontSize: 10, color: "rgba(255,255,255,0.3)" }}>
-                        <Calendar size={9} /> {new Date(gallery.date).toLocaleDateString("fr-CA", { day: "numeric", month: "long", year: "numeric" })}
+                        <Calendar size={9} /> {new Date(gallery.date).toLocaleDateString(locale === "fr" ? "fr-CA" : "en-CA", { day: "numeric", month: "long", year: "numeric" })}
                       </span>
                       {gallery.location && (
                         <span className="font-dm" style={{ display: "flex", alignItems: "center", gap: 4, fontSize: 10, color: "rgba(255,255,255,0.3)" }}>
@@ -329,15 +344,15 @@ export default function Galleries({ initialGalleries = [] }: { initialGalleries?
       {/* Bottom CTA */}
       <motion.div initial={{ opacity: 0, y: 20 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.6, delay: 0.4 }}
         style={{ marginTop: 80, padding: "40px", borderRadius: 24, border: "1px solid rgba(255,255,255,0.07)", background: "rgba(255,255,255,0.02)", textAlign: "center" }}>
-        <p className="font-dm" style={{ fontSize: 12, color: "rgba(255,255,255,0.3)", letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: 12 }}>Vous avez aimé les photos ?</p>
-        <h3 className="font-bebas" style={{ fontSize: "clamp(28px, 4vw, 48px)", color: "#fff", letterSpacing: "0.03em", marginBottom: 8 }}>Réservez MassiShoots pour votre prochain événement</h3>
+        <p className="font-dm" style={{ fontSize: 12, color: "rgba(255,255,255,0.3)", letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: 12 }}>{t("ctaTagline")}</p>
+        <h3 className="font-bebas" style={{ fontSize: "clamp(28px, 4vw, 48px)", color: "#fff", letterSpacing: "0.03em", marginBottom: 8 }}>{t("ctaHeading")}</h3>
         <p className="font-dm" style={{ fontSize: 13, color: "rgba(255,255,255,0.35)", marginBottom: 28, lineHeight: 1.7 }}>Photo · Vidéo · Événements · Mariages · Corporate</p>
         <div style={{ display: "flex", justifyContent: "center", gap: 12, flexWrap: "wrap" }}>
           <Link href="/contact" className="font-dm" style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "13px 28px", background: "#f2f0ec", color: "#0a0a0a", borderRadius: 9999, textDecoration: "none", fontSize: 13, fontWeight: 700, letterSpacing: "0.06em" }}>
-            Réserver une consultation <ArrowRight size={13} />
+            {t("ctaBook")} <ArrowRight size={13} />
           </Link>
           <Link href="/services" className="font-dm" style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "13px 24px", borderRadius: 9999, border: "1px solid rgba(255,255,255,0.12)", color: "rgba(255,255,255,0.55)", textDecoration: "none", fontSize: 13 }}>
-            Voir les services
+            {t("ctaServices")}
           </Link>
         </div>
       </motion.div>

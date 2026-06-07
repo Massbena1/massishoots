@@ -1,23 +1,17 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useTranslations } from "next-intl";
 
-const ARGS = [
-  {
-    title: "Parce que votre marque n'est pas standard.",
-    text: "Un entrepreneur qui démarre n'a pas les mêmes besoins qu'une agence qui veut dominer son marché. Nous construisons une offre qui correspond exactement à là où vous en êtes — et là où vous voulez aller.",
-  },
-  {
-    title: "Parce que le meilleur contenu se planifie.",
-    text: "Avant de chiffrer quoi que ce soit, on prend 30 minutes pour comprendre votre vision, votre clientèle et vos objectifs. C'est ce qui fait la différence entre du contenu et du contenu qui performe.",
-  },
-  {
-    title: "Parce que vous méritez une vraie conversation.",
-    text: "Pas un formulaire automatique. Pas un PDF générique. Un appel direct avec Massi pour définir ensemble ce qui fera avancer votre marque.",
-  },
-];
+
 
 export default function TarifsWhy() {
+  const t = useTranslations("tarifs.why");
+  const ARGS = [
+    { title: t("a1title"), text: t("a1text") },
+    { title: t("a2title"), text: t("a2text") },
+    { title: t("a3title"), text: t("a3text") },
+  ];
   return (
     <section style={{ background: "#0a0a0a", padding: "100px 24px" }}>
       <div style={{ maxWidth: 820, margin: "0 auto" }}>
@@ -38,7 +32,7 @@ export default function TarifsWhy() {
             maxWidth: 640,
           }}
         >
-          Pourquoi nous ne publions pas de tarifs fixes.
+          {t("heading")}
         </motion.h2>
 
         {/* Arguments */}

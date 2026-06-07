@@ -535,5 +535,484 @@
     "ctaSendBtn": "Envoyer ma demande",
     "ctaInstagramBtn": "Voir l'Instagram",
     "ctaFootnote": "Disponible pour voyages · Réponse sous 24h · Premier appel gratuit"
+  },
+  "aboutPage": {
+    "hero": {
+      "badge": "Le fondateur · Massishoots",
+      "name": "Massi Bena.",
+      "subtitle": "Ingénieur de formation. Cinéaste par vocation.",
+      "desc1": "Certains construisent des logiciels.",
+      "desc2": "D'autres construisent des images.",
+      "desc3": "Massi fait les deux — avec la même rigueur et la même passion."
+    },
+    "story": {
+      "label": "— L'histoire",
+      "title1": "DE LA CODE",
+      "title2": "À LA CAMÉRA.",
+      "p1": "Massi a grandi avec deux obsessions : comprendre comment les choses fonctionnent et capturer la beauté du monde autour de lui. Ingénieur logiciel de formation, il a toujours eu un appareil photo dans les mains — pas par obligation, mais parce que c'était naturel.",
+      "p2": "Ce qui a commencé comme une passion pure — photographier, filmer, observer — s'est progressivement transformé en quelque chose de plus grand. Les projets se sont multipliés. Les clients sont arrivés. Et Massi a réalisé que sa formation technique n'était pas un hasard : elle lui donnait une façon unique de voir et de construire des images.",
+      "quote": "\"Ce n'est pas juste de la photo. C'est de l'ingénierie visuelle.\"",
+      "p3a": "Aujourd'hui, Massishoots est le résultat de cette double expertise.",
+      "p3b": "La rigueur de l'ingénieur. La sensibilité de l'artiste.",
+      "p3c": "Au service des marques qui veulent une image à la hauteur de leurs ambitions."
+    },
+    "values": {
+      "title1": "CE QUI GUIDE",
+      "title2": "CHAQUE PROJET.",
+      "v1title": "La rigueur avant tout",
+      "v1text": "Chaque projet est planifié, structuré et exécuté avec précision. Pas d'improvisation — une vision claire du début à la livraison.",
+      "v2title": "La passion comme moteur",
+      "v2text": "On ne fait pas ce métier pour remplir un calendrier. On le fait parce que chaque projet est une nouvelle occasion de créer quelque chose d'exceptionnel.",
+      "v3title": "Le résultat comme mesure",
+      "v3text": "Un beau visuel qui ne performe pas, c'est un échec. Ce qui compte, c'est l'impact que le contenu a sur votre marque et vos clients."
+    },
+    "cta": {
+      "title1": "Vous avez un projet.",
+      "title2": "J'ai la vision.",
+      "subtitle": "Prenons 30 minutes pour voir si on est faits pour travailler ensemble.",
+      "btn": "Réserver un appel gratuit →",
+      "footnote": "Sans engagement · Réponse sous 24h · 438-464-0607"
+    }
+  },
+  "tarifs": {
+    "hero": {
+      "badge": "Studio Premium · Montréal",
+      "h1a": "Chaque projet est unique.",
+      "h1b": "Votre investissement aussi.",
+      "subtitle": "Nous ne travaillons pas avec des formules fixes.\nNous construisons une offre sur mesure autour de vos objectifs,\nvotre marque et vos ambitions.",
+      "scrollHint": "Découvrir nos offres"
+    },
+    "why": {
+      "heading": "Pourquoi nous ne publions pas de tarifs fixes.",
+      "a1title": "Parce que votre marque n'est pas standard.",
+      "a1text": "Un entrepreneur qui démarre n'a pas les mêmes besoins qu'une agence qui veut dominer son marché. Nous construisons une offre qui correspond exactement à là où vous en êtes — et là où vous voulez aller.",
+      "a2title": "Parce que le meilleur contenu se planifie.",
+      "a2text": "Avant de chiffrer quoi que ce soit, on prend 30 minutes pour comprendre votre vision, votre clientèle et vos objectifs. C'est ce qui fait la différence entre du contenu et du contenu qui performe.",
+      "a3title": "Parce que vous méritez une vraie conversation.",
+      "a3text": "Pas un formulaire automatique. Pas un PDF générique. Un appel direct avec Massi pour définir ensemble ce qui fera avancer votre marque."
+    },
+    "stats": {
+      "label": "— Résultats réels",
+      "heading": "Ce que nos clients obtiennent.",
+      "s1val": "+127%",
+      "s1label": "Engagement moyen après 3 mois",
+      "s2val": "2M+",
+      "s2label": "Vues générées pour nos clients",
+      "s3val": "50+",
+      "s3label": "Marques accompagnées à Montréal",
+      "s4val": "48h",
+      "s4label": "Livraison express disponible"
+    },
+    "results": {
+      "label": "— Résultats réels",
+      "heading": "CE QUE\nNOS CLIENTS\nOBTIENNENT",
+      "tagline": "Du contenu qui performe — pas juste du contenu qui est beau.",
+      "cta": "Démarrer",
+      "m1val": "+127%",
+      "m1label": "Engagement moyen",
+      "m1sub": "Après 3 mois de contenu mensuel",
+      "m2val": "2M+",
+      "m2label": "Vues générées",
+      "m2sub": "Sur les Reels & vidéos clients",
+      "m3val": "50+",
+      "m3label": "Clients accompagnés",
+      "m3sub": "Entrepreneurs & marques à Montréal",
+      "m4val": "48h",
+      "m4label": "Livraison express",
+      "m4sub": "Pour les projets urgents"
+    },
+    "packages": {
+      "label": "— Contenu mensuel",
+      "heading": "CHOISISSEZ VOTRE\nPACKAGE",
+      "subtitle": "Contrat mensuel · Sans engagement annuel · Fourchette de prix selon votre projet",
+      "tabCards": "Packages",
+      "tabCompare": "Comparer",
+      "popular": "LE PLUS POPULAIRE",
+      "compareHeader": "Livrable",
+      "footnote": "* Fourchette indicative en CAD · Prix exact confirmé lors de votre consultation gratuite · Taxes en sus",
+      "ctaStart": "Commencer avec",
+      "ctaChoose": "Choisir",
+      "unlimited": "Illimitées",
+      "mois": "/ mois"
+    }
+  },
+  "simulateur": {
+    "title": "Simulateur IA Gratuit — Idées de Reels pour votre Business",
+    "badge": "✦ Propulsé par l'IA · Massishoots",
+    "heading": "3 idées de Reels\npersonnalisées pour\nton business.",
+    "subheading": "Choisis ton secteur et ta cible — on génère des idées de contenu personnalisées en 10 secondes.",
+    "step1label": "Ton secteur",
+    "step2label": "Ta cible",
+    "step3label": "Génération",
+    "step1title": "Dans quel secteur évolues-tu ?",
+    "step2title": "À qui s'adresse ton contenu ?",
+    "generating": "Génération en cours...",
+    "generateBtn": "Générer mes idées",
+    "backBtn": "Retour",
+    "restartBtn": "Recommencer",
+    "resultsTitle": "Tes 3 idées de Reels",
+    "copyBtn": "Copier",
+    "copiedBtn": "Copié !",
+    "calendlyBtn": "Créer ce contenu avec Massi →",
+    "leadTitle": "Reçois un plan de contenu personnalisé gratuit.",
+    "leadSubtitle": "Parfait ! Massi va analyser ton profil et te contacter sous 24h avec un plan de contenu sur mesure.",
+    "leadConfirmation": "Reçois un plan de contenu personnalisé gratuit par email.",
+    "leadPrenom": "Ton prénom",
+    "leadEmail": "Ton email",
+    "leadInsta": "Ton Instagram (optionnel)",
+    "leadBtn": "Recevoir mon plan gratuit →",
+    "leadSent": "✓ Plan envoyé ! Massi te contacte sous 24h.",
+    "secteurs": {
+      "restaurant": "Restaurant / Food",
+      "mode": "Mode / Lifestyle",
+      "tech": "Tech / SaaS",
+      "immobilier": "Immobilier",
+      "wellness": "Santé / Bien-être",
+      "coach": "Coach / Consultant",
+      "evenement": "Événementiel",
+      "corporate": "Corporate / Entreprise"
+    },
+    "cibles": {
+      "b2b": "Professionnels & entreprises",
+      "b2c": "Grand public & consommateurs",
+      "premium": "Clients premium & luxe",
+      "young": "Audience jeune & tendance"
+    }
+  },
+  "calculator": {
+    "label": "— Estimez votre budget",
+    "heading": "CALCULATEUR\nDE PRIX",
+    "subtitle": "Répondez à quelques questions — obtenez une fourchette instantanée, sans engagement.",
+    "selectionLabel": "Sélection :",
+    "questionOf": "Question {n} / {total}",
+    "projectQuestion": "Quel type de projet ?",
+    "back": "← Retour",
+    "modify": "← Modifier",
+    "next": "Suivant",
+    "seeEstimate": "Voir mon estimation",
+    "restart": "Recommencer",
+    "book": "Réserver ma consultation",
+    "estimateLabel": "Estimation pour votre projet",
+    "estimateNote": "Fourchette indicative en dollars canadiens, taxes en sus.\nPrix exact confirmé lors de votre consultation gratuite.",
+    "quoteNeeded": "Ce projet nécessite un devis personnalisé.",
+    "getQuote": "Obtenir un devis",
+    "footnote": "* Prix indicatifs en CAD. Consultation gratuite pour confirmer le devis exact.",
+    "projects": {
+      "evenement": {
+        "label": "Événement",
+        "sub": "Soirée, gala, lancement, conférence"
+      },
+      "mensuel": {
+        "label": "Contenu Mensuel",
+        "sub": "Personal branding, Reels, face caméra"
+      },
+      "pub": {
+        "label": "Publicité",
+        "sub": "Meta Ads, Instagram, UGC vidéo"
+      },
+      "mariage": {
+        "label": "Mariage",
+        "sub": "Cérémonie, préparatifs, réception"
+      },
+      "portrait": {
+        "label": "Portrait / Corporate",
+        "sub": "Headshots, session pro, branding"
+      }
+    },
+    "summaryProject": "Projet",
+    "questions": {
+      "evenement": {
+        "duree": {
+          "label": "Quelle est la durée de l'événement ?",
+          "4h": "4 heures",
+          "4h_sub": "Cocktail, lancement",
+          "6h": "6 heures",
+          "6h_sub": "Soirée standard",
+          "8h": "8 heures",
+          "8h_sub": "Journée complète",
+          "12h": "12 heures +",
+          "12h_sub": "Gala, événement multi-scènes"
+        },
+        "equipe": {
+          "label": "Combien de personnes sur place ?",
+          "1": "Solo (1 personne)",
+          "1_sub": "Moi seul",
+          "2": "Duo (2 personnes)",
+          "2_sub": "Photographe + vidéaste",
+          "3": "Équipe (3 personnes)",
+          "3_sub": "Couverture maximale",
+          "3+": "4 personnes et plus",
+          "3+_sub": "Sur devis"
+        },
+        "livrable": {
+          "label": "Qu'est-ce que vous voulez comme livrable ?",
+          "photo": "Photo seulement",
+          "video": "Vidéo seulement",
+          "photo+video": "Photo + Vidéo",
+          "photo+video_sub": "Couverture complète"
+        },
+        "delai": {
+          "label": "Délai de livraison souhaité ?",
+          "standard": "Standard (2–3 semaines)",
+          "express": "Express (48–72h)",
+          "express_sub": "+20%"
+        }
+      },
+      "mensuel": {
+        "jours": {
+          "label": "Nombre de jours de tournage par mois ?",
+          "1j": "1 jour / mois",
+          "1j_sub": "Essentiel",
+          "2j": "2 jours / mois",
+          "2j_sub": "Croissance",
+          "4j": "4 jours / mois",
+          "4j_sub": "Présence maximale"
+        },
+        "reels": {
+          "label": "Combien de vidéos / Reels par mois ?",
+          "10": "10 vidéos / mois",
+          "15": "15 vidéos / mois",
+          "15_sub": "+30%",
+          "20+": "20+ vidéos / mois",
+          "20+_sub": "+60%"
+        },
+        "contenu": {
+          "label": "Type de contenu souhaité ?",
+          "video": "Vidéo seulement",
+          "video_sub": "Reels, face caméra",
+          "photo": "Photo seulement",
+          "photo_sub": "Branding, catalogue",
+          "photo+video": "Photo + Vidéo",
+          "photo+video_sub": "Package complet"
+        },
+        "client": {
+          "label": "C'est pour qui ?",
+          "personne": "Personne / Entrepreneur",
+          "personne_sub": "Personal branding, créateur de contenu",
+          "entreprise": "Entreprise / Marque",
+          "entreprise_sub": "PME, startup, grande entreprise"
+        },
+        "duree": {
+          "label": "Durée du contrat ?",
+          "1": "1 mois",
+          "1_sub": "Essai",
+          "3": "3 mois",
+          "3_sub": "Réduction 8%",
+          "6": "6 mois",
+          "6_sub": "Réduction 13%",
+          "12": "12 mois",
+          "12_sub": "Réduction 18%"
+        }
+      },
+      "pub": {
+        "nombre": {
+          "label": "Combien de vidéos publicitaires ?",
+          "1": "1 vidéo",
+          "1_sub": "300 $",
+          "3": "3 vidéos",
+          "3_sub": "800 $",
+          "5": "5 vidéos",
+          "5_sub": "1 300 $",
+          "10": "10 vidéos",
+          "10_sub": "2 400 $",
+          "15": "15 vidéos",
+          "15_sub": "3 400 $",
+          "20": "20 vidéos",
+          "20_sub": "4 200 $"
+        },
+        "format": {
+          "label": "Format de la vidéo ?",
+          "ugc": "UGC style brut",
+          "ugc_sub": "Authentique, sans montage complexe",
+          "reel": "Reel monté",
+          "reel_sub": "Montage pro, sous-titres, effets",
+          "long": "Vidéo longue (30–60s)",
+          "long_sub": "Brand film, ad cinématique"
+        },
+        "strategie": {
+          "label": "Stratégie & script inclus ?",
+          "non": "Non — juste le tournage / montage",
+          "oui": "Oui — script, accroches, stratégie",
+          "oui_sub": "+35%"
+        }
+      },
+      "mariage": {
+        "heures": {
+          "label": "Nombre d'heures de couverture ?",
+          "6h": "6 heures",
+          "6h_sub": "Cérémonie + cocktail",
+          "8h": "8 heures",
+          "8h_sub": "Journée standard",
+          "10h": "10 heures",
+          "10h_sub": "Journée + début soirée",
+          "12h": "12 heures +",
+          "12h_sub": "Journée complète"
+        },
+        "livrable": {
+          "label": "Livrable souhaité ?",
+          "photo": "Photo seulement",
+          "film": "Film seulement",
+          "film_sub": "Court-métrage cinématique",
+          "both": "Photo + Film",
+          "both_sub": "Couverture complète"
+        },
+        "lieu": {
+          "label": "Où se déroule le mariage ?",
+          "montreal": "Montréal & région",
+          "qc-on": "Québec / Ontario",
+          "qc-on_sub": "+15%",
+          "intl": "International",
+          "intl_sub": "+40% + frais voyage"
+        },
+        "extras": {
+          "label": "Options supplémentaires ?",
+          "none": "Aucun extra",
+          "album": "Album photo premium",
+          "album_sub": "+800 $",
+          "drone": "Drone",
+          "drone_sub": "+600 $",
+          "2nd": "2e photographe",
+          "2nd_sub": "+900 $"
+        }
+      },
+      "portrait": {
+        "duree": {
+          "label": "Durée de la session ?",
+          "1h": "1 heure",
+          "2h": "2 heures",
+          "demi": "Demi-journée (4h)",
+          "demi_sub": "Branding complet"
+        },
+        "looks": {
+          "label": "Nombre de looks / tenues ?",
+          "1": "1 look",
+          "2": "2 looks",
+          "3": "3 looks +"
+        },
+        "photos": {
+          "label": "Nombre de photos retouchées livrées ?",
+          "10": "10 photos",
+          "25": "25 photos",
+          "50": "50 photos +"
+        }
+      }
+    }
+  },
+  "galleries": {
+    "pinPrompt": "Entrez le code PIN pour accéder",
+    "verifying": "Vérification...",
+    "cancel": "Annuler",
+    "pinError": "PIN incorrect",
+    "connError": "Erreur de connexion",
+    "accessPin": "Accéder avec PIN",
+    "accessPhotos": "Accéder aux photos",
+    "featured": "⭐ Vedette",
+    "searchPlaceholder": "Rechercher un événement...",
+    "filterAll": "Tous",
+    "filterEvent": "Événement",
+    "filterCorporate": "Corporate",
+    "filterFeatured": "Vedette ⭐",
+    "noResults": "Aucune galerie trouvée pour \"{search}\"",
+    "viewGallery": "Voir la galerie",
+    "ctaTagline": "Photo · Vidéo · Événements · Mariages · Corporate",
+    "ctaHeading": "Réservez MassiShoots pour votre prochain événement",
+    "ctaBook": "Réserver une consultation",
+    "ctaServices": "Voir les services",
+    "emptyTitle": "GALERIES BIENTÔT DISPONIBLES",
+    "emptyText1": "Tu as assisté à un événement MassiShoots ?",
+    "emptyText2": "Les photos seront disponibles ici après l'événement.",
+    "emptyPixieset": "Voir le site Pixieset"
+  },
+  "exitIntent": {
+    "badge": "✦ OFFRE EXCLUSIVE",
+    "heading1": "Avant de partir...",
+    "heading2": "Reçois 3 idées de Reels gratuites pour ta marque.",
+    "subtext": "Notre IA analyse ton secteur et te génère 3 concepts de Reels personnalisés — gratuitement, en 10 secondes.",
+    "fieldPrenom": "Ton prénom",
+    "fieldEmail": "Ton email",
+    "fieldSecteur": "Ton secteur",
+    "cta": "Recevoir mes idées gratuites →",
+    "sending": "Envoi...",
+    "secondary": "Non merci, je quitte sans mes idées",
+    "footnote": "Aucune carte de crédit · Réponse sous 24h · Sans engagement",
+    "errorRequired": "Prénom et email requis.",
+    "errorServer": "Une erreur est survenue, réessaie.",
+    "successTitle": "C'est dans ta boîte !",
+    "successText": "Massi va analyser ton profil et t'envoyer 3 idées de Reels personnalisées sous 24h. Surveille tes emails 📲",
+    "successCta": "Voir le portfolio en attendant →"
+  },
+  "analyseInstagram": {
+    "badge": "✦ Outil Gratuit · Propulsé par IA",
+    "title1": "Ton Instagram performe-t-il vraiment ?",
+    "title2": "Notre IA analyse ton profil en 30 secondes et identifie exactement ce qui freine ta croissance.",
+    "subtitle": "Entrez votre handle Instagram ci-dessous. Notre IA analyse votre bio, votre positionnement et votre niche pour vous donner un rapport personnalisé — gratuitement.",
+    "formStep1Title": "Analysons votre profil",
+    "usernamePlaceholder": "@votrecompte",
+    "usernameNote": "Nous n'accédons pas à votre compte — analyse publique uniquement",
+    "secteurLabel": "Votre secteur d'activité",
+    "objectifLabel": "Votre objectif principal",
+    "emailPlaceholder": "Pour recevoir votre rapport complet",
+    "ctaButton": "Analyser mon profil gratuitement →",
+    "secteurs": {
+      "restaurant": "Restaurant",
+      "mode": "Mode/Lifestyle",
+      "tech": "Tech/SaaS",
+      "immobilier": "Immobilier",
+      "sante": "Santé/Bien-être",
+      "coach": "Coach/Consultant",
+      "evenementiel": "Événementiel",
+      "corporate": "Corporate",
+      "autre": "Autre"
+    },
+    "objectifs": {
+      "clients": "Attirer plus de clients",
+      "notoriete": "Augmenter ma notoriété",
+      "ventes": "Vendre mes produits/services",
+      "marque": "Construire ma marque personnelle"
+    },
+    "loading": "Analyse en cours...",
+    "loadingSteps": [
+      "Analyse du profil en cours...",
+      "Évaluation du positionnement...",
+      "Identification des opportunités...",
+      "Génération du rapport..."
+    ],
+    "disclaimer": "100% gratuit • Analyse sous 24h • Aucun engagement",
+    "featuresTitle": "Ce que tu vas recevoir",
+    "featuresSubtitle": "Une analyse complète pour optimiser ta présence sur Instagram",
+    "feature1Title": "Audit de profil",
+    "feature1Desc": "Analyse complète de ton profil, bio, highlights et première impression",
+    "feature2Title": "Performance du contenu",
+    "feature2Desc": "Statistiques d'engagement et recommandations pour améliorer tes posts",
+    "feature3Title": "Stratégie personnalisée",
+    "feature3Desc": "Plan d'action sur-mesure pour développer ton audience et ton engagement",
+    "timelineTitle": "Comment ça marche",
+    "step1": "Tu soumets ton profil",
+    "step1Time": "30 secondes",
+    "step2": "Massi analyse ton compte",
+    "step2Time": "24 heures",
+    "step3": "Tu reçois ton rapport",
+    "step3Time": "Par email",
+    "successTitle": "Analyse en cours !",
+    "successDesc": "Massi va analyser ton profil Instagram et t'envoyer un rapport détaillé sous 24h. Surveille ta boîte de réception !",
+    "successCta": "Découvrir notre portfolio",
+    "reportTitle": "Rapport d'analyse —",
+    "pointsFortsTitle": "✓ Ce qui fonctionne",
+    "problemesTitle": "⚠ Ce qui freine ta croissance",
+    "planActionTitle": "→ Tes 3 priorités immédiates",
+    "ctaFinalTitle": "Tu veux qu'on implémente tout ça ensemble ?",
+    "ctaFinalSubtitle": "Massi peut créer exactement le contenu qui manque à ton profil.",
+    "ctaFinalButton": "Réserver mon appel stratégique gratuit →"
+  },
+  "metadata": {
+    "home": {
+      "title": "Massishoots | Photographe & Vidéaste Premium Montréal",
+      "description": "Studio photo et vidéo premium à Montréal. Contenu mensuel, événements, publicité et mariages. 50+ marques accompagnées. Réservez votre appel gratuit.",
+      "keywords": "photographe montréal, vidéaste montréal, contenu réseaux sociaux montréal, studio photo vidéo montréal, personal branding montréal"
+    },
+    "analyseInstagram": {
+      "title": "Analyse Instagram Gratuite | Massishoots Montréal",
+      "description": "Reçois une analyse gratuite et personnalisée de ton compte Instagram. Optimise ton profil, engagement et stratégie de contenu avec l'expertise de Massishoots."
+    }
   }
 }

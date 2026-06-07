@@ -536,5 +536,484 @@
     "ctaSendBtn": "Send my request",
     "ctaInstagramBtn": "View Instagram",
     "ctaFootnote": "Available for travel · Response within 24h · First call free"
+  },
+  "aboutPage": {
+    "hero": {
+      "badge": "The founder · Massishoots",
+      "name": "Massi Bena.",
+      "subtitle": "Engineer by training. Filmmaker by vocation.",
+      "desc1": "Some build software.",
+      "desc2": "Others build images.",
+      "desc3": "Massi does both — with the same rigor and the same passion."
+    },
+    "story": {
+      "label": "— The story",
+      "title1": "FROM CODE",
+      "title2": "TO CAMERA.",
+      "p1": "Massi grew up with two obsessions: understanding how things work and capturing the beauty of the world around him. A software engineer by training, he always had a camera in his hands — not out of obligation, but because it was natural.",
+      "p2": "What started as a pure passion — photographing, filming, observing — gradually transformed into something bigger. Projects multiplied. Clients arrived. And Massi realized his technical background was no accident: it gave him a unique way of seeing and building images.",
+      "quote": "\"It's not just photography. It's visual engineering.\"",
+      "p3a": "Today, Massishoots is the result of this dual expertise.",
+      "p3b": "The engineer's rigor. The artist's sensitivity.",
+      "p3c": "At the service of brands that want an image worthy of their ambitions."
+    },
+    "values": {
+      "title1": "WHAT GUIDES",
+      "title2": "EVERY PROJECT.",
+      "v1title": "Rigor above all",
+      "v1text": "Every project is planned, structured and executed with precision. No improvisation — a clear vision from start to delivery.",
+      "v2title": "Passion as the driver",
+      "v2text": "We don't do this work to fill a calendar. We do it because every project is a new opportunity to create something exceptional.",
+      "v3title": "Results as the measure",
+      "v3text": "A beautiful visual that doesn't perform is a failure. What matters is the impact the content has on your brand and your clients."
+    },
+    "cta": {
+      "title1": "You have a project.",
+      "title2": "I have the vision.",
+      "subtitle": "Let's take 30 minutes to see if we're made to work together.",
+      "btn": "Book a free call →",
+      "footnote": "No commitment · Response within 24h · 438-464-0607"
+    }
+  },
+  "tarifs": {
+    "hero": {
+      "badge": "Premium Studio · Montreal",
+      "h1a": "Every project is unique.",
+      "h1b": "So is your investment.",
+      "subtitle": "We don't work with fixed packages.\nWe build a custom offer around your goals,\nyour brand and your ambitions.",
+      "scrollHint": "Discover our offers"
+    },
+    "why": {
+      "heading": "Why we don't publish fixed pricing.",
+      "a1title": "Because your brand isn't standard.",
+      "a1text": "An entrepreneur just starting out doesn't have the same needs as an agency trying to dominate their market. We build an offer that matches exactly where you are — and where you want to go.",
+      "a2title": "Because the best content is planned.",
+      "a2text": "Before quoting anything, we take 30 minutes to understand your vision, your audience and your goals. That's what makes the difference between content and content that performs.",
+      "a3title": "Because you deserve a real conversation.",
+      "a3text": "Not an automated form. Not a generic PDF. A direct call with Massi to define together what will move your brand forward."
+    },
+    "stats": {
+      "label": "— Real results",
+      "heading": "What our clients get.",
+      "s1val": "+127%",
+      "s1label": "Average engagement after 3 months",
+      "s2val": "2M+",
+      "s2label": "Views generated for our clients",
+      "s3val": "50+",
+      "s3label": "Brands served in Montreal",
+      "s4val": "48h",
+      "s4label": "Express delivery available"
+    },
+    "results": {
+      "label": "— Real results",
+      "heading": "WHAT OUR\nCLIENTS\nGET",
+      "tagline": "Content that performs — not just content that looks good.",
+      "cta": "Get started",
+      "m1val": "+127%",
+      "m1label": "Avg engagement",
+      "m1sub": "After 3 months of monthly content",
+      "m2val": "2M+",
+      "m2label": "Views generated",
+      "m2sub": "On client Reels & videos",
+      "m3val": "50+",
+      "m3label": "Clients served",
+      "m3sub": "Entrepreneurs & brands in Montreal",
+      "m4val": "48h",
+      "m4label": "Express delivery",
+      "m4sub": "For urgent projects"
+    },
+    "packages": {
+      "label": "— Monthly content",
+      "heading": "CHOOSE YOUR\nPACKAGE",
+      "subtitle": "Monthly contract · No annual commitment · Price range based on your project",
+      "tabCards": "Packages",
+      "tabCompare": "Compare",
+      "popular": "MOST POPULAR",
+      "compareHeader": "Deliverable",
+      "footnote": "* Indicative range in CAD · Exact price confirmed at your free consultation · Taxes extra",
+      "ctaStart": "Start with",
+      "ctaChoose": "Choose",
+      "unlimited": "Unlimited",
+      "mois": "/ mo"
+    }
+  },
+  "simulateur": {
+    "title": "Free AI Simulator — Reel Ideas for Your Business",
+    "badge": "✦ Powered by AI · Massishoots",
+    "heading": "3 personalized Reel\nideas for your\nbusiness.",
+    "subheading": "Pick your industry and audience — we generate personalized content ideas in 10 seconds.",
+    "step1label": "Your industry",
+    "step2label": "Your audience",
+    "step3label": "Generation",
+    "step1title": "What industry are you in?",
+    "step2title": "Who is your content for?",
+    "generating": "Generating...",
+    "generateBtn": "Generate my ideas",
+    "backBtn": "Back",
+    "restartBtn": "Start over",
+    "resultsTitle": "Your 3 Reel ideas",
+    "copyBtn": "Copy",
+    "copiedBtn": "Copied!",
+    "calendlyBtn": "Create this content with Massi →",
+    "leadTitle": "Get a free personalized content plan.",
+    "leadSubtitle": "Massi will review your profile and reach out within 24h with a custom content plan.",
+    "leadConfirmation": "Get your free personalized content plan by email.",
+    "leadPrenom": "Your first name",
+    "leadEmail": "Your email",
+    "leadInsta": "Your Instagram (optional)",
+    "leadBtn": "Get my free plan →",
+    "leadSent": "✓ Plan sent! Massi will contact you within 24h.",
+    "secteurs": {
+      "restaurant": "Restaurant / Food",
+      "mode": "Fashion / Lifestyle",
+      "tech": "Tech / SaaS",
+      "immobilier": "Real Estate",
+      "wellness": "Health / Wellness",
+      "coach": "Coach / Consultant",
+      "evenement": "Events",
+      "corporate": "Corporate / Business"
+    },
+    "cibles": {
+      "b2b": "Professionals & businesses",
+      "b2c": "General public & consumers",
+      "premium": "Premium & luxury clients",
+      "young": "Young & trendy audience"
+    }
+  },
+  "calculator": {
+    "label": "— Estimate your budget",
+    "heading": "PRICE\nCALCULATOR",
+    "subtitle": "Answer a few questions — get an instant range, no commitment.",
+    "selectionLabel": "Selection:",
+    "questionOf": "Question {n} / {total}",
+    "projectQuestion": "What type of project?",
+    "back": "← Back",
+    "modify": "← Edit",
+    "next": "Next",
+    "seeEstimate": "See my estimate",
+    "restart": "Start over",
+    "book": "Book my consultation",
+    "estimateLabel": "Estimate for your project",
+    "estimateNote": "Indicative range in Canadian dollars, taxes extra.\nExact price confirmed at your free consultation.",
+    "quoteNeeded": "This project requires a custom quote.",
+    "getQuote": "Get a quote",
+    "footnote": "* Indicative prices in CAD. Free consultation to confirm exact quote.",
+    "projects": {
+      "evenement": {
+        "label": "Event",
+        "sub": "Party, gala, launch, conference"
+      },
+      "mensuel": {
+        "label": "Monthly Content",
+        "sub": "Personal branding, Reels, talking head"
+      },
+      "pub": {
+        "label": "Advertising",
+        "sub": "Meta Ads, Instagram, UGC video"
+      },
+      "mariage": {
+        "label": "Wedding",
+        "sub": "Ceremony, preparations, reception"
+      },
+      "portrait": {
+        "label": "Portrait / Corporate",
+        "sub": "Headshots, pro session, branding"
+      }
+    },
+    "summaryProject": "Project",
+    "questions": {
+      "evenement": {
+        "duree": {
+          "label": "How long is the event?",
+          "4h": "4 hours",
+          "4h_sub": "Cocktail, launch",
+          "6h": "6 hours",
+          "6h_sub": "Standard evening",
+          "8h": "8 hours",
+          "8h_sub": "Full day",
+          "12h": "12 hours +",
+          "12h_sub": "Gala, multi-stage event"
+        },
+        "equipe": {
+          "label": "How many people on site?",
+          "1": "Solo (1 person)",
+          "1_sub": "Just me",
+          "2": "Duo (2 people)",
+          "2_sub": "Photographer + videographer",
+          "3": "Team (3 people)",
+          "3_sub": "Maximum coverage",
+          "3+": "4 people and more",
+          "3+_sub": "Custom quote"
+        },
+        "livrable": {
+          "label": "What deliverable do you want?",
+          "photo": "Photo only",
+          "video": "Video only",
+          "photo+video": "Photo + Video",
+          "photo+video_sub": "Full coverage"
+        },
+        "delai": {
+          "label": "Desired delivery timeline?",
+          "standard": "Standard (2–3 weeks)",
+          "express": "Express (48–72h)",
+          "express_sub": "+20%"
+        }
+      },
+      "mensuel": {
+        "jours": {
+          "label": "Number of shoot days per month?",
+          "1j": "1 day / month",
+          "1j_sub": "Essential",
+          "2j": "2 days / month",
+          "2j_sub": "Growth",
+          "4j": "4 days / month",
+          "4j_sub": "Maximum presence"
+        },
+        "reels": {
+          "label": "How many videos / Reels per month?",
+          "10": "10 videos / month",
+          "15": "15 videos / month",
+          "15_sub": "+30%",
+          "20+": "20+ videos / month",
+          "20+_sub": "+60%"
+        },
+        "contenu": {
+          "label": "Type of content?",
+          "video": "Video only",
+          "video_sub": "Reels, talking head",
+          "photo": "Photo only",
+          "photo_sub": "Branding, catalog",
+          "photo+video": "Photo + Video",
+          "photo+video_sub": "Full package"
+        },
+        "client": {
+          "label": "Who is this for?",
+          "personne": "Person / Entrepreneur",
+          "personne_sub": "Personal branding, content creator",
+          "entreprise": "Business / Brand",
+          "entreprise_sub": "SME, startup, large company"
+        },
+        "duree": {
+          "label": "Contract duration?",
+          "1": "1 month",
+          "1_sub": "Trial",
+          "3": "3 months",
+          "3_sub": "8% discount",
+          "6": "6 months",
+          "6_sub": "13% discount",
+          "12": "12 months",
+          "12_sub": "18% discount"
+        }
+      },
+      "pub": {
+        "nombre": {
+          "label": "How many ad videos?",
+          "1": "1 video",
+          "1_sub": "$300",
+          "3": "3 videos",
+          "3_sub": "$800",
+          "5": "5 videos",
+          "5_sub": "$1,300",
+          "10": "10 videos",
+          "10_sub": "$2,400",
+          "15": "15 videos",
+          "15_sub": "$3,400",
+          "20": "20 videos",
+          "20_sub": "$4,200"
+        },
+        "format": {
+          "label": "Video format?",
+          "ugc": "Raw UGC style",
+          "ugc_sub": "Authentic, no complex editing",
+          "reel": "Edited Reel",
+          "reel_sub": "Pro edit, subtitles, effects",
+          "long": "Long video (30–60s)",
+          "long_sub": "Brand film, cinematic ad"
+        },
+        "strategie": {
+          "label": "Strategy & script included?",
+          "non": "No — just shoot / edit",
+          "oui": "Yes — script, hooks, strategy",
+          "oui_sub": "+35%"
+        }
+      },
+      "mariage": {
+        "heures": {
+          "label": "Hours of coverage?",
+          "6h": "6 hours",
+          "6h_sub": "Ceremony + cocktail",
+          "8h": "8 hours",
+          "8h_sub": "Standard day",
+          "10h": "10 hours",
+          "10h_sub": "Full day + early evening",
+          "12h": "12 hours +",
+          "12h_sub": "Full day"
+        },
+        "livrable": {
+          "label": "Desired deliverable?",
+          "photo": "Photo only",
+          "film": "Film only",
+          "film_sub": "Cinematic short film",
+          "both": "Photo + Film",
+          "both_sub": "Full coverage"
+        },
+        "lieu": {
+          "label": "Where is the wedding?",
+          "montreal": "Montreal & area",
+          "qc-on": "Quebec / Ontario",
+          "qc-on_sub": "+15%",
+          "intl": "International",
+          "intl_sub": "+40% + travel costs"
+        },
+        "extras": {
+          "label": "Additional options?",
+          "none": "No extras",
+          "album": "Premium photo album",
+          "album_sub": "+$800",
+          "drone": "Drone",
+          "drone_sub": "+$600",
+          "2nd": "2nd photographer",
+          "2nd_sub": "+$900"
+        }
+      },
+      "portrait": {
+        "duree": {
+          "label": "Session duration?",
+          "1h": "1 hour",
+          "2h": "2 hours",
+          "demi": "Half-day (4h)",
+          "demi_sub": "Full branding"
+        },
+        "looks": {
+          "label": "Number of looks / outfits?",
+          "1": "1 look",
+          "2": "2 looks",
+          "3": "3 looks +"
+        },
+        "photos": {
+          "label": "Number of retouched photos delivered?",
+          "10": "10 photos",
+          "25": "25 photos",
+          "50": "50 photos +"
+        }
+      }
+    }
+  },
+  "galleries": {
+    "pinPrompt": "Enter the PIN code to access",
+    "verifying": "Verifying...",
+    "cancel": "Cancel",
+    "pinError": "Incorrect PIN",
+    "connError": "Connection error",
+    "accessPin": "Access with PIN",
+    "accessPhotos": "View photos",
+    "featured": "⭐ Featured",
+    "searchPlaceholder": "Search an event...",
+    "filterAll": "All",
+    "filterEvent": "Event",
+    "filterCorporate": "Corporate",
+    "filterFeatured": "Featured ⭐",
+    "noResults": "No gallery found for \"{search}\"",
+    "viewGallery": "View gallery",
+    "ctaTagline": "Photo · Video · Events · Weddings · Corporate",
+    "ctaHeading": "Book MassiShoots for your next event",
+    "ctaBook": "Book a consultation",
+    "ctaServices": "View services",
+    "emptyTitle": "GALLERIES COMING SOON",
+    "emptyText1": "Did you attend a MassiShoots event?",
+    "emptyText2": "Photos will be available here after the event.",
+    "emptyPixieset": "View Pixieset site"
+  },
+  "exitIntent": {
+    "badge": "✦ EXCLUSIVE OFFER",
+    "heading1": "Before you leave...",
+    "heading2": "Get 3 free Reel ideas for your brand.",
+    "subtext": "Our AI analyzes your industry and generates 3 personalized Reel concepts — free, in 10 seconds.",
+    "fieldPrenom": "Your first name",
+    "fieldEmail": "Your email",
+    "fieldSecteur": "Your industry",
+    "cta": "Get my free ideas →",
+    "sending": "Sending...",
+    "secondary": "No thanks, I'll leave without my ideas",
+    "footnote": "No credit card · Reply within 24h · No commitment",
+    "errorRequired": "First name and email are required.",
+    "errorServer": "Something went wrong, please try again.",
+    "successTitle": "Check your inbox!",
+    "successText": "Massi will analyze your profile and send you 3 personalized Reel ideas within 24h. Keep an eye on your emails 📲",
+    "successCta": "View the portfolio in the meantime →"
+  },
+  "analyseInstagram": {
+    "badge": "✦ Free Tool · AI Powered",
+    "title1": "Is your Instagram really performing?",
+    "title2": "Our AI analyzes your profile in 30 seconds and identifies exactly what's holding back your growth.",
+    "subtitle": "Enter your Instagram handle below. Our AI analyzes your bio, positioning and niche to give you a personalized report — for free.",
+    "formStep1Title": "Let's analyze your profile",
+    "usernamePlaceholder": "@youraccount",
+    "usernameNote": "We don't access your account — public analysis only",
+    "secteurLabel": "Your industry",
+    "objectifLabel": "Your main objective",
+    "emailPlaceholder": "To receive your complete report",
+    "ctaButton": "Analyze my profile for free →",
+    "secteurs": {
+      "restaurant": "Restaurant",
+      "mode": "Fashion/Lifestyle",
+      "tech": "Tech/SaaS",
+      "immobilier": "Real Estate",
+      "sante": "Health/Wellness",
+      "coach": "Coach/Consultant",
+      "evenementiel": "Events",
+      "corporate": "Corporate",
+      "autre": "Other"
+    },
+    "objectifs": {
+      "clients": "Attract more clients",
+      "notoriete": "Increase my visibility",
+      "ventes": "Sell my products/services",
+      "marque": "Build my personal brand"
+    },
+    "loading": "Analysis in progress...",
+    "loadingSteps": [
+      "Profile analysis in progress...",
+      "Positioning evaluation...",
+      "Identifying opportunities...",
+      "Generating report..."
+    ],
+    "disclaimer": "100% free • Analysis within 24h • No commitment",
+    "featuresTitle": "What you'll receive",
+    "featuresSubtitle": "A complete analysis to optimize your Instagram presence",
+    "feature1Title": "Profile audit",
+    "feature1Desc": "Complete analysis of your profile, bio, highlights and first impression",
+    "feature2Title": "Content performance",
+    "feature2Desc": "Engagement statistics and recommendations to improve your posts",
+    "feature3Title": "Personalized strategy",
+    "feature3Desc": "Custom action plan to grow your audience and engagement",
+    "timelineTitle": "How it works",
+    "step1": "You submit your profile",
+    "step1Time": "30 seconds",
+    "step2": "Massi analyzes your account",
+    "step2Time": "24 hours",
+    "step3": "You receive your report",
+    "step3Time": "By email",
+    "successTitle": "Analysis in progress!",
+    "successDesc": "Massi will analyze your Instagram profile and send you a detailed report within 24h. Keep an eye on your inbox!",
+    "successCta": "Discover our portfolio",
+    "reportTitle": "Analysis report —",
+    "pointsFortsTitle": "✓ What's working",
+    "problemesTitle": "⚠ What's holding back your growth",
+    "planActionTitle": "→ Your 3 immediate priorities",
+    "ctaFinalTitle": "Want us to implement all of this together?",
+    "ctaFinalSubtitle": "Massi can create exactly the content your profile is missing.",
+    "ctaFinalButton": "Book my free strategy call →"
+  },
+  "metadata": {
+    "home": {
+      "title": "Massishoots | Premium Photographer & Videographer Montreal",
+      "description": "Premium photo and video studio in Montreal. Monthly content, events, advertising and weddings. 50+ brands supported. Book your free call.",
+      "keywords": "photographer montreal, videographer montreal, social media content montreal, photo video studio montreal, personal branding montreal"
+    },
+    "analyseInstagram": {
+      "title": "Free Instagram Analysis | Massishoots Montreal",
+      "description": "Get a free and personalized analysis of your Instagram account. Optimize your profile, engagement and content strategy with Massishoots' expertise."
+    }
   }
 }

@@ -1,89 +1,124 @@
 "use client";
-import { motion, useInView } from "framer-motion";
-import { useRef, useState } from "react";
+import { motion } from "framer-motion";
+import { useState } from "react";
 import { Link } from "@/i18n/navigation";
 import { useTranslations } from "next-intl";
+import { cn } from "@/lib/utils";
+
+const LampContainer = ({
+  children,
+  className,
+}: {
+  children: React.ReactNode;
+  className?: string;
+}) => {
+  return (
+    <div
+      className={cn("relative w-full overflow-hidden", className)}
+      style={{ background: "#0a0a0a" }}
+    >
+      {/* Lamp effect — decorative only */}
+      <div className="pointer-events-none absolute inset-x-0 top-0 flex justify-center" style={{ zIndex: 0 }}>
+        {/* Wide light cone */}
+        <div style={{
+          width: "100%", maxWidth: "900px", height: "420px",
+          background: "radial-gradient(ellipse 50% 100% at 50% 0%, rgba(201,168,76,0.2) 0%, rgba(201,168,76,0.06) 50%, transparent 80%)",
+        }} />
+      </div>
+
+      {/* Gold line at very top */}
+      <div className="absolute inset-x-0 top-0 flex justify-center pointer-events-none" style={{ zIndex: 1 }}>
+        <motion.div
+          initial={{ width: "6rem", opacity: 0 }}
+          whileInView={{ width: "28rem", opacity: 1 }}
+          transition={{ delay: 0.3, duration: 1, ease: "easeOut" }}
+          style={{ height: "1px", background: "linear-gradient(to right, transparent, #C9A84C, transparent)" }}
+        />
+      </div>
+
+      {/* Content */}
+      <div className="relative flex flex-col items-center px-6 pt-28 pb-24" style={{ zIndex: 10 }}>
+        {children}
+      </div>
+    </div>
+  );
+};
 
 export default function CtaFinal() {
   const t = useTranslations("cta");
-  const [hoveredPrimary, setHoveredPrimary] = useState(false);
   const [hoveredSecondary, setHoveredSecondary] = useState(false);
-  const sectionRef = useRef(null);
-  const inView = useInView(sectionRef, { once: true, margin: "-80px" });
 
   return (
-    <section
-      id="cta"
-      ref={sectionRef}
-      style={{
-        padding: "140px 0",
-        background: "transparent",
-        position: "relative",
-      }}
-    >
-      {/* Top separator line */}
-      <motion.div
-        initial={{ scaleX: 0, opacity: 0 }}
-        animate={inView ? { scaleX: 1, opacity: 1 } : {}}
-        transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1] }}
-        style={{
-          position: "absolute",
-          top: 0,
-          left: 0,
-          right: 0,
-          height: 1,
-          background:
-            "linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.12) 30%, rgba(196,205,214,0.18) 50%, rgba(255,255,255,0.12) 70%, transparent 100%)",
-          transformOrigin: "center",
-        }}
-      />
-
-      <div
-        style={{
-          maxWidth: 1280,
-          margin: "0 auto",
-          padding: "0 24px",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          textAlign: "center",
-        }}
-      >
+    <section id="cta" style={{ position: "relative" }}>
+      <LampContainer>
         {/* Label */}
         <motion.span
-          className="font-dm text-accent"
+          className="font-dm"
           initial={{ opacity: 0, y: 20 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6, delay: 0.05, ease: [0.22, 1, 0.36, 1] }}
-          style={{ fontSize: 11, letterSpacing: "0.3em", textTransform: "uppercase" }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.4, duration: 0.6 }}
+          style={{ fontSize: 11, letterSpacing: "0.3em", textTransform: "uppercase", color: "#C9A84C", marginBottom: 24, display: "block" }}
         >
           {t("label")}
         </motion.span>
 
-        <motion.div initial={{ opacity: 0, y: 32 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.8, delay: 0.15, ease: [0.22, 1, 0.36, 1] }} style={{ marginTop: 24 }}>
-          <h2 className="font-bebas" style={{ fontSize: "clamp(52px, 9vw, 96px)", letterSpacing: "0.02em", lineHeight: 0.92, color: "#fff", margin: 0 }}>
-            {t("heading1")}
-            <br />
-            <em style={{ fontStyle: "italic", color: "#c4cdd6", display: "block" }}>{t("heading2")}</em>
-          </h2>
-        </motion.div>
+        {/* Heading */}
+        <motion.h2
+          className="font-bebas"
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.5, duration: 0.8, ease: "easeInOut" }}
+          style={{
+            fontSize: "clamp(52px, 9vw, 96px)",
+            letterSpacing: "0.02em",
+            lineHeight: 0.92,
+            color: "#fff",
+            textAlign: "center",
+            marginBottom: 0,
+          }}
+        >
+          {t("heading1")}
+          <br />
+          <em style={{ fontStyle: "italic", color: "#c4cdd6" }}>{t("heading2")}</em>
+        </motion.h2>
 
-        <motion.p className="font-dm" initial={{ opacity: 0, y: 24 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.7, delay: 0.28, ease: [0.22, 1, 0.36, 1] }} style={{ fontSize: 15, color: "rgba(255,255,255,0.45)", lineHeight: 1.85, maxWidth: 480, margin: "32px auto 0" }}>
+        {/* Subtext */}
+        <motion.p
+          className="font-dm"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.65, duration: 0.7 }}
+          style={{ fontSize: 15, color: "rgba(255,255,255,0.45)", lineHeight: 1.85, maxWidth: 480, margin: "28px auto 0", textAlign: "center" }}
+        >
           {t("subtext")}
         </motion.p>
 
-        <motion.div initial={{ opacity: 0, y: 24 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.7, delay: 0.42, ease: [0.22, 1, 0.36, 1] }} style={{ display: "flex", alignItems: "center", flexWrap: "wrap", gap: 12, justifyContent: "center", marginTop: 48 }}>
+        {/* Buttons */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.78, duration: 0.7 }}
+          style={{ display: "flex", alignItems: "center", flexWrap: "wrap", gap: 12, justifyContent: "center", marginTop: 44 }}
+        >
           <Link
             href="/contact"
-            className="font-dm cta-primary"
+            className="font-dm"
             style={{
               display: "inline-flex", alignItems: "center", justifyContent: "center",
               padding: "16px 36px", borderRadius: 9999,
-              background: "#f2f0ec",
-              color: "#0a0a0a", fontSize: 14, fontWeight: 600, letterSpacing: "0.06em",
+              background: "#C9A84C",
+              color: "#0a0a0a", fontSize: 14, fontWeight: 700, letterSpacing: "0.06em",
               textDecoration: "none", whiteSpace: "nowrap",
-              border: "1px solid transparent",
-              transition: "color 0.25s, border-color 0.25s, background 0.25s, transform 0.25s, box-shadow 0.25s",
+              boxShadow: "0 0 32px rgba(201,168,76,0.35)",
+              transition: "transform 0.2s, box-shadow 0.2s",
+            }}
+            onMouseEnter={e => {
+              (e.currentTarget as HTMLElement).style.transform = "translateY(-2px)";
+              (e.currentTarget as HTMLElement).style.boxShadow = "0 0 48px rgba(201,168,76,0.55)";
+            }}
+            onMouseLeave={e => {
+              (e.currentTarget as HTMLElement).style.transform = "translateY(0)";
+              (e.currentTarget as HTMLElement).style.boxShadow = "0 0 32px rgba(201,168,76,0.35)";
             }}
           >
             {t("primaryBtn")}
@@ -116,10 +151,17 @@ export default function CtaFinal() {
           </a>
         </motion.div>
 
-        <motion.p className="font-dm" initial={{ opacity: 0 }} animate={inView ? { opacity: 1 } : {}} transition={{ duration: 0.7, delay: 0.58, ease: "easeOut" }} style={{ fontSize: 11, color: "rgba(255,255,255,0.25)", letterSpacing: "0.1em", marginTop: 28, margin: "28px 0 0" }}>
+        {/* Footnote */}
+        <motion.p
+          className="font-dm"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{ delay: 0.9, duration: 0.7 }}
+          style={{ fontSize: 11, color: "rgba(255,255,255,0.2)", letterSpacing: "0.1em", marginTop: 28 }}
+        >
           {t("footnote")}
         </motion.p>
-      </div>
+      </LampContainer>
     </section>
   );
 }

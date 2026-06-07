@@ -2,6 +2,7 @@
 
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
+import { useTranslations } from "next-intl";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 28 },
@@ -9,6 +10,7 @@ const fadeUp = {
 };
 
 export default function AboutStory() {
+  const t = useTranslations("aboutPage.story");
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
 
@@ -38,7 +40,7 @@ export default function AboutStory() {
             marginBottom: 28,
           }}
         >
-          — L&apos;histoire
+          {t("label")}
         </motion.span>
 
         {/* Title */}
@@ -56,9 +58,9 @@ export default function AboutStory() {
             marginBottom: 64,
           }}
         >
-          DE LA CODE
+          {t("title1")}
           <br />
-          À LA CAMÉRA.
+          {t("title2")}
         </motion.h2>
 
         {/* Paragraphe 1 */}
@@ -75,10 +77,7 @@ export default function AboutStory() {
             marginBottom: 40,
           }}
         >
-          Massi a grandi avec deux obsessions : comprendre comment les choses fonctionnent
-          et capturer la beauté du monde autour de lui.
-          Ingénieur logiciel de formation, il a toujours eu un appareil photo dans les mains —
-          pas par obligation, mais parce que c&apos;était naturel.
+          {t("p1")}
         </motion.p>
 
         {/* Paragraphe 2 */}
@@ -95,11 +94,7 @@ export default function AboutStory() {
             marginBottom: 56,
           }}
         >
-          Ce qui a commencé comme une passion pure — photographier, filmer, observer —
-          s&apos;est progressivement transformé en quelque chose de plus grand.
-          Les projets se sont multipliés. Les clients sont arrivés.
-          Et Massi a réalisé que sa formation technique n&apos;était pas un hasard :
-          elle lui donnait une façon unique de voir et de construire des images.
+          {t("p2")}
         </motion.p>
 
         {/* Citation gold */}
@@ -124,9 +119,7 @@ export default function AboutStory() {
               margin: 0,
             }}
           >
-            &ldquo;Ce n&apos;est pas juste de la photo.
-            <br />
-            C&apos;est de l&apos;ingénierie visuelle.&rdquo;
+            {t("quote")}
           </p>
         </motion.blockquote>
 
@@ -143,11 +136,11 @@ export default function AboutStory() {
             color: "rgba(255,255,255,0.62)",
           }}
         >
-          Aujourd&apos;hui, Massishoots est le résultat de cette double expertise.{" "}
+          {t("p3a")}{" "}
           <span style={{ color: "rgba(255,255,255,0.88)" }}>
-            La rigueur de l&apos;ingénieur. La sensibilité de l&apos;artiste.
+            {t("p3b")}
           </span>{" "}
-          Au service des marques qui veulent une image à la hauteur de leurs ambitions.
+          {t("p3c")}
         </motion.p>
 
       </div>

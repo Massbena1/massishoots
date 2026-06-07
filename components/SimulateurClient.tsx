@@ -2,30 +2,34 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Zap, ChevronRight, RotateCcw, Copy, Check } from "lucide-react";
+import { useTranslations } from "next-intl";
 import Footer from "@/components/Footer";
 
 type Viralite = "Fort" | "Très fort" | "Explosif";
 type Idea = { hook: string; titre: string; format: string; viralite: Viralite };
 
-const SECTEURS = [
-  { id: "restaurant",  label: "Restaurant / Food",      emoji: "🍽️" },
-  { id: "mode",        label: "Mode / Lifestyle",        emoji: "👗" },
-  { id: "tech",        label: "Tech / SaaS",             emoji: "💻" },
-  { id: "immobilier",  label: "Immobilier",               emoji: "🏠" },
-  { id: "wellness",    label: "Santé / Bien-être",       emoji: "🧘" },
-  { id: "coach",       label: "Coach / Consultant",      emoji: "🎯" },
-  { id: "evenement",   label: "Événementiel",             emoji: "🎉" },
-  { id: "corporate",   label: "Corporate / Entreprise",  emoji: "🏢" },
-];
 
-const CIBLES = [
-  { id: "b2b",     label: "Professionnels & entreprises", emoji: "👔" },
-  { id: "b2c",     label: "Grand public & consommateurs", emoji: "🛍️" },
-  { id: "premium", label: "Clients premium & luxe",       emoji: "🌟" },
-  { id: "young",   label: "Audience jeune & tendance",    emoji: "📱" },
-];
 
 export default function SimulateurClient() {
+  const t = useTranslations("simulateur");
+  const ts = useTranslations("simulateur.secteurs");
+  const tc = useTranslations("simulateur.cibles");
+  const SECTEURS = [
+    { id: "restaurant", label: ts("restaurant"), emoji: "🍽️" },
+    { id: "mode",       label: ts("mode"),       emoji: "👗" },
+    { id: "tech",       label: ts("tech"),       emoji: "💻" },
+    { id: "immobilier", label: ts("immobilier"), emoji: "🏠" },
+    { id: "wellness",   label: ts("wellness"),   emoji: "🧘" },
+    { id: "coach",      label: ts("coach"),      emoji: "🎯" },
+    { id: "evenement",  label: ts("evenement"),  emoji: "🎉" },
+    { id: "corporate",  label: ts("corporate"),  emoji: "🏢" },
+  ];
+  const CIBLES = [
+    { id: "b2b",     label: tc("b2b"),     emoji: "👔" },
+    { id: "b2c",     label: tc("b2c"),     emoji: "🛍️" },
+    { id: "premium", label: tc("premium"), emoji: "🌟" },
+    { id: "young",   label: tc("young"),   emoji: "📱" },
+  ];
   const [step, setStep] = useState(1);
   const [secteur, setSecteur] = useState("");
   const [cible, setCible] = useState("");
@@ -112,7 +116,7 @@ export default function SimulateurClient() {
             3 IDÉES DE REELS<br />POUR TON BUSINESS
           </h1>
           <p className="font-dm" style={{ fontSize: 15, color: "rgba(255,255,255,0.45)", lineHeight: 1.7, marginBottom: 0 }}>
-            Choisis ton secteur et ta cible — on génère des idées de contenu personnalisées en 10 secondes.
+            {t("subheading")}
           </p>
         </motion.div>
       </section>
@@ -124,7 +128,7 @@ export default function SimulateurClient() {
         {step < 4 && (
           <div style={{ marginBottom: 40 }}>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 10 }}>
-              {["Ton secteur", "Ta cible", "Génération"].map((label, i) => {
+              {[t("step1label"), t("step2label"), t("step3label")].map((label, i) => {
                 const s = i + 1;
                 const active = step >= s;
                 const current = step === s;
@@ -173,7 +177,7 @@ export default function SimulateurClient() {
           {/* Step 2 — Cible */}
           {step === 2 && (
             <motion.div key="s2" initial={{ opacity: 0, x: 16 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -16 }} transition={{ duration: 0.22 }}>
-              <p className="font-dm" style={{ fontSize: 14, color: "rgba(255,255,255,0.6)", marginBottom: 20, fontWeight: 600 }}>À qui s&apos;adresse ton contenu ?</p>
+              <p className="font-dm" style={{ fontSize: 14, color: "rgba(255,255,255,0.6)", marginBottom: 20, fontWeight: 600 }}>{t("step2title")}</p>
               <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: 10, marginBottom: 28 }} className="secteur-grid">
                 {CIBLES.map(c => (
                   <button key={c.id} onClick={() => setCible(c.id)} className="font-dm"
@@ -185,7 +189,7 @@ export default function SimulateurClient() {
                 ))}
               </div>
               <div style={{ display: "flex", gap: 10 }}>
-                <button onClick={() => setStep(1)} className="font-dm" style={{ padding: "12px 18px", background: "none", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 9999, color: "rgba(255,255,255,0.35)", fontSize: 13, cursor: "pointer" }}>← Retour</button>
+                <button onClick={() => setStep(1)} className="font-dm" style={{ padding: "12px 18px", background: "none", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 9999, color: "rgba(255,255,255,0.35)", fontSize: 13, cursor: "pointer" }}>← {t("backBtn")}</button>
                 <button onClick={() => setStep(3)} disabled={!cible} className="font-dm"
                   style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "13px 24px", background: cible ? "#f2f0ec" : "rgba(255,255,255,0.06)", color: cible ? "#0a0a0a" : "rgba(255,255,255,0.2)", border: "none", borderRadius: 9999, fontSize: 13, fontWeight: 700, cursor: cible ? "pointer" : "not-allowed", transition: "all 0.2s" }}>
                   Continuer <ChevronRight size={14} />
@@ -202,10 +206,10 @@ export default function SimulateurClient() {
               <input type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="ton@email.com"
                 style={{ width: "100%", padding: "14px 16px", background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 12, color: "#fff", fontSize: 14, outline: "none", fontFamily: "var(--font-dm-sans), sans-serif", boxSizing: "border-box", marginBottom: 20 }} />
               <div style={{ display: "flex", gap: 10 }}>
-                <button onClick={() => setStep(2)} className="font-dm" style={{ padding: "12px 18px", background: "none", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 9999, color: "rgba(255,255,255,0.35)", fontSize: 13, cursor: "pointer" }}>← Retour</button>
+                <button onClick={() => setStep(2)} className="font-dm" style={{ padding: "12px 18px", background: "none", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 9999, color: "rgba(255,255,255,0.35)", fontSize: 13, cursor: "pointer" }}>← {t("backBtn")}</button>
                 <button onClick={handleGenerate} disabled={loading} className="font-dm"
                   style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "13px 28px", background: "#818cf8", color: "#fff", border: "none", borderRadius: 9999, fontSize: 13, fontWeight: 700, cursor: "pointer", transition: "all 0.2s" }}>
-                  <Zap size={14} /> {loading ? "Génération..." : "Générer mes idées"}
+                  <Zap size={14} /> {loading ? t("generating") : t("generateBtn")}
                 </button>
               </div>
             </motion.div>
@@ -216,11 +220,11 @@ export default function SimulateurClient() {
             <motion.div key="s4" initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4 }}>
               <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 32, flexWrap: "wrap", gap: 10 }}>
                 <div>
-                  <p className="font-dm" style={{ fontSize: 11, color: "#C9A84C", letterSpacing: "0.2em", textTransform: "uppercase", marginBottom: 6 }}>3 idées de Reels générées</p>
+                  <p className="font-dm" style={{ fontSize: 11, color: "#C9A84C", letterSpacing: "0.2em", textTransform: "uppercase", marginBottom: 6 }}>{t("resultsTitle")}</p>
                   <h2 className="font-bebas" style={{ fontSize: 32, color: "#fff", letterSpacing: "0.04em" }}>TON CONTENU PERSONNALISÉ</h2>
                 </div>
                 <button onClick={reset} className="font-dm" style={{ display: "flex", alignItems: "center", gap: 6, padding: "8px 14px", background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 9999, color: "rgba(255,255,255,0.35)", fontSize: 12, cursor: "pointer" }}>
-                  <RotateCcw size={11} /> Recommencer
+                  <RotateCcw size={11} /> {t("restartBtn")}
                 </button>
               </div>
 
@@ -286,7 +290,7 @@ export default function SimulateurClient() {
                     style={{ textAlign: "center", padding: "8px 0" }}>
                     <div style={{ fontSize: 32, marginBottom: 14 }}>📲</div>
                     <p className="font-dm" style={{ fontSize: 15, color: "#fff", fontWeight: 600, marginBottom: 8, lineHeight: 1.5 }}>
-                      Parfait ! Massi va analyser ton profil et te contacter sous 24h avec un plan de contenu sur mesure.
+                      {t("leadSubtitle")}
                     </p>
                     <p className="font-dm" style={{ fontSize: 13, color: "rgba(255,255,255,0.35)" }}>
                       Vérifie ta boîte mail — on arrive vite.
@@ -301,7 +305,7 @@ export default function SimulateurClient() {
                       TU VEUX QU&apos;ON RÉALISE CES IDÉES ENSEMBLE ?
                     </h3>
                     <p className="font-dm" style={{ fontSize: 13, color: "rgba(255,255,255,0.45)", marginBottom: 24, lineHeight: 1.6 }}>
-                      Reçois un plan de contenu personnalisé gratuit par email.
+                      {t("leadConfirmation")}
                     </p>
                     <form onSubmit={handleLeadSubmit} style={{ display: "flex", flexDirection: "column", gap: 12 }}>
                       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }} className="lead-grid">
@@ -317,13 +321,13 @@ export default function SimulateurClient() {
                         />
                       </div>
                       <input
-                        type="text" placeholder="Ton Instagram (optionnel)" value={leadInsta} onChange={e => setLeadInsta(e.target.value)}
+                        type="text" placeholder={t("leadInsta")} value={leadInsta} onChange={e => setLeadInsta(e.target.value)}
                         className="font-dm"
                         style={{ padding: "12px 14px", background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 10, color: "#fff", fontSize: 13, outline: "none", fontFamily: "var(--font-dm-sans), sans-serif" }}
                       />
                       <button type="submit" disabled={!leadPrenom || !leadEmail || leadSending} className="font-dm"
                         style={{ padding: "14px 24px", background: leadPrenom && leadEmail ? "#C9A84C" : "rgba(201,168,76,0.2)", color: leadPrenom && leadEmail ? "#0a0a0a" : "rgba(201,168,76,0.4)", border: "none", borderRadius: 9999, fontSize: 13, fontWeight: 700, cursor: leadPrenom && leadEmail ? "pointer" : "not-allowed", letterSpacing: "0.04em", transition: "all 0.2s" }}>
-                        {leadSending ? "Envoi en cours…" : "Recevoir mon plan gratuit →"}
+                        {leadSending ? "..." : t("leadBtn")}
                       </button>
                     </form>
                   </>
@@ -338,7 +342,7 @@ export default function SimulateurClient() {
                 </button>
                 <a href="https://calendly.com/massishot-ca/30min" target="_blank" rel="noopener noreferrer" className="font-dm"
                   style={{ flex: 1, minWidth: 180, padding: "13px 20px", background: "#C9A84C", color: "#0a0a0a", border: "none", borderRadius: 9999, fontSize: 13, fontWeight: 700, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", gap: 8, textDecoration: "none", letterSpacing: "0.04em" }}>
-                  Créer ce contenu avec Massi →
+                  {t("calendlyBtn")}
                 </a>
               </div>
             </motion.div>

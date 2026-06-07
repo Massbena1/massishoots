@@ -45,6 +45,7 @@ export default function Footer() {
         { title: t("lWedding"), href: "/services" },
         { title: "Partenariats agences", href: "/partenaires" },
         { title: "✨ Simulateur de contenu", href: "/simulateur" },
+        { title: "✨ Analyse Instagram Gratuite", href: "/analyse-instagram" },
       ],
     },
     {

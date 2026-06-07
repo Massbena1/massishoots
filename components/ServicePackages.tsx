@@ -3,115 +3,50 @@ import { useState, useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import { Link } from "@/i18n/navigation";
 import { Check, Minus, ArrowRight, Star } from "lucide-react";
+import { useTranslations } from "next-intl";
+import { useLocale } from "next-intl";
 
-const PACKAGES = [
-  {
-    id: "express",
-    name: "Contenu Express",
-    tagline: "Pour démarrer sans risque",
-    price: "800 $",
-    priceHigh: null,
-    unit: "/ mois",
-    popular: false,
-    color: "rgba(255,255,255,0.04)",
-    border: "rgba(255,255,255,0.08)",
-    livrables: [
-      "1h30 de tournage / mois",
-      "2 vidéos / Reels montés",
-      "5 photos retouchées",
-      "Livraison en 2 semaines",
-    ],
-    nonInclus: [
-      "Droits commerciaux",
-      "Stratégie contenu",
-      "Priorité agenda",
-    ],
-  },
-  {
-    id: "essentiel",
-    name: "Essentiel",
-    tagline: "Pour démarrer fort",
-    price: "2 500 $",
-    priceHigh: "4 000 $",
-    unit: "/ mois",
-    popular: false,
-    color: "rgba(255,255,255,0.06)",
-    border: "rgba(255,255,255,0.08)",
-    livrables: [
-      "1 jour de tournage / mois",
-      "4 Reels montés",
-      "10 photos retouchées",
-      "Livraison en 2 semaines",
-      "1 révision incluse",
-    ],
-    nonInclus: [
-      "Droits commerciaux",
-      "Stratégie contenu",
-      "Priorité agenda",
-    ],
-  },
-  {
-    id: "autorite",
-    name: "Autorité",
-    tagline: "Pour dominer ton marché",
-    price: "4 500 $",
-    priceHigh: "6 500 $",
-    unit: "/ mois",
-    popular: true,
-    color: "rgba(196,205,214,0.06)",
-    border: "rgba(196,205,214,0.25)",
-    livrables: [
-      "2 jours de tournage / mois",
-      "8 Reels montés",
-      "25 photos retouchées",
-      "Droits commerciaux inclus",
-      "Livraison en 10 jours",
-      "2 révisions incluses",
-    ],
-    nonInclus: [
-      "Stratégie contenu",
-      "Priorité agenda",
-    ],
-  },
-  {
-    id: "fullbrand",
-    name: "Full Brand",
-    tagline: "Pour une présence irréfutable",
-    price: "7 100 $",
-    priceHigh: "9 000 $",
-    unit: "/ mois",
-    popular: false,
-    color: "rgba(255,255,255,0.04)",
-    border: "rgba(255,255,255,0.08)",
-    livrables: [
-      "4 jours de tournage / mois",
-      "12+ Reels montés",
-      "50 photos retouchées",
-      "Droits commerciaux inclus",
-      "Stratégie contenu incluse",
-      "Livraison en 7 jours",
-      "Révisions illimitées",
-      "Priorité agenda",
-    ],
-    nonInclus: [],
-  },
-];
 
-const COMPARE_ROWS = [
-  { label: "Tournage / mois", values: ["1h30", "1 jour", "2 jours", "4 jours"] },
-  { label: "Vidéos / Reels", values: ["2", "4", "8", "12+"] },
-  { label: "Photos retouchées", values: ["5", "10", "25", "50"] },
-  { label: "Droits commerciaux", values: [false, false, true, true] },
-  { label: "Stratégie contenu", values: [false, false, false, true] },
-  { label: "Révisions", values: ["1", "1", "2", "Illimitées"] },
-  { label: "Délai de livraison", values: ["2 semaines", "2 semaines", "10 jours", "7 jours"] },
-  { label: "Priorité agenda", values: [false, false, false, true] },
-];
 
 export default function ServicePackages() {
+  const t = useTranslations("tarifs.packages");
+  const locale = useLocale();
+  const isFr = locale === "fr";
   const [activeTab, setActiveTab] = useState<"cards" | "compare">("cards");
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
+
+  const PACKAGES = isFr ? [
+    { id: "express",  name: "Contenu Express", tagline: "Pour démarrer sans risque",        price: "800 $",    priceHigh: null,      unit: t("mois"), popular: false, color: "rgba(255,255,255,0.04)", border: "rgba(255,255,255,0.08)", livrables: ["1h30 de tournage / mois","2 vidéos / Reels montés","5 photos retouchées","Livraison en 2 semaines"], nonInclus: ["Droits commerciaux","Stratégie contenu","Priorité agenda"] },
+    { id: "essentiel",name: "Essentiel",        tagline: "Pour démarrer fort",               price: "2 500 $",  priceHigh: "4 000 $", unit: t("mois"), popular: false, color: "rgba(255,255,255,0.06)", border: "rgba(255,255,255,0.08)", livrables: ["1 jour de tournage / mois","4 Reels montés","10 photos retouchées","Livraison en 2 semaines","1 révision incluse"], nonInclus: ["Droits commerciaux","Stratégie contenu","Priorité agenda"] },
+    { id: "autorite", name: "Autorité",         tagline: "Pour dominer ton marché",          price: "4 500 $",  priceHigh: "6 500 $", unit: t("mois"), popular: true,  color: "rgba(196,205,214,0.06)", border: "rgba(196,205,214,0.25)", livrables: ["2 jours de tournage / mois","8 Reels montés","25 photos retouchées","Droits commerciaux inclus","Livraison en 10 jours","2 révisions incluses"], nonInclus: ["Stratégie contenu","Priorité agenda"] },
+    { id: "fullbrand",name: "Full Brand",       tagline: "Pour une présence irréfutable",    price: "7 100 $",  priceHigh: "9 000 $", unit: t("mois"), popular: false, color: "rgba(255,255,255,0.04)", border: "rgba(255,255,255,0.08)", livrables: ["4 jours de tournage / mois","12+ Reels montés","50 photos retouchées","Droits commerciaux inclus","Stratégie contenu incluse","Livraison en 7 jours","Révisions illimitées","Priorité agenda"], nonInclus: [] },
+  ] : [
+    { id: "express",  name: "Express Content",  tagline: "Start without risk",               price: "$800",     priceHigh: null,      unit: t("mois"), popular: false, color: "rgba(255,255,255,0.04)", border: "rgba(255,255,255,0.08)", livrables: ["1h30 shoot / month","2 edited videos / Reels","5 retouched photos","Delivery in 2 weeks"], nonInclus: ["Commercial rights","Content strategy","Priority booking"] },
+    { id: "essentiel",name: "Essential",        tagline: "Start strong",                     price: "$2,500",   priceHigh: "$4,000",  unit: t("mois"), popular: false, color: "rgba(255,255,255,0.06)", border: "rgba(255,255,255,0.08)", livrables: ["1 shoot day / month","4 edited Reels","10 retouched photos","Delivery in 2 weeks","1 revision included"], nonInclus: ["Commercial rights","Content strategy","Priority booking"] },
+    { id: "autorite", name: "Authority",        tagline: "Dominate your market",             price: "$4,500",   priceHigh: "$6,500",  unit: t("mois"), popular: true,  color: "rgba(196,205,214,0.06)", border: "rgba(196,205,214,0.25)", livrables: ["2 shoot days / month","8 edited Reels","25 retouched photos","Commercial rights included","Delivery in 10 days","2 revisions included"], nonInclus: ["Content strategy","Priority booking"] },
+    { id: "fullbrand",name: "Full Brand",       tagline: "Undeniable presence",              price: "$7,100",   priceHigh: "$9,000",  unit: t("mois"), popular: false, color: "rgba(255,255,255,0.04)", border: "rgba(255,255,255,0.08)", livrables: ["4 shoot days / month","12+ edited Reels","50 retouched photos","Commercial rights included","Content strategy included","Delivery in 7 days","Unlimited revisions","Priority booking"], nonInclus: [] },
+  ];
+
+  const COMPARE_ROWS = isFr ? [
+    { label: "Tournage / mois",    values: ["1h30", "1 jour", "2 jours", "4 jours"] },
+    { label: "Vidéos / Reels",     values: ["2", "4", "8", "12+"] },
+    { label: "Photos retouchées",  values: ["5", "10", "25", "50"] },
+    { label: "Droits commerciaux", values: [false, false, true, true] },
+    { label: "Stratégie contenu",  values: [false, false, false, true] },
+    { label: "Révisions",          values: ["1", "1", "2", t("unlimited")] },
+    { label: "Délai de livraison", values: ["2 semaines", "2 semaines", "10 jours", "7 jours"] },
+    { label: "Priorité agenda",    values: [false, false, false, true] },
+  ] : [
+    { label: "Shoot / month",      values: ["1h30", "1 day", "2 days", "4 days"] },
+    { label: "Videos / Reels",     values: ["2", "4", "8", "12+"] },
+    { label: "Retouched photos",   values: ["5", "10", "25", "50"] },
+    { label: "Commercial rights",  values: [false, false, true, true] },
+    { label: "Content strategy",   values: [false, false, false, true] },
+    { label: "Revisions",          values: ["1", "1", "2", t("unlimited")] },
+    { label: "Delivery time",      values: ["2 weeks", "2 weeks", "10 days", "7 days"] },
+    { label: "Priority booking",   values: [false, false, false, true] },
+  ];
 
   return (
     <section ref={ref} style={{ padding: "100px 0", background: "transparent" }}>
@@ -125,13 +60,13 @@ export default function ServicePackages() {
           style={{ textAlign: "center", marginBottom: 48 }}
         >
           <span className="font-dm section-label" style={{ fontSize: 11, letterSpacing: "0.3em", textTransform: "uppercase", color: "#c4cdd6" }}>
-            — Contenu mensuel
+            {t("label")}
           </span>
           <h2 className="font-bebas" style={{ fontSize: "clamp(40px, 6vw, 64px)", color: "#fff", letterSpacing: "0.03em", marginTop: 12, lineHeight: 0.95 }}>
-            CHOISISSEZ VOTRE<br />PACKAGE
+            {t("heading").split("\n").map((l: string, i: number) => <span key={i}>{l}{i===0 && <br/>}</span>)}
           </h2>
           <p className="font-dm" style={{ fontSize: 13, color: "rgba(255,255,255,0.4)", marginTop: 16, lineHeight: 1.7 }}>
-            Contrat mensuel · Sans engagement annuel · Fourchette de prix selon votre projet
+            {t("subtitle")}
           </p>
 
           {/* Tab switcher */}
@@ -150,7 +85,7 @@ export default function ServicePackages() {
                   letterSpacing: "0.05em",
                 }}
               >
-                {tab === "cards" ? "Packages" : "Comparer"}
+                {tab === "cards" ? t("tabCards") : t("tabCompare")}
               </button>
             ))}
           </div>
@@ -190,7 +125,7 @@ export default function ServicePackages() {
                     whiteSpace: "nowrap",
                   }}>
                     <Star size={10} fill="#0a0a0a" />
-                    <span className="font-dm" style={{ fontSize: 10, fontWeight: 700, letterSpacing: "0.1em" }}>LE PLUS POPULAIRE</span>
+                    <span className="font-dm" style={{ fontSize: 10, fontWeight: 700, letterSpacing: "0.1em" }}>{t("popular")}</span>
                   </div>
                 )}
 
@@ -251,7 +186,7 @@ export default function ServicePackages() {
                   onMouseEnter={e => (e.currentTarget.style.opacity = "0.85")}
                   onMouseLeave={e => (e.currentTarget.style.opacity = "1")}
                 >
-                  Commencer avec {pkg.name}
+                  {t("ctaStart")} {pkg.name}
                   <ArrowRight size={14} />
                 </Link>
               </motion.div>
@@ -271,7 +206,7 @@ export default function ServicePackages() {
               <thead>
                 <tr>
                   <th style={{ padding: "16px 20px", textAlign: "left", width: "35%" }}>
-                    <span className="font-dm" style={{ fontSize: 11, color: "rgba(255,255,255,0.3)", letterSpacing: "0.15em", textTransform: "uppercase" }}>Livrable</span>
+                    <span className="font-dm" style={{ fontSize: 11, color: "rgba(255,255,255,0.3)", letterSpacing: "0.15em", textTransform: "uppercase" }}>{t("compareHeader")}</span>
                   </th>
                   {PACKAGES.map(pkg => (
                     <th key={pkg.id} style={{ padding: "16px 20px", textAlign: "center" }}>
@@ -305,10 +240,10 @@ export default function ServicePackages() {
                     <td key={pkg.id} style={{ padding: "20px", textAlign: "center" }}>
                       <div style={{ marginBottom: 8 }}>
                         <span className="font-bebas" style={{ fontSize: 20, color: "#fff", letterSpacing: "0.03em" }}>{pkg.price}</span>
-                        {pkg.priceHigh && <span className="font-dm" style={{ fontSize: 11, color: "rgba(255,255,255,0.3)", display: "block" }}>— {pkg.priceHigh} / mois</span>}
+                        {pkg.priceHigh && <span className="font-dm" style={{ fontSize: 11, color: "rgba(255,255,255,0.3)", display: "block" }}>— {pkg.priceHigh} {t("mois")}</span>}
                       </div>
                       <Link href="/contact" className="font-dm" style={{ display: "inline-flex", alignItems: "center", gap: 6, padding: "10px 18px", background: pkg.popular ? "#f2f0ec" : "rgba(255,255,255,0.06)", color: pkg.popular ? "#0a0a0a" : "rgba(255,255,255,0.6)", borderRadius: 9999, textDecoration: "none", fontSize: 12, fontWeight: 700, border: pkg.popular ? "none" : "1px solid rgba(255,255,255,0.08)" }}>
-                        Choisir <ArrowRight size={11} />
+                        {t("ctaChoose")} <ArrowRight size={11} />
                       </Link>
                     </td>
                   ))}
@@ -319,7 +254,7 @@ export default function ServicePackages() {
         )}
 
         <p className="font-dm" style={{ textAlign: "center", fontSize: 11, color: "rgba(255,255,255,0.2)", marginTop: 28 }}>
-          * Fourchette indicative en CAD · Prix exact confirmé lors de votre consultation gratuite · Taxes en sus
+          {t("footnote")}
         </p>
       </div>
 

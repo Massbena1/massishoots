@@ -3,31 +3,18 @@ import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import { Link } from "@/i18n/navigation";
 import { ArrowRight } from "lucide-react";
+import { useTranslations } from "next-intl";
 
-const METRICS = [
-  {
-    value: "+127%",
-    label: "Engagement moyen",
-    sub: "Après 3 mois de contenu mensuel",
-  },
-  {
-    value: "2M+",
-    label: "Vues générées",
-    sub: "Sur les Reels & vidéos clients",
-  },
-  {
-    value: "50+",
-    label: "Clients accompagnés",
-    sub: "Entrepreneurs & marques à Montréal",
-  },
-  {
-    value: "48h",
-    label: "Livraison express",
-    sub: "Pour les projets urgents",
-  },
-];
+
 
 export default function ClientResults() {
+  const t = useTranslations("tarifs.results");
+  const METRICS = [
+    { value: t("m1val"), label: t("m1label"), sub: t("m1sub") },
+    { value: t("m2val"), label: t("m2label"), sub: t("m2sub") },
+    { value: t("m3val"), label: t("m3label"), sub: t("m3sub") },
+    { value: t("m4val"), label: t("m4label"), sub: t("m4sub") },
+  ];
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
 
@@ -55,17 +42,17 @@ export default function ClientResults() {
               style={{ maxWidth: 280 }}
             >
               <span className="font-dm" style={{ fontSize: 11, letterSpacing: "0.3em", textTransform: "uppercase", color: "#c4cdd6", display: "block", marginBottom: 16 }}>
-                — Résultats réels
+                {t("label")}
               </span>
               <h2 className="font-bebas" style={{ fontSize: "clamp(36px, 4vw, 52px)", color: "#fff", letterSpacing: "0.03em", lineHeight: 0.95, marginBottom: 20 }}>
-                CE QUE<br />NOS CLIENTS<br />OBTIENNENT
+                {t("heading").split("\n").map((line: string, i: number) => (<span key={i}>{line}{i < 2 && <br />}</span>))}
               </h2>
               <p className="font-dm" style={{ fontSize: 13, color: "rgba(255,255,255,0.4)", lineHeight: 1.7, marginBottom: 28 }}>
-                Du contenu qui performe — pas juste du contenu qui est beau.
+                {t("tagline")}
               </p>
               <Link href="/contact" className="font-dm"
                 style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "12px 22px", background: "#f2f0ec", color: "#0a0a0a", borderRadius: 9999, textDecoration: "none", fontSize: 12, fontWeight: 700, letterSpacing: "0.06em" }}>
-                Démarrer <ArrowRight size={12} />
+{t("cta")} <ArrowRight size={12} />
               </Link>
             </motion.div>
 

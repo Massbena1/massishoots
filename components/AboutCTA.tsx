@@ -2,8 +2,10 @@
 
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
+import { useTranslations } from "next-intl";
 
 export default function AboutCTA() {
+  const t = useTranslations("aboutPage.cta");
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
 
@@ -52,9 +54,9 @@ export default function AboutCTA() {
             marginBottom: 20,
           }}
         >
-          Vous avez un projet.
+          {t("title1")}
           <br />
-          <span style={{ color: "#C9A84C" }}>J&apos;ai la vision.</span>
+          <span style={{ color: "#C9A84C" }}>{t("title2")}</span>
         </motion.h2>
 
         {/* Subtitle */}
@@ -71,7 +73,7 @@ export default function AboutCTA() {
             margin: "0 auto 44px",
           }}
         >
-          Prenons 30 minutes pour voir si on est faits pour travailler ensemble.
+          {t("subtitle")}
         </motion.p>
 
         {/* Button */}
@@ -107,7 +109,7 @@ export default function AboutCTA() {
               (e.currentTarget as HTMLAnchorElement).style.transform = "translateY(0)";
             }}
           >
-            Réserver un appel gratuit →
+            {t("btn")}
           </a>
         </motion.div>
 
@@ -124,7 +126,7 @@ export default function AboutCTA() {
             letterSpacing: "0.06em",
           }}
         >
-          Sans engagement · Réponse sous 24h · 438-464-0607
+          {t("footnote")}
         </motion.p>
       </motion.div>
     </section>

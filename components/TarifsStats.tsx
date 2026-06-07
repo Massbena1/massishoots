@@ -2,15 +2,18 @@
 
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
+import { useTranslations } from "next-intl";
 
-const STATS = [
-  { value: "+127%", label: "Engagement moyen après 3 mois" },
-  { value: "2M+",   label: "Vues générées pour nos clients" },
-  { value: "50+",   label: "Marques accompagnées à Montréal" },
-  { value: "48h",   label: "Livraison express disponible" },
-];
+
 
 export default function TarifsStats() {
+  const t = useTranslations("tarifs.stats");
+  const STATS = [
+    { value: t("s1val"), label: t("s1label") },
+    { value: t("s2val"), label: t("s2label") },
+    { value: t("s3val"), label: t("s3label") },
+    { value: t("s4val"), label: t("s4label") },
+  ];
   const ref = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState(false);
 
@@ -38,7 +41,7 @@ export default function TarifsStats() {
           style={{ marginBottom: 64, textAlign: "center" }}
         >
           <span className="font-dm" style={{ fontSize: 11, letterSpacing: "0.3em", textTransform: "uppercase", color: "#C9A84C" }}>
-            — Résultats réels
+            {t("label")}
           </span>
           <h2 className="font-bebas" style={{
             fontSize: "clamp(32px, 4.5vw, 60px)",
@@ -47,7 +50,7 @@ export default function TarifsStats() {
             marginTop: 14,
             lineHeight: 0.95,
           }}>
-            Ce que nos clients obtiennent.
+            {t("heading")}
           </h2>
         </motion.div>
 

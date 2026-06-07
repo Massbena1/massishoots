@@ -1,8 +1,10 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useTranslations } from "next-intl";
 
 export default function AboutHero() {
+  const t = useTranslations("aboutPage.hero");
   return (
     <section
       style={{
@@ -70,7 +72,7 @@ export default function AboutHero() {
               marginBottom: 40,
             }}
           >
-            Le fondateur · Massishoots
+            {t("badge")}
           </span>
         </motion.div>
 
@@ -88,7 +90,7 @@ export default function AboutHero() {
             marginBottom: 24,
           }}
         >
-          Massi Bena.
+          {t("name")}
         </motion.h1>
 
         {/* Subtitle italic gold */}
@@ -105,7 +107,7 @@ export default function AboutHero() {
             lineHeight: 1.3,
           }}
         >
-          Ingénieur de formation. Cinéaste par vocation.
+          {t("subtitle")}
         </motion.p>
 
         {/* Gold separator */}
@@ -136,12 +138,12 @@ export default function AboutHero() {
             margin: "0 auto",
           }}
         >
-          Certains construisent des logiciels.{" "}
+          {t("desc1")}
           <br />
-          D&apos;autres construisent des images.{" "}
+          {t("desc2")}
           <br />
           <span style={{ color: "rgba(255,255,255,0.8)" }}>
-            Massi fait les deux — avec la même rigueur et la même passion.
+            {t("desc3")}
           </span>
         </motion.p>
       </div>

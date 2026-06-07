@@ -1,8 +1,10 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useTranslations } from "next-intl";
 
 export default function TarifsHero() {
+  const t = useTranslations("tarifs.hero");
   return (
     <section
       style={{
@@ -54,7 +56,7 @@ export default function TarifsHero() {
             }}
           >
             <span style={{ width: 5, height: 5, borderRadius: "50%", background: "#C9A84C", display: "inline-block" }} />
-            Studio Premium · Montréal
+            {t("badge")}
           </span>
         </motion.div>
 
@@ -72,9 +74,9 @@ export default function TarifsHero() {
             marginBottom: 32,
           }}
         >
-          Chaque projet est unique.
+          {t("h1a")}
           <br />
-          <span style={{ color: "#C9A84C" }}>Votre investissement aussi.</span>
+          <span style={{ color: "#C9A84C" }}>{t("h1b")}</span>
         </motion.h1>
 
         {/* Divider */}
@@ -104,11 +106,7 @@ export default function TarifsHero() {
             maxWidth: 620,
           }}
         >
-          Nous ne travaillons pas avec des formules fixes.
-          <br />
-          Nous construisons une offre sur mesure autour de vos objectifs,
-          <br />
-          votre marque et vos ambitions.
+          {t("subtitle")}
         </motion.p>
 
         {/* Scroll hint */}
@@ -123,7 +121,7 @@ export default function TarifsHero() {
             background: "linear-gradient(to bottom, rgba(201,168,76,0.5), transparent)",
           }} />
           <span className="font-dm" style={{ fontSize: 10, letterSpacing: "0.25em", textTransform: "uppercase", color: "rgba(255,255,255,0.2)" }}>
-            Découvrir nos offres
+            {t("scrollHint")}
           </span>
         </motion.div>
 

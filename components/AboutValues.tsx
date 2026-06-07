@@ -2,27 +2,18 @@
 
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
+import { useTranslations } from "next-intl";
 
-const values = [
-  {
-    num: "01",
-    title: "La rigueur avant tout",
-    text: "Chaque projet est planifié, structuré et exécuté avec précision. Pas d'improvisation — une vision claire du début à la livraison.",
-  },
-  {
-    num: "02",
-    title: "La passion comme moteur",
-    text: "On ne fait pas ce métier pour remplir un calendrier. On le fait parce que chaque projet est une nouvelle occasion de créer quelque chose d'exceptionnel.",
-  },
-  {
-    num: "03",
-    title: "Le résultat comme mesure",
-    text: "Un beau visuel qui ne performe pas, c'est un échec. Ce qui compte, c'est l'impact que le contenu a sur votre marque et vos clients.",
-  },
-];
+
 
 export default function AboutValues() {
+  const t = useTranslations("aboutPage.values");
   const ref = useRef(null);
+  const values = [
+    { num: "01", title: t("v1title"), text: t("v1text") },
+    { num: "02", title: t("v2title"), text: t("v2text") },
+    { num: "03", title: t("v3title"), text: t("v3text") },
+  ];
   const inView = useInView(ref, { once: true, margin: "-80px" });
 
   return (
@@ -46,9 +37,9 @@ export default function AboutValues() {
             marginBottom: 64,
           }}
         >
-          CE QUI GUIDE
+          {t("title1")}
           <br />
-          CHAQUE PROJET.
+          {t("title2")}
         </motion.h2>
 
         {/* Grid */}
