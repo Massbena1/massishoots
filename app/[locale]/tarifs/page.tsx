@@ -4,6 +4,7 @@ import TarifsHero from "@/components/TarifsHero";
 import TarifsExpertise from "@/components/TarifsExpertise";
 import TarifsWhy from "@/components/TarifsWhy";
 import TarifsStats from "@/components/TarifsStats";
+import TarifsCTA from "@/components/TarifsCTA";
 import type { Metadata } from "next";
 
 export async function generateMetadata({
@@ -31,6 +32,7 @@ export default async function TarifsPage({
       <TarifsExpertise />
       <TarifsWhy />
       <TarifsStats />
+      <TarifsCTA />
       <Footer />
     </>
   );
