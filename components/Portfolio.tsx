@@ -95,21 +95,21 @@ const VIDEOS: Item[] = [
   // En avant
   { sub: "events",       src: "/portfolio/videos/event-1.1.jpg",  videoSrc: "https://jkrbnlhfycrznxld.public.blob.vercel-storage.com/videos/event-1.1.mp4",  altKey: "altEvent", wide: true },
   // Immobilier
-  { sub: "immobilier", src: "/immobilier/thumb.jpg", videoSrc: "/immobilier/1.mp4", altKey: "altEvents", wide: true },
+  { sub: "immobilier", src: "/immobilier/thumb.jpg", videoSrc: "https://jkrbnlhfycrznxld.public.blob.vercel-storage.com/videos/immobilier-1.mp4", altKey: "altEvents", wide: true },
   // Events
-  { sub: "events",       src: "/portfolio/videos/event-1.jpg",    videoSrc: "/portfolio/videos/event-1.mp4",    altKey: "altEvent" },
-  { sub: "corporate",   src: "/portfolio/videos/corpo-1.jpg",    videoSrc: "/portfolio/videos/corpo-1.mp4",    altKey: "altCorpVideo" },
-  { sub: "branding",    src: "/portfolio/videos/brand-1.jpg",    videoSrc: "/portfolio/videos/brand-1.mp4",    altKey: "altBrandFilm" },
-  { sub: "professionel",src: "/portfolio/videos/facecam-1.jpg",  videoSrc: "/portfolio/videos/facecam-1.mp4",  altKey: "altProfessionel" },
-  { sub: "events",      src: "/portfolio/videos/event-2.jpg",    videoSrc: "/portfolio/videos/event-2.mp4",    altKey: "altEvent" },
-  { sub: "professionel",src: "/portfolio/videos/facecam-2.jpg",  videoSrc: "/portfolio/videos/facecam-2.mp4",  altKey: "altProfessionel" },
-  { sub: "branding",    src: "/portfolio/videos/brand-2.jpg",    videoSrc: "/portfolio/videos/brand-2.mp4",    altKey: "altBrandFilm" },
-  { sub: "professionel",src: "/portfolio/videos/facecam-3.jpg",  videoSrc: "/portfolio/videos/facecam-3.mp4",  altKey: "altProfessionel" },
-  { sub: "corporate",   src: "/portfolio/videos/corpo-2.jpg",    videoSrc: "/portfolio/videos/corpo-2.mp4",    altKey: "altCorpVideo" },
-  { sub: "professionel",src: "/portfolio/videos/facecam-4.jpg",  videoSrc: "/portfolio/videos/facecam-4.mp4",  altKey: "altProfessionel" },
-  { sub: "branding",    src: "/portfolio/videos/brand-3.jpg",    videoSrc: "/portfolio/videos/brand-3.mp4",    altKey: "altBrandFilm" },
-  { sub: "professionel",src: "/portfolio/videos/facecam-5.jpg",  videoSrc: "/portfolio/videos/facecam-5.mp4",  altKey: "altProfessionel" },
-  { sub: "professionel",src: "/portfolio/videos/facecam-6.jpg",  videoSrc: "/portfolio/videos/facecam-6.mp4",  altKey: "altProfessionel" },
+  { sub: "events",       src: "/portfolio/videos/event-1.jpg",    videoSrc: "https://jkrbnlhfycrznxld.public.blob.vercel-storage.com/videos/event-1.mp4",    altKey: "altEvent" },
+  { sub: "corporate",   src: "/portfolio/videos/corpo-1.jpg",    videoSrc: "https://jkrbnlhfycrznxld.public.blob.vercel-storage.com/videos/corpo-1.mp4",    altKey: "altCorpVideo" },
+  { sub: "branding",    src: "/portfolio/videos/brand-1.jpg",    videoSrc: "https://jkrbnlhfycrznxld.public.blob.vercel-storage.com/videos/brand-1.mp4",    altKey: "altBrandFilm" },
+  { sub: "professionel",src: "/portfolio/videos/facecam-1.jpg",  videoSrc: "https://jkrbnlhfycrznxld.public.blob.vercel-storage.com/videos/facecam-1.mp4",  altKey: "altProfessionel" },
+  { sub: "events",      src: "/portfolio/videos/event-2.jpg",    videoSrc: "https://jkrbnlhfycrznxld.public.blob.vercel-storage.com/videos/event-2.mp4",    altKey: "altEvent" },
+  { sub: "professionel",src: "/portfolio/videos/facecam-2.jpg",  videoSrc: "https://jkrbnlhfycrznxld.public.blob.vercel-storage.com/videos/facecam-2.mp4",  altKey: "altProfessionel" },
+  { sub: "branding",    src: "/portfolio/videos/brand-2.jpg",    videoSrc: "https://jkrbnlhfycrznxld.public.blob.vercel-storage.com/videos/brand-2.mp4",    altKey: "altBrandFilm" },
+  { sub: "professionel",src: "/portfolio/videos/facecam-3.jpg",  videoSrc: "https://jkrbnlhfycrznxld.public.blob.vercel-storage.com/videos/facecam-3.mp4",  altKey: "altProfessionel" },
+  { sub: "corporate",   src: "/portfolio/videos/corpo-2.jpg",    videoSrc: "https://jkrbnlhfycrznxld.public.blob.vercel-storage.com/videos/corpo-2.mp4",    altKey: "altCorpVideo" },
+  { sub: "professionel",src: "/portfolio/videos/facecam-4.jpg",  videoSrc: "https://jkrbnlhfycrznxld.public.blob.vercel-storage.com/videos/facecam-4.mp4",  altKey: "altProfessionel" },
+  { sub: "branding",    src: "/portfolio/videos/brand-3.jpg",    videoSrc: "https://jkrbnlhfycrznxld.public.blob.vercel-storage.com/videos/brand-3.mp4",    altKey: "altBrandFilm" },
+  { sub: "professionel",src: "/portfolio/videos/facecam-5.jpg",  videoSrc: "https://jkrbnlhfycrznxld.public.blob.vercel-storage.com/videos/facecam-5.mp4",  altKey: "altProfessionel" },
+  { sub: "professionel",src: "/portfolio/videos/facecam-6.jpg",  videoSrc: "https://jkrbnlhfycrznxld.public.blob.vercel-storage.com/videos/facecam-6.mp4",  altKey: "altProfessionel" },
 ];
 
 const PHOTO_FILTERS: { value: Sub; labelKey: string }[] = [
