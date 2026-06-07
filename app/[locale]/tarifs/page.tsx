@@ -13,10 +13,16 @@ export async function generateMetadata({
   params: Promise<{ locale: string }>;
 }): Promise<Metadata> {
   const { locale } = await params;
+  const description = "Massishoots propose des offres sur mesure en photo, vidéo, contenu mensuel et couverture d'événements à Montréal. Réservez un appel gratuit de 30 minutes pour discuter de votre projet.";
   return {
-    title: "Tarifs | Massishoots — Studio Photo & Vidéo Montréal",
-    description:
-      "Des offres sur mesure adaptées à vos objectifs. Contenu mensuel, événements, publicité et mariages — investissement selon votre projet.",
+    title: "Tarifs & Services — Massishoots | Studio Photo & Vidéo Premium Montréal",
+    description,
+    openGraph: {
+      title: "Tarifs — Massishoots Studio Premium Montréal",
+      description,
+      locale: locale === "fr" ? "fr_CA" : "en_CA",
+      type: "website",
+    },
   };
 }
 
