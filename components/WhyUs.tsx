@@ -91,18 +91,20 @@ export default function WhyUs() {
           <span className="font-dm text-accent section-label" style={{ fontSize: 11, letterSpacing: "0.3em", textTransform: "uppercase" }}>
             {t("label")}
           </span>
-          <p className="font-dm" style={{ fontSize: 14, color: "rgba(255,255,255,0.35)", marginTop: 14, marginBottom: 12, letterSpacing: "0.02em" }}>
-            {t("introText")}
-          </p>
           <h2 className="font-bebas" style={{
             fontSize: "clamp(36px, 5.5vw, 72px)",
             letterSpacing: "0.02em",
             lineHeight: 0.95,
             color: "#fff",
             maxWidth: 860,
+            marginTop: 14,
+            marginBottom: 16,
           }}>
-            {t("heading")}
+            {t("introText")}
           </h2>
+          <p className="font-dm" style={{ fontSize: 15, color: "rgba(255,255,255,0.45)", maxWidth: 680, lineHeight: 1.7 }}>
+            {t("heading")}
+          </p>
         </motion.div>
 
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 16 }} className="whyus-grid">
