@@ -5,28 +5,28 @@ import { motion } from "framer-motion";
 const BLOCS = [
   {
     num: "01",
-    icon: "📸",
+    icon: "◆",
     title: "Contenu Mensuel",
     desc: "Photos, Reels, face caméra — votre présence en ligne gérée chaque mois, clés en main. Idéal pour les entrepreneurs qui veulent scaler leur image sans y penser.",
     full: false,
   },
   {
     num: "02",
-    icon: "🎬",
+    icon: "◆",
     title: "Couverture d'Événements",
     desc: "Galas, lancements, conférences, soirées privées — photo et vidéo cinématique livrées en 48h. Votre événement immortalisé avec la précision qu'il mérite.",
     full: false,
   },
   {
     num: "03",
-    icon: "📱",
+    icon: "◆",
     title: "Publicité & Ads",
     desc: "Vidéos courtes et visuels conçus pour convertir sur Meta et Instagram. Formats optimisés, accroches testées, résultats mesurables.",
     full: false,
   },
   {
     num: "04",
-    icon: "💍",
+    icon: "◆",
     title: "Mariage & Célébrations",
     desc: "Chaque émotion capturée avec une précision rare. Du premier regard à la dernière danse — photo et film cinématique sur mesure.",
     full: false,
@@ -120,7 +120,7 @@ export default function TarifsExpertise() {
 
               {/* Content */}
               <div style={{ position: "relative", zIndex: 1, maxWidth: bloc.full ? 680 : "100%" }}>
-                <span style={{ fontSize: 28, display: "block", marginBottom: 20 }}>{bloc.icon}</span>
+                <span style={{ fontSize: 14, display: "block", marginBottom: 20, color: "#C9A84C" }}>{bloc.icon}</span>
 
                 <h3 className="font-bebas" style={{
                   fontSize: "clamp(24px, 2.8vw, 36px)",
