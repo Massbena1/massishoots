@@ -33,20 +33,34 @@ export async function generateMetadata({
   };
 }
 
+function Divider() {
+  return <hr className="section-divider" />;
+}
+
 export default function Home() {
   return (
     <main>
       <Hero />
+      <Divider />
       <Clients />
       <Stats />
+      <Divider />
       <Services />
+      <Divider />
       <SimulateurCta />
+      <Divider />
       <Portfolio />
+      <Divider />
       <Process />
+      <Divider />
       <WhyUs />
+      <Divider />
       <ClientResults />
+      <Divider />
       <Testimonials />
+      <Divider />
       <Faq />
+      <Divider />
       <CtaFinal />
       <Footer />
     </main>

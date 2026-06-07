@@ -39,7 +39,7 @@ export default function Services() {
 
         <div style={{ display: "grid", gridTemplateColumns: "320px 1fr", gap: 64, alignItems: "center" }} className="services-layout">
           <motion.div ref={ref} initial={{ opacity: 0, x: -30 }} animate={inView ? { opacity: 1, x: 0 } : {}} transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}>
-            <span className="font-dm text-accent" style={{ fontSize: 11, letterSpacing: "0.3em", textTransform: "uppercase" }}>
+            <span className="font-dm text-accent section-label" style={{ fontSize: 11, letterSpacing: "0.3em", textTransform: "uppercase" }}>
               {t("label")}
             </span>
             <h2 className="font-bebas" style={{ fontSize: "clamp(44px, 5vw, 72px)", letterSpacing: "0.02em", lineHeight: 0.9, marginTop: 16, marginBottom: 24, color: "#fff" }}>
@@ -48,9 +48,7 @@ export default function Services() {
             <p className="font-dm" style={{ fontSize: 13, color: "rgba(255,255,255,0.4)", lineHeight: 1.8, marginBottom: 32 }}>
               {t("subtitle")}
             </p>
-            <Link href="/contact" className="font-dm" style={{ display: "inline-flex", alignItems: "center", gap: 10, padding: "12px 28px", background: "#f2f0ec", color: "#0a0a0a", borderRadius: 9999, fontSize: 13, fontWeight: 700, textDecoration: "none", letterSpacing: "0.08em", transition: "gap 0.2s, opacity 0.2s" }}
-              onMouseEnter={e => (e.currentTarget.style.opacity = "0.85")}
-              onMouseLeave={e => (e.currentTarget.style.opacity = "1")}
+            <Link href="/contact" className="font-dm cta-primary" style={{ display: "inline-flex", alignItems: "center", gap: 10, padding: "12px 28px", background: "#f2f0ec", color: "#0a0a0a", borderRadius: 9999, fontSize: 13, fontWeight: 700, textDecoration: "none", letterSpacing: "0.08em", border: "1px solid transparent", transition: "gap 0.2s, color 0.25s, border-color 0.25s, background 0.25s" }}
             >
               {t("cta")} <span style={{ fontSize: 15 }}>→</span>
             </Link>

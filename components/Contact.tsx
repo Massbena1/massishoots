@@ -528,10 +528,8 @@ export default function Contact() {
             <div style={{ display: "flex", justifyContent: "center", gap: 10, flexWrap: "wrap" }}>
               <a
                 href="#contact-form"
-                className="font-dm"
-                style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "14px 28px", borderRadius: 9999, background: "#f2f0ec", color: "#0a0a0a", textDecoration: "none", fontSize: 13, fontWeight: 700, letterSpacing: "0.06em", transition: "opacity 0.2s" }}
-                onMouseEnter={e => (e.currentTarget.style.opacity = "0.85")}
-                onMouseLeave={e => (e.currentTarget.style.opacity = "1")}
+                className="font-dm cta-primary"
+                style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "14px 28px", borderRadius: 9999, background: "#f2f0ec", color: "#0a0a0a", textDecoration: "none", fontSize: 13, fontWeight: 700, letterSpacing: "0.06em", border: "1px solid transparent", transition: "color 0.25s, border-color 0.25s, background 0.25s" }}
               >
                 {t("ctaSendBtn")} <ArrowRight size={13} />
               </a>

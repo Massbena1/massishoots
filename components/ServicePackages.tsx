@@ -124,7 +124,7 @@ export default function ServicePackages() {
           transition={{ duration: 0.6 }}
           style={{ textAlign: "center", marginBottom: 48 }}
         >
-          <span className="font-dm" style={{ fontSize: 11, letterSpacing: "0.3em", textTransform: "uppercase", color: "#c4cdd6" }}>
+          <span className="font-dm section-label" style={{ fontSize: 11, letterSpacing: "0.3em", textTransform: "uppercase", color: "#c4cdd6" }}>
             — Contenu mensuel
           </span>
           <h2 className="font-bebas" style={{ fontSize: "clamp(40px, 6vw, 64px)", color: "#fff", letterSpacing: "0.03em", marginTop: 12, lineHeight: 0.95 }}>

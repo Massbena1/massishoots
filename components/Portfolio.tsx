@@ -209,7 +209,7 @@ export default function Portfolio() {
           transition={{ duration: 0.7 }}
           style={{ marginBottom: 48 }}
         >
-          <span className="font-dm text-accent" style={{ fontSize: 11, letterSpacing: "0.3em", textTransform: "uppercase" }}>
+          <span className="font-dm text-accent section-label" style={{ fontSize: 11, letterSpacing: "0.3em", textTransform: "uppercase" }}>
             {t("label")}
           </span>
           <h2 className="font-bebas" style={{ fontSize: "clamp(44px, 7vw, 80px)", letterSpacing: "0.02em", lineHeight: 0.9, marginTop: 16, color: "#fff" }}>

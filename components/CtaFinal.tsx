@@ -75,18 +75,15 @@ export default function CtaFinal() {
         <motion.div initial={{ opacity: 0, y: 24 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.7, delay: 0.42, ease: [0.22, 1, 0.36, 1] }} style={{ display: "flex", alignItems: "center", flexWrap: "wrap", gap: 12, justifyContent: "center", marginTop: 48 }}>
           <Link
             href="/contact"
-            className="font-dm"
-            onMouseEnter={() => setHoveredPrimary(true)}
-            onMouseLeave={() => setHoveredPrimary(false)}
+            className="font-dm cta-primary"
             style={{
               display: "inline-flex", alignItems: "center", justifyContent: "center",
               padding: "16px 36px", borderRadius: 9999,
-              background: hoveredPrimary ? "rgba(242,240,236,0.88)" : "#f2f0ec",
+              background: "#f2f0ec",
               color: "#0a0a0a", fontSize: 14, fontWeight: 600, letterSpacing: "0.06em",
               textDecoration: "none", whiteSpace: "nowrap",
-              transition: "background 0.25s, transform 0.25s, box-shadow 0.25s",
-              transform: hoveredPrimary ? "translateY(-2px)" : "translateY(0)",
-              boxShadow: hoveredPrimary ? "0 12px 32px rgba(242,240,236,0.15)" : "none",
+              border: "1px solid transparent",
+              transition: "color 0.25s, border-color 0.25s, background 0.25s, transform 0.25s, box-shadow 0.25s",
             }}
           >
             {t("primaryBtn")}

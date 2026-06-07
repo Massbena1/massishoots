@@ -22,6 +22,10 @@
   --ring: #c4cdd6;
   --radius: 1.25rem;
 
+  /* Gold palette */
+  --gold: #C9A84C;
+  --gold-subtle: rgba(201,168,76,0.18);
+
   /* Glacial glass tokens */
   --glass-bg: rgba(255,255,255,0.045);
   --glass-border: rgba(255,255,255,0.09);
@@ -54,6 +58,39 @@ h1, h2 {
 .text-accent   { color: #c4cdd6; }
 .bg-accent     { background-color: #c4cdd6; }
 .border-accent { border-color: #c4cdd6; }
+
+/* ── Gold system ── */
+
+/* Section labels: small uppercase eyebrow text */
+.section-label {
+  color: var(--gold) !important;
+}
+
+/* Section dividers */
+.section-divider {
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  border: none;
+  margin: 0;
+  opacity: 0.45;
+}
+
+/* CTA primary buttons */
+.cta-primary {
+  transition: color 0.25s, border-color 0.25s, background 0.25s !important;
+}
+.cta-primary:hover {
+  color: var(--gold) !important;
+  border-color: var(--gold) !important;
+  background: rgba(201,168,76,0.06) !important;
+}
+
+/* Testimonial cards left gold border */
+.testimonial-card {
+  border-left: 2px solid var(--gold) !important;
+  border-radius: 0 18px 18px 0 !important;
+}
 
 
 html { scroll-behavior: auto; }

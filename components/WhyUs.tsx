@@ -88,7 +88,7 @@ export default function WhyUs() {
           transition={{ duration: 0.7 }}
           style={{ marginBottom: 64 }}
         >
-          <span className="font-dm text-accent" style={{ fontSize: 11, letterSpacing: "0.3em", textTransform: "uppercase" }}>
+          <span className="font-dm text-accent section-label" style={{ fontSize: 11, letterSpacing: "0.3em", textTransform: "uppercase" }}>
             {t("label")}
           </span>
           <p className="font-dm" style={{ fontSize: 14, color: "rgba(255,255,255,0.35)", marginTop: 14, marginBottom: 12, letterSpacing: "0.02em" }}>
