@@ -165,7 +165,7 @@ export default function ChatBot() {
             onClick={() => { setShowBubble(false); setOpen(true); }}
             style={{
               position: "fixed",
-              bottom: 92,
+              bottom: 164,
               right: 24,
               zIndex: 9998,
               background: "#C9A84C",
@@ -203,7 +203,7 @@ export default function ChatBot() {
         whileTap={{ scale: 0.95 }}
         style={{
           position: "fixed",
-          bottom: 24,
+          bottom: 96,
           right: 24,
           zIndex: 9999,
           width: 56,
@@ -243,7 +243,7 @@ export default function ChatBot() {
             className="chatbot-window"
             style={{
               position: "fixed",
-              bottom: 92,
+              bottom: 164,
               right: 24,
               zIndex: 9998,
               width: 360,
