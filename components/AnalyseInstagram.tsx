@@ -10,6 +10,7 @@ export default function AnalyseInstagram() {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [secteur, setSecteur] = useState("");
+  const [autreSecteur, setAutreSecteur] = useState("");
   const [objectif, setObjectif] = useState("");
   const [loading, setLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
@@ -20,6 +21,7 @@ export default function AnalyseInstagram() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!username.trim() || !email.trim() || !secteur || !objectif) return;
+    if (secteur === "autre" && !autreSecteur.trim()) return;
 
     setLoading(true);
     setLoadingStep(0);
@@ -36,7 +38,7 @@ export default function AnalyseInstagram() {
         body: JSON.stringify({
           username: username.trim().replace("@", ""),
           email: email.trim(),
-          secteur,
+          secteur: secteur === "autre" ? autreSecteur.trim() : secteur,
           objectif
         }),
       });
@@ -666,6 +668,51 @@ export default function AnalyseInstagram() {
                     <option value="autre">{t("secteurs.autre")}</option>
                   </select>
                 </div>
+
+                {/* Champ autre secteur - affiché seulement si "autre" est sélectionné */}
+                {secteur === "autre" && (
+                  <motion.div
+                    initial={{ opacity: 0, height: 0 }}
+                    animate={{ opacity: 1, height: "auto" }}
+                    exit={{ opacity: 0, height: 0 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    <input
+                      type="text"
+                      placeholder="Précisez votre secteur d'activité"
+                      value={autreSecteur}
+                      onChange={(e) => setAutreSecteur(e.target.value)}
+                      className="font-dm"
+                      style={{
+                        width: "100%",
+                        padding: "16px 20px",
+                        background: "#1a1a1a",
+                        border: "1px solid #333",
+                        borderRadius: 6,
+                        color: "#fff",
+                        fontSize: 14,
+                        outline: "none",
+                        transition: "all 0.3s ease",
+                      }}
+                      onFocus={(e) => {
+                        e.target.style.borderColor = "#C9A84C";
+                        e.target.style.boxShadow = "0 0 0 3px rgba(201,168,76,0.1)";
+                      }}
+                      onBlur={(e) => {
+                        e.target.style.borderColor = "#333";
+                        e.target.style.boxShadow = "none";
+                      }}
+                      required
+                    />
+                    <p className="font-dm" style={{
+                      fontSize: 11,
+                      color: "rgba(255,255,255,0.4)",
+                      marginTop: 6,
+                    }}>
+                      Exemple: Photographie, E-commerce, Consulting, etc.
+                    </p>
+                  </motion.div>
+                )}
 
                 {/* Objectif Field */}
                 <div>
