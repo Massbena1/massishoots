@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { usePathname } from "next/navigation";
 
 interface Message {
   role: "user" | "assistant";
@@ -29,15 +30,55 @@ export default function ChatBot() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [showQuickReplies, setShowQuickReplies] = useState(false);
   const [suggestions, setSuggestions] = useState<string[]>([]);
+  const [showBubble, setShowBubble] = useState(false);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const bottomRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const welcomeSent = useRef(false);
+  const pathname = usePathname();
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages, loading, showQuickReplies]);
+
+  // Inactivity bubble — home page only, once per session
+  useEffect(() => {
+    const isHome = pathname === "/fr" || pathname === "/en" || pathname === "/" || pathname === "/fr/" || pathname === "/en/";
+    if (!isHome) return;
+    if (sessionStorage.getItem("chatBubbleShown")) return;
+
+    let inactivityTimer: ReturnType<typeof setTimeout>;
+    let hideTimer: ReturnType<typeof setTimeout>;
+
+    const reset = () => {
+      clearTimeout(inactivityTimer);
+      inactivityTimer = setTimeout(() => {
+        if (!open) {
+          setShowBubble(true);
+          sessionStorage.setItem("chatBubbleShown", "1");
+          hideTimer = setTimeout(() => setShowBubble(false), 8000);
+        }
+      }, 15000);
+    };
+
+    const hide = () => { setShowBubble(false); clearTimeout(hideTimer); };
+
+    reset();
+    window.addEventListener("mousemove", reset);
+    window.addEventListener("keydown", reset);
+    window.addEventListener("scroll", reset);
+    window.addEventListener("click", hide);
+
+    return () => {
+      clearTimeout(inactivityTimer);
+      clearTimeout(hideTimer);
+      window.removeEventListener("mousemove", reset);
+      window.removeEventListener("keydown", reset);
+      window.removeEventListener("scroll", reset);
+      window.removeEventListener("click", hide);
+    };
+  }, [open, pathname]);
 
   useEffect(() => {
     if (open && !welcomeSent.current) {
@@ -79,9 +120,51 @@ export default function ChatBot() {
 
   return (
     <>
+      {/* Inactivity bubble */}
+      <AnimatePresence>
+        {showBubble && !open && (
+          <motion.div
+            initial={{ opacity: 0, y: 8, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 8, scale: 0.95 }}
+            transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+            onClick={() => { setShowBubble(false); setOpen(true); }}
+            style={{
+              position: "fixed",
+              bottom: 92,
+              right: 24,
+              zIndex: 9998,
+              background: "#C9A84C",
+              color: "#0a0a0a",
+              padding: "10px 14px",
+              borderRadius: 8,
+              fontSize: 13,
+              fontWeight: 600,
+              whiteSpace: "nowrap",
+              cursor: "pointer",
+              boxShadow: "0 4px 20px rgba(201,168,76,0.4)",
+              fontFamily: "var(--font-dm-sans), sans-serif",
+            }}
+          >
+            💬 Vous avez un projet en tête ? Je peux vous aider →
+            {/* Arrow */}
+            <div style={{
+              position: "absolute",
+              bottom: -7,
+              right: 22,
+              width: 0,
+              height: 0,
+              borderLeft: "7px solid transparent",
+              borderRight: "7px solid transparent",
+              borderTop: "7px solid #C9A84C",
+            }} />
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       {/* Floating button */}
       <motion.button
-        onClick={() => setOpen(!open)}
+        onClick={() => { setShowBubble(false); setOpen(!open); }}
         whileHover={{ scale: 1.08 }}
         whileTap={{ scale: 0.95 }}
         style={{
