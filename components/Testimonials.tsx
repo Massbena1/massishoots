@@ -36,7 +36,7 @@ export default function Testimonials() {
           transition={{ duration: 0.7 }}
           style={{ marginBottom: 80 }}
         >
-          <span className="font-dm text-accent section-label" style={{ fontSize: 11, letterSpacing: "0.3em", textTransform: "uppercase" }}>
+          <span className="font-dm text-accent" style={{ fontSize: 11, letterSpacing: "0.3em", textTransform: "uppercase" }}>
             {t("label")}
           </span>
           <h2 className="font-bebas" style={{ fontSize: "clamp(44px, 7vw, 80px)", letterSpacing: "0.02em", lineHeight: 0.9, marginTop: 16, color: "#fff" }}>
@@ -54,7 +54,6 @@ export default function Testimonials() {
             animate={inView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.8, delay: 0.2 }}
             style={{ position: "relative" }}
-            data-no-sr
           >
             <ShuffleCards testimonials={testimonials} />
           </motion.div>
@@ -82,7 +81,6 @@ export default function Testimonials() {
                   const avatar = e.currentTarget.querySelector("img") as HTMLElement;
                   if (avatar) avatar.style.borderColor = "rgba(196,205,214,0.2)";
                 }}
-                className="testimonial-card"
                 style={{
                   padding: "20px 24px",
                   background: "rgba(255,255,255,0.03)",
@@ -96,7 +94,7 @@ export default function Testimonials() {
                   position: "relative",
                   overflow: "hidden",
                   transition: "background 0.3s ease, border-color 0.3s ease, transform 0.4s cubic-bezier(0.22,1,0.36,1)",
-                  cursor: "pointer",
+                  cursor: "none",
                 }}
               >
                 <div style={{ position: "absolute", top: 0, left: 16, right: 16, height: 1, background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent)" }} />

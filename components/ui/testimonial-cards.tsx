@@ -61,7 +61,7 @@ export function TestimonialCard({ handleShuffle, testimonial, position, author, 
         src={avatar}
         alt={author}
         className="pointer-events-none mx-auto h-24 w-24 rounded-full object-cover"
-        style={{ border: "2px solid rgba(196,205,214,0.2)", boxShadow: "0 0 24px rgba(196,205,214,0.08)" }}
+        style={{ border: "2px solid rgba(196,205,214,0.2)", boxShadow: "0 0 24px rgba(196,205,214,0.08)", objectPosition: "center top" }}
       />
 
       <div style={{ display: "flex", justifyContent: "center", gap: 3 }}>
