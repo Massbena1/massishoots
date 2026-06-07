@@ -3,6 +3,7 @@ import { getAlternates, getOpenGraph, getTwitter } from "@/lib/hreflang";
 import About from "@/components/About";
 import AboutHero from "@/components/AboutHero";
 import AboutStory from "@/components/AboutStory";
+import AboutValues from "@/components/AboutValues";
 import Stats from "@/components/Stats";
 import Footer from "@/components/Footer";
 import type { Metadata } from "next";
@@ -36,6 +37,7 @@ export default async function AboutPage({
     <main>
       <AboutHero />
       <AboutStory />
+      <AboutValues />
       <About />
       <Stats />
       <Footer />
