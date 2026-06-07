@@ -82,19 +82,19 @@ export default function ShaderHero() {
 
           {/* Headline */}
           <motion.h1
-            className="font-playfair text-white mb-6"
-            style={{ fontSize: "clamp(36px, 5.5vw, 72px)", letterSpacing: "-0.01em", lineHeight: 1.1, fontStyle: "italic" }}
+            className="font-bebas text-white mb-6 leading-none"
+            style={{ fontSize: "clamp(52px, 9vw, 110px)", letterSpacing: "0.02em" }}
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
           >
-            <span className="block" style={{ color: "#ffffff" }}>{t("subtitle")} —</span>
-            <span className="block" style={{ color: "#C9A84C" }}>{t("tagline")}</span>
+            <span className="block" style={{ fontSize: "clamp(18px, 3vw, 36px)", letterSpacing: "0.35em", color: "rgba(196,205,214,0.8)", fontFamily: "var(--font-dm-sans), sans-serif", textTransform: "uppercase" }}>{t("subtitle")}</span>
+            <span className="block" style={{ color: "#ffffff" }}>— {t("tagline")}</span>
           </motion.h1>
 
           {/* Italic subtitle */}
           <motion.p
-            className="font-playfair mb-3 leading-snug max-w-lg"
+            className="font-dm mb-3 leading-snug max-w-lg"
             style={{ fontSize: "clamp(16px, 1.8vw, 22px)", color: "rgba(255,255,255,0.55)", fontStyle: "italic", letterSpacing: "0.01em" }}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
