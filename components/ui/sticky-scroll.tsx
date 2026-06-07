@@ -3,25 +3,25 @@ import { ReactLenis } from 'lenis/react';
 import React, { forwardRef } from 'react';
 
 const leftCol = [
-  '/portfolio/eventt/1.jpg',
-  '/portfolio/corpo/3.jpg',
-  '/portfolio/mariage/3.jpg',
-  '/portfolio/brand/1.jpg',
-  '/portfolio/lyfestyle/1.jpg',
+  { src: '/portfolio/eventt/1.jpg',      alt: 'Couverture événement corporatif Montréal — Massishoots' },
+  { src: '/portfolio/corpo/3.jpg',       alt: 'Photographie corporate Montréal — Massishoots' },
+  { src: '/portfolio/mariage/3.jpg',     alt: 'Photographe mariage Montréal — Massishoots' },
+  { src: '/portfolio/brand/1.jpg',       alt: 'Personal branding photo Montréal — Massishoots' },
+  { src: '/portfolio/lyfestyle/1.jpg',   alt: 'Séance lifestyle Montréal — Massishoots' },
 ];
 
 const centerCol = [
-  '/portfolio/professionel/1.JPG',
-  '/portfolio/eventt/5.jpg',
-  '/portfolio/corpo/5.jpg',
+  { src: '/portfolio/professionel/1.JPG', alt: 'Portrait professionnel Montréal — Massishoots' },
+  { src: '/portfolio/eventt/5.jpg',       alt: 'Événement photo Montréal — Massishoots' },
+  { src: '/portfolio/corpo/5.jpg',        alt: 'Contenu corporate Montréal — Massishoots' },
 ];
 
 const rightCol = [
-  '/portfolio/mariage/5.jpg',
-  '/portfolio/brand/3.jpg',
-  '/portfolio/eventt/7.jpg',
-  '/portfolio/lyfestyle/3.jpg',
-  '/portfolio/corpo/7.jpg',
+  { src: '/portfolio/mariage/5.jpg',    alt: 'Photo mariage cinématique Montréal — Massishoots' },
+  { src: '/portfolio/brand/3.jpg',      alt: 'Branding photo studio Montréal — Massishoots' },
+  { src: '/portfolio/eventt/7.jpg',     alt: 'Photographie événement Montréal — Massishoots' },
+  { src: '/portfolio/lyfestyle/3.jpg',  alt: 'Lifestyle photographe Montréal — Massishoots' },
+  { src: '/portfolio/corpo/7.jpg',      alt: 'Photo corporate B2B Montréal — Massishoots' },
 ];
 
 const StickyScrollGallery = forwardRef<HTMLElement>((_, ref) => {
@@ -60,11 +60,11 @@ const StickyScrollGallery = forwardRef<HTMLElement>((_, ref) => {
 
             {/* Left col – scrolls */}
             <div className='grid gap-2 col-span-4'>
-              {leftCol.map((src, i) => (
+              {leftCol.map((item, i) => (
                 <figure key={i} className='w-full overflow-hidden rounded-xl' style={{ margin: 0 }}>
                   <img
-                    src={src}
-                    alt={`Portfolio ${i + 1}`}
+                    src={item.src}
+                    alt={item.alt}
                     className='transition-all duration-500 w-full h-96 object-cover hover:scale-105'
                     style={{ display: 'block', filter: 'brightness(0.9) saturate(0.85)' }}
                     onMouseEnter={e => { e.currentTarget.style.filter = 'brightness(1) saturate(1)'; }}
@@ -76,11 +76,11 @@ const StickyScrollGallery = forwardRef<HTMLElement>((_, ref) => {
 
             {/* Center col – sticky */}
             <div className='sticky top-0 h-screen col-span-4 gap-2 grid grid-rows-3'>
-              {centerCol.map((src, i) => (
+              {centerCol.map((item, i) => (
                 <figure key={i} className='w-full h-full overflow-hidden rounded-xl' style={{ margin: 0 }}>
                   <img
-                    src={src}
-                    alt={`Portfolio center ${i + 1}`}
+                    src={item.src}
+                    alt={item.alt}
                     className='transition-all duration-500 h-full w-full object-cover hover:scale-105'
                     style={{ display: 'block', filter: 'brightness(0.9) saturate(0.85)' }}
                     onMouseEnter={e => { e.currentTarget.style.filter = 'brightness(1) saturate(1)'; }}
@@ -92,11 +92,11 @@ const StickyScrollGallery = forwardRef<HTMLElement>((_, ref) => {
 
             {/* Right col – scrolls */}
             <div className='grid gap-2 col-span-4'>
-              {rightCol.map((src, i) => (
+              {rightCol.map((item, i) => (
                 <figure key={i} className='w-full overflow-hidden rounded-xl' style={{ margin: 0 }}>
                   <img
-                    src={src}
-                    alt={`Portfolio ${i + 1}`}
+                    src={item.src}
+                    alt={item.alt}
                     className='transition-all duration-500 w-full h-96 object-cover hover:scale-105'
                     style={{ display: 'block', filter: 'brightness(0.9) saturate(0.85)' }}
                     onMouseEnter={e => { e.currentTarget.style.filter = 'brightness(1) saturate(1)'; }}

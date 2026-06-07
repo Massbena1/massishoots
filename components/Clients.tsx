@@ -24,15 +24,15 @@ type LogoItem =
 
 const logos: LogoItem[] = [
   { id: "techguys",     type: "svg", component: TechGuys,              className: "w-40" },
-  { id: "omnigo",       type: "img", src: "/clients/omnigo.png",       alt: "Omnigo",            className: "w-28" },
-  { id: "blackswan",    type: "img", src: "/clients/blackswan.svg",    alt: "Manoir Black Swan", className: "w-44" },
-  { id: "tagekarting",  type: "img", src: "/clients/tage.png",         alt: "Tage Karting",      className: "w-28" },
+  { id: "omnigo",       type: "img", src: "/clients/omnigo.png",       alt: "Omnigo — Client Massishoots Montréal",            className: "w-28" },
+  { id: "blackswan",    type: "img", src: "/clients/blackswan.svg",    alt: "Manoir Black Swan — Client Massishoots Montréal", className: "w-44" },
+  { id: "tagekarting",  type: "img", src: "/clients/tage.png",         alt: "Tage Karting — Client Massishoots Montréal",      className: "w-28" },
   { id: "estaevent",    type: "svg", component: EstaEvent,              className: "w-32" },
   // duplicate pour le slider infini
   { id: "techguys2",    type: "svg", component: TechGuys,              className: "w-40" },
-  { id: "omnigo2",      type: "img", src: "/clients/omnigo.png",       alt: "Omnigo",            className: "w-28" },
-  { id: "blackswan2",   type: "img", src: "/clients/blackswan.svg",    alt: "Manoir Black Swan", className: "w-44" },
-  { id: "tagekarting2", type: "img", src: "/clients/tage.png",         alt: "Tage Karting",      className: "w-28" },
+  { id: "omnigo2",      type: "img", src: "/clients/omnigo.png",       alt: "Omnigo — Client Massishoots Montréal",            className: "w-28" },
+  { id: "blackswan2",   type: "img", src: "/clients/blackswan.svg",    alt: "Manoir Black Swan — Client Massishoots Montréal", className: "w-44" },
+  { id: "tagekarting2", type: "img", src: "/clients/tage.png",         alt: "Tage Karting — Client Massishoots Montréal",      className: "w-28" },
   { id: "estaevent2",   type: "svg", component: EstaEvent,              className: "w-32" },
 ];
 

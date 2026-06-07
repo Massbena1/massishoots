@@ -1,4 +1,4 @@
-const BASE = "https://massishoots.com";
+const BASE = "https://www.massishoots.com";
 const OG_IMAGE = `${BASE}/couverture.png`;
 
 export function getAlternates(path: string) {

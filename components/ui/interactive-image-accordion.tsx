@@ -54,7 +54,7 @@ function AccordionItem({
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={item.imageUrl}
-          alt={item.title}
+          alt={`${item.title} — Massishoots Montréal`}
           style={{
             position: "absolute",
             inset: 0,
@@ -207,7 +207,7 @@ function AccordionItem({
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         src={item.imageUrl}
-        alt={item.title}
+        alt={`${item.title} — Massishoots Montréal`}
         style={{
           position: "absolute",
           inset: 0,

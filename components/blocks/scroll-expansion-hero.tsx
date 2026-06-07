@@ -252,7 +252,7 @@ export default function ScrollExpandMedia({
             // eslint-disable-next-line @next/next/no-img-element
             <img
               src={mediaSrc}
-              alt="Massishoots"
+              alt="Studio photo vidéo premium Montréal — Massishoots"
               style={{ width: "100%", height: "100%", objectFit: "cover" }}
             />
           )}

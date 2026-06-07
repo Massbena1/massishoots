@@ -472,7 +472,7 @@ export default function Portfolio() {
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={activePhoto.src}
-                alt=""
+                alt="Photo portfolio — Massishoots Montréal"
                 style={{ maxWidth: "90vw", maxHeight: "90vh", objectFit: "contain", borderRadius: 12, display: "block" }}
               />
               {/* Prev */}

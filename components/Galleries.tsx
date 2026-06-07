@@ -56,7 +56,7 @@ function PinModal({ gallery, onClose }: { gallery: Gallery; onClose: () => void 
         {gallery.cover && (
           <div style={{ width: 56, height: 56, borderRadius: 16, overflow: "hidden", margin: "0 auto 20px", border: "1px solid rgba(255,255,255,0.1)" }}>
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={gallery.cover} alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+            <img src={gallery.cover} alt={`Galerie photo ${gallery.name} — Massishoots Montréal`} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
           </div>
         )}
         <h3 className="font-bebas" style={{ fontSize: 26, color: "#fff", letterSpacing: "0.06em", marginBottom: 4, lineHeight: 1 }}>{gallery.name}</h3>
@@ -141,7 +141,7 @@ function Lightbox({ gallery, galleries, onClose, onAccess, onNav }: {
         {gallery.cover ? (
           <div style={{ aspectRatio: "16/9", overflow: "hidden", position: "relative" }}>
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={gallery.cover} alt={gallery.name} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+            <img src={gallery.cover} alt={`Galerie ${gallery.name} — Massishoots Montréal`} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
             <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(10,10,12,0.9) 0%, transparent 50%)" }} />
             <div style={{ position: "absolute", top: 16, left: 16, display: "flex", gap: 6 }}>
               <span className="font-dm" style={{ fontSize: 10, color: "#0a0a0a", fontWeight: 700, padding: "3px 10px", background: "#c4cdd6", borderRadius: 9999, letterSpacing: "0.08em", textTransform: "uppercase" }}>{gallery.type}</span>
@@ -271,7 +271,7 @@ export default function Galleries({ initialGalleries = [] }: { initialGalleries?
                   <div style={{ overflow: "hidden", position: "relative", background: "rgba(255,255,255,0.04)", aspectRatio: i % 3 === 1 ? "3/4" : "4/3" }}>
                     {gallery.cover ? (
                       // eslint-disable-next-line @next/next/no-img-element
-                      <img src={gallery.cover} alt={gallery.name} style={{ width: "100%", height: "100%", objectFit: "cover", transition: "transform 0.5s ease" }}
+                      <img src={gallery.cover} alt={`Galerie ${gallery.name} — Massishoots Montréal`} style={{ width: "100%", height: "100%", objectFit: "cover", transition: "transform 0.5s ease" }}
                         onMouseEnter={e => (e.currentTarget.style.transform = "scale(1.05)")}
                         onMouseLeave={e => (e.currentTarget.style.transform = "scale(1)")} />
                     ) : (

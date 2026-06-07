@@ -1,4 +1,5 @@
 import { getTranslations } from "next-intl/server";
+import { getAlternates, getOpenGraph, getTwitter } from "@/lib/hreflang";
 import Footer from "@/components/Footer";
 import TarifsHero from "@/components/TarifsHero";
 import TarifsExpertise from "@/components/TarifsExpertise";
@@ -13,16 +14,14 @@ export async function generateMetadata({
   params: Promise<{ locale: string }>;
 }): Promise<Metadata> {
   const { locale } = await params;
+  const title = "Tarifs & Offres Sur Mesure — Massishoots Montréal";
   const description = "Offres personnalisées en photo et vidéo premium à Montréal. Réservez un appel gratuit de 30 minutes avec Massi.";
   return {
-    title: "Tarifs & Offres Sur Mesure — Massishoots Montréal",
+    title,
     description,
-    openGraph: {
-      title: "Tarifs — Massishoots Studio Premium Montréal",
-      description,
-      locale: locale === "fr" ? "fr_CA" : "en_CA",
-      type: "website",
-    },
+    alternates: getAlternates("/tarifs"),
+    openGraph: getOpenGraph(locale, "/tarifs", title, description),
+    twitter: getTwitter(title, description),
   };
 }
 
