@@ -20,12 +20,14 @@ export function TestimonialCard({ handleShuffle, testimonial, position, author, 
     <motion.div
       style={{
         zIndex: position === "front" ? 2 : position === "middle" ? 1 : 0,
-        background: "rgba(255,255,255,0.04)",
-        backdropFilter: "blur(24px)",
-        WebkitBackdropFilter: "blur(24px)",
-        border: "1px solid rgba(255,255,255,0.09)",
+        background: isFront
+          ? "linear-gradient(145deg, rgba(255,255,255,0.07) 0%, rgba(255,255,255,0.03) 100%)"
+          : "rgba(255,255,255,0.03)",
+        backdropFilter: "blur(32px)",
+        WebkitBackdropFilter: "blur(32px)",
+        border: isFront ? "1px solid rgba(201,168,76,0.25)" : "1px solid rgba(255,255,255,0.07)",
         boxShadow: isFront
-          ? "0 24px 60px rgba(0,0,0,0.5), 0 0 0 1px rgba(196,205,214,0.06) inset"
+          ? "0 32px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(201,168,76,0.08) inset, 0 1px 0 rgba(255,255,255,0.1) inset"
           : "0 12px 40px rgba(0,0,0,0.3)",
       }}
       animate={{
@@ -37,50 +39,59 @@ export function TestimonialCard({ handleShuffle, testimonial, position, author, 
       dragElastic={0.2}
       dragListener={isFront}
       dragConstraints={{ top: 0, left: 0, right: 0, bottom: 0 }}
-      onDragStart={(e) => {
-        dragRef.current = (e as PointerEvent).clientX;
-      }}
+      onDragStart={(e) => { dragRef.current = (e as PointerEvent).clientX; }}
       onDragEnd={(e) => {
         if (dragRef.current - (e as PointerEvent).clientX > 80) handleShuffle();
         dragRef.current = 0;
       }}
       transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
       onClick={isFront ? handleShuffle : undefined}
-      className={`absolute left-0 top-0 grid h-[420px] w-[320px] select-none place-content-center space-y-5 rounded-3xl p-8 ${
-        isFront ? "cursor-pointer" : ""
-      }`}
+      className={`absolute left-0 top-0 grid h-[420px] w-[320px] select-none place-content-center space-y-5 rounded-3xl p-8 ${isFront ? "cursor-pointer" : ""}`}
     >
-      {/* Top highlight */}
+      {/* Gold top highlight */}
       <div style={{
-        position: "absolute", top: 0, left: 24, right: 24, height: 1,
-        background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.13), transparent)",
-        borderRadius: 9999,
+        position: "absolute", top: 0, left: 32, right: 32, height: 1,
+        background: "linear-gradient(90deg, transparent, rgba(201,168,76,0.4), transparent)",
       }} />
 
-      <div style={{ opacity: isFront ? 1 : 0, transition: "opacity 0.3s" }}>
-        <img
-          src={avatar}
-          alt={author}
-          className="pointer-events-none mx-auto h-24 w-24 rounded-full object-cover"
-          style={{ border: "2px solid rgba(196,205,214,0.2)", boxShadow: "0 0 24px rgba(196,205,214,0.08)", objectPosition: "center top" }}
-        />
+      <div style={{ opacity: isFront ? 1 : 0, transition: "opacity 0.35s" }}>
+        {/* Avatar with gold ring */}
+        <div style={{ position: "relative", width: 88, height: 88, margin: "0 auto" }}>
+          <div style={{
+            position: "absolute", inset: -2, borderRadius: "50%",
+            background: "linear-gradient(135deg, #C9A84C, rgba(201,168,76,0.2))",
+            zIndex: 0,
+          }} />
+          <img
+            src={avatar}
+            alt={author}
+            className="pointer-events-none rounded-full object-cover"
+            style={{ width: 88, height: 88, objectPosition: "center top", position: "relative", zIndex: 1, border: "2px solid #0a0a0a" }}
+          />
+        </div>
 
-        <div style={{ display: "flex", justifyContent: "center", gap: 3, marginTop: 16 }}>
+        {/* Gold stars */}
+        <div style={{ display: "flex", justifyContent: "center", gap: 4, marginTop: 18 }}>
           {[...Array(5)].map((_, i) => (
-            <span key={i} style={{ color: "#c4cdd6", fontSize: 12 }}>★</span>
+            <span key={i} style={{ color: "#C9A84C", fontSize: 14 }}>★</span>
           ))}
         </div>
 
-        <p className="font-dm" style={{
-          textAlign: "center", fontSize: 13, marginTop: 12,
-          fontStyle: "italic", color: "rgba(255,255,255,0.55)", lineHeight: 1.8,
+        {/* Quote */}
+        <p className="font-playfair" style={{
+          textAlign: "center", fontSize: 14, marginTop: 16,
+          color: "rgba(255,255,255,0.75)", lineHeight: 1.75,
         }}>
           &ldquo;{testimonial}&rdquo;
         </p>
 
+        {/* Gold divider */}
+        <div style={{ width: 32, height: 1, background: "rgba(201,168,76,0.4)", margin: "16px auto 12px" }} />
+
+        {/* Author */}
         <p className="font-dm" style={{
-          textAlign: "center", fontSize: 11, fontWeight: 600, marginTop: 8,
-          color: "#c4cdd6", letterSpacing: "0.1em", textTransform: "uppercase",
+          textAlign: "center", fontSize: 10, fontWeight: 700,
+          color: "#C9A84C", letterSpacing: "0.14em", textTransform: "uppercase",
         }}>
           {author}
         </p>
