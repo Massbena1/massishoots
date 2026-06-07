@@ -104,7 +104,6 @@ body {
   color: #fff;
   overflow-x: hidden;
   font-family: var(--font-dm-sans), "DM Sans", sans-serif;
-  cursor: default !important;
 }
 
 /* ── Glacial glass utilities ── */
