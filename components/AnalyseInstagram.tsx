@@ -17,6 +17,7 @@ export default function AnalyseInstagram() {
   const [currentStep, setCurrentStep] = useState(1);
   const [analysisResult, setAnalysisResult] = useState<any>(null);
   const [loadingStep, setLoadingStep] = useState(0);
+  const [error, setError] = useState("");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -25,6 +26,7 @@ export default function AnalyseInstagram() {
 
     setLoading(true);
     setLoadingStep(0);
+    setError(""); // Reset error state
 
     // Animate loading steps
     const stepInterval = setInterval(() => {
@@ -32,6 +34,8 @@ export default function AnalyseInstagram() {
     }, 2000);
 
     try {
+      console.log("🚀 Envoi de la requête d'analyse...");
+
       const response = await fetch("/api/analyse-instagram-ai", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -43,16 +47,30 @@ export default function AnalyseInstagram() {
         }),
       });
 
+      console.log("📡 Réponse reçue:", response.status);
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.error("❌ Erreur API:", errorData);
+        setError(`Erreur ${response.status}: ${errorData.error || 'Problème serveur'}`);
+        return;
+      }
+
       const result = await response.json();
+      console.log("📊 Résultat:", result);
 
       if (result.analysis) {
         setAnalysisResult(result.analysis);
         setSubmitted(true);
+        setError("");
+        console.log("✅ Analyse terminée avec succès!");
       } else {
-        console.error("No analysis result received");
+        console.error("❌ Pas de données d'analyse reçues:", result);
+        setError("Aucun résultat d'analyse reçu. Veuillez réessayer.");
       }
     } catch (error) {
-      console.error("Error submitting analysis request:", error);
+      console.error("💥 Erreur de connexion:", error);
+      setError("Erreur de connexion. Vérifiez votre internet et réessayez.");
     } finally {
       clearInterval(stepInterval);
       setLoading(false);
@@ -846,6 +864,24 @@ export default function AnalyseInstagram() {
                     </>
                   )}
                 </motion.button>
+
+                {error && (
+                  <div style={{
+                    padding: "12px 16px",
+                    background: "rgba(220, 38, 38, 0.1)",
+                    border: "1px solid rgba(220, 38, 38, 0.3)",
+                    borderRadius: 6,
+                    marginTop: 16,
+                  }}>
+                    <p className="font-dm" style={{
+                      fontSize: 13,
+                      color: "#DC2626",
+                      margin: 0,
+                    }}>
+                      ⚠️ {error}
+                    </p>
+                  </div>
+                )}
 
                 <p className="font-dm" style={{
                   fontSize: 11,
