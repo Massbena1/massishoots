@@ -34,6 +34,13 @@ export default function SimulateurPage() {
   const [loading, setLoading] = useState(false);
   const [copied, setCopied] = useState<number | null>(null);
 
+  // Lead capture state
+  const [leadPrenom, setLeadPrenom] = useState("");
+  const [leadEmail, setLeadEmail] = useState("");
+  const [leadInsta, setLeadInsta] = useState("");
+  const [leadSending, setLeadSending] = useState(false);
+  const [leadSent, setLeadSent] = useState(false);
+
   const handleGenerate = async () => {
     setLoading(true);
     try {
@@ -70,7 +77,26 @@ export default function SimulateurPage() {
     setTimeout(() => setCopied(null), 2000);
   };
 
-  const reset = () => { setStep(1); setSecteur(""); setCible(""); setEmail(""); setIdeas([]); };
+  const reset = () => {
+    setStep(1); setSecteur(""); setCible(""); setEmail(""); setIdeas([]);
+    setLeadPrenom(""); setLeadEmail(""); setLeadInsta(""); setLeadSent(false);
+  };
+
+  const handleLeadSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!leadPrenom || !leadEmail) return;
+    setLeadSending(true);
+    try {
+      await fetch("/api/simulateur-lead", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ prenom: leadPrenom, email: leadEmail, instagram: leadInsta, secteur, cible }),
+      });
+      setLeadSent(true);
+    } finally {
+      setLeadSending(false);
+    }
+  };
 
   return (
     <main style={{ background: "#0a0a0a", minHeight: "100vh" }}>
@@ -247,6 +273,63 @@ export default function SimulateurPage() {
                 })}
               </div>
 
+              {/* Lead capture */}
+              <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5, duration: 0.5 }}
+                style={{ background: "#111", border: "1px solid rgba(201,168,76,0.2)", borderRadius: 20, padding: "32px 28px", marginBottom: 24 }}>
+                <div style={{ position: "relative" }}>
+                  {/* Gold top line */}
+                  <div style={{ position: "absolute", top: -32, left: "50%", transform: "translateX(-50%)", width: 60, height: 1, background: "linear-gradient(to right, transparent, #C9A84C, transparent)" }} />
+                </div>
+
+                {leadSent ? (
+                  <motion.div initial={{ opacity: 0, scale: 0.96 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.35 }}
+                    style={{ textAlign: "center", padding: "8px 0" }}>
+                    <div style={{ fontSize: 32, marginBottom: 14 }}>📲</div>
+                    <p className="font-dm" style={{ fontSize: 15, color: "#fff", fontWeight: 600, marginBottom: 8, lineHeight: 1.5 }}>
+                      Parfait ! Massi va analyser ton profil et te contacter sous 24h avec un plan de contenu sur mesure.
+                    </p>
+                    <p className="font-dm" style={{ fontSize: 13, color: "rgba(255,255,255,0.35)" }}>
+                      Vérifie ta boîte mail — on arrive vite.
+                    </p>
+                  </motion.div>
+                ) : (
+                  <>
+                    <p className="font-dm" style={{ fontSize: 11, letterSpacing: "0.2em", textTransform: "uppercase", color: "#C9A84C", marginBottom: 10, fontWeight: 600 }}>
+                      ✦ Offre gratuite
+                    </p>
+                    <h3 className="font-bebas" style={{ fontSize: 26, color: "#fff", letterSpacing: "0.03em", lineHeight: 1.1, marginBottom: 8 }}>
+                      TU VEUX QU&apos;ON RÉALISE CES IDÉES ENSEMBLE ?
+                    </h3>
+                    <p className="font-dm" style={{ fontSize: 13, color: "rgba(255,255,255,0.45)", marginBottom: 24, lineHeight: 1.6 }}>
+                      Reçois un plan de contenu personnalisé gratuit par email.
+                    </p>
+                    <form onSubmit={handleLeadSubmit} style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+                      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }} className="lead-grid">
+                        <input
+                          type="text" placeholder="Ton prénom *" value={leadPrenom} onChange={e => setLeadPrenom(e.target.value)} required
+                          className="font-dm"
+                          style={{ padding: "12px 14px", background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 10, color: "#fff", fontSize: 13, outline: "none", fontFamily: "var(--font-dm-sans), sans-serif" }}
+                        />
+                        <input
+                          type="email" placeholder="Email professionnel *" value={leadEmail} onChange={e => setLeadEmail(e.target.value)} required
+                          className="font-dm"
+                          style={{ padding: "12px 14px", background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 10, color: "#fff", fontSize: 13, outline: "none", fontFamily: "var(--font-dm-sans), sans-serif" }}
+                        />
+                      </div>
+                      <input
+                        type="text" placeholder="Ton Instagram (optionnel)" value={leadInsta} onChange={e => setLeadInsta(e.target.value)}
+                        className="font-dm"
+                        style={{ padding: "12px 14px", background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 10, color: "#fff", fontSize: 13, outline: "none", fontFamily: "var(--font-dm-sans), sans-serif" }}
+                      />
+                      <button type="submit" disabled={!leadPrenom || !leadEmail || leadSending} className="font-dm"
+                        style={{ padding: "14px 24px", background: leadPrenom && leadEmail ? "#C9A84C" : "rgba(201,168,76,0.2)", color: leadPrenom && leadEmail ? "#0a0a0a" : "rgba(201,168,76,0.4)", border: "none", borderRadius: 9999, fontSize: 13, fontWeight: 700, cursor: leadPrenom && leadEmail ? "pointer" : "not-allowed", letterSpacing: "0.04em", transition: "all 0.2s" }}>
+                        {leadSending ? "Envoi en cours…" : "Recevoir mon plan gratuit →"}
+                      </button>
+                    </form>
+                  </>
+                )}
+              </motion.div>
+
               {/* Actions */}
               <div style={{ display: "flex", gap: 12, marginBottom: 40, flexWrap: "wrap" }}>
                 <button onClick={reset} className="font-dm"
@@ -267,7 +350,7 @@ export default function SimulateurPage() {
       <Footer />
 
       <style>{`
-        @media (max-width: 560px) { .secteur-grid { grid-template-columns: 1fr !important; } }
+        @media (max-width: 560px) { .secteur-grid { grid-template-columns: 1fr !important; } .lead-grid { grid-template-columns: 1fr !important; } }
       `}</style>
     </main>
   );
