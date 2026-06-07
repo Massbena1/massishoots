@@ -111,7 +111,11 @@ export default function ChatBot() {
       const res = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ messages: newMessages }),
+        body: JSON.stringify({
+          messages: newMessages.filter(m =>
+            !m.content.includes("coordonnées ont bien été transmises")
+          ),
+        }),
       });
       const data = await res.json();
       const assistantMsg = data.message ?? "Une erreur est survenue.";
@@ -143,7 +147,7 @@ export default function ChatBot() {
       setLeadStep("done");
       setMessages(prev => [...prev, {
         role: "assistant",
-        content: `Merci ${leadName} 🙏 Massi a vos coordonnées. Posez-moi vos questions, je suis là !`,
+        content: "Vos coordonnées ont bien été transmises à Massi 🙏 N'hésitez pas à poser vos questions, je suis là !",
       }]);
     }
   };
@@ -307,7 +311,17 @@ export default function ChatBot() {
                       border: msg.role === "assistant" ? "0.5px solid rgba(255,255,255,0.07)" : "none",
                     }}
                   >
-                    {msg.content}
+                    {msg.content.split("\n").map((line, j) => (
+                      <span key={j}>
+                        {line.startsWith("- ") ? (
+                          <span style={{ display: "flex", gap: 6, alignItems: "flex-start" }}>
+                            <span style={{ color: "#C9A84C", flexShrink: 0 }}>◆</span>
+                            <span>{line.slice(2)}</span>
+                          </span>
+                        ) : line}
+                        {j < msg.content.split("\n").length - 1 && <br />}
+                      </span>
+                    ))}
                   </div>
                 </div>
               ))}
