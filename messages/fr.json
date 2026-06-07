@@ -200,10 +200,10 @@
         "label": "01 · Production",
         "title": "Production Haut de Gamme",
         "equipment": [
-          "Sony A7 III",
-          "DJI Mini 5 Pro",
-          "Éclairage professionnel",
-          "Audio haute qualité"
+          "Sony",
+          "DJI",
+          "Aputure",
+          "Rode"
         ],
         "desc": "Chaque projet est filmé avec une approche cinématique pensée pour les réseaux sociaux modernes et les marques premium."
       },
@@ -356,20 +356,20 @@
     "equipmentLabel": "Équipement",
     "equipment": [
       {
-        "name": "Sony A7 III",
-        "role": "Boîtier principal"
+        "name": "Sony",
+        "role": "Caméra principale"
       },
       {
-        "name": "DJI Mini 5 Pro",
-        "role": "Drone cinématique"
+        "name": "DJI",
+        "role": "Drone & stabilisateur"
       },
       {
-        "name": "DJI RS 4 Mini",
-        "role": "Stabilisateur gimbal"
-      },
-      {
-        "name": "Aputure MC Pro",
+        "name": "Aputure",
         "role": "Éclairage LED"
+      },
+      {
+        "name": "Rode",
+        "role": "Audio"
       }
     ],
     "page": {

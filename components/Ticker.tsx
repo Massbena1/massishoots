@@ -5,7 +5,7 @@ const items = [
   "PERSONAL BRANDING", "✦", "CORPORATE B2B", "✦",
   "EVENTS & WEDDINGS", "✦", "MONTRÉAL", "✦",
   "PHOTOGRAPHY", "✦", "VIDEOGRAPHY", "✦",
-  "SONY A7 III", "✦", "DJI MINI 5 PRO", "✦",
+  "SONY", "✦", "DJI", "✦", "APUTURE", "✦", "RODE", "✦",
 ];
 
 const doubled = [...items, ...items];
