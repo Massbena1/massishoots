@@ -260,7 +260,6 @@ export default function ChatBot() {
                   outline: "none",
                   color: "#fff",
                   fontSize: 13,
-                  placeholder: "rgba(255,255,255,0.2)",
                 }}
               />
               <button
