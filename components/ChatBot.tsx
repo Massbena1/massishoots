@@ -8,30 +8,44 @@ interface Message {
   content: string;
 }
 
-const SUGGESTED = [
-  "C'est quoi vos tarifs ?",
-  "Réserver un appel",
-  "Délais de livraison ?",
+const WELCOME = `Bonjour 👋 Je suis l'assistant de Massishoots.
+
+Je peux vous aider à :
+- Trouver le service qui correspond à votre projet
+- Répondre à vos questions
+- Vous connecter directement avec Massi
+
+Quel type de projet avez-vous ?`;
+
+const QUICK_REPLIES = [
+  "📸 Contenu mensuel",
+  "🎬 Événement",
+  "💍 Mariage",
+  "Autre projet",
 ];
 
 export default function ChatBot() {
   const [open, setOpen] = useState(false);
-  const [messages, setMessages] = useState<Message[]>([
-    {
-      role: "assistant",
-      content: "Bonjour 👋 Je suis l'assistant Massishoots. Comment puis-je vous aider ?",
-    },
-  ]);
+  const [messages, setMessages] = useState<Message[]>([]);
+  const [showQuickReplies, setShowQuickReplies] = useState(false);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const bottomRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  const welcomeSent = useRef(false);
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages, loading]);
+  }, [messages, loading, showQuickReplies]);
 
   useEffect(() => {
+    if (open && !welcomeSent.current) {
+      welcomeSent.current = true;
+      setTimeout(() => {
+        setMessages([{ role: "assistant", content: WELCOME }]);
+        setTimeout(() => setShowQuickReplies(true), 200);
+      }, 500);
+    }
     if (open) setTimeout(() => inputRef.current?.focus(), 300);
   }, [open]);
 
@@ -42,6 +56,7 @@ export default function ChatBot() {
 
     const newMessages: Message[] = [...messages, { role: "user", content }];
     setMessages(newMessages);
+    setShowQuickReplies(false);
     setLoading(true);
 
     try {
@@ -205,33 +220,41 @@ export default function ChatBot() {
                 </div>
               )}
 
-              {/* Suggested — show only at start */}
-              {messages.length === 1 && (
-                <div style={{ display: "flex", flexWrap: "wrap", gap: 6, marginTop: 4 }}>
-                  {SUGGESTED.map((s) => (
-                    <button
-                      key={s}
-                      onClick={() => send(s)}
-                      className="font-dm"
-                      style={{
-                        padding: "6px 12px",
-                        background: "transparent",
-                        border: "0.5px solid rgba(201,168,76,0.4)",
-                        borderRadius: 9999,
-                        color: "#C9A84C",
-                        fontSize: 11,
-                        cursor: "pointer",
-                        letterSpacing: "0.03em",
-                        transition: "background 0.2s",
-                      }}
-                      onMouseEnter={e => (e.currentTarget.style.background = "rgba(201,168,76,0.1)")}
-                      onMouseLeave={e => (e.currentTarget.style.background = "transparent")}
-                    >
-                      {s}
-                    </button>
-                  ))}
-                </div>
-              )}
+              {/* Quick replies */}
+              <AnimatePresence>
+                {showQuickReplies && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 4 }}
+                    transition={{ duration: 0.2 }}
+                    style={{ display: "flex", flexWrap: "wrap", gap: 6, marginTop: 4 }}
+                  >
+                    {QUICK_REPLIES.map((s) => (
+                      <button
+                        key={s}
+                        onClick={() => send(s)}
+                        className="font-dm"
+                        style={{
+                          padding: "7px 14px",
+                          background: "transparent",
+                          border: "0.5px solid rgba(201,168,76,0.4)",
+                          borderRadius: 9999,
+                          color: "#C9A84C",
+                          fontSize: 12,
+                          cursor: "pointer",
+                          letterSpacing: "0.02em",
+                          transition: "background 0.2s",
+                        }}
+                        onMouseEnter={e => (e.currentTarget.style.background = "rgba(201,168,76,0.1)")}
+                        onMouseLeave={e => (e.currentTarget.style.background = "transparent")}
+                      >
+                        {s}
+                      </button>
+                    ))}
+                  </motion.div>
+                )}
+              </AnimatePresence>
 
               <div ref={bottomRef} />
             </div>
