@@ -1,16 +1,19 @@
 "use client";
+
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { usePathname } from "next/navigation";
 import { useLocale, useTranslations } from "next-intl";
 import { Link, useRouter } from "@/i18n/navigation";
+import { Home, Camera, Image, DollarSign, User, Images } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 const NAV_LINKS = [
-  { key: "services",  href: "/services",  sectionId: "services",  homeScroll: true  },
-  { key: "portfolio", href: "/portfolio", sectionId: "portfolio", homeScroll: true  },
-  { key: "tarifs",    href: "/tarifs",    sectionId: null,        homeScroll: false },
-  { key: "about",     href: "/about",     sectionId: null,        homeScroll: false },
-  { key: "galleries", href: "/galleries", sectionId: null,        homeScroll: false },
+  { key: "services",  href: "/services",  sectionId: "services",  homeScroll: true,  icon: Camera   },
+  { key: "portfolio", href: "/portfolio", sectionId: "portfolio", homeScroll: true,  icon: Image    },
+  { key: "tarifs",    href: "/tarifs",    sectionId: null,        homeScroll: false, icon: DollarSign },
+  { key: "about",     href: "/about",     sectionId: null,        homeScroll: false, icon: User     },
+  { key: "galleries", href: "/galleries", sectionId: null,        homeScroll: false, icon: Images   },
 ] as const;
 
 function easeInOutCubic(t: number): number {
@@ -21,14 +24,12 @@ function smoothScroll(target: number, duration = 800) {
   const start = window.scrollY;
   const distance = target - start;
   const startTime = performance.now();
-
   function step(now: number) {
     const elapsed = now - startTime;
     const progress = Math.min(elapsed / duration, 1);
     window.scrollTo(0, start + distance * easeInOutCubic(progress));
     if (progress < 1) requestAnimationFrame(step);
   }
-
   requestAnimationFrame(step);
 }
 
@@ -37,12 +38,13 @@ export default function Navbar() {
   const locale = useLocale();
   const router = useRouter();
   const pathname = usePathname();
-
   const [scrolled, setScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState<string | null>(null);
+  const [mounted, setMounted] = useState(false);
 
-  // Detect if we're on the home page (with locale prefix)
   const isHome = pathname === `/${locale}` || pathname === `/${locale}/`;
+
+  useEffect(() => { setMounted(true); }, []);
 
   useEffect(() => {
     const fn = () => setScrolled(window.scrollY > 80);
@@ -75,9 +77,7 @@ export default function Navbar() {
       e.preventDefault();
       const el = document.getElementById(link.sectionId);
       if (!el) return;
-      const navOffset = 96;
-      const target = el.getBoundingClientRect().top + window.scrollY - navOffset;
-      smoothScroll(target, 900);
+      smoothScroll(el.getBoundingClientRect().top + window.scrollY - 96, 900);
     }
   };
 
@@ -88,7 +88,6 @@ export default function Navbar() {
 
   const switchLocale = () => {
     const next = locale === "fr" ? "en" : "fr";
-    // Get current path without locale prefix
     const localePrefix = `/${locale}`;
     const currentPath = pathname.startsWith(localePrefix)
       ? pathname.slice(localePrefix.length) || "/"
@@ -96,113 +95,178 @@ export default function Navbar() {
     router.replace(currentPath, { locale: next });
   };
 
+  if (!mounted) return null;
+
   return (
-    <>
-      {/* Desktop floating pill — mobile handled by GradientMenu + TopBar */}
-      <nav className="hidden md:flex" style={{
-        position: "fixed", top: 24, left: "50%", transform: "translateX(-50%)", zIndex: 100,
-      }}>
-        <motion.div
-          initial={{ opacity: 0, y: -16, scale: 0.95 }}
-          animate={{ opacity: 1, y: 0, scale: 1 }}
-          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-          className="navbar-pill"
+    <nav className="hidden md:block" style={{ position: "fixed", top: 0, left: 0, right: 0, zIndex: 100, paddingTop: 20 }}>
+      <motion.div
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+        style={{ display: "flex", justifyContent: "center" }}
+      >
+        <div
+          className={cn(
+            "flex items-center gap-1",
+          )}
           style={{
-            display: "flex", alignItems: "center", gap: 2,
-            padding: "5px 5px 5px 18px", borderRadius: 9999,
-            background: "rgba(6,8,12,0.92)",
-            backdropFilter: "blur(20px)", WebkitBackdropFilter: "blur(20px)",
+            background: scrolled ? "rgba(6,8,12,0.95)" : "rgba(6,8,12,0.80)",
+            backdropFilter: "blur(20px)",
+            WebkitBackdropFilter: "blur(20px)",
             border: "1px solid rgba(255,255,255,0.08)",
-            borderBottom: "1px solid rgba(201,168,76,0.5)",
+            borderBottom: "1px solid rgba(201,168,76,0.35)",
+            borderRadius: 9999,
+            padding: "5px 6px 5px 16px",
             boxShadow: scrolled
-              ? "0 12px 40px rgba(0,0,0,0.6), 0 0 0 1px rgba(0,229,255,0.1) inset, 0 1px 0 rgba(255,255,255,0.06) inset"
-              : "0 4px 24px rgba(0,0,0,0.5), 0 1px 0 rgba(255,255,255,0.06) inset",
+              ? "0 12px 40px rgba(0,0,0,0.6), 0 1px 0 rgba(255,255,255,0.06) inset"
+              : "0 4px 24px rgba(0,0,0,0.4), 0 1px 0 rgba(255,255,255,0.06) inset",
+            transition: "background 0.3s, box-shadow 0.3s",
           }}
         >
           {/* Logo */}
-          <Link href="/" className="font-bebas navbar-logo" style={{
-            fontSize: 15, letterSpacing: "0.2em", color: "#fff",
-            textDecoration: "none", marginRight: 6, whiteSpace: "nowrap",
+          <Link href="/" className="font-bebas" style={{
+            fontSize: 14, letterSpacing: "0.2em", color: "#fff",
+            textDecoration: "none", marginRight: 8, whiteSpace: "nowrap",
           }}>
             MASSISHOOTS
           </Link>
 
-          <div className="navbar-divider" style={{ width: 1, height: 14, background: "rgba(255,255,255,0.1)", margin: "0 6px" }} />
+          <div style={{ width: 1, height: 14, background: "rgba(255,255,255,0.1)", margin: "0 4px" }} />
 
-          {/* Nav links */}
-          {NAV_LINKS.map((l) => (
-            <Link
-              key={l.href}
-              href={l.href}
-              onClick={(e) => handleNavClick(e, l)}
-              className={`font-dm ${isActive(l) ? "navbar-link-active" : "navbar-link"}`}
-              style={{
-                fontSize: 12.5,
-                color: isActive(l) ? "#fff" : "rgba(255,255,255,0.5)",
-                textDecoration: "none", letterSpacing: "0.03em",
-                padding: "6px 14px", borderRadius: 9999,
-                transition: "color 0.2s, background 0.2s", whiteSpace: "nowrap",
-                fontWeight: isActive(l) ? 600 : 400,
-                background: isActive(l) ? "rgba(255,255,255,0.13)" : "transparent",
-              }}
-            >
-              {t(l.key)}
-            </Link>
-          ))}
+          {/* Nav links with lamp effect */}
+          {NAV_LINKS.map((link) => {
+            const active = isActive(link);
+            const Icon = link.icon;
+            return (
+              <Link
+                key={link.href}
+                href={link.href}
+                onClick={(e) => handleNavClick(e, link)}
+                className="font-dm"
+                style={{
+                  position: "relative",
+                  fontSize: 12.5,
+                  color: active ? "#fff" : "rgba(255,255,255,0.5)",
+                  textDecoration: "none",
+                  letterSpacing: "0.03em",
+                  padding: "7px 14px",
+                  borderRadius: 9999,
+                  whiteSpace: "nowrap",
+                  fontWeight: active ? 600 : 400,
+                  transition: "color 0.2s",
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: 6,
+                }}
+                onMouseEnter={e => { if (!active) (e.currentTarget as HTMLElement).style.color = "rgba(255,255,255,0.85)"; }}
+                onMouseLeave={e => { if (!active) (e.currentTarget as HTMLElement).style.color = "rgba(255,255,255,0.5)"; }}
+              >
+                {/* Lamp background */}
+                <AnimatePresence>
+                  {active && (
+                    <motion.span
+                      layoutId="lamp"
+                      style={{
+                        position: "absolute",
+                        inset: 0,
+                        borderRadius: 9999,
+                        background: "rgba(201,168,76,0.1)",
+                        zIndex: -1,
+                      }}
+                      initial={false}
+                      transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                    >
+                      {/* Lamp light beam from top */}
+                      <span style={{
+                        position: "absolute",
+                        top: -3,
+                        left: "50%",
+                        transform: "translateX(-50%)",
+                        width: 28,
+                        height: 3,
+                        background: "#C9A84C",
+                        borderRadius: "0 0 4px 4px",
+                        display: "block",
+                      }} />
+                      <span style={{
+                        position: "absolute",
+                        top: -8,
+                        left: "50%",
+                        transform: "translateX(-50%)",
+                        width: 40,
+                        height: 12,
+                        background: "rgba(201,168,76,0.18)",
+                        borderRadius: "50%",
+                        filter: "blur(6px)",
+                        display: "block",
+                      }} />
+                      <span style={{
+                        position: "absolute",
+                        top: -4,
+                        left: "50%",
+                        transform: "translateX(-50%)",
+                        width: 20,
+                        height: 8,
+                        background: "rgba(201,168,76,0.25)",
+                        borderRadius: "50%",
+                        filter: "blur(3px)",
+                        display: "block",
+                      }} />
+                    </motion.span>
+                  )}
+                </AnimatePresence>
 
-          <div className="navbar-divider" style={{ width: 1, height: 14, background: "rgba(255,255,255,0.1)", margin: "0 2px 0 4px" }} />
+                {/* Icon (mobile) + label (desktop) */}
+                <span className="hidden lg:inline">{t(link.key)}</span>
+                <span className="lg:hidden">
+                  <Icon size={16} strokeWidth={2} />
+                </span>
+              </Link>
+            );
+          })}
 
-          {/* Locale switcher */}
+          <div style={{ width: 1, height: 14, background: "rgba(255,255,255,0.1)", margin: "0 2px 0 4px" }} />
+
+          {/* Locale */}
           <button
             onClick={switchLocale}
-            className="font-dm navbar-locale"
+            className="font-dm"
             style={{
               fontSize: 11, letterSpacing: "0.12em", fontWeight: 600,
-              color: "rgba(255,255,255,0.45)",
-              padding: "6px 10px", borderRadius: 9999, border: "none",
-              background: "transparent", cursor: "pointer",
-              transition: "color 0.2s",
-              whiteSpace: "nowrap",
+              color: "rgba(255,255,255,0.4)", padding: "6px 10px",
+              borderRadius: 9999, border: "none", background: "transparent",
+              cursor: "pointer", whiteSpace: "nowrap", transition: "color 0.2s",
             }}
             onMouseEnter={e => (e.currentTarget.style.color = "#c4cdd6")}
-            onMouseLeave={e => (e.currentTarget.style.color = "rgba(255,255,255,0.45)")}
+            onMouseLeave={e => (e.currentTarget.style.color = "rgba(255,255,255,0.4)")}
           >
             {locale === "fr" ? "EN" : "FR"}
           </button>
 
           {/* Espace client */}
-          <Link
-            href="/client"
-            className="font-dm"
-            style={{
-              padding: "8px 16px",
-              background: "rgba(255,255,255,0.05)",
-              border: "1px solid rgba(255,255,255,0.1)",
-              color: "rgba(255,255,255,0.55)",
-              borderRadius: 9999, fontSize: 12, fontWeight: 600,
-              textDecoration: "none", letterSpacing: "0.04em",
-              whiteSpace: "nowrap", display: "inline-flex", alignItems: "center", gap: 5,
-            }}
-          >
+          <Link href="/client" className="font-dm" style={{
+            padding: "7px 14px",
+            background: "rgba(255,255,255,0.04)",
+            border: "1px solid rgba(255,255,255,0.09)",
+            color: "rgba(255,255,255,0.5)",
+            borderRadius: 9999, fontSize: 12, fontWeight: 600,
+            textDecoration: "none", letterSpacing: "0.04em",
+            whiteSpace: "nowrap", display: "inline-flex", alignItems: "center", gap: 5,
+          }}>
             🔒 Espace client
           </Link>
 
           {/* CTA */}
-          <Link
-            href="/contact"
-            className="font-dm"
-            style={{
-              padding: "8px 18px", background: "#f2f0ec", color: "#0a0a0a",
-              borderRadius: 9999, fontSize: 12.5, fontWeight: 700,
-              textDecoration: "none", letterSpacing: "0.05em",
-              marginLeft: 2, whiteSpace: "nowrap", display: "inline-block",
-            }}
-          >
+          <Link href="/contact" className="font-dm" style={{
+            padding: "8px 18px", background: "#f2f0ec", color: "#0a0a0a",
+            borderRadius: 9999, fontSize: 12.5, fontWeight: 700,
+            textDecoration: "none", letterSpacing: "0.05em",
+            marginLeft: 2, whiteSpace: "nowrap", display: "inline-block",
+          }}>
             {t("book")}
           </Link>
-        </motion.div>
-      </nav>
-
-    </>
+        </div>
+      </motion.div>
+    </nav>
   );
 }
