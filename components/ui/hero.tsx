@@ -56,7 +56,7 @@ export default function ShaderHero() {
               <span style={{ position: "absolute", inset: 1, borderRadius: "50%", background: "#4ade80" }} />
             </span>
             <span className="font-dm text-white/70 relative z-10 tracking-wide" style={{ fontSize: 12 }}>
-              2 spots disponibles ce mois-ci
+              Studio premium · Montréal
             </span>
           </motion.div>
 
