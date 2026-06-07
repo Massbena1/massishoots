@@ -33,6 +33,11 @@ export default function ChatBot() {
   const [showBubble, setShowBubble] = useState(false);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
+  const [leadStep, setLeadStep] = useState<"idle" | "capturing" | "done">("idle");
+  const [leadService, setLeadService] = useState("");
+  const [leadName, setLeadName] = useState("");
+  const [leadEmail, setLeadEmail] = useState("");
+  const [leadSending, setLeadSending] = useState(false);
   const bottomRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const welcomeSent = useRef(false);
@@ -109,12 +114,37 @@ export default function ChatBot() {
         body: JSON.stringify({ messages: newMessages }),
       });
       const data = await res.json();
-      setMessages([...newMessages, { role: "assistant", content: data.message ?? "Une erreur est survenue." }]);
+      const assistantMsg = data.message ?? "Une erreur est survenue.";
+      setMessages([...newMessages, { role: "assistant", content: assistantMsg }]);
       if (data.suggestions?.length) setSuggestions(data.suggestions);
+      // Trigger lead capture after first bot reply
+      if (leadStep === "idle") {
+        setLeadService(content);
+        setLeadStep("capturing");
+      }
     } catch {
       setMessages([...newMessages, { role: "assistant", content: "Désolé, une erreur est survenue. Réessayez ou contactez-nous directement." }]);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const submitLead = async () => {
+    if (!leadName.trim() || !leadEmail.trim()) return;
+    setLeadSending(true);
+    try {
+      await fetch("/api/lead", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name: leadName, email: leadEmail, service: leadService }),
+      });
+    } finally {
+      setLeadSending(false);
+      setLeadStep("done");
+      setMessages(prev => [...prev, {
+        role: "assistant",
+        content: `Merci ${leadName} 🙏 Massi a vos coordonnées. Posez-moi vos questions, je suis là !`,
+      }]);
     }
   };
 
@@ -338,6 +368,83 @@ export default function ChatBot() {
                         {s}
                       </button>
                     ))}
+                  </motion.div>
+                )}
+              </AnimatePresence>
+
+              {/* Lead capture form */}
+              <AnimatePresence>
+                {leadStep === "capturing" && !loading && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.25 }}
+                    style={{
+                      background: "#111",
+                      border: "0.5px solid rgba(201,168,76,0.35)",
+                      borderRadius: 10,
+                      padding: "16px 14px",
+                      display: "flex",
+                      flexDirection: "column",
+                      gap: 10,
+                    }}
+                  >
+                    <p className="font-dm" style={{ fontSize: 12, color: "#C9A84C", fontWeight: 600, margin: 0, letterSpacing: "0.04em" }}>
+                      Pour que Massi puisse vous recontacter :
+                    </p>
+                    <input
+                      placeholder="Votre prénom"
+                      value={leadName}
+                      onChange={e => setLeadName(e.target.value)}
+                      className="font-dm"
+                      style={{
+                        background: "#1a1a1a", border: "0.5px solid rgba(255,255,255,0.1)",
+                        borderRadius: 6, padding: "8px 12px", color: "#fff",
+                        fontSize: 13, outline: "none", width: "100%", boxSizing: "border-box",
+                      }}
+                    />
+                    <input
+                      placeholder="Votre email"
+                      type="email"
+                      value={leadEmail}
+                      onChange={e => setLeadEmail(e.target.value)}
+                      onKeyDown={e => { if (e.key === "Enter") submitLead(); }}
+                      className="font-dm"
+                      style={{
+                        background: "#1a1a1a", border: "0.5px solid rgba(255,255,255,0.1)",
+                        borderRadius: 6, padding: "8px 12px", color: "#fff",
+                        fontSize: 13, outline: "none", width: "100%", boxSizing: "border-box",
+                      }}
+                    />
+                    <div style={{ display: "flex", gap: 8 }}>
+                      <button
+                        onClick={submitLead}
+                        disabled={!leadName.trim() || !leadEmail.trim() || leadSending}
+                        className="font-dm"
+                        style={{
+                          flex: 1, padding: "9px", borderRadius: 6,
+                          background: leadName.trim() && leadEmail.trim() ? "#C9A84C" : "rgba(201,168,76,0.2)",
+                          color: leadName.trim() && leadEmail.trim() ? "#0a0a0a" : "rgba(201,168,76,0.4)",
+                          border: "none", fontSize: 12, fontWeight: 700,
+                          cursor: leadName.trim() && leadEmail.trim() ? "pointer" : "default",
+                          letterSpacing: "0.04em",
+                        }}
+                      >
+                        {leadSending ? "Envoi…" : "Confirmer →"}
+                      </button>
+                      <button
+                        onClick={() => setLeadStep("done")}
+                        className="font-dm"
+                        style={{
+                          padding: "9px 12px", borderRadius: 6,
+                          background: "transparent", border: "0.5px solid rgba(255,255,255,0.1)",
+                          color: "rgba(255,255,255,0.3)", fontSize: 12, cursor: "pointer",
+                        }}
+                      >
+                        Passer
+                      </button>
+                    </div>
                   </motion.div>
                 )}
               </AnimatePresence>
