@@ -93,7 +93,7 @@ const PHOTOS: Item[] = [
 
 const VIDEOS: Item[] = [
   // En avant
-  { sub: "events",       src: "/portfolio/videos/event-1.1.jpg",  videoSrc: "/portfolio/videos/event-1.1.mp4",  altKey: "altEvent", wide: true },
+  { sub: "events",       src: "/portfolio/videos/event-1.1.jpg",  videoSrc: "https://jkrbnlhfycrznxld.public.blob.vercel-storage.com/videos/event-1.1.mp4",  altKey: "altEvent", wide: true },
   // Immobilier
   { sub: "immobilier", src: "/immobilier/thumb.jpg", videoSrc: "/immobilier/1.mp4", altKey: "altEvents", wide: true },
   // Events
