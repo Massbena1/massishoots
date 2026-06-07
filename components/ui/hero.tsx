@@ -69,7 +69,7 @@ export default function ShaderHero() {
           >
             <div className="absolute top-0 left-1 right-1 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent rounded-full" />
             <span className="font-dm text-white/80 text-sm font-medium relative z-10 tracking-wide">
-              ✦ Montréal · Photo & Vidéo
+              ✦ Photo & Vidéo · Cinématique
             </span>
           </motion.div>
 
