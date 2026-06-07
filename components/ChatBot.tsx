@@ -31,6 +31,7 @@ export default function ChatBot() {
   const [showQuickReplies, setShowQuickReplies] = useState(false);
   const [suggestions, setSuggestions] = useState<string[]>([]);
   const [showBubble, setShowBubble] = useState(false);
+  const [showDot, setShowDot] = useState(true);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const [leadStep, setLeadStep] = useState<"idle" | "capturing" | "done">("idle");
@@ -46,6 +47,12 @@ export default function ChatBot() {
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages, loading, showQuickReplies]);
+
+  // Hide red dot after 15s
+  useEffect(() => {
+    const t = setTimeout(() => setShowDot(false), 15000);
+    return () => clearTimeout(t);
+  }, []);
 
   // Inactivity bubble — home page only, once per session
   useEffect(() => {
@@ -197,40 +204,75 @@ export default function ChatBot() {
       </AnimatePresence>
 
       {/* Floating button */}
-      <motion.button
-        onClick={() => { setShowBubble(false); setOpen(!open); }}
-        whileHover={{ scale: 1.08 }}
-        whileTap={{ scale: 0.95 }}
-        style={{
-          position: "fixed",
-          bottom: 28,
-          right: 24,
-          zIndex: 9999,
-          width: 56,
-          height: 56,
-          borderRadius: "50%",
-          background: "#C9A84C",
-          border: "none",
-          cursor: "pointer",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          boxShadow: "0 4px 24px rgba(201,168,76,0.4)",
-        }}
-        aria-label="Ouvrir le chat"
-      >
-        <AnimatePresence mode="wait">
-          {open ? (
-            <motion.svg key="close" initial={{ rotate: -90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: 90, opacity: 0 }} transition={{ duration: 0.2 }} width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0a0a0a" strokeWidth="2.5" strokeLinecap="round">
-              <line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" />
-            </motion.svg>
-          ) : (
-            <motion.svg key="chat" initial={{ scale: 0.7, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.7, opacity: 0 }} transition={{ duration: 0.2 }} width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0a0a0a" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
-            </motion.svg>
-          )}
-        </AnimatePresence>
-      </motion.button>
+      <div style={{ position: "fixed", bottom: 28, right: 24, zIndex: 9999 }}>
+        {/* Red notification dot */}
+        {showDot && !open && (
+          <span style={{
+            position: "absolute", top: 2, right: 2,
+            width: 11, height: 11, borderRadius: "50%",
+            background: "#ef4444",
+            border: "2px solid #0a0a0a",
+            zIndex: 10000,
+            animation: "dotPulse 1.5s ease-in-out infinite",
+          }} />
+        )}
+        <motion.button
+          onClick={() => { setShowBubble(false); setShowDot(false); setOpen(!open); }}
+          whileHover={{ scale: 1.1, boxShadow: "0 12px 40px rgba(201,168,76,0.6)" }}
+          whileTap={{ scale: 0.95 }}
+          animate={{ scale: [1, 1.08, 1], opacity: [1, 0.82, 1] }}
+          transition={{
+            scale: { repeat: Infinity, duration: 3, ease: "easeInOut", repeatDelay: 2 },
+            opacity: { repeat: Infinity, duration: 3, ease: "easeInOut", repeatDelay: 2 },
+          }}
+          style={{
+            width: 58,
+            height: 58,
+            borderRadius: "50%",
+            background: "linear-gradient(135deg, #C9A84C 0%, #E8C97A 100%)",
+            border: "none",
+            cursor: "pointer",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            boxShadow: "0 8px 32px rgba(201,168,76,0.4)",
+          }}
+          aria-label="Ouvrir le chat"
+        >
+          <AnimatePresence mode="wait">
+            {open ? (
+              <motion.span
+                key="close"
+                initial={{ rotate: -90, opacity: 0 }}
+                animate={{ rotate: 0, opacity: 1 }}
+                exit={{ rotate: 90, opacity: 0 }}
+                transition={{ duration: 0.3 }}
+                style={{ fontSize: 20, color: "#fff", lineHeight: 1, fontWeight: 300 }}
+              >
+                ✕
+              </motion.span>
+            ) : (
+              <motion.span
+                key="star"
+                initial={{ scale: 0.6, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                exit={{ scale: 0.6, opacity: 0 }}
+                transition={{ duration: 0.3 }}
+                style={{ fontSize: 20, color: "#fff", lineHeight: 1 }}
+              >
+                ✦
+              </motion.span>
+            )}
+          </AnimatePresence>
+        </motion.button>
+      </div>
+
+      <style>{`
+        @keyframes dotPulse {
+          0%, 100% { opacity: 1; transform: scale(1); }
+          50% { opacity: 0.5; transform: scale(0.8); }
+        }
+      `}</style>
 
       {/* Chat window */}
       <AnimatePresence>
