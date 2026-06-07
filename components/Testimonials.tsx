@@ -55,7 +55,7 @@ export default function Testimonials() {
             transition={{ duration: 0.8, delay: 0.2 }}
             style={{ position: "relative" }}
           >
-            <ShuffleCards testimonials={testimonials} />
+            <ShuffleCards testimonials={testimonials.slice(0, 3)} />
           </motion.div>
 
           <motion.div
