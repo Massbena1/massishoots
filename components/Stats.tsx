@@ -1,24 +1,45 @@
 "use client";
-import { motion, useInView, useMotionValue, useTransform, animate } from "framer-motion";
-import { useRef, useEffect } from "react";
+import { motion, useInView } from "framer-motion";
+import { useRef, useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 
+function easeOutQuad(t: number) {
+  return t * (2 - t);
+}
+
 function Counter({ value, suffix }: { value: number; suffix: string }) {
-  const ref = useRef(null);
-  const inView = useInView(ref, { once: true });
-  const count = useMotionValue(0);
-  const rounded = useTransform(count, v => Math.round(v));
+  const ref = useRef<HTMLSpanElement>(null);
+  const [display, setDisplay] = useState(0);
+  const triggered = useRef(false);
 
   useEffect(() => {
-    if (inView) {
-      const controls = animate(count, value, { duration: 2, ease: "easeOut" });
-      return controls.stop;
-    }
-  }, [inView, count, value]);
+    const el = ref.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !triggered.current) {
+          triggered.current = true;
+          observer.disconnect();
+          const duration = 1500;
+          const start = performance.now();
+          const step = (now: number) => {
+            const elapsed = now - start;
+            const progress = Math.min(elapsed / duration, 1);
+            setDisplay(Math.round(easeOutQuad(progress) * value));
+            if (progress < 1) requestAnimationFrame(step);
+          };
+          requestAnimationFrame(step);
+        }
+      },
+      { threshold: 0.2 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [value]);
 
   return (
     <span ref={ref} className="font-bebas stat-counter" style={{ fontSize: "clamp(44px, 5vw, 68px)", color: "#c4cdd6", lineHeight: 1, display: "block", transition: "color 0.3s ease" }}>
-      <motion.span>{rounded}</motion.span>{suffix}
+      {display}{suffix}
     </span>
   );
 }
