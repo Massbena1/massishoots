@@ -1,6 +1,7 @@
 import { getTranslations } from "next-intl/server";
 import Footer from "@/components/Footer";
 import TarifsHero from "@/components/TarifsHero";
+import TarifsExpertise from "@/components/TarifsExpertise";
 import type { Metadata } from "next";
 
 export async function generateMetadata({
@@ -25,6 +26,7 @@ export default async function TarifsPage({
   return (
     <>
       <TarifsHero />
+      <TarifsExpertise />
       <Footer />
     </>
   );
