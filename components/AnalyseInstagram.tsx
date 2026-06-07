@@ -753,6 +753,15 @@ export default function AnalyseInstagram() {
 
                 {/* Email Field */}
                 <div>
+                  <label className="font-dm" style={{
+                    display: "block",
+                    fontSize: 12,
+                    color: "rgba(255,255,255,0.6)",
+                    marginBottom: 8,
+                    fontWeight: 500,
+                  }}>
+                    Adresse email pour recevoir le rapport
+                  </label>
                   <input
                     type="email"
                     placeholder={t("emailPlaceholder")}
