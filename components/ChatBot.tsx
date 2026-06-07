@@ -28,6 +28,7 @@ export default function ChatBot() {
   const [open, setOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
   const [showQuickReplies, setShowQuickReplies] = useState(false);
+  const [suggestions, setSuggestions] = useState<string[]>([]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const bottomRef = useRef<HTMLDivElement>(null);
@@ -57,6 +58,7 @@ export default function ChatBot() {
     const newMessages: Message[] = [...messages, { role: "user", content }];
     setMessages(newMessages);
     setShowQuickReplies(false);
+    setSuggestions([]);
     setLoading(true);
 
     try {
@@ -67,6 +69,7 @@ export default function ChatBot() {
       });
       const data = await res.json();
       setMessages([...newMessages, { role: "assistant", content: data.message ?? "Une erreur est survenue." }]);
+      if (data.suggestions?.length) setSuggestions(data.suggestions);
     } catch {
       setMessages([...newMessages, { role: "assistant", content: "Désolé, une erreur est survenue. Réessayez ou contactez-nous directement." }]);
     } finally {
@@ -251,6 +254,66 @@ export default function ChatBot() {
                       >
                         {s}
                       </button>
+                    ))}
+                  </motion.div>
+                )}
+              </AnimatePresence>
+
+              {/* Contextual suggestions after bot reply */}
+              <AnimatePresence>
+                {suggestions.length > 0 && !loading && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.2 }}
+                    style={{ display: "flex", flexWrap: "wrap", gap: 6, justifyContent: "flex-end" }}
+                  >
+                    {suggestions.map((s) => (
+                      s === "Réserver un appel" || s === "Parler à Massi" ? (
+                        <a
+                          key={s}
+                          href="https://calendly.com/massishot-ca/30min"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="font-dm"
+                          style={{
+                            padding: "7px 14px",
+                            background: "#C9A84C",
+                            border: "none",
+                            borderRadius: 9999,
+                            color: "#0a0a0a",
+                            fontSize: 12,
+                            fontWeight: 600,
+                            cursor: "pointer",
+                            letterSpacing: "0.02em",
+                            textDecoration: "none",
+                          }}
+                        >
+                          {s} →
+                        </a>
+                      ) : (
+                        <button
+                          key={s}
+                          onClick={() => send(s)}
+                          className="font-dm"
+                          style={{
+                            padding: "7px 14px",
+                            background: "transparent",
+                            border: "0.5px solid rgba(201,168,76,0.4)",
+                            borderRadius: 9999,
+                            color: "#C9A84C",
+                            fontSize: 12,
+                            cursor: "pointer",
+                            letterSpacing: "0.02em",
+                            transition: "background 0.2s",
+                          }}
+                          onMouseEnter={e => (e.currentTarget.style.background = "rgba(201,168,76,0.1)")}
+                          onMouseLeave={e => (e.currentTarget.style.background = "transparent")}
+                        >
+                          {s}
+                        </button>
+                      )
                     ))}
                   </motion.div>
                 )}

@@ -23,7 +23,21 @@ Contact :
 
 Après 2-3 échanges, propose toujours de réserver un appel gratuit de 30 minutes via Calendly.
 Ne donne jamais de prix fermes — dis 'à partir de' et oriente vers l'appel.
-Si tu ne sais pas quelque chose, dis que Massi pourra en discuter lors de l'appel.`;
+Si tu ne sais pas quelque chose, dis que Massi pourra en discuter lors de l'appel.
+
+IMPORTANT — FORMAT DE RÉPONSE :
+Réponds UNIQUEMENT avec du JSON valide, sans markdown, sans backticks, exactement comme ceci :
+{"message":"ta réponse ici","suggestions":["suggestion 1","suggestion 2"]}
+
+Les suggestions sont 2 boutons courts (max 4 mots) pertinents pour continuer la conversation.
+Si une suggestion est "Réserver un appel", elle doit être exactement ce texte.
+Exemples de suggestions selon le contexte :
+- Événement → ["Quelle date ?", "Réserver un appel"]
+- Mariage → ["Voir le portfolio", "Réserver un appel"]
+- Contenu mensuel → ["Comment ça fonctionne ?", "Réserver un appel"]
+- Publicité → ["Exemples de résultats", "Réserver un appel"]
+- Hésitation → ["Voir des exemples", "Parler à Massi"]
+- Général → ["En savoir plus", "Réserver un appel"]`;
 
 export async function POST(req: NextRequest) {
   try {
@@ -46,8 +60,16 @@ export async function POST(req: NextRequest) {
       })),
     });
 
-    const text = response.content[0].type === "text" ? response.content[0].text : "";
-    return NextResponse.json({ message: text });
+    const raw = response.content[0].type === "text" ? response.content[0].text : "{}";
+    try {
+      const parsed = JSON.parse(raw);
+      return NextResponse.json({
+        message: parsed.message ?? raw,
+        suggestions: parsed.suggestions ?? ["En savoir plus", "Réserver un appel"],
+      });
+    } catch {
+      return NextResponse.json({ message: raw, suggestions: ["En savoir plus", "Réserver un appel"] });
+    }
   } catch {
     return NextResponse.json({ error: "Erreur serveur" }, { status: 500 });
   }
