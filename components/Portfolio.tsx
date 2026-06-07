@@ -96,6 +96,7 @@ const VIDEOS: Item[] = [
   { sub: "immobilier", src: "/immobilier/thumb.jpg", videoSrc: "/immobilier/1.mp4", altKey: "altEvents", wide: true },
   // Events en premier
   { sub: "events",       src: "/portfolio/videos/event-1.jpg",    videoSrc: "/portfolio/videos/event-1.mp4",    altKey: "altEvent" },
+  { sub: "events",       src: "/portfolio/videos/event-1.1.jpg",  videoSrc: "/portfolio/videos/event-1.1.mp4",  altKey: "altEvent" },
   { sub: "corporate",   src: "/portfolio/videos/corpo-1.jpg",    videoSrc: "/portfolio/videos/corpo-1.mp4",    altKey: "altCorpVideo" },
   { sub: "branding",    src: "/portfolio/videos/brand-1.jpg",    videoSrc: "/portfolio/videos/brand-1.mp4",    altKey: "altBrandFilm" },
   { sub: "professionel",src: "/portfolio/videos/facecam-1.jpg",  videoSrc: "/portfolio/videos/facecam-1.mp4",  altKey: "altProfessionel" },
