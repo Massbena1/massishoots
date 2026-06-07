@@ -158,7 +158,7 @@ export default function Portfolio() {
   const t = useTranslations("portfolio");
   const [mediaType, setMediaType] = useState<MediaType>("photo");
   const [sub, setSub] = useState<Sub>("all");
-  const [visibleCount, setVisibleCount] = useState(8);
+  const [visibleCount, setVisibleCount] = useState(12);
   const [activeVideo, setActiveVideo] = useState<string | null>(null);
   const [activePhoto, setActivePhoto] = useState<{ src: string; index: number } | null>(null);
   const ref = useRef(null);
@@ -190,12 +190,12 @@ export default function Portfolio() {
   const switchMedia = (type: MediaType) => {
     setMediaType(type);
     setSub("all");
-    setVisibleCount(8);
+    setVisibleCount(12);
   };
 
   const handleSetSub = (value: Sub) => {
     setSub(value);
-    setVisibleCount(8);
+    setVisibleCount(12);
   };
 
   return (
