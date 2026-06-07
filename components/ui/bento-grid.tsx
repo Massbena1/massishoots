@@ -36,7 +36,7 @@ function BentoGrid({ items, className }: BentoGridProps) {
             item.active || item.hasPersistentHover
               ? "bento-card-active -translate-y-0.5"
               : "bento-card-idle",
-            item.onClick && "cursor-none"
+            item.onClick && "cursor-pointer"
           )}
         >
           {/* Dot grid — visible on hover or when active */}

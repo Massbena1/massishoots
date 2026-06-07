@@ -195,7 +195,7 @@ function AccordionItem({
         height: 520,
         borderRadius: 20,
         overflow: "hidden",
-        cursor: "none",
+        cursor: "pointer",
         flex: isActive ? "1 1 0" : "0 0 64px",
         minWidth: isActive ? 0 : 64,
         transition: "flex 0.6s cubic-bezier(0.22, 1, 0.36, 1)",

@@ -32,7 +32,7 @@ export default function About() {
             e.currentTarget.style.boxShadow = "none";
             e.currentTarget.style.transform = "translateY(0)";
           }}
-          style={{ position: "relative", aspectRatio: "3/4", borderRadius: 28, overflow: "hidden", maxWidth: 460, border: "1px solid rgba(255,255,255,0.09)", transition: "border-color 0.4s ease, box-shadow 0.4s ease, transform 0.4s ease", cursor: "none" }}
+          style={{ position: "relative", aspectRatio: "3/4", borderRadius: 28, overflow: "hidden", maxWidth: 460, border: "1px solid rgba(255,255,255,0.09)", transition: "border-color 0.4s ease, box-shadow 0.4s ease, transform 0.4s ease", cursor: "pointer" }}
         >
           <Image
             src="/moi.jpg"
@@ -112,7 +112,7 @@ export default function About() {
                     const dot = e.currentTarget.querySelector(".gear-dot") as HTMLElement;
                     if (dot) { dot.style.background = "#c4cdd6"; dot.style.boxShadow = "none"; }
                   }}
-                  style={{ display: "flex", alignItems: "center", gap: 14, padding: "4px 0", transition: "background 0.3s, padding 0.3s", cursor: "none" }}
+                  style={{ display: "flex", alignItems: "center", gap: 14, padding: "4px 0", transition: "background 0.3s, padding 0.3s", cursor: "pointer" }}
                 >
                   <div style={{
                     width: 32, height: 32, borderRadius: 10, flexShrink: 0,

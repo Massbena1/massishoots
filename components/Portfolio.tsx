@@ -262,7 +262,7 @@ export default function Portfolio() {
                 fontSize: 12,
                 letterSpacing: "0.08em",
                 border: "1px solid",
-                cursor: "none",
+                cursor: "pointer",
                 transition: "all 0.25s",
                 background: sub === f.value ? "rgba(196,205,214,0.12)" : "transparent",
                 color: sub === f.value ? "#c4cdd6" : "rgba(255,255,255,0.35)",
@@ -301,7 +301,7 @@ export default function Portfolio() {
                     aspectRatio: item.wide ? "16/9" : item.videoSrc ? "9/16" : "3/4",
                     border: "1px solid rgba(255,255,255,0.07)",
                     position: "relative",
-                    cursor: "none",
+                    cursor: "pointer",
                     transition: "border-color 0.4s, box-shadow 0.4s, transform 0.4s",
                   }}
                   onClick={() => {
@@ -415,7 +415,7 @@ export default function Portfolio() {
                 color: "#fff",
                 fontSize: 13,
                 letterSpacing: "0.06em",
-                cursor: "none",
+                cursor: "pointer",
                 transition: "border-color 0.3s, background 0.3s, transform 0.3s",
               }}
               onMouseEnter={e => {
@@ -529,7 +529,7 @@ export default function Portfolio() {
               position: "fixed", inset: 0, zIndex: 9999,
               background: "rgba(0,0,0,0.92)",
               display: "flex", alignItems: "center", justifyContent: "center",
-              cursor: "none",
+              cursor: "pointer",
             }}
           >
             <motion.div
@@ -555,7 +555,7 @@ export default function Portfolio() {
                   border: "1px solid rgba(255,255,255,0.15)",
                   borderRadius: 9999,
                   color: "#fff", fontSize: 13, letterSpacing: "0.08em",
-                  padding: "6px 16px", cursor: "none",
+                  padding: "6px 16px", cursor: "pointer",
                 }}
               >
                 ✕ Fermer

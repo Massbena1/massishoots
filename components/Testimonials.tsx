@@ -95,7 +95,7 @@ export default function Testimonials() {
                   position: "relative",
                   overflow: "hidden",
                   transition: "background 0.3s ease, border-color 0.3s ease, transform 0.4s cubic-bezier(0.22,1,0.36,1)",
-                  cursor: "none",
+                  cursor: "pointer",
                 }}
               >
                 <div style={{ position: "absolute", top: 0, left: 16, right: 16, height: 1, background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent)" }} />

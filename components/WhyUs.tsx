@@ -56,7 +56,7 @@ function Card({
         position: "relative",
         overflow: "hidden",
         transition: "background 0.35s ease, border-color 0.35s ease, transform 0.4s cubic-bezier(0.22,1,0.36,1), box-shadow 0.35s ease",
-        cursor: "none",
+        cursor: "pointer",
         ...style,
       }}
     >
