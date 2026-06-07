@@ -41,26 +41,20 @@ export default function Home() {
   return (
     <main>
       <Hero />
-      <Divider />
       <Clients />
       <Stats />
       <Divider />
       <Services />
-      <Divider />
-      <SimulateurCta />
-      <Divider />
       <Portfolio />
       <Divider />
       <Process />
-      <Divider />
       <WhyUs />
       <Divider />
       <ClientResults />
-      <Divider />
       <Testimonials />
       <Divider />
+      <SimulateurCta />
       <Faq />
-      <Divider />
       <CtaFinal />
       <Footer />
     </main>
