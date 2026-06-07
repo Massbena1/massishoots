@@ -78,7 +78,7 @@ export default function Faq() {
   const inView = useInView(ref, { once: true, margin: "-80px" });
 
   return (
-    <section id="faq" style={{ padding: "140px 0", background: "transparent" }}>
+    <section data-sr id="faq" style={{ padding: "140px 0", background: "transparent" }}>
       <div style={{ maxWidth: 1280, margin: "0 auto", padding: "0 24px" }}>
 
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 64, alignItems: "end", marginBottom: 72 }} className="faq-header">
