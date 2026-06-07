@@ -2,6 +2,7 @@
 import { PulsingBorder } from "@paper-design/shaders-react";
 import { motion } from "framer-motion";
 import { useTranslations } from "next-intl";
+import { SparklesCore } from "@/components/ui/sparkles";
 
 export default function ShaderHero() {
   const t = useTranslations("hero");
@@ -40,6 +41,17 @@ export default function ShaderHero() {
           </filter>
         </defs>
       </svg>
+
+      {/* Sparkles layer — gold particles behind content */}
+      <SparklesCore
+        className="absolute inset-0 w-full h-full z-10 pointer-events-none"
+        background="transparent"
+        particleColor="#C9A84C"
+        particleDensity={40}
+        minSize={0.6}
+        maxSize={2}
+        speed={0.35}
+      />
 
       {/* Main content — bottom left */}
       <main className="absolute bottom-8 left-8 z-20 max-w-2xl">
