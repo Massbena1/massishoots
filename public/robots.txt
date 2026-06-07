@@ -21,4 +21,4 @@ User-agent: Bingbot
 Allow: /
 
 # Sitemap
-Sitemap: https://massishoots.com/sitemap.xml
+Sitemap: https://www.massishoots.com/sitemap.xml
