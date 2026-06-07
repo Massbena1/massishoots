@@ -193,9 +193,9 @@
   },
   "whyUs": {
     "label": "— Notre différence",
-    "introText": "L'image moderne demande plus qu'une caméra.",
-    "heading": "Création cinématique propulsée par stratégie, montage avancé & intelligence artificielle.",
-    "quote": "Nous combinons créativité humaine, direction artistique et technologies modernes pour créer du contenu qui se démarque réellement.",
+    "introText": "Ce qui nous sépare du reste.",
+    "heading": "Chaque projet est une alliance entre vision créative, technologie de pointe et stratégie de marque. Pas juste de belles images — du contenu qui travaille pour vous.",
+    "quote": "On ne livre pas des fichiers. On livre une image qui vend.",
     "cards": [
       {
         "label": "01 · Production",
@@ -206,7 +206,7 @@
           "Aputure",
           "Rode"
         ],
-        "desc": "Chaque projet est filmé avec une approche cinématique pensée pour les réseaux sociaux modernes et les marques premium."
+        "desc": "Matériel cinéma Sony FX6, FX3, objectifs GM II — la même qualité que les grandes productions, au service de votre marque."
       },
       {
         "label": "02 · Post-production",
@@ -218,7 +218,7 @@
           "Photoshop",
           "Lightroom"
         ],
-        "desc": "Chaque vidéo est montée avec une attention extrême au rythme, à l'émotion et à l'impact visuel."
+        "desc": "Color grading DaVinci, montage Premiere, effets After Effects. Chaque seconde de votre vidéo est travaillée pour maximiser l'impact et la rétention."
       },
       {
         "label": "03 · Animation",
@@ -230,7 +230,7 @@
           "Motion design premium",
           "Effets cinématiques"
         ],
-        "desc": "Des vidéos pensées pour capter l'attention dès les premières secondes."
+        "desc": "Motion design, typographie animée, transitions cinématiques — pour que votre contenu arrête le scroll dès la première image."
       },
       {
         "label": "04 · IA au service de l'humain",
