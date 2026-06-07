@@ -17,11 +17,10 @@ const SECTEURS = [
 ];
 
 const CIBLES = [
-  { id: "entrepreneurs", label: "Entrepreneurs" },
-  { id: "women",         label: "Femmes 25-45 ans" },
-  { id: "young",         label: "Jeunes adultes 18-30" },
-  { id: "b2b",           label: "Professionnels B2B" },
-  { id: "families",      label: "Familles" },
+  { id: "b2b",     label: "Professionnels & entreprises", emoji: "👔" },
+  { id: "b2c",     label: "Grand public & consommateurs", emoji: "🛍️" },
+  { id: "premium", label: "Clients premium & luxe",       emoji: "🌟" },
+  { id: "young",   label: "Audience jeune & tendance",    emoji: "📱" },
 ];
 
 export default function SimulateurPage() {
@@ -95,10 +94,29 @@ export default function SimulateurPage() {
 
         {/* Progress */}
         {step < 4 && (
-          <div style={{ display: "flex", gap: 6, marginBottom: 36, justifyContent: "center" }}>
-            {[1, 2, 3].map(s => (
-              <div key={s} style={{ height: 3, width: 48, borderRadius: 9999, background: step >= s ? "#818cf8" : "rgba(255,255,255,0.08)", transition: "background 0.3s" }} />
-            ))}
+          <div style={{ marginBottom: 40 }}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 10 }}>
+              {["Ton secteur", "Ta cible", "Génération"].map((label, i) => {
+                const s = i + 1;
+                const active = step >= s;
+                const current = step === s;
+                return (
+                  <div key={s} style={{ display: "flex", flexDirection: "column", alignItems: i === 1 ? "center" : i === 2 ? "flex-end" : "flex-start", flex: 1 }}>
+                    <span className="font-dm" style={{ fontSize: 10, letterSpacing: "0.12em", textTransform: "uppercase", color: current ? "#818cf8" : active ? "rgba(255,255,255,0.4)" : "rgba(255,255,255,0.15)", transition: "color 0.3s", fontWeight: current ? 700 : 400 }}>
+                      Étape {s}/3
+                    </span>
+                    <span className="font-dm" style={{ fontSize: 11, color: current ? "#fff" : active ? "rgba(255,255,255,0.3)" : "rgba(255,255,255,0.12)", transition: "color 0.3s", marginTop: 2 }}>
+                      {label}
+                    </span>
+                  </div>
+                );
+              })}
+            </div>
+            <div style={{ display: "flex", gap: 4 }}>
+              {[1, 2, 3].map(s => (
+                <div key={s} style={{ height: 3, flex: 1, borderRadius: 9999, background: step >= s ? "#818cf8" : "rgba(255,255,255,0.08)", transition: "background 0.4s" }} />
+              ))}
+            </div>
           </div>
         )}
 
@@ -127,13 +145,14 @@ export default function SimulateurPage() {
           {/* Step 2 — Cible */}
           {step === 2 && (
             <motion.div key="s2" initial={{ opacity: 0, x: 16 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -16 }} transition={{ duration: 0.22 }}>
-              <p className="font-dm" style={{ fontSize: 14, color: "rgba(255,255,255,0.6)", marginBottom: 20, fontWeight: 600 }}>Ta cible principale :</p>
-              <div style={{ display: "flex", flexDirection: "column", gap: 10, marginBottom: 28 }}>
+              <p className="font-dm" style={{ fontSize: 14, color: "rgba(255,255,255,0.6)", marginBottom: 20, fontWeight: 600 }}>À qui s&apos;adresse ton contenu ?</p>
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: 10, marginBottom: 28 }} className="secteur-grid">
                 {CIBLES.map(c => (
                   <button key={c.id} onClick={() => setCible(c.id)} className="font-dm"
-                    style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "15px 20px", background: cible === c.id ? "rgba(99,102,241,0.08)" : "rgba(255,255,255,0.02)", border: `1px solid ${cible === c.id ? "rgba(99,102,241,0.35)" : "rgba(255,255,255,0.07)"}`, borderRadius: 12, cursor: "pointer", transition: "all 0.18s" }}>
-                    <span style={{ fontSize: 14, color: cible === c.id ? "#fff" : "rgba(255,255,255,0.55)", fontWeight: cible === c.id ? 600 : 400 }}>{c.label}</span>
-                    {cible === c.id && <Check size={15} color="#818cf8" />}
+                    style={{ display: "flex", alignItems: "center", gap: 12, padding: "18px 18px", background: cible === c.id ? "rgba(99,102,241,0.1)" : "rgba(255,255,255,0.03)", border: `1px solid ${cible === c.id ? "rgba(99,102,241,0.4)" : "rgba(255,255,255,0.08)"}`, borderRadius: 14, cursor: "pointer", textAlign: "left", transition: "all 0.18s" }}>
+                    <span style={{ fontSize: 22, flexShrink: 0 }}>{c.emoji}</span>
+                    <span style={{ fontSize: 13, color: cible === c.id ? "#fff" : "rgba(255,255,255,0.55)", fontWeight: cible === c.id ? 600 : 400, lineHeight: 1.35 }}>{c.label}</span>
+                    {cible === c.id && <Check size={14} color="#818cf8" style={{ marginLeft: "auto", flexShrink: 0 }} />}
                   </button>
                 ))}
               </div>
