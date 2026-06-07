@@ -7,17 +7,15 @@ import { Sparkles } from "@/components/ui/sparkles";
 import { useTranslations } from "next-intl";
 
 const TechGuys = () => (
-  <svg viewBox="0 0 220 52" fill="currentColor" className="w-full">
-    <text x="8" y="32" fontFamily="Arial, sans-serif" fontSize="20" letterSpacing="4" fontWeight="700">TECHGUYS</text>
-    <text x="8" y="48" fontFamily="Arial, sans-serif" fontSize="10" letterSpacing="5" fontWeight="300">CONSULTING</text>
-  </svg>
+  <span style={{ fontSize: 11, letterSpacing: "0.15em", fontWeight: 500, color: "#fff", whiteSpace: "nowrap", fontFamily: "inherit" }}>
+    TECHGUYS CONSULTING
+  </span>
 );
 
 const EstaEvent = () => (
-  <svg viewBox="0 0 200 52" fill="currentColor" className="w-full">
-    <text x="8" y="32" fontFamily="Georgia, serif" fontSize="24" letterSpacing="4" fontWeight="400">ESTA</text>
-    <text x="8" y="48" fontFamily="Georgia, serif" fontSize="13" letterSpacing="6" fontWeight="300">EVENT</text>
-  </svg>
+  <span style={{ fontSize: 11, letterSpacing: "0.15em", fontWeight: 500, color: "#fff", whiteSpace: "nowrap", fontFamily: "inherit" }}>
+    ESTA EVENT
+  </span>
 );
 
 type LogoItem =
@@ -59,12 +57,26 @@ export default function Clients() {
             gap={48}
           >
             {logos.map((logo) => (
-              <div key={logo.id} className={logo.className} style={{ opacity: 0.55, color: "#fff", display: "flex", alignItems: "center" }}>
+              <div
+                key={logo.id}
+                style={{
+                  opacity: 0.5,
+                  display: "flex",
+                  alignItems: "center",
+                  transition: "opacity 0.3s",
+                }}
+                onMouseEnter={e => (e.currentTarget.style.opacity = "1")}
+                onMouseLeave={e => (e.currentTarget.style.opacity = "0.5")}
+              >
                 {logo.type === "svg" ? (
                   <logo.component />
                 ) : (
                   // eslint-disable-next-line @next/next/no-img-element
-                  <img src={logo.src} alt={logo.alt} className="client-logo" style={{ width: "100%", height: "auto", filter: "brightness(0) invert(1)" }} />
+                  <img
+                    src={logo.src}
+                    alt={logo.alt}
+                    style={{ height: 28, width: "auto", filter: "brightness(0) invert(1)", display: "block" }}
+                  />
                 )}
               </div>
             ))}
