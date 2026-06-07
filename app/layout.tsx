@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Bebas_Neue, DM_Sans } from "next/font/google";
+import { Bebas_Neue, DM_Sans, Playfair_Display } from "next/font/google";
 import "./globals.css";
 
 const bebasNeue = Bebas_Neue({
@@ -15,6 +15,14 @@ const dmSans = DM_Sans({
   display: "swap",
 });
 
+const playfair = Playfair_Display({
+  weight: ["400", "700"],
+  style: ["italic"],
+  variable: "--font-playfair",
+  subsets: ["latin"],
+  display: "swap",
+});
+
 export const metadata: Metadata = {
   title: "Massishoots | Photographe & Vidéaste Premium — Montréal",
   description:
@@ -23,7 +31,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html className={`${bebasNeue.variable} ${dmSans.variable} grain`}>
+    <html className={`${bebasNeue.variable} ${dmSans.variable} ${playfair.variable} grain`}>
       <body>{children}</body>
     </html>
   );

@@ -36,8 +36,21 @@
 }
 
 /* Guaranteed utility classes */
-.font-bebas { font-family: var(--font-bebas-neue), "Bebas Neue", cursive; }
-.font-dm    { font-family: var(--font-dm-sans), "DM Sans", sans-serif; }
+.font-bebas    { font-family: var(--font-bebas-neue), "Bebas Neue", cursive; }
+.font-dm       { font-family: var(--font-dm-sans), "DM Sans", sans-serif; }
+.font-playfair { font-family: var(--font-playfair), "Playfair Display", serif; font-style: italic; }
+
+/* Luxury editorial: Playfair Display italic on all display headings */
+h1, h2 {
+  font-family: var(--font-playfair), "Playfair Display", serif;
+  font-style: italic;
+}
+
+/* Preserve Bebas Neue on elements that explicitly use .font-bebas */
+.font-bebas, .font-bebas * {
+  font-family: var(--font-bebas-neue), "Bebas Neue", cursive !important;
+  font-style: normal !important;
+}
 .text-accent   { color: #c4cdd6; }
 .bg-accent     { background-color: #c4cdd6; }
 .border-accent { border-color: #c4cdd6; }
