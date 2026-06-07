@@ -199,7 +199,7 @@ export default function Portfolio() {
   };
 
   return (
-    <section data-sr id="portfolio" style={{ padding: "140px 0", background: "transparent" }}>
+    <section data-sr id="portfolio" style={{ padding: "140px 0", background: "#0a0a0a" }}>
       <div style={{ maxWidth: 1280, margin: "0 auto", padding: "0 24px" }}>
 
         <motion.div
