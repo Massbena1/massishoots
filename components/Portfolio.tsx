@@ -290,6 +290,7 @@ export default function Portfolio() {
             style={{
               display: "grid",
               gridTemplateColumns: "repeat(4, 1fr)",
+              gridAutoFlow: "dense",
               gap: "clamp(8px, 1.2vw, 20px)",
             }}
           >
