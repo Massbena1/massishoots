@@ -28,96 +28,28 @@ export function generateStaticParams() {
 
 const jsonLd = {
   "@context": "https://schema.org",
-  "@graph": [
-    {
-      "@type": "LocalBusiness",
-      "@id": "https://massishoots.com/#business",
-      "name": "Massishoots",
-      "description": "Photographe et vidéaste freelance premium à Montréal. Personal branding, événements, mariages et publicité.",
-      "url": "https://massishoots.com",
-      "telephone": "+14384640607",
-      "email": "massishot.ca@gmail.com",
-      "image": "https://massishoots.com/og-image.jpg",
-      "priceRange": "$$$",
-      "currenciesAccepted": "CAD",
-      "paymentAccepted": "Cash, Credit Card, Bank Transfer, e-Transfer",
-      "address": {
-        "@type": "PostalAddress",
-        "addressLocality": "Montréal",
-        "addressRegion": "QC",
-        "addressCountry": "CA"
-      },
-      "geo": {
-        "@type": "GeoCoordinates",
-        "latitude": 45.5017,
-        "longitude": -73.5673
-      },
-      "areaServed": [
-        { "@type": "City", "name": "Montréal" },
-        { "@type": "Province", "name": "Québec" },
-        { "@type": "Country", "name": "Canada" }
-      ],
-      "sameAs": [
-        "https://instagram.com/massishoots",
-        "https://www.tiktok.com/@massishoots",
-        "https://www.linkedin.com/in/massishoots",
-        "https://massishoots.pixieset.com/"
-      ],
-      "hasOfferCatalog": {
-        "@type": "OfferCatalog",
-        "name": "Services photo & vidéo",
-        "itemListElement": [
-          {
-            "@type": "Offer",
-            "name": "Contenu Mensuel",
-            "description": "Personal branding, Reels, face caméra, photos — package mensuel complet.",
-            "price": "2500",
-            "priceCurrency": "CAD",
-            "priceSpecification": { "@type": "UnitPriceSpecification", "unitCode": "MON" }
-          },
-          {
-            "@type": "Offer",
-            "name": "Couverture d'Événements",
-            "description": "Photo + vidéo complète pour soirées, galas, conférences, lancements.",
-            "price": "2900",
-            "priceCurrency": "CAD"
-          },
-          {
-            "@type": "Offer",
-            "name": "Publicité",
-            "description": "Contenu vidéo court pour Meta Ads et Instagram.",
-            "price": "599",
-            "priceCurrency": "CAD"
-          },
-          {
-            "@type": "Offer",
-            "name": "Mariage",
-            "description": "Photo + film cinématique de mariage, de la préparation à la soirée.",
-            "priceCurrency": "CAD"
-          }
-        ]
-      }
-    },
-    {
-      "@type": "Person",
-      "@id": "https://massishoots.com/#person",
-      "name": "Massi Bena",
-      "jobTitle": "Photographe & Vidéaste",
-      "worksFor": { "@id": "https://massishoots.com/#business" },
-      "url": "https://massishoots.com",
-      "sameAs": [
-        "https://instagram.com/massishoots",
-        "https://www.linkedin.com/in/massishoots"
-      ],
-      "knowsLanguage": ["fr", "en"],
-      "address": {
-        "@type": "PostalAddress",
-        "addressLocality": "Montréal",
-        "addressRegion": "QC",
-        "addressCountry": "CA"
-      }
-    }
-  ]
+  "@type": "LocalBusiness",
+  "name": "Massishoots",
+  "description": "Studio photo et vidéo premium à Montréal. Personal branding, événements, mariages et publicité.",
+  "url": "https://www.massishoots.com",
+  "telephone": "+1-438-464-0607",
+  "email": "massishoots.ca@gmail.com",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Montréal",
+    "addressRegion": "QC",
+    "addressCountry": "CA"
+  },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": 45.5017,
+    "longitude": -73.5673
+  },
+  "sameAs": [
+    "https://www.instagram.com/massishoots"
+  ],
+  "priceRange": "$$$$",
+  "openingHours": "Mo-Fr 09:00-18:00"
 };
 
 export default async function LocaleLayout({
