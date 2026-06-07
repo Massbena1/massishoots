@@ -6,7 +6,7 @@ import { BentoGrid } from "@/components/ui/bento-grid";
 import { useTranslations } from "next-intl";
 
 type MediaType = "photo" | "video";
-type Sub = "all" | "branding" | "corporate" | "mariage" | "events" | "lifestyle" | "professionel";
+type Sub = "all" | "branding" | "corporate" | "mariage" | "events" | "lifestyle" | "professionel" | "immobilier";
 
 interface Item {
   sub: Exclude<Sub, "all">;
@@ -92,6 +92,8 @@ const PHOTOS: Item[] = [
 ];
 
 const VIDEOS: Item[] = [
+  // Immobilier
+  { sub: "immobilier", src: "/immobilier/thumb.jpg", videoSrc: "/immobilier/1.mp4", altKey: "altEvents", wide: true },
   // Events en premier
   { sub: "events",       src: "/portfolio/videos/event-1.jpg",    videoSrc: "/portfolio/videos/event-1.mp4",    altKey: "altEvent" },
   { sub: "corporate",   src: "/portfolio/videos/corpo-1.jpg",    videoSrc: "/portfolio/videos/corpo-1.mp4",    altKey: "altCorpVideo" },
@@ -120,6 +122,7 @@ const PHOTO_FILTERS: { value: Sub; labelKey: string }[] = [
 
 const VIDEO_FILTERS: { value: Sub; labelKey: string }[] = [
   { value: "all",          labelKey: "filterAll" },
+  { value: "immobilier",   labelKey: "filterImmobilier" },
   { value: "events",       labelKey: "filterEvents" },
   { value: "branding",     labelKey: "filterBranding" },
   { value: "corporate",    labelKey: "filterCorporate" },
