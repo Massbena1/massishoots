@@ -93,9 +93,9 @@ const PHOTOS: Item[] = [
 
 const VIDEOS: Item[] = [
   // En avant
-  { sub: "events",       src: "/portfolio/videos/event-1.1.jpg",  videoSrc: "https://jkrbnlhfycrznxld.public.blob.vercel-storage.com/videos/event-1.1.mp4",  altKey: "altEvent", wide: true },
+  { sub: "events",       src: "/portfolio/videos/event-1.1.jpg",  videoSrc: "https://jkrbnlhfycrznxld.public.blob.vercel-storage.com/videos/event-1.1.mp4",  altKey: "altEvent" },
   // Immobilier
-  { sub: "immobilier", src: "/immobilier/thumb.jpg", videoSrc: "https://jkrbnlhfycrznxld.public.blob.vercel-storage.com/videos/immobilier-1.mp4", altKey: "altEvents", wide: true },
+  { sub: "immobilier", src: "/immobilier/thumb.jpg", videoSrc: "https://jkrbnlhfycrznxld.public.blob.vercel-storage.com/videos/immobilier-1.mp4", altKey: "altEvents" },
   // Events
   { sub: "events",       src: "/portfolio/videos/event-1.jpg",    videoSrc: "https://jkrbnlhfycrznxld.public.blob.vercel-storage.com/videos/event-1.mp4",    altKey: "altEvent" },
   { sub: "corporate",   src: "/portfolio/videos/corpo-1.jpg",    videoSrc: "https://jkrbnlhfycrznxld.public.blob.vercel-storage.com/videos/corpo-1.mp4",    altKey: "altCorpVideo" },
@@ -300,10 +300,10 @@ export default function Portfolio() {
                   key={`${item.src}-${i}`}
                   className={`portfolio-item${item.wide ? " portfolio-item-wide" : ""}`}
                   style={{
-                    gridColumn: item.wide ? "span 2" : item.videoSrc ? "span 2" : "span 1",
+                    gridColumn: item.wide ? "span 2" : "span 1",
                     borderRadius: 20,
                     overflow: "hidden",
-                    aspectRatio: item.videoSrc ? "16/9" : item.wide ? "16/9" : "3/4",
+                    aspectRatio: item.videoSrc ? "9/16" : item.wide ? "16/9" : "3/4",
                     border: "1px solid rgba(255,255,255,0.07)",
                     position: "relative",
                     cursor: "pointer",
