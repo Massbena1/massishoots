@@ -45,7 +45,6 @@ export function TestimonialCard({ handleShuffle, testimonial, position, author, 
       transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
       onClick={isFront ? handleShuffle : undefined}
       className={`absolute left-0 top-0 h-[420px] w-[320px] select-none rounded-3xl p-8 ${isFront ? "cursor-pointer" : ""}`}
-      style2={{ display: "grid", placeContent: "center" }}
     >
       <div style={{
         position: "absolute", top: 0, left: 24, right: 24, height: 1,
