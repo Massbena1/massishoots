@@ -13,9 +13,9 @@ export async function generateMetadata({
   params: Promise<{ locale: string }>;
 }): Promise<Metadata> {
   const { locale } = await params;
-  const description = "Massishoots propose des offres sur mesure en photo, vidéo, contenu mensuel et couverture d'événements à Montréal. Réservez un appel gratuit de 30 minutes pour discuter de votre projet.";
+  const description = "Offres personnalisées en photo et vidéo premium à Montréal. Réservez un appel gratuit de 30 minutes avec Massi.";
   return {
-    title: "Tarifs & Services — Massishoots | Studio Photo & Vidéo Premium Montréal",
+    title: "Tarifs & Offres Sur Mesure — Massishoots Montréal",
     description,
     openGraph: {
       title: "Tarifs — Massishoots Studio Premium Montréal",

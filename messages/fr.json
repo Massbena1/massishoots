@@ -1,24 +1,25 @@
 {
   "metadata": {
     "home": {
-      "title": "Massishoots | Photographe & Vidéaste Premium — Montréal",
-      "description": "Massishoots — Studio photo & vidéo premium à Montréal. Contenu mensuel, événements, publicité et mariages. 50+ marques accompagnées. Réservez votre appel gratuit."
+      "title": "Massishoots | Photographe & Vidéaste Premium Montréal",
+      "description": "Studio photo et vidéo premium à Montréal. Contenu mensuel, événements, publicité et mariages. 50+ marques accompagnées. Réservez votre appel gratuit.",
+      "keywords": "photographe montréal, vidéaste montréal, contenu réseaux sociaux montréal, studio photo vidéo montréal, personal branding montréal"
     },
     "about": {
       "title": "À propos | Massishoots — Photographe & Vidéaste Montréal",
       "description": "L'histoire de Massi Bena, son équipement, sa vision artistique et ses valeurs."
     },
     "services": {
-      "title": "Services | Massishoots — Photographe & Vidéaste Montréal",
-      "description": "Découvrez les offres Personal Branding, Corporate B2B et Events & Weddings avec forfaits et tarifs."
+      "title": "Services Photo & Vidéo Premium — Massishoots Montréal",
+      "description": "Contenu mensuel, couverture d'événements, publicité Meta et mariage à Montréal. Qualité cinématique, livraison 48h."
     },
     "contact": {
       "title": "Contact | Massishoots — Réserver une séance à Montréal",
       "description": "Formulaire de contact, réservation en ligne et réseaux sociaux — réponse sous 24h."
     },
     "portfolio": {
-      "title": "Portfolio | Massishoots — Photographe & Vidéaste Montréal",
-      "description": "Galerie complète — Personal Branding, Corporate, Mariages & Événements à Montréal."
+      "title": "Portfolio — Massishoots Studio Photo & Vidéo Montréal",
+      "description": "Découvrez nos réalisations photo et vidéo : personal branding, événements, mariages et campagnes publicitaires à Montréal."
     }
   },
   "hero": {

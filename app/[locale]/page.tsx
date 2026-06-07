@@ -24,9 +24,11 @@ export async function generateMetadata({
   const t = await getTranslations({ locale, namespace: "metadata.home" });
   const title = t("title");
   const description = t("description");
+  const keywords = t("keywords");
   return {
     title,
     description,
+    keywords,
     alternates: getAlternates(""),
     openGraph: getOpenGraph(locale, "", title, description),
     twitter: getTwitter(title, description),
