@@ -65,7 +65,28 @@ const TARGET_MAP: Record<string, string> = {
   young: "Jeunes adultes 18-30",
   b2b: "Professionnels B2B",
   women: "Femmes 25-45 ans",
+  premium: "Clients premium & luxe",
 };
+
+const FORMATS = ["Face caméra", "B-roll + VO", "Carousel", "Face caméra", "B-roll + VO", "Talking head"];
+const VIRALITES: Array<"Fort" | "Très fort" | "Explosif"> = ["Très fort", "Explosif", "Fort"];
+
+function detectFormat(idea: string): string {
+  const lower = idea.toLowerCase();
+  if (lower.includes("pov") || lower.includes("j'ai ") || lower.includes("ma routine") || lower.includes("voici comment")) return "Face caméra";
+  if (lower.includes("coulisses") || lower.includes("backstage") || lower.includes("journée dans")) return "B-roll + VO";
+  if (lower.match(/^(3|5|les \d)/)) return "Carousel";
+  if (lower.includes("on a ") || lower.includes("on te ") || lower.includes("notre ")) return "B-roll + VO";
+  return FORMATS[Math.floor(Math.random() * 3)];
+}
+
+function extractTitle(idea: string): string {
+  const dashIdx = idea.indexOf(" — ");
+  const colonIdx = idea.indexOf(" : ");
+  if (dashIdx > 20 && dashIdx < 80) return idea.slice(0, dashIdx);
+  if (colonIdx > 0 && colonIdx < 60) return idea.slice(colonIdx + 3, 90).split(" — ")[0];
+  return idea.slice(0, 72).replace(/\s\w+$/, "…");
+}
 
 export async function POST(req: NextRequest) {
   const { secteur, cible } = await req.json();
@@ -73,7 +94,14 @@ export async function POST(req: NextRequest) {
   const sectorIdeas = IDEAS[secteur];
   if (!sectorIdeas) return NextResponse.json({ error: "Secteur non trouvé" }, { status: 400 });
 
-  const ideas = sectorIdeas[cible] ?? sectorIdeas[Object.keys(sectorIdeas)[0]];
+  const rawIdeas: string[] = sectorIdeas[cible] ?? sectorIdeas[Object.keys(sectorIdeas)[0]];
+
+  const ideas = rawIdeas.map((hook, i) => ({
+    hook,
+    titre: extractTitle(hook),
+    format: detectFormat(hook),
+    viralite: VIRALITES[i % 3],
+  }));
 
   return NextResponse.json({
     ideas,

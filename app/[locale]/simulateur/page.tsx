@@ -1,9 +1,11 @@
 "use client";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Link } from "@/i18n/navigation";
-import { ArrowRight, Zap, ChevronRight, RotateCcw, Copy, Check } from "lucide-react";
+import { Zap, ChevronRight, RotateCcw, Copy, Check } from "lucide-react";
 import Footer from "@/components/Footer";
+
+type Viralite = "Fort" | "Très fort" | "Explosif";
+type Idea = { hook: string; titre: string; format: string; viralite: Viralite };
 
 const SECTEURS = [
   { id: "restaurant",  label: "Restaurant / Food",      emoji: "🍽️" },
@@ -28,7 +30,7 @@ export default function SimulateurPage() {
   const [secteur, setSecteur] = useState("");
   const [cible, setCible] = useState("");
   const [email, setEmail] = useState("");
-  const [ideas, setIdeas] = useState<string[]>([]);
+  const [ideas, setIdeas] = useState<Idea[]>([]);
   const [loading, setLoading] = useState(false);
   const [copied, setCopied] = useState<number | null>(null);
 
@@ -62,8 +64,8 @@ export default function SimulateurPage() {
     }
   };
 
-  const copyIdea = (idx: number, text: string) => {
-    navigator.clipboard.writeText(text);
+  const copyIdea = (idx: number, idea: Idea) => {
+    navigator.clipboard.writeText(`${idea.titre}\n\nOuvre avec : ${idea.hook}`);
     setCopied(idx);
     setTimeout(() => setCopied(null), 2000);
   };
@@ -186,45 +188,75 @@ export default function SimulateurPage() {
           {/* Step 4 — Résultats */}
           {step === 4 && ideas.length > 0 && (
             <motion.div key="s4" initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4 }}>
-              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 24, flexWrap: "wrap", gap: 10 }}>
+              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 32, flexWrap: "wrap", gap: 10 }}>
                 <div>
-                  <p className="font-dm" style={{ fontSize: 11, color: "#818cf8", letterSpacing: "0.15em", textTransform: "uppercase", marginBottom: 4 }}>3 idées de Reels générées</p>
-                  <h2 className="font-bebas" style={{ fontSize: 28, color: "#fff", letterSpacing: "0.04em" }}>TON CONTENU PERSONNALISÉ</h2>
+                  <p className="font-dm" style={{ fontSize: 11, color: "#C9A84C", letterSpacing: "0.2em", textTransform: "uppercase", marginBottom: 6 }}>3 idées de Reels générées</p>
+                  <h2 className="font-bebas" style={{ fontSize: 32, color: "#fff", letterSpacing: "0.04em" }}>TON CONTENU PERSONNALISÉ</h2>
                 </div>
-                <button onClick={reset} className="font-dm" style={{ display: "flex", alignItems: "center", gap: 6, padding: "8px 14px", background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 9999, color: "rgba(255,255,255,0.4)", fontSize: 12, cursor: "pointer" }}>
+                <button onClick={reset} className="font-dm" style={{ display: "flex", alignItems: "center", gap: 6, padding: "8px 14px", background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 9999, color: "rgba(255,255,255,0.35)", fontSize: 12, cursor: "pointer" }}>
                   <RotateCcw size={11} /> Recommencer
                 </button>
               </div>
 
-              <div style={{ display: "flex", flexDirection: "column", gap: 14, marginBottom: 36 }}>
-                {ideas.map((idea, i) => (
-                  <motion.div key={i} initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.12 }}
-                    style={{ padding: "22px 24px", background: "rgba(99,102,241,0.05)", border: "1px solid rgba(99,102,241,0.15)", borderRadius: 18, position: "relative" }}>
-                    <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: 12 }}>
-                      <div style={{ display: "flex", gap: 14, flex: 1 }}>
-                        <span className="font-bebas" style={{ fontSize: 32, color: "rgba(99,102,241,0.3)", lineHeight: 1, flexShrink: 0 }}>0{i + 1}</span>
-                        <p className="font-dm" style={{ fontSize: 14, color: "rgba(255,255,255,0.8)", lineHeight: 1.6, margin: 0 }}>{idea}</p>
+              {/* Cartes */}
+              <div style={{ display: "flex", flexDirection: "column", gap: 16, marginBottom: 36 }}>
+                {ideas.map((idea, i) => {
+                  const virColor = idea.viralite === "Explosif" ? "#C9A84C" : idea.viralite === "Très fort" ? "#C9A84C" : "rgba(255,255,255,0.35)";
+                  const virBg = idea.viralite === "Explosif" ? "rgba(201,168,76,0.12)" : idea.viralite === "Très fort" ? "rgba(201,168,76,0.07)" : "rgba(255,255,255,0.04)";
+                  return (
+                    <motion.div key={i} initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.13 }}
+                      style={{ background: "#111", borderLeft: "2px solid #C9A84C", borderRadius: "0 16px 16px 0", padding: "28px 24px 24px", position: "relative", overflow: "hidden" }}>
+
+                      {/* Big number bg */}
+                      <span className="font-bebas" style={{ position: "absolute", top: 8, right: 16, fontSize: 88, lineHeight: 1, color: "rgba(201,168,76,0.07)", userSelect: "none", pointerEvents: "none" }}>
+                        0{i + 1}
+                      </span>
+
+                      {/* Top row: badges + copy */}
+                      <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 14, flexWrap: "wrap" }}>
+                        {/* Format badge */}
+                        <span className="font-dm" style={{ fontSize: 10, letterSpacing: "0.12em", textTransform: "uppercase", padding: "3px 10px", background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 9999, color: "rgba(255,255,255,0.5)", fontWeight: 600 }}>
+                          {idea.format}
+                        </span>
+                        {/* Viralité badge */}
+                        <span className="font-dm" style={{ fontSize: 10, letterSpacing: "0.12em", textTransform: "uppercase", padding: "3px 10px", background: virBg, border: `1px solid ${virColor}40`, borderRadius: 9999, color: virColor, fontWeight: 700, animation: idea.viralite === "Explosif" ? "pulse 2s ease-in-out infinite" : "none" }}>
+                          ✦ {idea.viralite}
+                        </span>
+                        {/* Copy button */}
+                        <button onClick={() => copyIdea(i, idea)} style={{ marginLeft: "auto", background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 8, padding: "5px 8px", cursor: "pointer", color: copied === i ? "#4ade80" : "rgba(255,255,255,0.3)", display: "flex", flexShrink: 0 }}>
+                          {copied === i ? <Check size={12} /> : <Copy size={12} />}
+                        </button>
                       </div>
-                      <button onClick={() => copyIdea(i, idea)} style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 8, padding: "6px 8px", cursor: "pointer", color: copied === i ? "#4ade80" : "rgba(255,255,255,0.3)", flexShrink: 0, display: "flex" }}>
-                        {copied === i ? <Check size={13} /> : <Copy size={13} />}
-                      </button>
-                    </div>
-                  </motion.div>
-                ))}
+
+                      {/* Titre Playfair italic */}
+                      <p style={{ fontFamily: "'Playfair Display', Georgia, serif", fontStyle: "italic", fontSize: 17, color: "#fff", lineHeight: 1.4, marginBottom: 18 }}>
+                        {idea.titre}
+                      </p>
+
+                      {/* Hook block */}
+                      <div style={{ background: "rgba(201,168,76,0.05)", border: "1px solid rgba(201,168,76,0.15)", borderRadius: 10, padding: "14px 16px" }}>
+                        <span className="font-dm" style={{ fontSize: 10, letterSpacing: "0.15em", textTransform: "uppercase", color: "#C9A84C", display: "block", marginBottom: 6, fontWeight: 600 }}>
+                          💬 Ouvre avec :
+                        </span>
+                        <p className="font-dm" style={{ fontSize: 13, color: "rgba(255,255,255,0.65)", lineHeight: 1.65, fontStyle: "italic", margin: 0 }}>
+                          &ldquo;{idea.hook}&rdquo;
+                        </p>
+                      </div>
+                    </motion.div>
+                  );
+                })}
               </div>
 
-              {/* CTA */}
-              <div style={{ padding: "32px 28px", background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 20, textAlign: "center" }}>
-                <p className="font-dm" style={{ fontSize: 13, color: "rgba(255,255,255,0.4)", marginBottom: 8 }}>
-                  Tu veux qu&apos;on crée ce contenu pour toi ?
-                </p>
-                <h3 className="font-bebas" style={{ fontSize: 24, color: "#fff", letterSpacing: "0.04em", marginBottom: 20 }}>
-                  ON S&apos;OCCUPE DE TOUT — TOURNAGE, MONTAGE, LIVRAISON
-                </h3>
-                <Link href="/contact" className="font-dm"
-                  style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "13px 28px", background: "#f2f0ec", color: "#0a0a0a", borderRadius: 9999, textDecoration: "none", fontSize: 13, fontWeight: 700, letterSpacing: "0.06em" }}>
-                  Réserver une consultation gratuite <ArrowRight size={13} />
-                </Link>
+              {/* Actions */}
+              <div style={{ display: "flex", gap: 12, marginBottom: 40, flexWrap: "wrap" }}>
+                <button onClick={reset} className="font-dm"
+                  style={{ flex: 1, minWidth: 180, padding: "13px 20px", background: "none", border: "1px solid rgba(255,255,255,0.15)", borderRadius: 9999, color: "rgba(255,255,255,0.55)", fontSize: 13, fontWeight: 600, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", gap: 8 }}>
+                  <RotateCcw size={13} /> Générer 3 nouvelles idées
+                </button>
+                <a href="https://calendly.com/massishot-ca/30min" target="_blank" rel="noopener noreferrer" className="font-dm"
+                  style={{ flex: 1, minWidth: 180, padding: "13px 20px", background: "#C9A84C", color: "#0a0a0a", border: "none", borderRadius: 9999, fontSize: 13, fontWeight: 700, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", gap: 8, textDecoration: "none", letterSpacing: "0.04em" }}>
+                  Créer ce contenu avec Massi →
+                </a>
               </div>
             </motion.div>
           )}
