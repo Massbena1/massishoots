@@ -115,7 +115,8 @@ export default function ShaderHero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.75 }}
           >
-            {t("tagline")}{" "}
+            <span style={{ color: "#C9A84C" }}>— </span>
+            <span style={{ color: "#C9A84C" }}>{t("tagline")}</span>{" "}
             <em style={{ color: "rgba(255,255,255,0.5)", fontStyle: "italic" }}>{t("taglineEm")}</em>
           </motion.p>
 
