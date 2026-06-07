@@ -56,7 +56,7 @@ export default function CustomCursor() {
     const onMove = (e: MouseEvent) => { mx = e.clientX; my = e.clientY; };
     window.addEventListener("mousemove", onMove, { passive: true });
 
-    const LERP = 0.12;
+    const LERP = 0.25;
     function tick() {
       cx += (mx - cx) * LERP;
       cy += (my - cy) * LERP;
