@@ -3,6 +3,7 @@ import { Bebas_Neue, DM_Sans, Playfair_Display } from "next/font/google";
 import "./globals.css";
 import CustomCursor from "@/components/CustomCursor";
 import ScrollReveal from "@/components/ScrollReveal";
+import ChatBot from "@/components/ChatBot";
 
 const bebasNeue = Bebas_Neue({
   weight: "400",
@@ -37,6 +38,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body>
         <CustomCursor />
         <ScrollReveal />
+        <ChatBot />
         {children}
       </body>
     </html>
