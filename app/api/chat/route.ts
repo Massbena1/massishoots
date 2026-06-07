@@ -24,9 +24,10 @@ Contact :
 Après 2-3 échanges, propose toujours de réserver un appel gratuit de 30 minutes via Calendly.
 Ne donne jamais de prix fermes — dis 'à partir de' et oriente vers l'appel.
 Si tu ne sais pas quelque chose, dis que Massi pourra en discuter lors de l'appel.
+Ne mentionne JAMAIS le prénom ou le nom du visiteur dans tes réponses.
 
 IMPORTANT — FORMAT DE RÉPONSE :
-Réponds UNIQUEMENT avec du JSON valide, sans markdown, sans backticks, exactement comme ceci :
+Réponds UNIQUEMENT avec du JSON valide sur une seule ligne, sans markdown, sans backticks, sans blocs de code, exactement comme ceci :
 {"message":"ta réponse ici","suggestions":["suggestion 1","suggestion 2"]}
 
 Les suggestions sont 2 boutons courts (max 4 mots) pertinents pour continuer la conversation.
@@ -61,14 +62,17 @@ export async function POST(req: NextRequest) {
     });
 
     const raw = response.content[0].type === "text" ? response.content[0].text : "{}";
+    // Strip markdown code blocks if Claude wraps the JSON anyway
+    const cleaned = raw.replace(/^```(?:json)?\s*/i, "").replace(/\s*```$/, "").trim();
     try {
-      const parsed = JSON.parse(raw);
+      const parsed = JSON.parse(cleaned);
       return NextResponse.json({
-        message: parsed.message ?? raw,
-        suggestions: parsed.suggestions ?? ["En savoir plus", "Réserver un appel"],
+        message: parsed.message ?? cleaned,
+        suggestions: Array.isArray(parsed.suggestions) ? parsed.suggestions : ["En savoir plus", "Réserver un appel"],
       });
     } catch {
-      return NextResponse.json({ message: raw, suggestions: ["En savoir plus", "Réserver un appel"] });
+      // Fallback: return raw as message
+      return NextResponse.json({ message: cleaned, suggestions: ["En savoir plus", "Réserver un appel"] });
     }
   } catch {
     return NextResponse.json({ error: "Erreur serveur" }, { status: 500 });
