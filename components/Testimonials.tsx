@@ -54,6 +54,7 @@ export default function Testimonials() {
             animate={inView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.8, delay: 0.2 }}
             style={{ position: "relative" }}
+            data-no-sr
           >
             <ShuffleCards testimonials={testimonials} />
           </motion.div>
