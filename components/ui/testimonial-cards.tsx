@@ -32,6 +32,8 @@ export function TestimonialCard({ handleShuffle, testimonial, position, author, 
         rotate: position === "front" ? "-6deg" : position === "middle" ? "0deg" : "6deg",
         x: position === "front" ? 0 : position === "middle" ? 30 : 60,
         scale: position === "front" ? 1 : position === "middle" ? 0.97 : 0.94,
+        opacity: position === "front" ? 1 : position === "middle" ? 0.6 : position === "back" ? 0.3 : 0,
+        pointerEvents: position === "front" ? "auto" : "none",
       }}
       drag={true}
       dragElastic={0.2}
@@ -96,7 +98,7 @@ interface Testimonial {
 
 export function ShuffleCards({ testimonials }: { testimonials: Testimonial[] }) {
   const [positions, setPositions] = React.useState<string[]>(
-    testimonials.map((_, i) => (i === 0 ? "front" : i === 1 ? "middle" : "back"))
+    testimonials.map((_, i) => (i === 0 ? "front" : i === 1 ? "middle" : i === 2 ? "back" : "hidden"))
   );
   const [activeIndex, setActiveIndex] = React.useState(0);
 
