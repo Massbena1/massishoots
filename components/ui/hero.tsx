@@ -56,7 +56,7 @@ export default function ShaderHero() {
               <span style={{ position: "absolute", inset: 1, borderRadius: "50%", background: "#4ade80" }} />
             </span>
             <span className="font-dm text-white/70 relative z-10 tracking-wide" style={{ fontSize: 12 }}>
-              Studio premium · Montréal
+              2 spots disponibles ce mois-ci
             </span>
           </motion.div>
 
@@ -88,19 +88,35 @@ export default function ShaderHero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
           >
-            <span className="block" style={{ fontSize: "clamp(18px, 3vw, 36px)", letterSpacing: "0.35em", color: "rgba(196,205,214,0.8)", fontFamily: "var(--font-dm-sans), sans-serif", textTransform: "uppercase" }}>{t("subtitle")}</span>
-            <span className="block" style={{ color: "#ffffff" }}>— {t("tagline")}</span>
+            <motion.span
+              className="block font-light mb-1"
+              style={{
+                fontSize: "clamp(18px, 3vw, 36px)",
+                letterSpacing: "0.35em",
+                background: "linear-gradient(135deg, #ffffff 0%, #c4cdd6 45%, #8892a0 100%)",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+                backgroundClip: "text",
+                fontFamily: "var(--font-dm-sans), sans-serif",
+                textTransform: "uppercase",
+              }}
+            >
+              {t("subtitle")}
+            </motion.span>
+            <span className="block" style={{ color: "#ffffff" }}>MASSI</span>
+            <span className="block italic" style={{ color: "#c4cdd6", fontStyle: "italic" }}>SHOOTS</span>
           </motion.h1>
 
-          {/* Italic subtitle */}
+          {/* Emotional tagline */}
           <motion.p
-            className="font-dm mb-3 leading-snug max-w-lg"
-            style={{ fontSize: "clamp(16px, 1.8vw, 22px)", color: "rgba(255,255,255,0.55)", fontStyle: "italic", letterSpacing: "0.01em" }}
+            className="font-dm font-light mb-3 leading-snug max-w-lg"
+            style={{ fontSize: "clamp(18px, 2.2vw, 24px)", color: "#c4cdd6", letterSpacing: "-0.01em" }}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.75 }}
           >
-            <em>{t("taglineEm")}</em>
+            {t("tagline")}{" "}
+            <em style={{ color: "rgba(255,255,255,0.5)", fontStyle: "italic" }}>{t("taglineEm")}</em>
           </motion.p>
 
           {/* Subtitle */}
