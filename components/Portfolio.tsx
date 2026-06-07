@@ -300,10 +300,10 @@ export default function Portfolio() {
                   key={`${item.src}-${i}`}
                   className={`portfolio-item${item.wide ? " portfolio-item-wide" : ""}`}
                   style={{
-                    gridColumn: item.wide ? "span 2" : "span 1",
+                    gridColumn: item.wide ? "span 2" : item.videoSrc ? "span 2" : "span 1",
                     borderRadius: 20,
                     overflow: "hidden",
-                    aspectRatio: item.wide ? "16/9" : item.videoSrc ? "9/16" : "3/4",
+                    aspectRatio: item.videoSrc ? "16/9" : item.wide ? "16/9" : "3/4",
                     border: "1px solid rgba(255,255,255,0.07)",
                     position: "relative",
                     cursor: "pointer",
