@@ -2,11 +2,12 @@
 
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 import { Camera, TrendingUp, BarChart3, Users, CheckCircle, ArrowRight, Sparkles, Clock, Award } from "lucide-react";
 
 export default function AnalyseInstagram() {
   const t = useTranslations("analyseInstagram");
+  const locale = useLocale();
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [secteur, setSecteur] = useState("");
