@@ -60,34 +60,25 @@ Format de réponse EXACT :
   },
 
   "problemes": [
-    {
-      "severite": "Critique",
-      "titre": "",
-      "constat": "",
-      "impact": "",
-      "cause": ""
-    }
+    { "severite": "Critique", "titre": "", "constat": "", "impact": "", "cause": "" },
+    { "severite": "Modéré", "titre": "", "constat": "", "impact": "", "cause": "" },
+    { "severite": "Mineur", "titre": "", "constat": "", "impact": "", "cause": "" }
   ],
 
   "recommandations": [
-    {
-      "priorite": "Haute",
-      "titre": "",
-      "quoi": "",
-      "pourquoi": "",
-      "comment": "",
-      "impact_attendu": "",
-      "delai": ""
-    }
+    { "priorite": "Haute", "titre": "", "quoi": "", "pourquoi": "", "comment": "", "impact_attendu": "", "delai": "" },
+    { "priorite": "Haute", "titre": "", "quoi": "", "pourquoi": "", "comment": "", "impact_attendu": "", "delai": "" },
+    { "priorite": "Moyenne", "titre": "", "quoi": "", "pourquoi": "", "comment": "", "impact_attendu": "", "delai": "" }
   ],
 
   "plan_7_jours": [
-    {
-      "jour": "Lundi",
-      "action": "",
-      "duree": "1h",
-      "impact": ""
-    }
+    { "jour": "Lundi", "action": "", "duree": "30min", "impact": "" },
+    { "jour": "Mardi", "action": "", "duree": "1h", "impact": "" },
+    { "jour": "Mercredi", "action": "", "duree": "45min", "impact": "" },
+    { "jour": "Jeudi", "action": "", "duree": "1h", "impact": "" },
+    { "jour": "Vendredi", "action": "", "duree": "30min", "impact": "" },
+    { "jour": "Samedi", "action": "", "duree": "2h", "impact": "" },
+    { "jour": "Dimanche", "action": "", "duree": "30min", "impact": "" }
   ],
 
   "meilleur_jour_poster": "",
@@ -124,7 +115,7 @@ export async function POST(req: NextRequest) {
       },
       body: JSON.stringify({
         model: "claude-sonnet-4-6",
-        max_tokens: 2000,
+        max_tokens: 4096,
         system: SYSTEM_PROMPT,
         messages: [
           {
@@ -145,7 +136,7 @@ export async function POST(req: NextRequest) {
     }
 
     const data = await anthropicResponse.json();
-    console.log(`📡 Anthropic réponse reçue, stop_reason: ${data.stop_reason}`);
+    console.log(`📡 stop_reason: ${data.stop_reason}, usage: ${JSON.stringify(data.usage)}`);
 
     // Extraire le texte — avec interleaved-thinking il peut y avoir plusieurs blocs
     let rawText = "";
@@ -163,6 +154,11 @@ export async function POST(req: NextRequest) {
 
     // Nettoyer le JSON si l'IA a ajouté des balises markdown malgré la consigne
     const cleaned = rawText.replace(/^```(?:json)?\s*/i, "").replace(/\s*```$/, "").trim();
+
+    if (data.stop_reason === "max_tokens") {
+      console.error("❌ JSON tronqué — max_tokens atteint. Longueur:", cleaned.length);
+      return NextResponse.json({ error: "Réponse tronquée — réessaie dans quelques secondes" }, { status: 502 });
+    }
 
     let analysis: Record<string, unknown>;
     try {
