@@ -6,35 +6,80 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 const ANTHROPIC_API_KEY = process.env.ANTHROPIC_API_KEY;
 const ANTHROPIC_API_URL = "https://api.anthropic.com/v1/messages";
 
-const SYSTEM_PROMPT = `Tu es un expert en stratégie de contenu Instagram pour les marques premium.
-Tu analyses des profils Instagram et fournis des recommandations
-ultra-spécifiques et actionnables.
-Réponds UNIQUEMENT en JSON valide, sans markdown, sans texte avant ou après.
+const SYSTEM_PROMPT = `Tu es un expert senior en stratégie Instagram et personal branding pour les marques premium. Tu analyses des profils avec une précision chirurgicale.
+Tu réponds UNIQUEMENT en JSON valide, sans markdown, sans texte avant ou après.
 
-Format de réponse :
+Format de réponse EXACT :
 {
-  "score": 72,
-  "mention": "Bon potentiel — quelques ajustements clés manquants",
+  "score_global": 74,
+  "niveau": "Intermédiaire",
+  "accroche": "Ton profil a du potentiel mais laisse de l'argent sur la table chaque semaine.",
+
+  "scores_categories": {
+    "bio_positionnement": 65,
+    "qualite_visuelle": 80,
+    "strategie_contenu": 55,
+    "engagement": 70,
+    "monetisation": 45,
+    "consistance": 60
+  },
+
+  "bio_analyse": {
+    "note": 65,
+    "ce_qui_manque": "Description précise de ce qui manque dans la bio",
+    "bio_actuelle_probleme": "Ce qui ne fonctionne pas",
+    "bio_recommandee": "Exemple concret de bio réécrite pour ce secteur"
+  },
+
   "points_forts": [
-    "Point fort 1",
-    "Point fort 2"
+    "Point fort spécifique 1",
+    "Point fort spécifique 2",
+    "Point fort spécifique 3"
   ],
-  "problemes": [
+
+  "problemes_critiques": [
     {
       "titre": "Titre du problème",
-      "description": "Description en 1 phrase",
-      "impact": "Élevé / Moyen / Faible"
+      "explication": "Explication en 2 phrases maximum",
+      "impact_revenu": "Comment ça affecte directement les revenus",
+      "severite": "Critique / Modéré / Mineur"
     }
   ],
-  "recommandations": [
+
+  "plan_action": [
     {
-      "action": "Action concrète à faire",
-      "priorite": "Immédiat / Cette semaine / Ce mois",
-      "resultat_attendu": "Ce que ça va changer"
+      "semaine": 1,
+      "action": "Action concrète et spécifique",
+      "comment": "Comment faire exactement en 1 phrase",
+      "resultat": "Résultat attendu mesurable"
+    },
+    {
+      "semaine": 2,
+      "action": "Action concrète semaine 2",
+      "comment": "Comment faire exactement",
+      "resultat": "Résultat attendu"
+    },
+    {
+      "semaine": 3,
+      "action": "Action concrète semaine 3",
+      "comment": "Comment faire exactement",
+      "resultat": "Résultat attendu"
+    },
+    {
+      "semaine": 4,
+      "action": "Action concrète semaine 4",
+      "comment": "Comment faire exactement",
+      "resultat": "Résultat attendu"
     }
   ],
-  "type_contenu_manquant": "Type de contenu que ce compte ne fait pas assez",
-  "conclusion": "Phrase de conclusion personnalisée et motivante"
+
+  "type_contenu_manquant": "Type précis de contenu absent du profil",
+  "frequence_ideale": "4 posts par semaine — 3 Reels + 1 carousel",
+  "meilleur_moment_poster": "Mardi et jeudi entre 18h et 20h",
+
+  "verdict_massishoots": "Phrase personnalisée expliquant exactement comment Massishoots peut transformer ce profil spécifiquement",
+
+  "potentiel_croissance": "Fort / Très fort / Explosif"
 }`;
 
 export async function POST(req: NextRequest) {
@@ -61,7 +106,7 @@ export async function POST(req: NextRequest) {
     // Clean username (remove @ if present)
     const cleanUsername = username.replace("@", "").trim();
 
-    const userPrompt = `Analyse le profil Instagram @${cleanUsername} dans le secteur ${secteur} avec l'objectif de ${objectif}. Génère un rapport complet avec score, points forts, problèmes et recommandations.`;
+    const userPrompt = `Analyse le profil Instagram @${cleanUsername} dans le secteur ${secteur} avec l'objectif de ${objectif}. Sois ultra-spécifique et personnalisé — pas de généralités. Chaque recommandation doit être directement applicable demain matin.`;
 
     let analysis = null;
 

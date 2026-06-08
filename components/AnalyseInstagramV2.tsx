@@ -127,248 +127,299 @@ export default function AnalyseInstagramV2() {
 
   if (formState.submitted && formState.analysisResult) {
     const analysis = formState.analysisResult as any;
+    const score = analysis.score_global ?? analysis.score ?? 0;
+
+    const scoreColor = score >= 81 ? "#2ECC71" : score >= 66 ? "#C9A84C" : score >= 41 ? "#E67E22" : "#E74C3C";
+
+    const potentielColor = (p: string) => {
+      if (p === "Explosif") return "#E74C3C";
+      if (p === "Très fort") return "#C9A84C";
+      return "#2ECC71";
+    };
+
+    const severiteBg = (s: string) => {
+      if (s === "Critique") return { bg: "#2D1515", border: "rgba(231,76,60,0.35)", text: "#E74C3C" };
+      if (s === "Modéré")   return { bg: "#2D1E0F", border: "rgba(230,126,34,0.35)", text: "#E67E22" };
+      return { bg: "#1a1a1a", border: "rgba(255,255,255,0.1)", text: "rgba(255,255,255,0.45)" };
+    };
+
+    const CATEGORIES = [
+      { key: "bio_positionnement", label: "Bio & Positionnement" },
+      { key: "qualite_visuelle",   label: "Qualité Visuelle" },
+      { key: "strategie_contenu",  label: "Stratégie Contenu" },
+      { key: "engagement",         label: "Engagement" },
+      { key: "monetisation",       label: "Monétisation" },
+      { key: "consistance",        label: "Consistance" },
+    ];
+
+    const circumference = 2 * Math.PI * 58; // r=58
 
     return (
-      <section ref={reportRef} style={{
-        minHeight: "100vh",
-        background: "linear-gradient(180deg, rgba(0,0,0,0.95) 0%, #000 100%)",
-        padding: "120px 24px 80px",
-      }}>
-        <div style={{ maxWidth: 800, margin: "0 auto" }}>
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            style={{ textAlign: "center", marginBottom: 48 }}
-          >
-            <h1 className="font-bebas" style={{
-              fontSize: "clamp(36px, 6vw, 48px)",
-              color: "#fff",
-              marginBottom: 32,
-            }}>
-              {t("reportTitle")} @{formState.username.replace("@", "")}
-            </h1>
+      <section ref={reportRef} style={{ background: "#000", padding: "100px 24px 100px" }}>
+        <div style={{ maxWidth: 820, margin: "0 auto", display: "flex", flexDirection: "column", gap: 24 }}>
 
-            <div style={{
-              display: "inline-flex",
-              flexDirection: "column",
-              alignItems: "center",
-              gap: 16,
-              marginBottom: 32,
-            }}>
-              <div style={{
-                width: 120,
-                height: 120,
-                borderRadius: "50%",
-                background: `conic-gradient(#C9A84C ${analysis.score * 3.6}deg, rgba(201,168,76,0.1) 0deg)`,
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                position: "relative",
-              }}>
-                <div style={{
-                  width: 100,
-                  height: 100,
-                  borderRadius: "50%",
-                  background: "#000",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  flexDirection: "column",
-                }}>
-                  <span className="font-bebas" style={{
-                    fontSize: 32,
-                    fontWeight: 700,
-                    color: "#C9A84C",
-                  }}>
-                    {analysis.score}
-                  </span>
-                  <span className="font-dm" style={{
-                    fontSize: 11,
-                    color: "rgba(255,255,255,0.5)",
-                  }}>
-                    /100
-                  </span>
+          {/* ─── S1 : EN-TÊTE ─────────────────────────────────────── */}
+          <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }}
+            style={{ background: "#0d0d0d", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 16, padding: "40px 36px 36px" }}>
+
+            {/* Titre + sous-titre */}
+            <p className="font-bebas" style={{ fontSize: "clamp(22px,4vw,30px)", color: "#fff", letterSpacing: "0.04em", marginBottom: 4 }}>
+              Rapport d'analyse — <span style={{ color: scoreColor }}>@{formState.username.replace("@", "")}</span>
+            </p>
+            <p className="font-dm" style={{ fontSize: 12, color: "rgba(255,255,255,0.3)", letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 32 }}>
+              {formState.secteur} · Généré par IA Massishoots
+            </p>
+
+            {/* Score + badge niveau */}
+            <div style={{ display: "flex", alignItems: "center", gap: 32, flexWrap: "wrap" }}>
+              {/* Cercle SVG animé */}
+              <div style={{ position: "relative", width: 140, height: 140, flexShrink: 0 }}>
+                <svg width="140" height="140" style={{ transform: "rotate(-90deg)" }}>
+                  <circle cx="70" cy="70" r="58" fill="none" stroke="rgba(255,255,255,0.06)" strokeWidth="10" />
+                  <motion.circle cx="70" cy="70" r="58" fill="none" stroke={scoreColor} strokeWidth="10"
+                    strokeLinecap="round"
+                    initial={{ strokeDasharray: `0 ${circumference}` }}
+                    animate={{ strokeDasharray: `${(score / 100) * circumference} ${circumference}` }}
+                    transition={{ duration: 1.4, ease: "easeOut", delay: 0.3 }} />
+                </svg>
+                <div style={{ position: "absolute", inset: 0, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
+                  <span style={{ fontSize: 36, fontWeight: 700, color: "#fff", lineHeight: 1, fontFamily: "var(--font-bebas-neue)" }}>{score}</span>
+                  <span className="font-dm" style={{ fontSize: 11, color: "rgba(255,255,255,0.35)", marginTop: 2 }}>Score Global</span>
                 </div>
               </div>
 
-              <p className="font-dm" style={{
-                fontSize: 16,
-                fontStyle: "italic",
-                color: "rgba(255,255,255,0.7)",
-                margin: 0,
-              }}>
-                {analysis.mention}
+              {/* Infos à droite */}
+              <div style={{ flex: 1 }}>
+                {analysis.niveau && (
+                  <span className="font-dm" style={{ display: "inline-block", fontSize: 12, fontWeight: 700, padding: "6px 18px", borderRadius: 6, background: "#C9A84C", color: "#0a0a0a", letterSpacing: "0.06em", marginBottom: 16 }}>
+                    Niveau : {analysis.niveau}
+                  </span>
+                )}
+                {analysis.accroche && (
+                  <p className="font-dm" style={{ fontSize: 15, fontStyle: "italic", color: "#C9A84C", lineHeight: 1.65, margin: 0 }}>
+                    "{analysis.accroche}"
+                  </p>
+                )}
+              </div>
+            </div>
+          </motion.div>
+
+          {/* ─── S2 : BARRES DE PROGRESSION ───────────────────────── */}
+          {analysis.scores_categories && (
+            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15, duration: 0.6 }}
+              style={{ background: "#0d0d0d", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 16, padding: "32px 36px" }}>
+              <h2 className="font-dm" style={{ fontSize: 14, fontWeight: 700, color: "#fff", marginBottom: 6 }}>Analyse par catégorie</h2>
+              <p className="font-dm" style={{ fontSize: 11, color: "rgba(255,255,255,0.25)", letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: 28 }}>6 axes évalués par l'IA</p>
+              <div style={{ display: "flex", flexDirection: "column", gap: 18 }}>
+                {CATEGORIES.map(({ key, label }, idx) => {
+                  const val: number = analysis.scores_categories[key] ?? 0;
+                  return (
+                    <div key={key}>
+                      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 8 }}>
+                        <span className="font-dm" style={{ fontSize: 13, color: "rgba(255,255,255,0.7)" }}>{label}</span>
+                        <span className="font-dm" style={{ fontSize: 13, fontWeight: 700, color: "#fff" }}>{val}<span style={{ color: "rgba(255,255,255,0.3)", fontWeight: 400 }}>/100</span></span>
+                      </div>
+                      <div style={{ height: 6, background: "#1a1a1a", borderRadius: 9999, overflow: "hidden" }}>
+                        <motion.div
+                          initial={{ width: 0 }}
+                          animate={{ width: `${val}%` }}
+                          transition={{ delay: 0.3 + idx * 0.08, duration: 1.5, ease: "easeOut" }}
+                          style={{ height: "100%", background: "#C9A84C", borderRadius: 9999 }} />
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </motion.div>
+          )}
+
+          {/* ─── S3 : ANALYSE BIO ──────────────────────────────────── */}
+          {analysis.bio_analyse && (
+            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.25, duration: 0.6 }}
+              style={{ background: "#0d0d0d", borderLeft: "2px solid #C9A84C", borderRadius: 16, padding: "32px 36px" }}>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 24, flexWrap: "wrap", gap: 8 }}>
+                <h2 className="font-dm" style={{ fontSize: 15, fontWeight: 700, color: "#fff" }}>📝 Ta bio sous la loupe</h2>
+                {analysis.bio_analyse.note && (
+                  <span className="font-bebas" style={{ fontSize: 20, color: "#C9A84C" }}>{analysis.bio_analyse.note}/100</span>
+                )}
+              </div>
+              <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+                {analysis.bio_analyse.bio_actuelle_probleme && (
+                  <div style={{ padding: "16px 18px", borderRadius: 10, border: "1px solid rgba(231,76,60,0.2)" }}>
+                    <p className="font-dm" style={{ fontSize: 10, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "#E74C3C", marginBottom: 8 }}>Le problème</p>
+                    <p className="font-dm" style={{ fontSize: 13, color: "rgba(231,76,60,0.85)", lineHeight: 1.65, margin: 0 }}>{analysis.bio_analyse.bio_actuelle_probleme}</p>
+                  </div>
+                )}
+                {analysis.bio_analyse.ce_qui_manque && (
+                  <div style={{ padding: "16px 18px", borderRadius: 10, border: "1px solid rgba(230,126,34,0.2)" }}>
+                    <p className="font-dm" style={{ fontSize: 10, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "#E67E22", marginBottom: 8 }}>Ce qui manque</p>
+                    <p className="font-dm" style={{ fontSize: 13, color: "rgba(230,126,34,0.85)", lineHeight: 1.65, margin: 0 }}>{analysis.bio_analyse.ce_qui_manque}</p>
+                  </div>
+                )}
+                {analysis.bio_analyse.bio_recommandee && (
+                  <div style={{ padding: "18px 20px", background: "#0a0a0a", border: "1px solid rgba(201,168,76,0.35)", borderRadius: 10 }}>
+                    <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 10 }}>
+                      <span className="font-dm" style={{ fontSize: 10, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "#C9A84C" }}>✦ Exemple Massishoots</span>
+                    </div>
+                    <p className="font-dm" style={{ fontSize: 14, fontStyle: "italic", color: "#fff", lineHeight: 1.7, margin: 0 }}>"{analysis.bio_analyse.bio_recommandee}"</p>
+                  </div>
+                )}
+              </div>
+            </motion.div>
+          )}
+
+          {/* ─── S4 : POINTS FORTS ─────────────────────────────────── */}
+          {analysis.points_forts?.length > 0 && (
+            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.35, duration: 0.6 }}
+              style={{ background: "#0d0d0d", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 16, padding: "32px 36px" }}>
+              <h2 className="font-dm" style={{ fontSize: 15, fontWeight: 700, color: "#fff", marginBottom: 22 }}>✓ Ce qui fonctionne déjà</h2>
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: 14 }}>
+                {analysis.points_forts.map((point: string, i: number) => (
+                  <div key={i} style={{ background: "#111", border: "1px solid rgba(255,255,255,0.06)", borderRadius: 10, padding: "16px 18px", display: "flex", gap: 12, alignItems: "flex-start" }}>
+                    <span style={{ color: "#C9A84C", fontSize: 16, flexShrink: 0, lineHeight: 1.4 }}>✓</span>
+                    <span className="font-dm" style={{ fontSize: 13, color: "#fff", lineHeight: 1.6 }}>{point}</span>
+                  </div>
+                ))}
+              </div>
+            </motion.div>
+          )}
+
+          {/* ─── S5 : PROBLÈMES CRITIQUES ──────────────────────────── */}
+          {analysis.problemes_critiques?.length > 0 && (
+            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.45, duration: 0.6 }}
+              style={{ background: "#0d0d0d", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 16, padding: "32px 36px" }}>
+              <h2 className="font-dm" style={{ fontSize: 15, fontWeight: 700, color: "#fff", marginBottom: 22 }}>⚠ Ce qui freine ta croissance</h2>
+              <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+                {analysis.problemes_critiques.map((p: any, i: number) => {
+                  const c = severiteBg(p.severite);
+                  return (
+                    <div key={i} style={{ background: c.bg, border: `1px solid ${c.border}`, borderRadius: 12, padding: "20px 22px" }}>
+                      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 12, marginBottom: 10, flexWrap: "wrap" }}>
+                        <span className="font-dm" style={{ fontSize: 14, fontWeight: 700, color: "#fff" }}>{p.titre}</span>
+                        <span className="font-dm" style={{ fontSize: 10, padding: "3px 12px", borderRadius: 9999, background: c.bg, border: `1px solid ${c.border}`, color: c.text, letterSpacing: "0.08em", fontWeight: 700, flexShrink: 0 }}>
+                          {p.severite}
+                        </span>
+                      </div>
+                      <p className="font-dm" style={{ fontSize: 13, color: "rgba(255,255,255,0.6)", lineHeight: 1.7, marginBottom: p.impact_revenu ? 10 : 0 }}>{p.explication}</p>
+                      {p.impact_revenu && (
+                        <p className="font-dm" style={{ fontSize: 12, fontStyle: "italic", color: c.text, margin: 0 }}>
+                          Impact revenu : {p.impact_revenu}
+                        </p>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+            </motion.div>
+          )}
+
+          {/* ─── S6 : PLAN D'ACTION 4 SEMAINES ────────────────────── */}
+          {analysis.plan_action?.length > 0 && (
+            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.55, duration: 0.6 }}
+              style={{ background: "#0d0d0d", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 16, padding: "32px 36px" }}>
+              <h2 className="font-dm" style={{ fontSize: 15, fontWeight: 700, color: "#fff", marginBottom: 6 }}>→ Ton plan d'action sur 4 semaines</h2>
+              <p className="font-dm" style={{ fontSize: 12, color: "rgba(255,255,255,0.3)", marginBottom: 28 }}>Applique ces actions dans l'ordre exact</p>
+              <div style={{ display: "flex", flexDirection: "column", gap: 0 }}>
+                {analysis.plan_action.map((s: any, i: number) => (
+                  <div key={i} style={{ display: "flex", gap: 20, position: "relative" }}>
+                    {/* Timeline gauche */}
+                    <div style={{ display: "flex", flexDirection: "column", alignItems: "center", flexShrink: 0, width: 40 }}>
+                      <div style={{ width: 40, height: 40, borderRadius: "50%", background: "#C9A84C", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, zIndex: 1 }}>
+                        <span className="font-bebas" style={{ fontSize: 16, color: "#0a0a0a" }}>S{s.semaine}</span>
+                      </div>
+                      {i < analysis.plan_action.length - 1 && (
+                        <div style={{ width: 1, flex: 1, background: "rgba(201,168,76,0.2)", minHeight: 24, margin: "4px 0" }} />
+                      )}
+                    </div>
+                    {/* Carte */}
+                    <div style={{ flex: 1, background: "#111", border: "1px solid rgba(201,168,76,0.12)", borderRadius: 12, padding: "18px 20px", marginBottom: i < analysis.plan_action.length - 1 ? 8 : 0 }}>
+                      <span className="font-dm" style={{ fontSize: 10, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "#C9A84C", display: "block", marginBottom: 8 }}>
+                        Semaine {s.semaine}
+                      </span>
+                      <p className="font-dm" style={{ fontSize: 14, fontWeight: 700, color: "#fff", marginBottom: s.comment ? 8 : 0 }}>{s.action}</p>
+                      {s.comment && <p className="font-dm" style={{ fontSize: 12, color: "rgba(255,255,255,0.45)", lineHeight: 1.6, marginBottom: s.resultat ? 10 : 0 }}>Comment : {s.comment}</p>}
+                      {s.resultat && <p className="font-dm" style={{ fontSize: 12, fontStyle: "italic", color: "#C9A84C", margin: 0 }}>Résultat attendu : {s.resultat}</p>}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </motion.div>
+          )}
+
+          {/* ─── S7 : INSIGHTS SUPPLÉMENTAIRES ────────────────────── */}
+          {(analysis.type_contenu_manquant || analysis.frequence_ideale || analysis.meilleur_moment_poster) && (
+            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.65, duration: 0.6 }}
+              style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: 16 }}>
+              {analysis.type_contenu_manquant && (
+                <div style={{ background: "#0d0d0d", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 14, padding: "22px 24px" }}>
+                  <p style={{ fontSize: 22, marginBottom: 10 }}>📱</p>
+                  <p className="font-dm" style={{ fontSize: 10, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "rgba(255,255,255,0.35)", marginBottom: 8 }}>Contenu manquant</p>
+                  <p className="font-dm" style={{ fontSize: 13, color: "#fff", lineHeight: 1.6, margin: 0 }}>{analysis.type_contenu_manquant}</p>
+                </div>
+              )}
+              {analysis.frequence_ideale && (
+                <div style={{ background: "#0d0d0d", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 14, padding: "22px 24px" }}>
+                  <p style={{ fontSize: 22, marginBottom: 10 }}>📅</p>
+                  <p className="font-dm" style={{ fontSize: 10, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "rgba(255,255,255,0.35)", marginBottom: 8 }}>Fréquence idéale</p>
+                  <p className="font-dm" style={{ fontSize: 13, color: "#fff", lineHeight: 1.6, margin: 0 }}>{analysis.frequence_ideale}</p>
+                </div>
+              )}
+              {analysis.meilleur_moment_poster && (
+                <div style={{ background: "#0d0d0d", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 14, padding: "22px 24px" }}>
+                  <p style={{ fontSize: 22, marginBottom: 10 }}>⏰</p>
+                  <p className="font-dm" style={{ fontSize: 10, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "rgba(255,255,255,0.35)", marginBottom: 8 }}>Meilleur moment</p>
+                  <p className="font-dm" style={{ fontSize: 13, color: "#fff", lineHeight: 1.6, margin: 0 }}>{analysis.meilleur_moment_poster}</p>
+                </div>
+              )}
+            </motion.div>
+          )}
+
+          {/* ─── S8 : CTA FINAL ────────────────────────────────────── */}
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.75, duration: 0.6 }}
+            style={{ position: "relative", background: "#000", borderRadius: 16, overflow: "hidden", padding: "52px 40px 44px", textAlign: "center", border: "1px solid rgba(201,168,76,0.2)" }}>
+            {/* Ligne gold en haut */}
+            <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 1, background: "linear-gradient(to right, transparent, #C9A84C, transparent)" }} />
+
+            {/* Badge */}
+            <span className="font-dm" style={{ display: "inline-block", fontSize: 10, fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", color: "#C9A84C", border: "1px solid rgba(201,168,76,0.3)", padding: "5px 16px", borderRadius: 9999, marginBottom: 24 }}>
+              ✦ Recommandation Personnalisée
+            </span>
+
+            {/* Verdict */}
+            {analysis.verdict_massishoots && (
+              <p className="font-dm" style={{ fontSize: 18, fontStyle: "italic", color: "#C9A84C", lineHeight: 1.7, maxWidth: 580, margin: "0 auto 20px" }}>
+                "{analysis.verdict_massishoots}"
               </p>
-            </div>
-          </motion.div>
+            )}
 
-          {/* Points forts */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.4, duration: 0.6 }}
-            style={{
-              background: "#151515",
-              borderRadius: 12,
-              padding: 32,
-              marginBottom: 24,
-            }}
-          >
-            <h2 className="font-dm" style={{
-              fontSize: 20,
-              fontWeight: 600,
-              color: "#fff",
-              marginBottom: 20,
-            }}>
-              {t("pointsFortsTitle")}
-            </h2>
-            <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-              {analysis.points_forts.map((point: string, index: number) => (
-                <div key={index} style={{ display: "flex", alignItems: "center", gap: 12 }}>
-                  <span style={{ fontSize: 16, color: "#C9A84C", flexShrink: 0 }}>✓</span>
-                  <span className="font-dm" style={{
-                    fontSize: 15,
-                    color: "rgba(255,255,255,0.9)",
-                    lineHeight: 1.5,
-                  }}>
-                    {point}
-                  </span>
-                </div>
-              ))}
-            </div>
-          </motion.div>
+            {/* Potentiel */}
+            {analysis.potentiel_croissance && (
+              <p className="font-bebas" style={{ fontSize: 22, letterSpacing: "0.05em", color: potentielColor(analysis.potentiel_croissance), marginBottom: 32 }}>
+                Potentiel : {analysis.potentiel_croissance}
+              </p>
+            )}
 
-          {/* Problèmes */}
-          {analysis.problemes?.length > 0 && (
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.6, duration: 0.6 }}
-              style={{ background: "#151515", borderRadius: 12, padding: 32, marginBottom: 24 }}
-            >
-              <h2 className="font-dm" style={{ fontSize: 20, fontWeight: 600, color: "#fff", marginBottom: 20 }}>
-                {t("problemesTitle")}
-              </h2>
-              <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
-                {analysis.problemes.map((p: any, i: number) => (
-                  <div key={i} style={{ display: "flex", gap: 16, padding: "16px", background: "rgba(255,255,255,0.03)", borderRadius: 8, border: "1px solid rgba(255,255,255,0.06)" }}>
-                    <span style={{ fontSize: 18, flexShrink: 0, marginTop: 2 }}>⚠</span>
-                    <div style={{ flex: 1 }}>
-                      <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 6, flexWrap: "wrap" }}>
-                        <span className="font-dm" style={{ fontSize: 15, fontWeight: 600, color: "#fff" }}>{p.titre}</span>
-                        <span className="font-dm" style={{
-                          fontSize: 10, padding: "2px 10px", borderRadius: 9999, fontWeight: 700, letterSpacing: "0.06em",
-                          background: p.impact === "Élevé" || p.impact === "High" ? "rgba(239,68,68,0.15)" : p.impact === "Moyen" || p.impact === "Medium" ? "rgba(245,158,11,0.15)" : "rgba(255,255,255,0.08)",
-                          color: p.impact === "Élevé" || p.impact === "High" ? "#ef4444" : p.impact === "Moyen" || p.impact === "Medium" ? "#f59e0b" : "rgba(255,255,255,0.5)",
-                          border: `1px solid ${p.impact === "Élevé" || p.impact === "High" ? "rgba(239,68,68,0.3)" : p.impact === "Moyen" || p.impact === "Medium" ? "rgba(245,158,11,0.3)" : "rgba(255,255,255,0.1)"}`,
-                        }}>
-                          {p.impact}
-                        </span>
-                      </div>
-                      <p className="font-dm" style={{ fontSize: 13, color: "rgba(255,255,255,0.5)", lineHeight: 1.6, margin: 0 }}>{p.description}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </motion.div>
-          )}
+            <div style={{ width: 40, height: 1, background: "rgba(201,168,76,0.3)", margin: "0 auto 28px" }} />
 
-          {/* Recommandations / Plan d'action */}
-          {analysis.recommandations?.length > 0 && (
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.8, duration: 0.6 }}
-              style={{ background: "#151515", borderRadius: 12, padding: 32, marginBottom: 24 }}
-            >
-              <h2 className="font-dm" style={{ fontSize: 20, fontWeight: 600, color: "#fff", marginBottom: 20 }}>
-                {t("planActionTitle")}
-              </h2>
-              <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
-                {analysis.recommandations.map((r: any, i: number) => (
-                  <div key={i} style={{ display: "flex", gap: 16, padding: "20px", background: "rgba(201,168,76,0.04)", borderRadius: 8, border: "1px solid rgba(201,168,76,0.15)" }}>
-                    <div style={{ width: 28, height: 28, borderRadius: "50%", background: "rgba(201,168,76,0.15)", border: "1px solid rgba(201,168,76,0.3)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
-                      <span className="font-bebas" style={{ fontSize: 14, color: "#C9A84C" }}>{i + 1}</span>
-                    </div>
-                    <div style={{ flex: 1 }}>
-                      <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 8, flexWrap: "wrap" }}>
-                        <span className="font-dm" style={{ fontSize: 14, fontWeight: 600, color: "#fff" }}>{r.action}</span>
-                        <span className="font-dm" style={{ fontSize: 10, padding: "2px 10px", borderRadius: 9999, background: "rgba(201,168,76,0.1)", border: "1px solid rgba(201,168,76,0.25)", color: "#C9A84C", letterSpacing: "0.05em" }}>
-                          {r.priorite}
-                        </span>
-                      </div>
-                      <p className="font-dm" style={{ fontSize: 12, color: "rgba(255,255,255,0.45)", margin: 0 }}>
-                        → {r.resultat_attendu}
-                      </p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </motion.div>
-          )}
-
-          {/* Contenu manquant */}
-          {analysis.type_contenu_manquant && (
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 1.0, duration: 0.6 }}
-              style={{ background: "rgba(201,168,76,0.06)", borderRadius: 12, padding: 24, marginBottom: 24, border: "1px solid rgba(201,168,76,0.2)", display: "flex", gap: 16, alignItems: "flex-start" }}
-            >
-              <span style={{ fontSize: 22, flexShrink: 0 }}>💡</span>
-              <div>
-                <p className="font-dm" style={{ fontSize: 12, color: "#C9A84C", letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 6, fontWeight: 600 }}>
-                  {t("contenuManquantLabel")}
-                </p>
-                <p className="font-dm" style={{ fontSize: 15, color: "rgba(255,255,255,0.85)", lineHeight: 1.6, margin: 0 }}>
-                  {analysis.type_contenu_manquant}
-                </p>
-              </div>
-            </motion.div>
-          )}
-
-          {/* Conclusion */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.1, duration: 0.6 }}
-            style={{ textAlign: "center", marginBottom: 48, padding: "32px 24px", background: "#151515", borderRadius: 12 }}
-          >
-            <p className="font-dm" style={{
-              fontSize: 18, fontStyle: "italic", color: "#C9A84C",
-              lineHeight: 1.6, maxWidth: 600, margin: "0 auto",
-            }}>
-              "{analysis.conclusion}"
-            </p>
-          </motion.div>
-
-          {/* CTA Final */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.3, duration: 0.6 }}
-            style={{ textAlign: "center", padding: "48px 32px", background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 12 }}
-          >
-            <h3 className="font-bebas" style={{ fontSize: "clamp(28px, 4vw, 42px)", color: "#fff", letterSpacing: "0.02em", marginBottom: 12 }}>
-              {t("ctaFinalTitle")}
+            <h3 className="font-bebas" style={{ fontSize: "clamp(28px,5vw,44px)", color: "#fff", letterSpacing: "0.02em", marginBottom: 12 }}>
+              On s'occupe de tout ça pour toi.
             </h3>
-            <p className="font-dm" style={{ fontSize: 14, color: "rgba(255,255,255,0.45)", marginBottom: 28, lineHeight: 1.7 }}>
-              {t("ctaFinalSubtitle")}
+            <p className="font-dm" style={{ fontSize: 14, color: "rgba(255,255,255,0.45)", lineHeight: 1.75, maxWidth: 440, margin: "0 auto 32px" }}>
+              Massi va implémenter exactement ce plan — avec du contenu cinématique qui performe.
             </p>
-            <a
-              href="/contact"
-              className="font-dm"
-              style={{
-                display: "inline-flex", alignItems: "center", gap: 8,
-                padding: "16px 32px", background: "#C9A84C", color: "#0a0a0a",
-                borderRadius: 6, fontSize: 14, fontWeight: 700,
-                letterSpacing: "0.06em", textDecoration: "none",
-              }}
+
+            <a href="https://calendly.com/massishot-ca/30min" target="_blank" rel="noopener noreferrer" className="font-dm"
+              style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "17px 36px", background: "#C9A84C", color: "#0a0a0a", borderRadius: 8, fontSize: 14, fontWeight: 700, letterSpacing: "0.07em", textDecoration: "none", textTransform: "uppercase", boxShadow: "0 0 32px rgba(201,168,76,0.25)" }}
+              onMouseEnter={e => ((e.currentTarget as HTMLElement).style.opacity = "0.88")}
+              onMouseLeave={e => ((e.currentTarget as HTMLElement).style.opacity = "1")}
             >
-              {t("ctaFinalButton")}
+              Réserver mon appel stratégique gratuit →
             </a>
+            <p className="font-dm" style={{ fontSize: 11, color: "rgba(255,255,255,0.2)", marginTop: 16, letterSpacing: "0.06em" }}>
+              Appel 30 min · Sans engagement · Répond sous 24h
+            </p>
           </motion.div>
+
         </div>
       </section>
     );
