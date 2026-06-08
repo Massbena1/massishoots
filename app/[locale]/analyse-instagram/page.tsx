@@ -1,6 +1,6 @@
 import { getTranslations } from "next-intl/server";
 import { getAlternates, getOpenGraph, getTwitter } from "@/lib/hreflang";
-import AnalyseInstagram from "@/components/AnalyseInstagram";
+import AnalyseInstagramV2 from "@/components/AnalyseInstagramV2";
 import Footer from "@/components/Footer";
 import type { Metadata } from "next";
 
@@ -25,7 +25,7 @@ export async function generateMetadata({
 export default function AnalyseInstagramPage() {
   return (
     <main>
-      <AnalyseInstagram />
+      <AnalyseInstagramV2 />
       <Footer />
     </main>
   );
