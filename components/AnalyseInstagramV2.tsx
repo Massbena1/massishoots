@@ -8,8 +8,23 @@ import { Camera, TrendingUp, BarChart3, Users, ArrowRight, Sparkles, Clock, Awar
 export default function AnalyseInstagramV2() {
   const t = useTranslations("analyseInstagram");
 
+  // Type definition for form state
+  interface FormState {
+    username: string;
+    email: string;
+    secteur: string;
+    autreSecteur: string;
+    objectif: string;
+    loading: boolean;
+    submitted: boolean;
+    currentStep: number;
+    analysisResult: any;
+    loadingStep: number;
+    error: string;
+  }
+
   // All state in one place to avoid hooks order issues
-  const [formState, setFormState] = useState({
+  const [formState, setFormState] = useState<FormState>({
     username: "",
     email: "",
     secteur: "",
@@ -23,8 +38,8 @@ export default function AnalyseInstagramV2() {
     error: ""
   });
 
-  const updateFormState = (updates: any) => {
-    setFormState(prev => ({ ...prev, ...updates }));
+  const updateFormState = (updates: Partial<FormState>) => {
+    setFormState((prev: FormState) => ({ ...prev, ...updates }));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -38,7 +53,7 @@ export default function AnalyseInstagramV2() {
 
     // Animate loading steps
     const stepInterval = setInterval(() => {
-      updateFormState(prev => ({ ...prev, loadingStep: (prev.loadingStep + 1) % 4 }));
+      setFormState((prev: FormState) => ({ ...prev, loadingStep: (prev.loadingStep + 1) % 4 }));
     }, 2000);
 
     try {
