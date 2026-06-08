@@ -37,6 +37,7 @@ export default function AnalyseInstagramV2() {
     loadingStep: 0,
     error: ""
   });
+  const [animatedScore, setAnimatedScore] = useState(0);
 
   const updateFormState = (updates: Partial<FormState>) => {
     setFormState((prev: FormState) => ({ ...prev, ...updates }));
@@ -121,8 +122,6 @@ export default function AnalyseInstagramV2() {
   ];
 
   if (formState.submitted && formState.analysisResult) {
-    const [animatedScore, setAnimatedScore] = useState(0);
-
     const analysis = formState.analysisResult as any;
 
     return (
