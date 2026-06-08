@@ -262,30 +262,71 @@ async function notifyEmail(
   email: string,
   analysis: Record<string, unknown>
 ) {
+  const score = analysis.score_global ?? 0;
+  const niveau = analysis.niveau ?? "—";
+  const potentiel = analysis.potentiel_croissance ?? "—";
+
+  const problemes = analysis.problemes as any[] | undefined;
+  const recommandations = analysis.recommandations as any[] | undefined;
+  const premierProbleme = problemes?.[0]?.titre ?? "—";
+  const premiereReco = recommandations?.[0]?.titre ?? "—";
+
   const { Resend } = await import("resend");
   const resend = new Resend(process.env.RESEND_API_KEY);
+
   await resend.emails.send({
     from: "noreply@massishoots.com",
     to: "massishoots.ca@gmail.com",
-    subject: `🎯 Analyse Instagram — @${handle} — Score ${analysis.score_global}/100`,
+    subject: `🎯 Nouveau lead Analyse Instagram — @${handle} — Score: ${score}/100`,
+    text: `Nouveau lead via l'outil d'analyse Instagram.
+
+Handle : @${handle}
+Secteur : ${secteur}
+Objectif : ${objectif}
+Email : ${email}
+Score obtenu : ${score}/100
+Niveau : ${niveau}
+Potentiel : ${potentiel}
+
+Problème critique #1 : ${premierProbleme}
+Recommandation #1 : ${premiereReco}
+
+→ Contacter ce lead rapidement.`,
     html: `
       <div style="font-family:sans-serif;max-width:600px;margin:0 auto;background:#0a0a0a;color:#fff;padding:32px;border-radius:12px;">
-        <div style="border-left:3px solid #C9A84C;padding-left:16px;margin-bottom:24px;">
-          <h2 style="color:#C9A84C;margin:0 0 4px;">Nouvelle analyse Instagram</h2>
-          <p style="color:rgba(255,255,255,0.4);margin:0;font-size:13px;">${new Date().toLocaleString("fr-CA", { timeZone: "America/Toronto" })}</p>
+        <div style="border-left:3px solid #C9A84C;padding-left:16px;margin-bottom:28px;">
+          <h2 style="color:#C9A84C;margin:0 0 6px;font-size:18px;">Nouveau lead — Analyse Instagram</h2>
+          <p style="color:rgba(255,255,255,0.35);margin:0;font-size:12px;">${new Date().toLocaleString("fr-CA", { timeZone: "America/Toronto" })}</p>
         </div>
-        <table style="width:100%;border-collapse:collapse;">
-          <tr><td style="padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.08);color:rgba(255,255,255,0.5);font-size:12px;text-transform:uppercase;width:120px;">Handle</td><td style="padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.08);color:#C9A84C;font-weight:700;">@${handle}</td></tr>
-          <tr><td style="padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.08);color:rgba(255,255,255,0.5);font-size:12px;text-transform:uppercase;">Email</td><td style="padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.08);color:#fff;">${email}</td></tr>
-          <tr><td style="padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.08);color:rgba(255,255,255,0.5);font-size:12px;text-transform:uppercase;">Secteur</td><td style="padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.08);color:#fff;">${secteur}</td></tr>
-          <tr><td style="padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.08);color:rgba(255,255,255,0.5);font-size:12px;text-transform:uppercase;">Objectif</td><td style="padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.08);color:#fff;">${objectif}</td></tr>
-          <tr><td style="padding:10px 0;color:rgba(255,255,255,0.5);font-size:12px;text-transform:uppercase;">Score IA</td><td style="padding:10px 0;color:#C9A84C;font-weight:700;font-size:18px;">${analysis.score_global}/100 — ${analysis.niveau}</td></tr>
+
+        <table style="width:100%;border-collapse:collapse;margin-bottom:24px;">
+          <tr><td style="padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.07);color:rgba(255,255,255,0.4);font-size:11px;text-transform:uppercase;letter-spacing:0.1em;width:130px;">Handle</td><td style="padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.07);color:#C9A84C;font-weight:700;">@${handle}</td></tr>
+          <tr><td style="padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.07);color:rgba(255,255,255,0.4);font-size:11px;text-transform:uppercase;letter-spacing:0.1em;">Email</td><td style="padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.07);color:#fff;">${email}</td></tr>
+          <tr><td style="padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.07);color:rgba(255,255,255,0.4);font-size:11px;text-transform:uppercase;letter-spacing:0.1em;">Secteur</td><td style="padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.07);color:#fff;">${secteur}</td></tr>
+          <tr><td style="padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.07);color:rgba(255,255,255,0.4);font-size:11px;text-transform:uppercase;letter-spacing:0.1em;">Objectif</td><td style="padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.07);color:#fff;">${objectif}</td></tr>
+          <tr><td style="padding:10px 0;color:rgba(255,255,255,0.4);font-size:11px;text-transform:uppercase;letter-spacing:0.1em;">Potentiel</td><td style="padding:10px 0;color:#C9A84C;font-weight:700;">${potentiel}</td></tr>
         </table>
-        <div style="margin-top:24px;padding:16px;background:rgba(201,168,76,0.07);border:1px solid rgba(201,168,76,0.2);border-radius:8px;">
-          <p style="font-size:13px;color:rgba(255,255,255,0.7);font-style:italic;margin:0;">"${analysis.verdict_massishoots}"</p>
+
+        <div style="background:rgba(201,168,76,0.08);border:1px solid rgba(201,168,76,0.25);border-radius:10px;padding:20px;margin-bottom:16px;text-align:center;">
+          <p style="font-size:11px;color:rgba(255,255,255,0.35);text-transform:uppercase;letter-spacing:0.12em;margin:0 0 8px;">Score obtenu</p>
+          <p style="font-size:36px;font-weight:700;color:#C9A84C;margin:0;line-height:1;">${score}<span style="font-size:16px;color:rgba(255,255,255,0.3);font-weight:400;">/100</span></p>
+          <p style="font-size:13px;color:rgba(255,255,255,0.5);margin:6px 0 0;">Niveau : ${niveau}</p>
         </div>
-        <div style="margin-top:24px;text-align:center;">
-          <a href="mailto:${email}" style="display:inline-block;background:#C9A84C;color:#0a0a0a;padding:12px 28px;border-radius:9999px;font-weight:700;font-size:13px;text-decoration:none;">Contacter ce lead →</a>
+
+        <div style="background:#111;border:1px solid rgba(255,255,255,0.07);border-radius:10px;padding:18px;margin-bottom:16px;">
+          <p style="font-size:11px;color:#E74C3C;text-transform:uppercase;letter-spacing:0.1em;font-weight:700;margin:0 0 6px;">⚠ Problème critique #1</p>
+          <p style="font-size:14px;color:#fff;margin:0;">${premierProbleme}</p>
+        </div>
+
+        <div style="background:#111;border:1px solid rgba(255,255,255,0.07);border-radius:10px;padding:18px;margin-bottom:28px;">
+          <p style="font-size:11px;color:#C9A84C;text-transform:uppercase;letter-spacing:0.1em;font-weight:700;margin:0 0 6px;">→ Recommandation #1</p>
+          <p style="font-size:14px;color:#fff;margin:0;">${premiereReco}</p>
+        </div>
+
+        <div style="text-align:center;">
+          <a href="mailto:${email}" style="display:inline-block;background:#C9A84C;color:#0a0a0a;padding:14px 32px;border-radius:8px;font-weight:700;font-size:13px;text-decoration:none;letter-spacing:0.06em;">
+            Contacter ce lead rapidement →
+          </a>
         </div>
       </div>
     `,
