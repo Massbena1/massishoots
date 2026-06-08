@@ -2,24 +2,12 @@
   "metadata": {
     "home": {
       "title": "Massishoots | Premium Photographer & Videographer Montreal",
-      "description": "Premium photo and video studio in Montreal. Monthly content, events, advertising and weddings. 50+ brands. Book your free call.",
+      "description": "Premium photo and video studio in Montreal. Monthly content, events, advertising and weddings. 50+ brands supported. Book your free call.",
       "keywords": "photographer montreal, videographer montreal, social media content montreal, photo video studio montreal, personal branding montreal"
     },
-    "about": {
-      "title": "About · Massi Bena, Founder of Massishoots Montreal",
-      "description": "Software engineer turned premium photographer and videographer. Massi Bena is the founder of Massishoots, a creative studio based in Montreal."
-    },
-    "services": {
-      "title": "Services | Massishoots — Photographer & Videographer Montreal",
-      "description": "Explore Personal Branding, Corporate B2B and Events & Weddings packages with pricing."
-    },
-    "contact": {
-      "title": "Contact | Massishoots — Book a Session in Montreal",
-      "description": "Contact form, online booking and social media — response within 24h."
-    },
-    "portfolio": {
-      "title": "Portfolio | Massishoots — Photographer & Videographer Montreal",
-      "description": "Full gallery — Personal Branding, Corporate, Weddings & Events in Montreal."
+    "analyseInstagram": {
+      "title": "Free Instagram Analysis | Massishoots Montreal",
+      "description": "Get a free and personalized analysis of your Instagram account. Optimize your profile, engagement and content strategy with Massishoots' expertise."
     }
   },
   "hero": {
@@ -978,7 +966,7 @@
       "Identifying opportunities...",
       "Generating report..."
     ],
-    "disclaimer": "100% free • Analysis within 24h • No commitment",
+    "disclaimer": "100% free • Report generated in 30 seconds • No commitment",
     "featuresTitle": "What you'll receive",
     "featuresSubtitle": "A complete analysis to optimize your Instagram presence",
     "feature1Title": "Profile audit",
@@ -990,12 +978,12 @@
     "timelineTitle": "How it works",
     "step1": "You submit your profile",
     "step1Time": "30 seconds",
-    "step2": "Massi analyzes your account",
-    "step2Time": "24 hours",
-    "step3": "You receive your report",
-    "step3Time": "By email",
-    "successTitle": "Analysis in progress!",
-    "successDesc": "Massi will analyze your Instagram profile and send you a detailed report within 24h. Keep an eye on your inbox!",
+    "step2": "Our AI analyzes your profile",
+    "step2Time": "30 seconds",
+    "step3": "You view your report",
+    "step3Time": "Directly on the page",
+    "successTitle": "Report generated!",
+    "successDesc": "Our AI has analyzed your Instagram profile. Your full report appears below.",
     "successCta": "Discover our portfolio",
     "reportTitle": "Analysis report —",
     "pointsFortsTitle": "✓ What's working",
@@ -1003,17 +991,10 @@
     "planActionTitle": "→ Your 3 immediate priorities",
     "ctaFinalTitle": "Want us to implement all of this together?",
     "ctaFinalSubtitle": "Massi can create exactly the content your profile is missing.",
-    "ctaFinalButton": "Book my free strategy call →"
-  },
-  "metadata": {
-    "home": {
-      "title": "Massishoots | Premium Photographer & Videographer Montreal",
-      "description": "Premium photo and video studio in Montreal. Monthly content, events, advertising and weddings. 50+ brands supported. Book your free call.",
-      "keywords": "photographer montreal, videographer montreal, social media content montreal, photo video studio montreal, personal branding montreal"
-    },
-    "analyseInstagram": {
-      "title": "Free Instagram Analysis | Massishoots Montreal",
-      "description": "Get a free and personalized analysis of your Instagram account. Optimize your profile, engagement and content strategy with Massishoots' expertise."
-    }
+    "ctaFinalButton": "Book my free strategy call →",
+    "autreSecteurPlaceholder": "Specify your industry",
+    "autreSecteurNote": "Example: Photography, E-commerce, Consulting...",
+    "emailLabel": "Email to notify you when the report is ready",
+    "contenuManquantLabel": "What's missing from your profile"
   }
 }

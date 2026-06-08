@@ -5,21 +5,9 @@
       "description": "Studio photo et vidéo premium à Montréal. Contenu mensuel, événements, publicité et mariages. 50+ marques accompagnées. Réservez votre appel gratuit.",
       "keywords": "photographe montréal, vidéaste montréal, contenu réseaux sociaux montréal, studio photo vidéo montréal, personal branding montréal"
     },
-    "about": {
-      "title": "À propos · Massi Bena, Fondateur Massishoots Montréal",
-      "description": "Ingénieur logiciel devenu photographe et vidéaste premium. Massi Bena est le fondateur de Massishoots, studio créatif basé à Montréal. Découvrez son histoire et sa vision."
-    },
-    "services": {
-      "title": "Services Photo & Vidéo Premium — Massishoots Montréal",
-      "description": "Contenu mensuel, couverture d'événements, publicité Meta et mariage à Montréal. Qualité cinématique, livraison 48h."
-    },
-    "contact": {
-      "title": "Contact | Massishoots — Réserver une séance à Montréal",
-      "description": "Formulaire de contact, réservation en ligne et réseaux sociaux — réponse sous 24h."
-    },
-    "portfolio": {
-      "title": "Portfolio — Massishoots Studio Photo & Vidéo Montréal",
-      "description": "Découvrez nos réalisations photo et vidéo : personal branding, événements, mariages et campagnes publicitaires à Montréal."
+    "analyseInstagram": {
+      "title": "Analyse Instagram Gratuite | Massishoots Montréal",
+      "description": "Reçois une analyse gratuite et personnalisée de ton compte Instagram. Optimise ton profil, engagement et stratégie de contenu avec l'expertise de Massishoots."
     }
   },
   "hero": {
@@ -977,7 +965,7 @@
       "Identification des opportunités...",
       "Génération du rapport..."
     ],
-    "disclaimer": "100% gratuit • Analyse sous 24h • Aucun engagement",
+    "disclaimer": "100% gratuit • Rapport généré en 30 secondes • Aucun engagement",
     "featuresTitle": "Ce que tu vas recevoir",
     "featuresSubtitle": "Une analyse complète pour optimiser ta présence sur Instagram",
     "feature1Title": "Audit de profil",
@@ -989,12 +977,12 @@
     "timelineTitle": "Comment ça marche",
     "step1": "Tu soumets ton profil",
     "step1Time": "30 secondes",
-    "step2": "Massi analyse ton compte",
-    "step2Time": "24 heures",
-    "step3": "Tu reçois ton rapport",
-    "step3Time": "Par email",
-    "successTitle": "Analyse en cours !",
-    "successDesc": "Massi va analyser ton profil Instagram et t'envoyer un rapport détaillé sous 24h. Surveille ta boîte de réception !",
+    "step2": "Notre IA analyse ton profil",
+    "step2Time": "30 secondes",
+    "step3": "Tu consultes le rapport",
+    "step3Time": "Directement sur la page",
+    "successTitle": "Rapport généré !",
+    "successDesc": "Notre IA a analysé ton profil Instagram. Ton rapport complet s'affiche ci-dessous.",
     "successCta": "Découvrir notre portfolio",
     "reportTitle": "Rapport d'analyse —",
     "pointsFortsTitle": "✓ Ce qui fonctionne",
@@ -1002,17 +990,10 @@
     "planActionTitle": "→ Tes 3 priorités immédiates",
     "ctaFinalTitle": "Tu veux qu'on implémente tout ça ensemble ?",
     "ctaFinalSubtitle": "Massi peut créer exactement le contenu qui manque à ton profil.",
-    "ctaFinalButton": "Réserver mon appel stratégique gratuit →"
-  },
-  "metadata": {
-    "home": {
-      "title": "Massishoots | Photographe & Vidéaste Premium Montréal",
-      "description": "Studio photo et vidéo premium à Montréal. Contenu mensuel, événements, publicité et mariages. 50+ marques accompagnées. Réservez votre appel gratuit.",
-      "keywords": "photographe montréal, vidéaste montréal, contenu réseaux sociaux montréal, studio photo vidéo montréal, personal branding montréal"
-    },
-    "analyseInstagram": {
-      "title": "Analyse Instagram Gratuite | Massishoots Montréal",
-      "description": "Reçois une analyse gratuite et personnalisée de ton compte Instagram. Optimise ton profil, engagement et stratégie de contenu avec l'expertise de Massishoots."
-    }
+    "ctaFinalButton": "Réserver mon appel stratégique gratuit →",
+    "autreSecteurPlaceholder": "Précisez votre secteur d'activité",
+    "autreSecteurNote": "Exemple : Photographie, E-commerce, Consulting...",
+    "emailLabel": "Email pour te notifier quand le rapport est prêt",
+    "contenuManquantLabel": "Ce qui manque à ton profil"
   }
 }
