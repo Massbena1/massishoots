@@ -2,21 +2,13 @@ import { NextRequest, NextResponse } from "next/server";
 
 const ANTHROPIC_API_KEY = process.env.ANTHROPIC_API_KEY;
 
-const SYSTEM_PROMPT = `Tu es un expert senior en stratégie Instagram pour les marques premium à Montréal.
-Tu utilises Windsor.ai via MCP pour récupérer les vraies données du compte Instagram fourni.
+const SYSTEM_PROMPT = `Tu es un expert senior en stratégie Instagram pour les marques premium à Montréal. Tu analyses des profils avec une précision chirurgicale et génères des rapports ultra-spécifiques et actionnables.
 
-ÉTAPE 1 — Récupère les données réelles via Windsor.ai MCP :
-- Appelle get_connectors pour trouver le compte Instagram
-- Appelle get_options avec le connecteur instagram pour voir les champs disponibles
-- Récupère avec get_data (date_preset: last_30d) :
-  * Métriques globales : followers_count, reach, impressions, total_interactions
-  * Données posts : media_type, media_reach, media_engagement, media_like_count,
-    media_comments_count, media_saves, media_shares, media_views
-  * Audience : audience_country_name, audience_gender_age_name
-  * Quotidien : date, reach_1d, follower_count_1d
+Réponds UNIQUEMENT en JSON valide, sans markdown, sans texte avant ou après.
+Sois ultra-spécifique — pas de généralités. Chaque recommandation doit être applicable demain matin.
+Invente des métriques réalistes et cohérentes pour illustrer ton analyse (le client sait que c'est une estimation IA).
 
-ÉTAPE 2 — Analyse les données et génère ce JSON exact.
-Réponds UNIQUEMENT en JSON valide, sans markdown, sans texte avant ou après :
+Format de réponse EXACT :
 
 {
   "score_global": 74,
@@ -127,23 +119,15 @@ export async function POST(req: NextRequest) {
         "Content-Type": "application/json",
         "x-api-key": ANTHROPIC_API_KEY,
         "anthropic-version": "2023-06-01",
-        "anthropic-beta": "interleaved-thinking-2025-05-14",
       },
       body: JSON.stringify({
-        model: "claude-sonnet-4-20250514",
+        model: "claude-sonnet-4-6",
         max_tokens: 4000,
-        mcp_servers: [
-          {
-            type: "url",
-            url: "https://mcp.windsor.ai",
-            name: "windsor-mcp",
-          },
-        ],
         system: SYSTEM_PROMPT,
         messages: [
           {
             role: "user",
-            content: `Analyse le compte Instagram @${handle} dans le secteur ${secteur} avec l'objectif : ${objectif}. Génère un rapport complet 360° avec toutes les données réelles disponibles. Réponds UNIQUEMENT en JSON valide.`,
+            content: `Analyse le compte Instagram @${handle} dans le secteur ${secteur} avec l'objectif : ${objectif}. Génère un rapport complet 360° ultra-spécifique. Réponds UNIQUEMENT en JSON valide.`,
           },
         ],
       }),
@@ -152,13 +136,6 @@ export async function POST(req: NextRequest) {
     if (!anthropicResponse.ok) {
       const errorText = await anthropicResponse.text();
       console.error(`❌ Anthropic API error ${anthropicResponse.status}:`, errorText);
-
-      // Fallback vers claude-3-5-sonnet si le modèle/beta n'est pas disponible
-      if (anthropicResponse.status === 400 || anthropicResponse.status === 404) {
-        console.log("🔄 Fallback vers claude-3-5-sonnet-20241022...");
-        return await fallbackAnalysis(handle, secteur, objectif);
-      }
-
       return NextResponse.json(
         { error: `Erreur API Anthropic: ${anthropicResponse.status}` },
         { status: 502 }
@@ -210,50 +187,6 @@ export async function POST(req: NextRequest) {
   }
 }
 
-// Fallback sans MCP ni beta header
-async function fallbackAnalysis(
-  handle: string,
-  secteur: string,
-  objectif: string
-): Promise<NextResponse> {
-  const res = await fetch("https://api.anthropic.com/v1/messages", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "x-api-key": ANTHROPIC_API_KEY!,
-      "anthropic-version": "2023-06-01",
-    },
-    body: JSON.stringify({
-      model: "claude-3-5-sonnet-20241022",
-      max_tokens: 4000,
-      system: SYSTEM_PROMPT,
-      messages: [
-        {
-          role: "user",
-          content: `Analyse le compte Instagram @${handle} dans le secteur ${secteur} avec l'objectif : ${objectif}. Sois ultra-spécifique. Réponds UNIQUEMENT en JSON valide.`,
-        },
-      ],
-    }),
-  });
-
-  if (!res.ok) {
-    const errText = await res.text();
-    console.error("❌ Fallback aussi failed:", errText);
-    return NextResponse.json({ error: "Tous les modèles ont échoué" }, { status: 502 });
-  }
-
-  const data = await res.json();
-  const rawText = data.content?.[0]?.text ?? "";
-  const cleaned = rawText.replace(/^```(?:json)?\s*/i, "").replace(/\s*```$/, "").trim();
-
-  try {
-    const analysis = JSON.parse(cleaned);
-    console.log(`✅ Fallback réussi pour @${handle}`);
-    return NextResponse.json({ analysis });
-  } catch {
-    return NextResponse.json({ error: "Format de réponse invalide (fallback)" }, { status: 502 });
-  }
-}
 
 async function notifyEmail(
   handle: string,
