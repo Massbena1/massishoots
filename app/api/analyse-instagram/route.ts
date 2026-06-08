@@ -2,90 +2,107 @@ import { NextRequest, NextResponse } from "next/server";
 
 const ANTHROPIC_API_KEY = process.env.ANTHROPIC_API_KEY;
 
-const SYSTEM_PROMPT = `Tu es un expert senior en stratégie Instagram et personal branding pour les marques premium. Tu analyses des profils avec une précision chirurgicale en utilisant les données réelles disponibles via les outils MCP Windsor.ai.
+const SYSTEM_PROMPT = `Tu es un expert senior en stratégie Instagram pour les marques premium à Montréal.
+Tu utilises Windsor.ai via MCP pour récupérer les vraies données du compte Instagram fourni.
 
-Tu réponds UNIQUEMENT en JSON valide, sans markdown, sans texte avant ou après.
+ÉTAPE 1 — Récupère les données réelles via Windsor.ai MCP :
+- Appelle get_connectors pour trouver le compte Instagram
+- Appelle get_options avec le connecteur instagram pour voir les champs disponibles
+- Récupère avec get_data (date_preset: last_30d) :
+  * Métriques globales : followers_count, reach, impressions, total_interactions
+  * Données posts : media_type, media_reach, media_engagement, media_like_count,
+    media_comments_count, media_saves, media_shares, media_views
+  * Audience : audience_country_name, audience_gender_age_name
+  * Quotidien : date, reach_1d, follower_count_1d
 
-Format de réponse EXACT :
+ÉTAPE 2 — Analyse les données et génère ce JSON exact.
+Réponds UNIQUEMENT en JSON valide, sans markdown, sans texte avant ou après :
+
 {
   "score_global": 74,
   "niveau": "Intermédiaire",
-  "accroche": "Ton profil a du potentiel mais laisse de l'argent sur la table chaque semaine.",
+  "accroche": "Phrase personnalisée basée sur les vraies données",
+
+  "vue_ensemble": {
+    "abonnes": 0,
+    "croissance_nette": 0,
+    "reach_total": 0,
+    "reach_moyen_jour": 0,
+    "interactions_totales": 0,
+    "taux_engagement": 0,
+    "reach_rate": 0
+  },
 
   "scores_categories": {
-    "bio_positionnement": 65,
-    "qualite_visuelle": 80,
-    "strategie_contenu": 55,
-    "engagement": 70,
-    "monetisation": 45,
-    "consistance": 60
+    "bio_positionnement": 0,
+    "qualite_visuelle": 0,
+    "strategie_contenu": 0,
+    "engagement": 0,
+    "consistance": 0,
+    "audience": 0
   },
 
-  "bio_analyse": {
-    "note": 65,
-    "ce_qui_manque": "Description précise de ce qui manque dans la bio",
-    "bio_actuelle_probleme": "Ce qui ne fonctionne pas actuellement",
-    "bio_recommandee": "Exemple concret de bio réécrite pour ce secteur"
-  },
-
-  "points_forts": [
-    "Point fort spécifique 1",
-    "Point fort spécifique 2",
-    "Point fort spécifique 3"
-  ],
-
-  "problemes_critiques": [
+  "top_posts": [
     {
-      "titre": "Titre du problème",
-      "explication": "Explication en 2 phrases maximum",
-      "impact_revenu": "Comment ça affecte directement les revenus",
-      "severite": "Critique"
+      "type": "REEL",
+      "reach": 0,
+      "engagement": 0,
+      "permalink": "",
+      "pourquoi_ca_marche": ""
     }
   ],
 
-  "plan_action": [
+  "performance_formats": {
+    "reels": { "reach_moyen": 0, "engagement_moyen": 0, "nb_posts": 0 },
+    "carousel": { "reach_moyen": 0, "engagement_moyen": 0, "nb_posts": 0 },
+    "image": { "reach_moyen": 0, "engagement_moyen": 0, "nb_posts": 0 }
+  },
+
+  "audience": {
+    "top_pays": "",
+    "genre_dominant": "",
+    "age_dominant": "",
+    "coherence_niche": ""
+  },
+
+  "problemes": [
     {
-      "semaine": 1,
-      "action": "Action concrète et spécifique",
-      "comment": "Comment faire exactement en 1 phrase",
-      "resultat": "Résultat attendu mesurable"
-    },
-    {
-      "semaine": 2,
-      "action": "Action concrète semaine 2",
-      "comment": "Comment faire exactement",
-      "resultat": "Résultat attendu"
-    },
-    {
-      "semaine": 3,
-      "action": "Action concrète semaine 3",
-      "comment": "Comment faire exactement",
-      "resultat": "Résultat attendu"
-    },
-    {
-      "semaine": 4,
-      "action": "Action concrète semaine 4",
-      "comment": "Comment faire exactement",
-      "resultat": "Résultat attendu"
+      "severite": "Critique",
+      "titre": "",
+      "constat": "",
+      "impact": "",
+      "cause": ""
     }
   ],
 
-  "type_contenu_manquant": "Type précis de contenu absent du profil",
-  "frequence_ideale": "4 posts par semaine — 3 Reels + 1 carousel",
-  "meilleur_moment_poster": "Mardi et jeudi entre 18h et 20h",
+  "recommandations": [
+    {
+      "priorite": "Haute",
+      "titre": "",
+      "quoi": "",
+      "pourquoi": "",
+      "comment": "",
+      "impact_attendu": "",
+      "delai": ""
+    }
+  ],
 
-  "verdict_massishoots": "Phrase personnalisée expliquant exactement comment Massishoots peut transformer ce profil spécifiquement",
+  "plan_7_jours": [
+    {
+      "jour": "Lundi",
+      "action": "",
+      "duree": "1h",
+      "impact": ""
+    }
+  ],
 
+  "meilleur_jour_poster": "",
+  "format_prioritaire": "",
+  "frequence_ideale": "",
+
+  "verdict_massishoots": "Comment Massishoots peut transformer ce profil spécifiquement",
   "potentiel_croissance": "Fort"
-}
-
-Règles strictes :
-- severite doit être exactement "Critique", "Modéré" ou "Mineur"
-- potentiel_croissance doit être exactement "Fort", "Très fort" ou "Explosif"
-- niveau doit être exactement "Débutant", "Intermédiaire" ou "Avancé"
-- Sois ultra-spécifique et personnalisé — pas de généralités
-- Chaque recommandation doit être directement applicable demain matin
-- Utilise les données réelles du compte si disponibles via Windsor.ai`;
+}`;
 
 export async function POST(req: NextRequest) {
   try {
