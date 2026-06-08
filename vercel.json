@@ -7,5 +7,13 @@
         { "key": "Cache-Control", "value": "public, max-age=86400" }
       ]
     }
-  ]
+  ],
+  "functions": {
+    "app/api/analyse-instagram/route.ts": {
+      "maxDuration": 60
+    },
+    "app/api/analyse-instagram-ai/route.ts": {
+      "maxDuration": 60
+    }
+  }
 }
