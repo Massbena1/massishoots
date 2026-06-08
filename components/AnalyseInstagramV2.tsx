@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, useRef } from "react";
-import { motion } from "framer-motion";
+import { useState, useRef, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { useTranslations } from "next-intl";
 import { Camera, TrendingUp, BarChart3, Users, ArrowRight, Sparkles, Clock, Award } from "lucide-react";
 
@@ -39,6 +39,24 @@ export default function AnalyseInstagramV2() {
   });
   const [animatedScore, setAnimatedScore] = useState(0);
   const reportRef = useRef<HTMLDivElement>(null);
+  const [loaderTextIdx, setLoaderTextIdx] = useState(0);
+
+  const loaderTexts = (handle: string) => [
+    `Analyse du profil @${handle}...`,
+    "Évaluation du positionnement...",
+    "Audit de la stratégie contenu...",
+    "Identification des opportunités...",
+    "Génération du rapport premium...",
+  ];
+
+  useEffect(() => {
+    if (!formState.loading) return;
+    setLoaderTextIdx(0);
+    const id = setInterval(() => {
+      setLoaderTextIdx(prev => (prev + 1) % 5);
+    }, 1200);
+    return () => clearInterval(id);
+  }, [formState.loading]);
 
   const updateFormState = (updates: Partial<FormState>) => {
     setFormState((prev: FormState) => ({ ...prev, ...updates }));
@@ -425,8 +443,79 @@ export default function AnalyseInstagramV2() {
     );
   }
 
+  const handle = formState.username.replace("@", "") || "vous";
+
   return (
     <>
+      {/* ─── LOADER OVERLAY ────────────────────────────────────── */}
+      <AnimatePresence>
+        {formState.loading && (
+          <motion.div
+            key="loader"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            style={{
+              position: "fixed",
+              inset: 0,
+              zIndex: 9999,
+              background: "rgba(0,0,0,0.88)",
+              backdropFilter: "blur(12px)",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <div style={{ textAlign: "center", width: "min(360px, 88vw)" }}>
+
+              {/* Logo gold */}
+              <motion.p
+                initial={{ opacity: 0, y: -8 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.1 }}
+                className="font-bebas"
+                style={{ fontSize: 22, letterSpacing: "0.22em", color: "#C9A84C", marginBottom: 36 }}
+              >
+                MASSISHOOTS
+              </motion.p>
+
+              {/* Barre de progression */}
+              <div style={{ height: 2, background: "rgba(201,168,76,0.12)", borderRadius: 9999, overflow: "hidden", marginBottom: 28 }}>
+                <motion.div
+                  initial={{ width: "0%" }}
+                  animate={{ width: "100%" }}
+                  transition={{ duration: 4, ease: "easeInOut" }}
+                  style={{ height: "100%", background: "linear-gradient(to right, #C9A84C, #e8c96e)", borderRadius: 9999 }}
+                />
+              </div>
+
+              {/* Texte animé */}
+              <div style={{ height: 28, position: "relative", overflow: "hidden", marginBottom: 20 }}>
+                <AnimatePresence mode="wait">
+                  <motion.p
+                    key={loaderTextIdx}
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    transition={{ duration: 0.35 }}
+                    className="font-dm"
+                    style={{ fontSize: 14, color: "rgba(255,255,255,0.85)", position: "absolute", width: "100%", textAlign: "center" }}
+                  >
+                    {loaderTexts(handle)[loaderTextIdx]}
+                  </motion.p>
+                </AnimatePresence>
+              </div>
+
+              {/* Sous-texte */}
+              <p className="font-dm" style={{ fontSize: 10, color: "rgba(255,255,255,0.18)", letterSpacing: "0.1em", textTransform: "uppercase" }}>
+                Propulsé par Intelligence Artificielle · Massishoots
+              </p>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       {/* Hero Section */}
       <section style={{
         minHeight: "100vh",
