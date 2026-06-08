@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 
+export const maxDuration = 60;
+
 const ANTHROPIC_API_KEY = process.env.ANTHROPIC_API_KEY;
 
 const SYSTEM_PROMPT = `Tu es un expert senior en stratégie Instagram pour les marques premium à Montréal. Tu analyses des profils avec une précision chirurgicale et génères des rapports ultra-spécifiques et actionnables.
@@ -122,7 +124,7 @@ export async function POST(req: NextRequest) {
       },
       body: JSON.stringify({
         model: "claude-sonnet-4-6",
-        max_tokens: 4000,
+        max_tokens: 2000,
         system: SYSTEM_PROMPT,
         messages: [
           {
