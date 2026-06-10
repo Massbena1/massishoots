@@ -9,7 +9,8 @@ export const revalidate = 60;
 
 interface GalleryEntry {
   nom: string;
-  url: string;
+  url?: string;
+  code?: string;
   date: string;
   actif: boolean;
   public?: boolean;
@@ -17,11 +18,18 @@ interface GalleryEntry {
   photos?: number;
 }
 
-function loadPublicGalleries() {
+function loadGalleries() {
   try {
     const raw = readFileSync(join(process.cwd(), "data", "galleries.json"), "utf-8");
     const all: GalleryEntry[] = JSON.parse(raw);
-    return all.filter(g => g.actif && g.public).map(({ nom, url, date, cover, photos }) => ({ nom, url, date, cover, photos }));
+    return all
+      .filter(g => g.actif)
+      .sort((a, b) => b.date.localeCompare(a.date))
+      .map(({ nom, url, date, cover, photos, public: pub }) => ({
+        nom, date, cover, photos,
+        accessible: !!pub,
+        url: pub ? url : undefined,
+      }));
   } catch {
     return [];
   }
@@ -40,7 +48,7 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default function GalleriesPage() {
-  const galleries = loadPublicGalleries();
+  const galleries = loadGalleries();
   return (
     <>
       <GalleriesPageContent galleries={galleries} />

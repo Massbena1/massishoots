@@ -18,5 +18,15 @@
     "public": true,
     "cover": "/portfolio/eventt/1.jpg",
     "photos": 124
+  },
+  {
+    "code": "JY94231",
+    "nom": "Événement privé — Juin 2026",
+    "url": "https://massishoots.pixieset.com/jy94231",
+    "date": "2026-06-05",
+    "actif": true,
+    "public": false,
+    "cover": "/portfolio/corpo/1.2.jpg",
+    "photos": 64
   }
 ]

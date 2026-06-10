@@ -5,7 +5,8 @@ import Image from "next/image";
 
 interface PublicGallery {
   nom: string;
-  url: string;
+  url?: string;
+  accessible: boolean;
   date: string;
   cover?: string;
   photos?: number;
@@ -17,22 +18,12 @@ function formatDate(d: string) {
   return new Date(d).toLocaleDateString("fr-CA", { year: "numeric", month: "long", day: "numeric" });
 }
 
-/* ─── CARTE GALERIE PUBLIQUE ─────────────────────────────── */
+/* ─── CARTE GALERIE ──────────────────────────────────────── */
 function GalleryCard({ g, idx }: { g: PublicGallery; idx: number }) {
   const [hovered, setHovered] = useState(false);
-  return (
-    <motion.a
-      href={g.url}
-      target="_blank"
-      rel="noopener noreferrer"
-      initial={{ opacity: 0, y: 24 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-40px" }}
-      transition={{ duration: 0.6, delay: idx * 0.1 }}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-      style={{ display: "block", textDecoration: "none", borderRadius: 12, overflow: "hidden", border: "0.5px solid rgba(201,168,76,0.2)", position: "relative", background: "#111" }}
-    >
+
+  const cardInner = (
+    <>
       {/* Cover image */}
       <div style={{ position: "relative", height: 260, overflow: "hidden" }}>
         {g.cover ? (
@@ -41,7 +32,7 @@ function GalleryCard({ g, idx }: { g: PublicGallery; idx: number }) {
             alt={g.nom}
             fill
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-            style={{ objectFit: "cover", transition: "transform 0.5s ease", transform: hovered ? "scale(1.06)" : "scale(1)", filter: "brightness(0.75) saturate(0.85)" }}
+            style={{ objectFit: "cover", transition: "transform 0.5s ease", transform: hovered ? "scale(1.06)" : "scale(1)", filter: g.accessible ? "brightness(0.75) saturate(0.85)" : "brightness(0.4) saturate(0.3)" }}
           />
         ) : (
           <div style={{ width: "100%", height: "100%", background: "#1a1a1a", display: "flex", alignItems: "center", justifyContent: "center" }}>
@@ -49,18 +40,32 @@ function GalleryCard({ g, idx }: { g: PublicGallery; idx: number }) {
           </div>
         )}
         {/* Hover overlay */}
-        <div style={{ position: "absolute", inset: 0, background: hovered ? "rgba(201,168,76,0.15)" : "transparent", transition: "background 0.3s", display: "flex", alignItems: "center", justifyContent: "center" }}>
-          {hovered && (
+        <div style={{ position: "absolute", inset: 0, background: hovered && g.accessible ? "rgba(201,168,76,0.15)" : "transparent", transition: "background 0.3s", display: "flex", alignItems: "center", justifyContent: "center" }}>
+          {g.accessible && hovered && (
             <motion.span initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.2 }}
               className="font-dm" style={{ fontSize: 12, color: "#fff", letterSpacing: "0.2em", textTransform: "uppercase", border: "1px solid rgba(255,255,255,0.6)", padding: "8px 22px", borderRadius: 9999, background: "rgba(0,0,0,0.5)" }}>
               Voir la galerie →
             </motion.span>
           )}
+          {!g.accessible && (
+            <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 8 }}>
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.5)" strokeWidth="1.5">
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+              </svg>
+              <span className="font-dm" style={{ fontSize: 10, color: "rgba(255,255,255,0.4)", letterSpacing: "0.15em", textTransform: "uppercase" }}>Bientôt disponible</span>
+            </div>
+          )}
         </div>
         {/* Badge photos */}
-        {g.photos && (
+        {g.photos && g.accessible && (
           <span className="font-dm" style={{ position: "absolute", top: 14, right: 14, fontSize: 10, fontWeight: 700, color: "#0a0a0a", background: "#C9A84C", padding: "3px 10px", borderRadius: 9999, letterSpacing: "0.06em" }}>
             {g.photos} photos
+          </span>
+        )}
+        {!g.accessible && (
+          <span className="font-dm" style={{ position: "absolute", top: 14, right: 14, fontSize: 10, fontWeight: 700, color: "rgba(255,255,255,0.4)", background: "rgba(255,255,255,0.08)", border: "1px solid rgba(255,255,255,0.12)", padding: "3px 10px", borderRadius: 9999, letterSpacing: "0.06em" }}>
+            Privée
           </span>
         )}
       </div>
@@ -70,11 +75,40 @@ function GalleryCard({ g, idx }: { g: PublicGallery; idx: number }) {
         <p className="font-dm" style={{ fontSize: 10, color: "rgba(255,255,255,0.3)", letterSpacing: "0.15em", textTransform: "uppercase", marginBottom: 6 }}>
           {formatDate(g.date)}
         </p>
-        <h3 className="font-bebas" style={{ fontSize: 22, color: "#fff", letterSpacing: "0.04em", lineHeight: 1.1 }}>
+        <h3 className="font-bebas" style={{ fontSize: 22, color: g.accessible ? "#fff" : "rgba(255,255,255,0.45)", letterSpacing: "0.04em", lineHeight: 1.1 }}>
           {g.nom}
         </h3>
       </div>
-    </motion.a>
+    </>
+  );
+
+  const sharedStyle: React.CSSProperties = {
+    display: "block", textDecoration: "none", borderRadius: 12, overflow: "hidden",
+    border: `0.5px solid ${g.accessible ? "rgba(201,168,76,0.2)" : "rgba(255,255,255,0.06)"}`,
+    position: "relative", background: "#111",
+    cursor: g.accessible ? "pointer" : "default",
+  };
+
+  if (g.accessible && g.url) {
+    return (
+      <motion.a href={g.url} target="_blank" rel="noopener noreferrer"
+        initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-40px" }} transition={{ duration: 0.6, delay: idx * 0.1 }}
+        onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}
+        style={sharedStyle}>
+        {cardInner}
+      </motion.a>
+    );
+  }
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-40px" }} transition={{ duration: 0.6, delay: idx * 0.1 }}
+      onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}
+      style={sharedStyle}>
+      {cardInner}
+    </motion.div>
   );
 }
 
