@@ -10,7 +10,6 @@ import NavigationEvents from "@/components/NavigationEvents";
 import GradientMenu from "@/components/ui/gradient-menu";
 import TopBar from "@/components/TopBar";
 import Navbar from "@/components/Navbar";
-import ExitIntentPopup from "@/components/ExitIntentPopup";
 
 export async function generateMetadata({
   params,
@@ -85,7 +84,6 @@ export default async function LocaleLayout({
             <GradientMenu />
           </div>
           <PageTransition>{children}</PageTransition>
-          <ExitIntentPopup />
         </NextIntlClientProvider>
       </body>
     </html>
