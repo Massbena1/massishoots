@@ -194,8 +194,8 @@ export default function ShaderHero() {
             filter: "brightness(0.45) saturate(0.8)",
           }}
         >
-          <source src="/video/hero.mp4" type="video/mp4" />
-          <source src="/video/hero.mov" type="video/quicktime" />
+          <source src="/VIDEO/hero.mp4" type="video/mp4" />
+          <source src="/VIDEO/hero.mov" type="video/quicktime" />
         </video>
         <div style={{
           position: "absolute",
