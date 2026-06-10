@@ -1,11 +1,6 @@
-import { getTranslations } from "next-intl/server";
 import { getAlternates, getOpenGraph, getTwitter } from "@/lib/hreflang";
-import Services from "@/components/Services";
-import ServicePackages from "@/components/ServicePackages";
-import Process from "@/components/Process";
-import DeliveryTimeline from "@/components/DeliveryTimeline";
 import Footer from "@/components/Footer";
-import PageHeader from "@/components/PageHeader";
+import ServicesPageContent from "@/components/ServicesPageContent";
 import type { Metadata } from "next";
 
 export async function generateMetadata({
@@ -14,9 +9,8 @@ export async function generateMetadata({
   params: Promise<{ locale: string }>;
 }): Promise<Metadata> {
   const { locale } = await params;
-  const t = await getTranslations({ locale, namespace: "metadata.services" });
-  const title = t("title");
-  const description = t("description");
+  const title = "Nos Services — Studio Photo & Vidéo Premium | Massishoots Montréal";
+  const description = "Contenu mensuel, événements, publicité et mariage à Montréal. Massishoots crée du contenu cinématique sur mesure pour entrepreneurs et marques premium. Réservez votre appel gratuit.";
   return {
     title,
     description,
@@ -31,21 +25,11 @@ export default async function ServicesPage({
 }: {
   params: Promise<{ locale: string }>;
 }) {
-  const { locale } = await params;
-  const t = await getTranslations({ locale, namespace: "services.page" });
-
+  await params;
   return (
-    <main>
-      <PageHeader
-        label={t("label")}
-        title={t("title")}
-        subtitle={t("subtitle")}
-      />
-      <Services />
-      <ServicePackages />
-      <DeliveryTimeline />
-      <Process />
+    <>
+      <ServicesPageContent />
       <Footer />
-    </main>
+    </>
   );
 }
