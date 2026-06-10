@@ -1,8 +1,6 @@
-import { getTranslations } from "next-intl/server";
 import { getAlternates, getOpenGraph, getTwitter } from "@/lib/hreflang";
-import Portfolio from "@/components/Portfolio";
 import Footer from "@/components/Footer";
-import PageHeader from "@/components/PageHeader";
+import PortfolioPageContent from "@/components/PortfolioPageContent";
 import type { Metadata } from "next";
 
 export async function generateMetadata({
@@ -11,9 +9,8 @@ export async function generateMetadata({
   params: Promise<{ locale: string }>;
 }): Promise<Metadata> {
   const { locale } = await params;
-  const t = await getTranslations({ locale, namespace: "metadata.portfolio" });
-  const title = t("title");
-  const description = t("description");
+  const title = "Portfolio — Massishoots | Studio Photo & Vidéo Premium Montréal";
+  const description = "Découvrez les réalisations de Massishoots : événements, personal branding, mariages et publicité à Montréal. Contenu cinématique pour marques et entrepreneurs premium.";
   return {
     title,
     description,
@@ -28,18 +25,11 @@ export default async function PortfolioPage({
 }: {
   params: Promise<{ locale: string }>;
 }) {
-  const { locale } = await params;
-  const t = await getTranslations({ locale, namespace: "portfolio.page" });
-
+  await params;
   return (
-    <main>
-      <PageHeader
-        label={t("label")}
-        title={t("title")}
-        subtitle={t("subtitle")}
-      />
-      <Portfolio />
+    <>
+      <PortfolioPageContent />
       <Footer />
-    </main>
+    </>
   );
 }
