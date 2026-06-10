@@ -9,7 +9,7 @@ import { Home, Camera, Image, DollarSign, User, Images } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const NAV_LINKS = [
-  { key: "services",  href: "/services",  sectionId: "services",  homeScroll: true,  icon: Camera   },
+  { key: "services",  href: "/services",  sectionId: null,        homeScroll: false, icon: Camera   },
   { key: "portfolio", href: "/portfolio", sectionId: "portfolio", homeScroll: true,  icon: Image    },
   { key: "about",     href: "/about",     sectionId: null,        homeScroll: false, icon: User     },
   { key: "galleries", href: "/galleries", sectionId: null,        homeScroll: false, icon: Images   },
