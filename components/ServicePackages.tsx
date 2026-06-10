@@ -136,15 +136,9 @@ export default function ServicePackages() {
                   <h3 className="font-bebas" style={{ fontSize: 36, color: "#fff", letterSpacing: "0.06em", lineHeight: 1, marginBottom: 16 }}>
                     {pkg.name}
                   </h3>
-                  <div style={{ display: "flex", alignItems: "baseline", gap: 6, flexWrap: "wrap" }}>
-                    <span className="font-bebas" style={{ fontSize: 32, color: "#fff", letterSpacing: "0.03em" }}>
-                      {pkg.price}
-                    </span>
-                    <span className="font-dm" style={{ fontSize: 12, color: "rgba(255,255,255,0.3)" }}>
-                      {pkg.priceHigh ? `— ${pkg.priceHigh}` : ""}
-                    </span>
-                    <span className="font-dm" style={{ fontSize: 12, color: "rgba(255,255,255,0.3)" }}>
-                      {pkg.unit}
+                  <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                    <span className="font-dm" style={{ fontSize: 12, color: "#C9A84C", fontWeight: 600, padding: "4px 12px", border: "1px solid rgba(201,168,76,0.3)", borderRadius: 9999, letterSpacing: "0.08em" }}>
+                      Devis personnalisé
                     </span>
                   </div>
                 </div>
@@ -239,8 +233,7 @@ export default function ServicePackages() {
                   {PACKAGES.map(pkg => (
                     <td key={pkg.id} style={{ padding: "20px", textAlign: "center" }}>
                       <div style={{ marginBottom: 8 }}>
-                        <span className="font-bebas" style={{ fontSize: 20, color: "#fff", letterSpacing: "0.03em" }}>{pkg.price}</span>
-                        {pkg.priceHigh && <span className="font-dm" style={{ fontSize: 11, color: "rgba(255,255,255,0.3)", display: "block" }}>— {pkg.priceHigh} {t("mois")}</span>}
+                        <span className="font-dm" style={{ fontSize: 11, color: "#C9A84C", fontWeight: 600, letterSpacing: "0.06em" }}>Devis personnalisé</span>
                       </div>
                       <Link href="/contact" className="font-dm" style={{ display: "inline-flex", alignItems: "center", gap: 6, padding: "10px 18px", background: pkg.popular ? "#f2f0ec" : "rgba(255,255,255,0.06)", color: pkg.popular ? "#0a0a0a" : "rgba(255,255,255,0.6)", borderRadius: 9999, textDecoration: "none", fontSize: 12, fontWeight: 700, border: pkg.popular ? "none" : "1px solid rgba(255,255,255,0.08)" }}>
                         {t("ctaChoose")} <ArrowRight size={11} />

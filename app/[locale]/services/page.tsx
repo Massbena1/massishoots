@@ -3,7 +3,6 @@ import { getAlternates, getOpenGraph, getTwitter } from "@/lib/hreflang";
 import Services from "@/components/Services";
 import ServicePackages from "@/components/ServicePackages";
 import Process from "@/components/Process";
-import PriceCalculator from "@/components/PriceCalculator";
 import DeliveryTimeline from "@/components/DeliveryTimeline";
 import Footer from "@/components/Footer";
 import PageHeader from "@/components/PageHeader";
@@ -44,7 +43,6 @@ export default async function ServicesPage({
       />
       <Services />
       <ServicePackages />
-      <PriceCalculator />
       <DeliveryTimeline />
       <Process />
       <Footer />

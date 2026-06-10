@@ -101,7 +101,7 @@ function AccordionItem({
               color: "rgba(255,255,255,0.3)",
               letterSpacing: "0.08em",
             }}>
-              {item.price}
+              Devis personnalisé
             </span>
           </div>
         )}
@@ -146,7 +146,7 @@ function AccordionItem({
               marginBottom: 10,
               alignSelf: "flex-start",
             }}>
-              {item.price}
+              Devis personnalisé
             </span>
             <h3 className="font-bebas" style={{
               fontSize: 32,
@@ -277,7 +277,7 @@ function AccordionItem({
             letterSpacing: "0.08em", display: "inline-block", marginBottom: 14,
             backdropFilter: "blur(8px)",
           }}>
-            {item.price}
+            Devis personnalisé
           </span>
           <h3 className="font-bebas" style={{ fontSize: "clamp(32px, 4vw, 44px)", color: "#fff", letterSpacing: "0.03em", lineHeight: 0.95, marginBottom: 12 }}>
             {item.title}
