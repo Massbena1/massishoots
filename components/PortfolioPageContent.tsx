@@ -12,6 +12,7 @@ const FEATURED = [
     desc: "Photo + vidéo cinématique. Livraison dans les 48h. Chaque moment capturé avec précision.",
     tag: "Photo · Vidéo · Reel",
     image: "/portfolio/eventt/1.jpg",
+    gridFilter: "Événements" as const,
   },
   {
     num: "02",
@@ -20,6 +21,7 @@ const FEATURED = [
     desc: "Présence Instagram transformée en 30 jours. Photos, Reels, face caméra — livrés clés en main.",
     tag: "Photo · Reels · Face Caméra",
     image: "/portfolio/professionel/1.JPG",
+    gridFilter: "Branding" as const,
   },
   {
     num: "03",
@@ -28,6 +30,7 @@ const FEATURED = [
     desc: "Chaque émotion capturée avec une précision rare. Du premier regard à la dernière danse.",
     tag: "Photo · Film · Highlights",
     image: "/portfolio/mariage/1.jpg",
+    gridFilter: "Mariage" as const,
   },
 ];
 
@@ -252,6 +255,11 @@ export default function PortfolioPageContent() {
     setLightbox({ items: filtered, idx });
   };
 
+  const openFeaturedLightbox = (gridFilter: Filter) => {
+    const items = GRID_ITEMS.filter(i => i.filter === gridFilter);
+    setLightbox({ items, idx: 0 });
+  };
+
   return (
     <main style={{ background: "#000", minHeight: "100vh" }}>
 
@@ -301,7 +309,7 @@ export default function PortfolioPageContent() {
                   className="featured-block"
                 >
                   {/* Image (conditionally first or second) */}
-                  {!reversed && <FeaturedImage p={p} />}
+                  {!reversed && <FeaturedImage p={p} onClick={() => openFeaturedLightbox(p.gridFilter)} />}
 
                   {/* Texte */}
                   <div style={{ background: "#0f0f0f", padding: "52px 44px", display: "flex", flexDirection: "column", justifyContent: "center", position: "relative", overflow: "hidden", order: reversed ? -1 : 0 }}>
@@ -327,7 +335,7 @@ export default function PortfolioPageContent() {
                     </span>
                   </div>
 
-                  {reversed && <FeaturedImage p={p} />}
+                  {reversed && <FeaturedImage p={p} onClick={() => openFeaturedLightbox(p.gridFilter)} />}
                 </motion.div>
               );
             })}
@@ -475,11 +483,12 @@ export default function PortfolioPageContent() {
   );
 }
 
-function FeaturedImage({ p }: { p: typeof FEATURED[0] }) {
+function FeaturedImage({ p, onClick }: { p: typeof FEATURED[0]; onClick: () => void }) {
   const [hovered, setHovered] = useState(false);
   return (
     <div
-      style={{ position: "relative", overflow: "hidden" }}
+      onClick={onClick}
+      style={{ position: "relative", overflow: "hidden", cursor: "pointer" }}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
