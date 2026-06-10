@@ -170,38 +170,30 @@ export default function AnalyseInstagramV2() {
       { key: "bio_positionnement", label: "Bio & Positionnement" },
       { key: "qualite_visuelle",   label: "Qualité Visuelle" },
       { key: "strategie_contenu",  label: "Stratégie Contenu" },
-      { key: "engagement",        label: "Engagement" },
-      { key: "consistance",       label: "Consistance" },
-      { key: "audience",          label: "Audience" },
+      { key: "engagement",         label: "Engagement" },
+      { key: "consistance",        label: "Consistance" },
+      { key: "presence_marque",    label: "Présence de Marque" },
     ];
-
-    const engagementInterp = (taux: number) =>
-      taux > 3
-        ? { label: "Excellent ✓", color: "#2ECC71" }
-        : taux >= 1
-        ? { label: "Dans la moyenne", color: "#C9A84C" }
-        : { label: "À améliorer ⚠", color: "#E74C3C" };
-
-    const vue = a.vue_ensemble ?? {};
-    const perf = a.performance_formats ?? {};
-    const formats = ["reels", "carousel", "image"] as const;
-    const bestFormat = formats.reduce((best, fmt) =>
-      (perf[fmt]?.reach_moyen ?? 0) > (perf[best]?.reach_moyen ?? 0) ? fmt : best, "reels" as typeof formats[number]);
-
-    const DAYS = ["Lundi","Mardi","Mercredi","Jeudi","Vendredi","Samedi","Dimanche"];
 
     return (
       <section ref={reportRef} style={{ background: "#000", padding: "90px 24px 100px" }}>
         <div style={{ maxWidth: 860, margin: "0 auto", display: "flex", flexDirection: "column", gap: 20 }}>
 
+          {/* Disclaimer IA */}
+          <div style={{ background: "rgba(201,168,76,0.05)", border: "1px solid rgba(201,168,76,0.15)", borderRadius: 10, padding: "12px 18px", display: "flex", alignItems: "center", gap: 10 }}>
+            <span style={{ color: "#C9A84C", fontSize: 14, flexShrink: 0 }}>✦</span>
+            <p className="font-dm" style={{ fontSize: 11, color: "rgba(255,255,255,0.45)", margin: 0, lineHeight: 1.5 }}>
+              Analyse stratégique générée par IA · Basée sur ton secteur et tes objectifs · Non connectée aux métriques réelles de ton compte
+            </p>
+          </div>
+
           {/* ── A : SCORE GLOBAL ──────────────────────────────────── */}
           <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }}
             style={{ background: "#0d0d0d", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 16, padding: "40px 36px" }}>
             <p className="font-dm" style={{ fontSize: 11, letterSpacing: "0.2em", textTransform: "uppercase", color: "rgba(255,255,255,0.3)", marginBottom: 28 }}>
-              Rapport Analyse Instagram · @{formState.username.replace("@","")} · {formState.secteur}
+              Analyse Stratégique · @{formState.username.replace("@","")} · {formState.secteur}
             </p>
             <div style={{ display: "flex", alignItems: "center", gap: 36, flexWrap: "wrap" }}>
-              {/* Cercle */}
               <div style={{ position: "relative", width: 148, height: 148, flexShrink: 0 }}>
                 <svg width="148" height="148" style={{ transform: "rotate(-90deg)" }}>
                   <circle cx="74" cy="74" r="58" fill="none" stroke="rgba(255,255,255,0.05)" strokeWidth="10" />
@@ -211,15 +203,13 @@ export default function AnalyseInstagramV2() {
                     transition={{ duration: 1.6, ease: "easeOut", delay: 0.3 }} />
                 </svg>
                 <div style={{ position: "absolute", inset: 0, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
-                  <motion.span
-                    initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.5 }}
+                  <motion.span initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.5 }}
                     style={{ fontSize: 42, fontWeight: 700, color: "#fff", lineHeight: 1, fontFamily: "var(--font-bebas-neue)" }}>
                     {score}
                   </motion.span>
                   <span className="font-dm" style={{ fontSize: 11, color: "rgba(255,255,255,0.3)", marginTop: 3 }}>/ 100</span>
                 </div>
               </div>
-              {/* Droite */}
               <div style={{ flex: 1, minWidth: 200 }}>
                 {a.niveau && (
                   <span className="font-dm" style={{ display: "inline-block", fontSize: 11, fontWeight: 700, padding: "5px 16px", borderRadius: 6, background: scoreColor, color: "#0a0a0a", letterSpacing: "0.07em", marginBottom: 16 }}>
@@ -235,35 +225,11 @@ export default function AnalyseInstagramV2() {
             </div>
           </motion.div>
 
-          {/* ── B : VUE D'ENSEMBLE ────────────────────────────────── */}
-          {Object.keys(vue).length > 0 && (
+          {/* ── B : SCORES PAR CATÉGORIE ──────────────────────────── */}
+          {a.scores_categories && (
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1, duration: 0.6 }}
               style={{ background: "#0d0d0d", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 16, padding: "28px 32px" }}>
-              <h2 className="font-dm" style={{ fontSize: 14, fontWeight: 700, color: "#fff", marginBottom: 20 }}>Vue d'ensemble — 30 derniers jours</h2>
-              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))", gap: 12 }}>
-                {[
-                  { label: "Abonnés", value: vue.abonnes?.toLocaleString("fr-CA") ?? "—" },
-                  { label: "Croissance nette", value: vue.croissance_nette != null ? `${vue.croissance_nette > 0 ? "+" : ""}${vue.croissance_nette}` : "—" },
-                  { label: "Reach total", value: vue.reach_total?.toLocaleString("fr-CA") ?? "—" },
-                  { label: "Reach / jour", value: vue.reach_moyen_jour?.toLocaleString("fr-CA") ?? "—" },
-                  { label: "Interactions", value: vue.interactions_totales?.toLocaleString("fr-CA") ?? "—" },
-                  { label: "Taux engagement", value: vue.taux_engagement != null ? `${vue.taux_engagement}%` : "—", interp: engagementInterp(vue.taux_engagement ?? 0) },
-                ].map(({ label, value, interp }) => (
-                  <div key={label} style={{ background: "#111", border: "1px solid rgba(255,255,255,0.06)", borderRadius: 10, padding: "14px 16px" }}>
-                    <p className="font-dm" style={{ fontSize: 10, color: "rgba(255,255,255,0.3)", letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: 8 }}>{label}</p>
-                    <p className="font-bebas" style={{ fontSize: 22, color: "#fff", marginBottom: interp ? 4 : 0 }}>{value}</p>
-                    {interp && <p className="font-dm" style={{ fontSize: 10, color: interp.color, fontWeight: 700 }}>{interp.label}</p>}
-                  </div>
-                ))}
-              </div>
-            </motion.div>
-          )}
-
-          {/* ── C : SCORES PAR CATÉGORIE ──────────────────────────── */}
-          {a.scores_categories && (
-            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15, duration: 0.6 }}
-              style={{ background: "#0d0d0d", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 16, padding: "28px 32px" }}>
-              <h2 className="font-dm" style={{ fontSize: 14, fontWeight: 700, color: "#fff", marginBottom: 24 }}>Scores par catégorie</h2>
+              <h2 className="font-dm" style={{ fontSize: 14, fontWeight: 700, color: "#fff", marginBottom: 24 }}>Évaluation stratégique</h2>
               <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
                 {CATEGORIES.map(({ key, label }, idx) => {
                   const val: number = a.scores_categories[key] ?? 0;
@@ -275,8 +241,8 @@ export default function AnalyseInstagramV2() {
                       </div>
                       <div style={{ height: 5, background: "#1a1a1a", borderRadius: 9999, overflow: "hidden" }}>
                         <motion.div initial={{ width: 0 }} animate={{ width: `${val}%` }}
-                          transition={{ delay: 0.25 + idx * 0.07, duration: 1.4, ease: "easeOut" }}
-                          style={{ height: "100%", background: "#C9A84C", borderRadius: 9999 }} />
+                          transition={{ delay: 0.2 + idx * 0.07, duration: 1.4, ease: "easeOut" }}
+                          style={{ height: "100%", background: val >= 70 ? "#2ECC71" : val >= 50 ? "#C9A84C" : "#E74C3C", borderRadius: 9999 }} />
                       </div>
                     </div>
                   );
@@ -285,100 +251,25 @@ export default function AnalyseInstagramV2() {
             </motion.div>
           )}
 
-          {/* ── D : TOP POSTS ─────────────────────────────────────── */}
-          {a.top_posts?.length > 0 && (
-            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2, duration: 0.6 }}
+          {/* ── C : POINTS FORTS ──────────────────────────────────── */}
+          {a.points_forts?.length > 0 && (
+            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15, duration: 0.6 }}
               style={{ background: "#0d0d0d", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 16, padding: "28px 32px" }}>
-              <h2 className="font-dm" style={{ fontSize: 14, fontWeight: 700, color: "#fff", marginBottom: 20 }}>🏆 Top Posts — les plus performants</h2>
-              <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-                {a.top_posts.map((post: any, i: number) => (
-                  <div key={i} style={{ background: "#111", border: "1px solid rgba(255,255,255,0.06)", borderRadius: 12, padding: "18px 20px" }}>
-                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", flexWrap: "wrap", gap: 10, marginBottom: 10 }}>
-                      <div style={{ display: "flex", gap: 10, alignItems: "center" }}>
-                        <span className="font-dm" style={{ fontSize: 10, fontWeight: 700, padding: "3px 10px", borderRadius: 4, background: "rgba(201,168,76,0.1)", border: "1px solid rgba(201,168,76,0.25)", color: "#C9A84C", letterSpacing: "0.08em" }}>
-                          {post.type}
-                        </span>
-                        {post.permalink && (
-                          <a href={post.permalink} target="_blank" rel="noopener noreferrer"
-                            className="font-dm"
-                            style={{ fontSize: 11, color: "rgba(255,255,255,0.3)", textDecoration: "none", borderBottom: "1px solid rgba(255,255,255,0.1)" }}>
-                            Voir le post ↗
-                          </a>
-                        )}
-                      </div>
-                      <div style={{ display: "flex", gap: 16 }}>
-                        {post.reach && <span className="font-dm" style={{ fontSize: 12, color: "rgba(255,255,255,0.5)" }}>Reach <strong style={{ color: "#fff" }}>{post.reach.toLocaleString("fr-CA")}</strong></span>}
-                        {post.engagement && <span className="font-dm" style={{ fontSize: 12, color: "rgba(255,255,255,0.5)" }}>Eng. <strong style={{ color: "#C9A84C" }}>{post.engagement}%</strong></span>}
-                      </div>
-                    </div>
-                    {post.pourquoi_ca_marche && (
-                      <div style={{ display: "flex", gap: 10, alignItems: "flex-start", padding: "10px 12px", background: "rgba(201,168,76,0.04)", border: "1px solid rgba(201,168,76,0.12)", borderRadius: 8 }}>
-                        <span style={{ color: "#C9A84C", flexShrink: 0 }}>✦</span>
-                        <p className="font-dm" style={{ fontSize: 12, color: "rgba(255,255,255,0.65)", lineHeight: 1.55, margin: 0 }}>{post.pourquoi_ca_marche}</p>
-                      </div>
-                    )}
+              <h2 className="font-dm" style={{ fontSize: 14, fontWeight: 700, color: "#fff", marginBottom: 18 }}>✓ Ce qui fonctionne déjà</h2>
+              <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+                {a.points_forts.map((point: string, i: number) => (
+                  <div key={i} style={{ display: "flex", gap: 12, alignItems: "flex-start" }}>
+                    <span style={{ color: "#2ECC71", flexShrink: 0, marginTop: 2 }}>✓</span>
+                    <span className="font-dm" style={{ fontSize: 13, color: "rgba(255,255,255,0.8)", lineHeight: 1.6 }}>{point}</span>
                   </div>
                 ))}
               </div>
             </motion.div>
           )}
 
-          {/* ── E : PERFORMANCE PAR FORMAT ────────────────────────── */}
-          {Object.keys(perf).length > 0 && (
-            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.25, duration: 0.6 }}
-              style={{ background: "#0d0d0d", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 16, padding: "28px 32px" }}>
-              <h2 className="font-dm" style={{ fontSize: 14, fontWeight: 700, color: "#fff", marginBottom: 20 }}>📊 Performance par format</h2>
-              <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 12 }}>
-                {formats.map((fmt) => {
-                  const f = perf[fmt] ?? {};
-                  const isBest = fmt === bestFormat;
-                  return (
-                    <div key={fmt} style={{ background: isBest ? "rgba(201,168,76,0.06)" : "#111", border: isBest ? "1px solid rgba(201,168,76,0.3)" : "1px solid rgba(255,255,255,0.06)", borderRadius: 12, padding: "18px 16px", position: "relative" }}>
-                      {isBest && (
-                        <span className="font-dm" style={{ position: "absolute", top: -10, left: "50%", transform: "translateX(-50%)", fontSize: 9, fontWeight: 700, padding: "2px 10px", borderRadius: 9999, background: "#C9A84C", color: "#0a0a0a", letterSpacing: "0.08em", whiteSpace: "nowrap" }}>
-                          ✦ Meilleur format
-                        </span>
-                      )}
-                      <p className="font-bebas" style={{ fontSize: 16, letterSpacing: "0.1em", color: isBest ? "#C9A84C" : "rgba(255,255,255,0.5)", marginBottom: 12 }}>
-                        {fmt.charAt(0).toUpperCase() + fmt.slice(1)}
-                      </p>
-                      <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
-                        <div><p className="font-dm" style={{ fontSize: 10, color: "rgba(255,255,255,0.3)", marginBottom: 2 }}>Reach moyen</p><p className="font-dm" style={{ fontSize: 14, fontWeight: 700, color: "#fff" }}>{f.reach_moyen?.toLocaleString("fr-CA") ?? "—"}</p></div>
-                        <div><p className="font-dm" style={{ fontSize: 10, color: "rgba(255,255,255,0.3)", marginBottom: 2 }}>Engagement</p><p className="font-dm" style={{ fontSize: 14, fontWeight: 700, color: "#C9A84C" }}>{f.engagement_moyen != null ? `${f.engagement_moyen}%` : "—"}</p></div>
-                        <div><p className="font-dm" style={{ fontSize: 10, color: "rgba(255,255,255,0.3)", marginBottom: 2 }}>Posts</p><p className="font-dm" style={{ fontSize: 13, color: "rgba(255,255,255,0.6)" }}>{f.nb_posts ?? "—"}</p></div>
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            </motion.div>
-          )}
-
-          {/* ── F : AUDIENCE ──────────────────────────────────────── */}
-          {a.audience && (
-            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3, duration: 0.6 }}
-              style={{ background: "#0d0d0d", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 16, padding: "28px 32px" }}>
-              <h2 className="font-dm" style={{ fontSize: 14, fontWeight: 700, color: "#fff", marginBottom: 20 }}>👥 Ton audience</h2>
-              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))", gap: 12 }}>
-                {[
-                  { icon: "🌍", label: "Pays principal", value: a.audience.top_pays },
-                  { icon: "⚥", label: "Genre dominant", value: a.audience.genre_dominant },
-                  { icon: "🎯", label: "Âge dominant", value: a.audience.age_dominant },
-                  { icon: "✦", label: "Cohérence niche", value: a.audience.coherence_niche },
-                ].map(({ icon, label, value }) => value ? (
-                  <div key={label} style={{ background: "#111", border: "1px solid rgba(255,255,255,0.06)", borderRadius: 10, padding: "16px 18px" }}>
-                    <p style={{ fontSize: 20, marginBottom: 8 }}>{icon}</p>
-                    <p className="font-dm" style={{ fontSize: 10, color: "rgba(255,255,255,0.3)", letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: 6 }}>{label}</p>
-                    <p className="font-dm" style={{ fontSize: 13, color: "#fff", fontWeight: 600, lineHeight: 1.4, margin: 0 }}>{value}</p>
-                  </div>
-                ) : null)}
-              </div>
-            </motion.div>
-          )}
-
-          {/* ── G : PROBLÈMES ─────────────────────────────────────── */}
+          {/* ── D : PROBLÈMES ─────────────────────────────────────── */}
           {a.problemes?.length > 0 && (
-            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.35, duration: 0.6 }}
+            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2, duration: 0.6 }}
               style={{ background: "#0d0d0d", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 16, padding: "28px 32px" }}>
               <h2 className="font-dm" style={{ fontSize: 14, fontWeight: 700, color: "#fff", marginBottom: 20 }}>⚠ Ce qui freine ta croissance</h2>
               <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
@@ -386,17 +277,12 @@ export default function AnalyseInstagramV2() {
                   const c = severityStyle(p.severite);
                   return (
                     <div key={i} style={{ background: c.bg, border: `1px solid ${c.border}`, borderRadius: 12, padding: "18px 20px" }}>
-                      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 12, marginBottom: 12, flexWrap: "wrap" }}>
+                      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 12, marginBottom: 10, flexWrap: "wrap" }}>
                         <span className="font-dm" style={{ fontSize: 14, fontWeight: 700, color: "#fff" }}>{p.titre}</span>
-                        <span className="font-dm" style={{ fontSize: 10, padding: "3px 10px", borderRadius: 9999, border: `1px solid ${c.border}`, color: c.text, letterSpacing: "0.08em", fontWeight: 700, flexShrink: 0 }}>
-                          {p.severite}
-                        </span>
+                        <span className="font-dm" style={{ fontSize: 10, padding: "3px 10px", borderRadius: 9999, border: `1px solid ${c.border}`, color: c.text, letterSpacing: "0.08em", fontWeight: 700, flexShrink: 0 }}>{p.severite}</span>
                       </div>
-                      <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-                        {p.constat && <p className="font-dm" style={{ fontSize: 13, color: "rgba(255,255,255,0.75)", lineHeight: 1.6, margin: 0 }}><strong style={{ color: c.text }}>Constat :</strong> {p.constat}</p>}
-                        {p.cause && <p className="font-dm" style={{ fontSize: 12, color: "rgba(255,255,255,0.45)", lineHeight: 1.55, margin: 0 }}>Cause : {p.cause}</p>}
-                        {p.impact && <p className="font-dm" style={{ fontSize: 12, fontStyle: "italic", color: c.text, margin: 0 }}>Impact : {p.impact}</p>}
-                      </div>
+                      {p.explication && <p className="font-dm" style={{ fontSize: 13, color: "rgba(255,255,255,0.7)", lineHeight: 1.6, marginBottom: p.impact ? 8 : 0 }}>{p.explication}</p>}
+                      {p.impact && <p className="font-dm" style={{ fontSize: 12, fontStyle: "italic", color: c.text, margin: 0 }}>Impact : {p.impact}</p>}
                     </div>
                   );
                 })}
@@ -404,27 +290,23 @@ export default function AnalyseInstagramV2() {
             </motion.div>
           )}
 
-          {/* ── H : RECOMMANDATIONS ───────────────────────────────── */}
+          {/* ── E : RECOMMANDATIONS ───────────────────────────────── */}
           {a.recommandations?.length > 0 && (
-            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4, duration: 0.6 }}
+            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.25, duration: 0.6 }}
               style={{ background: "#0d0d0d", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 16, padding: "28px 32px" }}>
-              <h2 className="font-dm" style={{ fontSize: 14, fontWeight: 700, color: "#fff", marginBottom: 20 }}>→ Recommandations prioritaires</h2>
+              <h2 className="font-dm" style={{ fontSize: 14, fontWeight: 700, color: "#fff", marginBottom: 20 }}>→ Actions prioritaires</h2>
               <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
                 {a.recommandations.map((r: any, i: number) => {
                   const ps = priorityStyle(r.priorite);
                   return (
                     <div key={i} style={{ background: ps.bg, border: `1px solid ${ps.border}`, borderRadius: 12, padding: "18px 20px" }}>
-                      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 10, marginBottom: 12, flexWrap: "wrap" }}>
+                      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 10, marginBottom: 10, flexWrap: "wrap" }}>
                         <span className="font-dm" style={{ fontSize: 14, fontWeight: 700, color: "#fff" }}>{r.titre}</span>
-                        <div style={{ display: "flex", gap: 8, alignItems: "center", flexShrink: 0 }}>
-                          <span className="font-dm" style={{ fontSize: 10, padding: "3px 10px", borderRadius: 9999, border: `1px solid ${ps.border}`, color: ps.text, fontWeight: 700, letterSpacing: "0.07em" }}>{r.priorite}</span>
-                          {r.delai && <span className="font-dm" style={{ fontSize: 10, color: "rgba(255,255,255,0.3)" }}>{r.delai}</span>}
-                        </div>
+                        <span className="font-dm" style={{ fontSize: 10, padding: "3px 10px", borderRadius: 9999, border: `1px solid ${ps.border}`, color: ps.text, fontWeight: 700, letterSpacing: "0.07em", flexShrink: 0 }}>{r.priorite}</span>
                       </div>
                       <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
-                        {r.quoi && <p className="font-dm" style={{ fontSize: 13, color: "rgba(255,255,255,0.7)", lineHeight: 1.55, margin: 0 }}><strong style={{ color: "#fff" }}>Quoi :</strong> {r.quoi}</p>}
-                        {r.pourquoi && <p className="font-dm" style={{ fontSize: 12, color: "rgba(255,255,255,0.45)", lineHeight: 1.5, margin: 0 }}>Pourquoi : {r.pourquoi}</p>}
-                        {r.comment && <p className="font-dm" style={{ fontSize: 12, color: "rgba(255,255,255,0.45)", lineHeight: 1.5, margin: 0 }}>Comment : {r.comment}</p>}
+                        {r.quoi && <p className="font-dm" style={{ fontSize: 13, color: "rgba(255,255,255,0.8)", lineHeight: 1.55, margin: 0 }}>{r.quoi}</p>}
+                        {r.comment && <p className="font-dm" style={{ fontSize: 12, color: "rgba(255,255,255,0.4)", lineHeight: 1.5, margin: 0 }}>Comment : {r.comment}</p>}
                         {r.impact_attendu && <p className="font-dm" style={{ fontSize: 12, fontStyle: "italic", color: "#C9A84C", margin: 0 }}>→ {r.impact_attendu}</p>}
                       </div>
                     </div>
@@ -434,75 +316,76 @@ export default function AnalyseInstagramV2() {
             </motion.div>
           )}
 
-          {/* ── I : PLAN 7 JOURS ──────────────────────────────────── */}
-          {a.plan_7_jours?.length > 0 && (
-            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.45, duration: 0.6 }}
+          {/* ── F : PLAN D'ACTION 4 SEMAINES ──────────────────────── */}
+          {a.plan_action?.length > 0 && (
+            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3, duration: 0.6 }}
               style={{ background: "#0d0d0d", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 16, padding: "28px 32px" }}>
-              <h2 className="font-dm" style={{ fontSize: 14, fontWeight: 700, color: "#fff", marginBottom: 6 }}>📅 Plan d'action — 7 prochains jours</h2>
-              <p className="font-dm" style={{ fontSize: 11, color: "rgba(255,255,255,0.25)", marginBottom: 24 }}>Une action par jour, applicable immédiatement</p>
-              {/* Timeline horizontale scrollable */}
-              <div style={{ display: "flex", gap: 0, overflowX: "auto", paddingBottom: 8 }}>
-                {a.plan_7_jours.map((item: any, i: number) => (
-                  <div key={i} style={{ display: "flex", flexDirection: "column", alignItems: "center", flex: "0 0 auto", minWidth: 110 }}>
-                    {/* Dot + line */}
-                    <div style={{ display: "flex", alignItems: "center", width: "100%", marginBottom: 12 }}>
-                      {i > 0 && <div style={{ flex: 1, height: 1, background: "rgba(201,168,76,0.2)" }} />}
-                      <div style={{ width: 28, height: 28, borderRadius: "50%", background: "#C9A84C", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
-                        <span className="font-bebas" style={{ fontSize: 12, color: "#0a0a0a" }}>{i + 1}</span>
+              <h2 className="font-dm" style={{ fontSize: 14, fontWeight: 700, color: "#fff", marginBottom: 6 }}>📅 Plan d'action — 4 semaines</h2>
+              <p className="font-dm" style={{ fontSize: 11, color: "rgba(255,255,255,0.25)", marginBottom: 24 }}>Applique dans cet ordre exact</p>
+              <div style={{ display: "flex", flexDirection: "column", gap: 0 }}>
+                {a.plan_action.map((s: any, i: number) => (
+                  <div key={i} style={{ display: "flex", gap: 16 }}>
+                    <div style={{ display: "flex", flexDirection: "column", alignItems: "center", flexShrink: 0, width: 36 }}>
+                      <div style={{ width: 36, height: 36, borderRadius: "50%", background: "#C9A84C", display: "flex", alignItems: "center", justifyContent: "center", zIndex: 1 }}>
+                        <span className="font-bebas" style={{ fontSize: 14, color: "#0a0a0a" }}>S{s.semaine}</span>
                       </div>
-                      {i < a.plan_7_jours.length - 1 && <div style={{ flex: 1, height: 1, background: "rgba(201,168,76,0.2)" }} />}
+                      {i < a.plan_action.length - 1 && <div style={{ width: 1, flex: 1, background: "rgba(201,168,76,0.2)", margin: "4px 0", minHeight: 20 }} />}
                     </div>
-                    {/* Card */}
-                    <div style={{ width: "90%", background: "#111", border: "1px solid rgba(255,255,255,0.06)", borderRadius: 10, padding: "12px 10px", textAlign: "center" }}>
-                      <p className="font-bebas" style={{ fontSize: 13, color: "#C9A84C", letterSpacing: "0.08em", marginBottom: 6 }}>{item.jour ?? DAYS[i]}</p>
-                      <p className="font-dm" style={{ fontSize: 11, color: "rgba(255,255,255,0.75)", lineHeight: 1.5, marginBottom: 6 }}>{item.action}</p>
-                      {item.duree && <p className="font-dm" style={{ fontSize: 10, color: "rgba(255,255,255,0.3)" }}>{item.duree}</p>}
-                      {item.impact && <p className="font-dm" style={{ fontSize: 10, fontStyle: "italic", color: "#C9A84C", marginTop: 4 }}>{item.impact}</p>}
+                    <div style={{ flex: 1, background: "#111", border: "1px solid rgba(201,168,76,0.1)", borderRadius: 12, padding: "16px 18px", marginBottom: i < a.plan_action.length - 1 ? 8 : 0 }}>
+                      <p className="font-dm" style={{ fontSize: 10, color: "#C9A84C", letterSpacing: "0.1em", textTransform: "uppercase", fontWeight: 700, marginBottom: 6 }}>Semaine {s.semaine} — {s.focus}</p>
+                      {s.actions?.map((action: string, j: number) => (
+                        <p key={j} className="font-dm" style={{ fontSize: 13, color: "rgba(255,255,255,0.75)", lineHeight: 1.55, margin: "0 0 4px" }}>· {action}</p>
+                      ))}
                     </div>
                   </div>
                 ))}
               </div>
-              {/* Conseils sous le plan */}
-              {(a.meilleur_jour_poster || a.format_prioritaire || a.frequence_ideale) && (
-                <div style={{ display: "flex", gap: 12, flexWrap: "wrap", marginTop: 16 }}>
-                  {a.meilleur_jour_poster && <span className="font-dm" style={{ fontSize: 11, padding: "5px 12px", borderRadius: 6, background: "rgba(201,168,76,0.07)", border: "1px solid rgba(201,168,76,0.15)", color: "#C9A84C" }}>📅 {a.meilleur_jour_poster}</span>}
-                  {a.format_prioritaire && <span className="font-dm" style={{ fontSize: 11, padding: "5px 12px", borderRadius: 6, background: "rgba(201,168,76,0.07)", border: "1px solid rgba(201,168,76,0.15)", color: "#C9A84C" }}>🎬 {a.format_prioritaire}</span>}
-                  {a.frequence_ideale && <span className="font-dm" style={{ fontSize: 11, padding: "5px 12px", borderRadius: 6, background: "rgba(201,168,76,0.07)", border: "1px solid rgba(201,168,76,0.15)", color: "#C9A84C" }}>🔁 {a.frequence_ideale}</span>}
-                </div>
-              )}
             </motion.div>
           )}
 
-          {/* ── J : CTA FINAL ─────────────────────────────────────── */}
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5, duration: 0.6 }}
+          {/* ── G : CONSEILS PRATIQUES ────────────────────────────── */}
+          {(a.format_prioritaire || a.frequence_ideale || a.meilleur_moment || a.type_contenu_manquant) && (
+            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.35, duration: 0.6 }}
+              style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", gap: 12 }}>
+              {[
+                { icon: "🎬", label: "Format prioritaire", value: a.format_prioritaire },
+                { icon: "🔁", label: "Fréquence idéale", value: a.frequence_ideale },
+                { icon: "⏰", label: "Meilleur moment", value: a.meilleur_moment },
+                { icon: "💡", label: "Contenu manquant", value: a.type_contenu_manquant },
+              ].filter(item => item.value).map(({ icon, label, value }) => (
+                <div key={label} style={{ background: "#0d0d0d", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 12, padding: "18px 20px" }}>
+                  <p style={{ fontSize: 20, marginBottom: 8 }}>{icon}</p>
+                  <p className="font-dm" style={{ fontSize: 10, color: "rgba(255,255,255,0.3)", letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: 6 }}>{label}</p>
+                  <p className="font-dm" style={{ fontSize: 13, color: "#fff", fontWeight: 600, lineHeight: 1.5, margin: 0 }}>{value}</p>
+                </div>
+              ))}
+            </motion.div>
+          )}
+
+          {/* ── H : CTA FINAL ─────────────────────────────────────── */}
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4, duration: 0.6 }}
             style={{ position: "relative", background: "#000", borderRadius: 16, overflow: "hidden", padding: "52px 40px 48px", textAlign: "center", border: "1px solid rgba(201,168,76,0.2)" }}>
             <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 1, background: "linear-gradient(to right, transparent, #C9A84C, transparent)" }} />
-
             <span className="font-dm" style={{ display: "inline-block", fontSize: 10, fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", color: "#C9A84C", border: "1px solid rgba(201,168,76,0.3)", padding: "5px 16px", borderRadius: 9999, marginBottom: 24 }}>
-              ✦ Recommandation Personnalisée
+              ✦ Verdict Massishoots
             </span>
-
             {a.verdict_massishoots && (
-              <p className="font-dm" style={{ fontSize: 18, fontStyle: "italic", color: "#C9A84C", lineHeight: 1.75, maxWidth: 580, margin: "0 auto 20px" }}>
+              <p className="font-dm" style={{ fontSize: 17, fontStyle: "italic", color: "#C9A84C", lineHeight: 1.75, maxWidth: 580, margin: "0 auto 20px" }}>
                 "{a.verdict_massishoots}"
               </p>
             )}
-
             {a.potentiel_croissance && (
-              <p className="font-bebas" style={{ fontSize: 22, letterSpacing: "0.05em", color: potentielColor(a.potentiel_croissance), marginBottom: 32 }}>
-                Potentiel : {a.potentiel_croissance}
+              <p className="font-bebas" style={{ fontSize: 20, letterSpacing: "0.05em", color: potentielColor(a.potentiel_croissance), marginBottom: 32 }}>
+                Potentiel de croissance : {a.potentiel_croissance}
               </p>
             )}
-
             <div style={{ width: 40, height: 1, background: "rgba(201,168,76,0.3)", margin: "0 auto 28px" }} />
-
-            <h3 className="font-bebas" style={{ fontSize: "clamp(28px,5vw,44px)", color: "#fff", letterSpacing: "0.02em", marginBottom: 12 }}>
+            <h3 className="font-bebas" style={{ fontSize: "clamp(26px,5vw,42px)", color: "#fff", letterSpacing: "0.02em", marginBottom: 12 }}>
               On s'occupe de tout ça pour toi.
             </h3>
             <p className="font-dm" style={{ fontSize: 14, color: "rgba(255,255,255,0.4)", lineHeight: 1.75, maxWidth: 420, margin: "0 auto 32px" }}>
               Massi implémente exactement ce plan — avec du contenu cinématique qui performe.
             </p>
-
             <a href="https://calendly.com/massishot-ca/30min" target="_blank" rel="noopener noreferrer" className="font-dm"
               style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "17px 36px", background: "#C9A84C", color: "#0a0a0a", borderRadius: 8, fontSize: 14, fontWeight: 700, letterSpacing: "0.07em", textDecoration: "none", textTransform: "uppercase", boxShadow: "0 0 32px rgba(201,168,76,0.2)" }}
               onMouseEnter={e => ((e.currentTarget as HTMLElement).style.opacity = "0.88")}
