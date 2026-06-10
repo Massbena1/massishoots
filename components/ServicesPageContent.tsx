@@ -1,6 +1,7 @@
 "use client";
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
+import Image from "next/image";
 
 const SERVICES = [
   {
@@ -105,10 +106,12 @@ function ServiceBlock({ s, idx }: { s: typeof SERVICES[0]; idx: number }) {
     >
       {/* Image */}
       <div style={{ position: "relative", minHeight: 420, direction: "ltr" }}>
-        <img
+        <Image
           src={s.image}
           alt={s.title}
-          style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: s.imagePosition, filter: "brightness(0.7) saturate(0.85)" }}
+          fill
+          sizes="(max-width: 860px) 100vw, 50vw"
+          style={{ objectFit: "cover", objectPosition: s.imagePosition, filter: "brightness(0.7) saturate(0.85)" }}
         />
         <div style={{ position: "absolute", inset: 0, background: reversed ? "linear-gradient(to left, rgba(0,0,0,0.4), transparent)" : "linear-gradient(to right, rgba(0,0,0,0.4), transparent)" }} />
         <div style={{ position: "absolute", top: 24, left: 24 }}>

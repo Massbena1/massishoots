@@ -1,6 +1,7 @@
 "use client";
 import { useState, useRef, useEffect, useCallback } from "react";
 import { motion, AnimatePresence, useInView } from "framer-motion";
+import Image from "next/image";
 
 /* ─── DONNÉES ────────────────────────────────────────────── */
 
@@ -158,7 +159,7 @@ function Lightbox({
           />
         ) : (
           <img src={item.src} alt={item.title}
-            style={{ maxWidth: "88vw", maxHeight: "88vh", objectFit: "contain", borderRadius: 8 }} />
+            style={{ maxWidth: "88vw", maxHeight: "88vh", objectFit: "contain", borderRadius: 8, display: "block" }} />
         )}
       </motion.div>
 
@@ -195,15 +196,13 @@ function GridCard({ item, onClick }: { item: GridItem; onClick: () => void }) {
         background: "#111",
       }}
     >
-      <img
-        src={thumb}
+      <Image
+        src={thumb!}
         alt={item.title}
-        loading="lazy"
+        fill
+        sizes="(max-width: 520px) 100vw, (max-width: 860px) 50vw, 33vw"
         style={{
-          width: "100%",
-          height: "100%",
           objectFit: "cover",
-          display: "block",
           transition: "transform 0.4s ease",
           transform: hovered ? "scale(1.04)" : "scale(1)",
         }}
@@ -492,8 +491,10 @@ function FeaturedImage({ p, onClick }: { p: typeof FEATURED[0]; onClick: () => v
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
-      <img src={p.image} alt={p.title}
-        style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", transition: "transform 0.5s ease", transform: hovered ? "scale(1.04)" : "scale(1)" }} />
+      <Image src={p.image} alt={p.title} fill
+        sizes="(max-width: 860px) 100vw, 60vw"
+        priority
+        style={{ objectFit: "cover", transition: "transform 0.5s ease", transform: hovered ? "scale(1.04)" : "scale(1)" }} />
       <div style={{ position: "absolute", inset: 0, background: hovered ? "rgba(201,168,76,0.1)" : "transparent", transition: "background 0.3s", display: "flex", alignItems: "center", justifyContent: "center" }}>
         {hovered && (
           <span className="font-dm" style={{ fontSize: 12, color: "#fff", letterSpacing: "0.18em", textTransform: "uppercase", border: "1px solid rgba(255,255,255,0.5)", padding: "8px 20px", borderRadius: 9999, background: "rgba(0,0,0,0.5)" }}>
