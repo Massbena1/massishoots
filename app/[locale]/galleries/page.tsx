@@ -2,10 +2,34 @@ import { getAlternates, getOpenGraph, getTwitter } from "@/lib/hreflang";
 import Footer from "@/components/Footer";
 import GalleriesPageContent from "@/components/GalleriesPageContent";
 import type { Metadata } from "next";
+import { readFileSync } from "fs";
+import { join } from "path";
+
+export const revalidate = 60;
+
+interface GalleryEntry {
+  nom: string;
+  url: string;
+  date: string;
+  actif: boolean;
+  public?: boolean;
+  cover?: string;
+  photos?: number;
+}
+
+function loadPublicGalleries() {
+  try {
+    const raw = readFileSync(join(process.cwd(), "data", "galleries.json"), "utf-8");
+    const all: GalleryEntry[] = JSON.parse(raw);
+    return all.filter(g => g.actif && g.public).map(({ nom, url, date, cover, photos }) => ({ nom, url, date, cover, photos }));
+  } catch {
+    return [];
+  }
+}
 
 export async function generateMetadata(): Promise<Metadata> {
   const title = "Galeries Photos Événements — Massishoots Montréal";
-  const description = "Accédez à vos photos d'événements avec votre code personnel. Galeries privées Massishoots — studio photo premium à Montréal.";
+  const description = "Accédez à vos photos d'événements. Galeries privées Massishoots — studio photo premium à Montréal.";
   return {
     title,
     description,
@@ -16,9 +40,10 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default function GalleriesPage() {
+  const galleries = loadPublicGalleries();
   return (
     <>
-      <GalleriesPageContent />
+      <GalleriesPageContent galleries={galleries} />
       <Footer />
     </>
   );
