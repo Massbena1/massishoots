@@ -1,5 +1,48 @@
 [
   {
+    "code": "JPM2026",
+    "nom": "JPM 2.0 — 30e Anniversaire",
+    "url": "https://massishoots.pixieset.com/jpm2030eanniversaire/",
+    "date": "2026-06-03",
+    "actif": true,
+    "public": true,
+    "cover": "/portfolio/corpo/1.1.jpg",
+    "photos": 117,
+    "location": "Hotel W Montréal"
+  },
+  {
+    "code": "STEPHS2026",
+    "nom": "Steph's Round Table",
+    "url": "https://massishoots.pixieset.com/stephsroundtable/",
+    "date": "2026-05-28",
+    "actif": true,
+    "public": true,
+    "cover": "/portfolio/eventt/1.jpg",
+    "photos": 135,
+    "location": "Restaurant Alia"
+  },
+  {
+    "code": "TECHGAYS0526",
+    "nom": "Techgays — Mai 2026",
+    "url": "https://massishoots.pixieset.com/techgays/",
+    "date": "2026-05-07",
+    "actif": true,
+    "public": true,
+    "cover": "/gallery-covers/techgays-cover.jpg",
+    "photos": 172,
+    "location": "Le Cathcart"
+  },
+  {
+    "code": "MARCUS0526",
+    "nom": "Marcus Montreal",
+    "url": "https://massishoots.pixieset.com/marcusmontreal/",
+    "date": "2026-05-02",
+    "actif": true,
+    "public": true,
+    "cover": "/portfolio/corpo/3.jpg",
+    "photos": 25
+  },
+  {
     "code": "MACKAY2026",
     "nom": "Groupe Mackay — Gala 2026",
     "url": "https://massishoots.pixieset.com/mackay2026",
@@ -10,14 +53,15 @@
     "photos": 87
   },
   {
-    "code": "RESEAUTAGE0526",
-    "nom": "Réseautage en Direct — Mai 2026",
-    "url": "https://massishoots.pixieset.com/reseautage0526",
-    "date": "2026-05-15",
+    "code": "ESTA0426",
+    "nom": "ESTA Conférence",
+    "url": "https://massishoots.pixieset.com/esta/",
+    "date": "2026-04-15",
     "actif": true,
     "public": true,
-    "cover": "/portfolio/eventt/1.jpg",
-    "photos": 124
+    "cover": "/portfolio/eventt/3.jpg",
+    "photos": 18,
+    "location": "Palais des congrès"
   },
   {
     "code": "JY94231",
