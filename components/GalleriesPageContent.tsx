@@ -32,7 +32,7 @@ function GalleryCard({ g, idx }: { g: PublicGallery; idx: number }) {
             alt={g.nom}
             fill
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-            style={{ objectFit: "cover", transition: "transform 0.5s ease", transform: hovered ? "scale(1.06)" : "scale(1)", filter: g.accessible ? "brightness(0.75) saturate(0.85)" : "brightness(0.4) saturate(0.3)" }}
+            style={{ objectFit: "cover", transition: "transform 0.5s ease", transform: hovered ? "scale(1.06)" : "scale(1)", filter: "brightness(0.75) saturate(0.85)" }}
           />
         ) : (
           <div style={{ width: "100%", height: "100%", background: "#1a1a1a", display: "flex", alignItems: "center", justifyContent: "center" }}>
@@ -48,12 +48,12 @@ function GalleryCard({ g, idx }: { g: PublicGallery; idx: number }) {
             </motion.span>
           )}
           {!g.accessible && (
-            <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 8 }}>
-              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.5)" strokeWidth="1.5">
+            <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 6, background: "rgba(0,0,0,0.45)", backdropFilter: "blur(6px)", padding: "12px 20px", borderRadius: 12, border: "1px solid rgba(255,255,255,0.12)" }}>
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.85)" strokeWidth="1.5">
                 <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
                 <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
               </svg>
-              <span className="font-dm" style={{ fontSize: 10, color: "rgba(255,255,255,0.4)", letterSpacing: "0.15em", textTransform: "uppercase" }}>Bientôt disponible</span>
+              <span className="font-dm" style={{ fontSize: 10, color: "rgba(255,255,255,0.7)", letterSpacing: "0.15em", textTransform: "uppercase" }}>Accès privé</span>
             </div>
           )}
         </div>
