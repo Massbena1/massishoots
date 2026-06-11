@@ -101,7 +101,7 @@ export default function SeoLocalLayout(p: SeoLocalLayoutProps) {
         <section style={{ position: "relative", padding: "160px 24px 110px", overflow: "hidden" }}>
           {/* Background image subtle */}
           <div style={{ position: "absolute", inset: 0, zIndex: 0 }}>
-            <Image src={p.heroImage} alt="" fill sizes="100vw" style={{ objectFit: "cover", opacity: 0.08, filter: "saturate(0.6)" }} priority />
+            <Image src={p.heroImage} alt="" fill sizes="100vw" style={{ objectFit: "cover", opacity: 0.08, filter: "saturate(0.6)" }} priority fetchPriority="high" />
             <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, #000 100%)" }} />
           </div>
 
@@ -209,8 +209,8 @@ export default function SeoLocalLayout(p: SeoLocalLayoutProps) {
                     &ldquo;{t.text}&rdquo;
                   </p>
                   <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-                    <div style={{ width: 42, height: 42, borderRadius: "50%", flexShrink: 0, padding: 1.5, background: `linear-gradient(135deg, ${GOLD}, rgba(201,168,76,0.3))` }}>
-                      <img src={t.avatar} alt={t.name} style={{ width: "100%", height: "100%", borderRadius: "50%", objectFit: "cover", objectPosition: "center top", display: "block" }} />
+                    <div style={{ width: 42, height: 42, borderRadius: "50%", flexShrink: 0, padding: 1.5, background: `linear-gradient(135deg, ${GOLD}, rgba(201,168,76,0.3))`, position: "relative" }}>
+                      <Image src={t.avatar} alt={t.name} width={42} height={42} loading="lazy" style={{ borderRadius: "50%", objectFit: "cover", objectPosition: "center top", display: "block" }} />
                     </div>
                     <div>
                       <p className="font-dm" style={{ fontSize: 12, fontWeight: 700, color: "#fff", letterSpacing: "0.04em" }}>{t.name}</p>

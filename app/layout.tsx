@@ -2,7 +2,9 @@ import type { Metadata } from "next";
 import { Bebas_Neue, DM_Sans, Playfair_Display } from "next/font/google";
 import "./globals.css";
 import ScrollReveal from "@/components/ScrollReveal";
-import ChatBot from "@/components/ChatBot";
+import dynamic from "next/dynamic";
+
+const ChatBot = dynamic(() => import("@/components/ChatBot"), { ssr: false });
 
 const bebasNeue = Bebas_Neue({
   weight: "400",

@@ -77,7 +77,6 @@ export default function AnalyseInstagramV2() {
     }, 2000);
 
     try {
-      console.log("🚀 Envoi de la requête d'analyse...");
 
       const response = await fetch("/api/analyse-instagram", {
         method: "POST",
@@ -90,7 +89,6 @@ export default function AnalyseInstagramV2() {
         }),
       });
 
-      console.log("📡 Réponse reçue:", response.status);
 
       if (!response.ok) {
         const errorData = await response.json();
@@ -100,7 +98,6 @@ export default function AnalyseInstagramV2() {
       }
 
       const result = await response.json();
-      console.log("📊 Résultat:", result);
 
       if (result.analysis) {
         updateFormState({
@@ -108,7 +105,6 @@ export default function AnalyseInstagramV2() {
           submitted: true,
           error: ""
         });
-        console.log("✅ Analyse terminée avec succès!");
         setTimeout(() => {
           reportRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
         }, 100);

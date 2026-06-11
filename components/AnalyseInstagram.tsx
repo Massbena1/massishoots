@@ -35,7 +35,6 @@ export default function AnalyseInstagram() {
     }, 2000);
 
     try {
-      console.log("🚀 Envoi de la requête d'analyse...");
 
       const response = await fetch("/api/analyse-instagram-ai", {
         method: "POST",
@@ -48,7 +47,6 @@ export default function AnalyseInstagram() {
         }),
       });
 
-      console.log("📡 Réponse reçue:", response.status);
 
       if (!response.ok) {
         const errorData = await response.json();
@@ -58,13 +56,11 @@ export default function AnalyseInstagram() {
       }
 
       const result = await response.json();
-      console.log("📊 Résultat:", result);
 
       if (result.analysis) {
         setAnalysisResult(result.analysis);
         setSubmitted(true);
         setError("");
-        console.log("✅ Analyse terminée avec succès!");
       } else {
         console.error("❌ Pas de données d'analyse reçues:", result);
         setError("Aucun résultat d'analyse reçu. Veuillez réessayer.");
