@@ -93,10 +93,10 @@ export default function MerciPage() {
             </motion.div>
 
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 0.15 }}>
-              <h1 className="font-playfair" style={{ fontSize: "clamp(44px, 7vw, 82px)", color: "#fff", fontWeight: 400, fontStyle: "italic", lineHeight: 1.1, marginBottom: 20 }}>
-                Message reçu. 🎯
+              <h1 className="font-bebas" style={{ fontSize: "clamp(52px, 8vw, 96px)", color: "#fff", letterSpacing: "0.04em", lineHeight: 0.95, marginBottom: 20 }}>
+                Message reçu.
               </h1>
-              <p className="font-playfair" style={{ fontSize: "clamp(16px, 2.5vw, 22px)", color: GOLD, fontStyle: "italic", fontWeight: 400, marginBottom: 24, lineHeight: 1.5 }}>
+              <p className="font-bebas" style={{ fontSize: "clamp(20px, 3vw, 30px)", color: GOLD, letterSpacing: "0.06em", marginBottom: 24, lineHeight: 1.2 }}>
                 Massi va analyser votre demande<br />et vous recontacter sous 24h.
               </p>
               <p className="font-dm" style={{ fontSize: 15, color: "rgba(255,255,255,0.38)", lineHeight: 1.8, maxWidth: 460, margin: "0 auto" }}>
