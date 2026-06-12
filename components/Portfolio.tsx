@@ -350,7 +350,7 @@ export default function Portfolio() {
                     <img
                       src={item.src}
                       alt={altText}
-                      style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: item.pos ?? (item.wide ? "center center" : "center top"), display: "block", transition: "transform 0.7s ease", filter: "brightness(0.82)" }}
+                      style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: item.pos ?? "center center", display: "block", transition: "transform 0.7s ease", filter: "brightness(0.82)" }}
                     />
                   )}
 
