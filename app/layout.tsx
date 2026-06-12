@@ -2,9 +2,7 @@ import type { Metadata } from "next";
 import { Bebas_Neue, DM_Sans, Playfair_Display } from "next/font/google";
 import "./globals.css";
 import ScrollReveal from "@/components/ScrollReveal";
-import dynamic from "next/dynamic";
-
-const ChatBot = dynamic(() => import("@/components/ChatBot"), { ssr: false });
+import ChatBotLazy from "@/components/ChatBotLazy";
 
 const bebasNeue = Bebas_Neue({
   weight: "400",
@@ -38,7 +36,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html className={`${bebasNeue.variable} ${dmSans.variable} ${playfair.variable} grain`}>
       <body>
         <ScrollReveal />
-        <ChatBot />
+        <ChatBotLazy />
         {children}
       </body>
     </html>
