@@ -34,6 +34,82 @@
   --glass-highlight: rgba(255,255,255,0.11);
 }
 
+/* ── Image optimization rules ── */
+img {
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  max-width: 100%;
+}
+
+/* Specific ratios by image type */
+.portfolio-image-vertical { aspect-ratio: 4/5; }
+.portfolio-image-horizontal { aspect-ratio: 4/3; }
+.portfolio-image-square { aspect-ratio: 1/1; }
+
+.service-card-image { aspect-ratio: 16/9; object-fit: cover; object-position: center; }
+
+.testimonial-avatar {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.client-logo {
+  height: 28px;
+  width: auto;
+  object-fit: contain;
+}
+
+.hero-media {
+  width: 100%;
+  height: 100vh;
+  object-fit: cover;
+  object-position: center top;
+}
+
+.featured-project { aspect-ratio: 4/3; object-fit: cover; }
+
+.gallery-card { aspect-ratio: 16/9; object-fit: cover; object-position: center; }
+
+/* ── Responsive rules for mobile ── */
+@media (max-width: 768px) {
+  /* Images 16/9 deviennent 4/3 sur mobile */
+  .service-card-image,
+  .gallery-card,
+  .hero-media {
+    aspect-ratio: 4/3 !important;
+  }
+
+  /* Les images 4/5 restent 4/5 */
+  .portfolio-image-vertical {
+    aspect-ratio: 4/5 !important;
+  }
+
+  /* Logos clients plus grands sur mobile */
+  .client-logo {
+    height: 32px !important;
+  }
+
+  /* Avatars témoignages légèrement plus petits */
+  .testimonial-avatar {
+    width: 48px !important;
+    height: 48px !important;
+  }
+
+  /* Assurer qu'aucune image ne dépasse la largeur d'écran */
+  img, video {
+    max-width: 100vw !important;
+    height: auto;
+  }
+
+  /* Prévenir le scroll horizontal */
+  body, html {
+    overflow-x: hidden;
+  }
+}
+
 @theme inline {
   --font-bebas: var(--font-bebas-neue);
   --font-dm: var(--font-dm-sans);

@@ -107,19 +107,18 @@ export default function Testimonials() {
               {/* Author row */}
               <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
                 <div style={{
-                  width: 42, height: 42, borderRadius: "50%", flexShrink: 0,
+                  width: 56, height: 56, borderRadius: "50%", flexShrink: 0,
                   padding: 1.5,
                   background: "linear-gradient(135deg, #C9A84C, rgba(201,168,76,0.3))",
                 }}>
                   <img
                     src={item.avatar}
                     alt={item.name}
+                    className="testimonial-avatar"
                     style={{
                       width: "100%", height: "100%",
                       borderRadius: "50%",
-                      objectFit: "cover",
-                      objectPosition: "center top",
-                      display: "block",
+                      objectPosition: "center",
                     }}
                   />
                 </div>

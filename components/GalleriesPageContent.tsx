@@ -25,14 +25,15 @@ function GalleryCard({ g, idx }: { g: PublicGallery; idx: number }) {
   const cardInner = (
     <>
       {/* Cover image */}
-      <div style={{ position: "relative", height: 260, overflow: "hidden" }}>
+      <div style={{ position: "relative", aspectRatio: "16/9", overflow: "hidden" }}>
         {g.cover ? (
           <Image
             src={g.cover}
             alt={g.nom}
             fill
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-            style={{ objectFit: "cover", transition: "transform 0.5s ease", transform: hovered ? "scale(1.06)" : "scale(1)", filter: "brightness(0.75) saturate(0.85)" }}
+            className="gallery-card"
+            style={{ transition: "transform 0.5s ease", transform: hovered ? "scale(1.06)" : "scale(1)", filter: "brightness(0.75) saturate(0.85)" }}
           />
         ) : (
           <div style={{ width: "100%", height: "100%", background: "#1a1a1a", display: "flex", alignItems: "center", justifyContent: "center" }}>

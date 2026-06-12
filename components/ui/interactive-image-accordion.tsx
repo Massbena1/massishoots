@@ -55,13 +55,13 @@ function AccordionItem({
         <img
           src={item.imageUrl}
           alt={`${item.title} — Massishoots Montréal`}
+          className="service-card-image"
           style={{
             position: "absolute",
             inset: 0,
             width: "100%",
             height: "100%",
-            objectFit: "cover",
-            objectPosition: item.imagePosition ?? "center center",
+            objectPosition: item.imagePosition ?? "center",
             filter: isActive
               ? "brightness(0.35) saturate(0.5)"
               : "brightness(0.18) saturate(0.2)",
@@ -208,13 +208,13 @@ function AccordionItem({
       <img
         src={item.imageUrl}
         alt={`${item.title} — Massishoots Montréal`}
+        className="service-card-image"
         style={{
           position: "absolute",
           inset: 0,
           width: "100%",
           height: "100%",
-          objectFit: "cover",
-          objectPosition: item.imagePosition ?? "center center",
+          objectPosition: item.imagePosition ?? "center",
           filter: isActive
             ? "brightness(0.35) saturate(0.5)"
             : "brightness(0.22) saturate(0.3)",

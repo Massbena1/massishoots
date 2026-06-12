@@ -159,7 +159,7 @@ function Lightbox({
           />
         ) : (
           <img src={item.src} alt={item.title}
-            style={{ maxWidth: "88vw", maxHeight: "88vh", objectFit: "contain", borderRadius: 8, display: "block" }} />
+            style={{ maxWidth: "88vw", maxHeight: "88vh", objectFit: "contain", objectPosition: "center", borderRadius: 8, display: "block" }} />
         )}
       </motion.div>
 

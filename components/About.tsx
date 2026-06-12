@@ -38,7 +38,7 @@ export default function About() {
             src="/moi.jpg"
             alt="Massi Bena – Massishoots"
             fill
-            style={{ objectFit: "cover", objectPosition: "center top", transition: "transform 0.7s cubic-bezier(0.22,1,0.36,1), filter 0.5s ease" }}
+            style={{ objectFit: "cover", objectPosition: "center", transition: "transform 0.7s cubic-bezier(0.22,1,0.36,1), filter 0.5s ease" }}
           />
           <div style={{
             position: "absolute", bottom: 0, left: 0, right: 0, height: "45%",

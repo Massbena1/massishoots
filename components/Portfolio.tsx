@@ -304,7 +304,7 @@ export default function Portfolio() {
                     gridColumn: item.wide ? "span 2" : "span 1",
                     borderRadius: 20,
                     overflow: "hidden",
-                    minHeight: item.videoSrc ? "400px" : item.wide ? "300px" : "350px",
+                    aspectRatio: item.videoSrc ? "9/16" : item.wide ? "4/3" : "4/5",
                     border: "1px solid rgba(255,255,255,0.07)",
                     position: "relative",
                     cursor: "pointer",
@@ -350,7 +350,7 @@ export default function Portfolio() {
                     <img
                       src={item.src}
                       alt={altText}
-                      style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: item.pos ?? "center center", display: "block", transition: "transform 0.7s ease", filter: "brightness(0.82)" }}
+                      style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: item.pos ?? "center", display: "block", transition: "transform 0.7s ease", filter: "brightness(0.82)" }}
                     />
                   )}
 

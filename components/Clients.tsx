@@ -75,7 +75,8 @@ export default function Clients() {
                   <img
                     src={logo.src}
                     alt={logo.alt}
-                    style={{ height: 28, width: "auto", filter: "brightness(0) invert(1)", display: "block" }}
+                    className="client-logo"
+                    style={{ filter: "brightness(0) invert(1)" }}
                   />
                 )}
               </div>
