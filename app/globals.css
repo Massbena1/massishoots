@@ -73,47 +73,309 @@ img {
 
 .gallery-card { aspect-ratio: 16/9; object-fit: cover; object-position: center; }
 
-/* ── Responsive rules for mobile ── */
-@media (max-width: 768px) {
-  /* Images 16/9 deviennent 4/3 sur mobile */
-  .service-card-image,
-  .gallery-card,
-  .hero-media {
+/* ── SYSTÈME BREAKPOINTS 2026 ── */
+
+/* Variables CSS pour breakpoints */
+:root {
+  --mobile-s: 375px;
+  --mobile-m: 390px;
+  --mobile-l: 430px;
+  --mobile-xl: 460px;
+  --android-m: 412px;
+  --android-l: 480px;
+  --tablet-portrait: 768px;
+  --tablet-landscape: 1024px;
+  --tablet-xl: 1366px;
+  --desktop-s: 1280px;
+  --desktop-m: 1440px;
+  --desktop-l: 1512px;
+  --desktop-xl: 1728px;
+  --imac: 2560px;
+  --k4: 3840px;
+}
+
+/* UNIVERSELLES pour tous appareils */
+html, body {
+  overflow-x: hidden !important;
+  max-width: 100vw !important;
+}
+
+img, video {
+  max-width: 100% !important;
+  object-fit: cover;
+}
+
+/* Support Dynamic Island iPhone 16 Pro */
+@supports (padding: env(safe-area-inset-top)) {
+  .safe-area-top {
+    padding-top: env(safe-area-inset-top);
+  }
+}
+
+/* Préférence reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Curseur custom : 1024px+ uniquement */
+@media (min-width: 1024px) and (hover: hover) {
+  .custom-cursor-enabled {
+    cursor: none;
+  }
+}
+
+/* ── MOBILE S : 375px (iPhone SE 3e gen) ── */
+@media (max-width: 389px) {
+  .container {
+    padding: 0 20px;
+  }
+
+  h1 {
+    font-size: clamp(26px, 7vw, 34px) !important;
+  }
+
+  .grid-mobile-1 {
+    grid-template-columns: 1fr !important;
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+
+  .btn-mobile {
+    height: 48px !important;
+    width: 100% !important;
+    display: block !important;
+    text-align: center !important;
+  }
+
+  /* CTAs responsive */
+  .cta-buttons {
+    flex-direction: column !important;
+    gap: 12px !important;
+    width: 100% !important;
+  }
+
+  .cta-buttons > * {
+    width: 100% !important;
+    justify-content: center !important;
+  }
+
+  .portfolio-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .portfolio-image-vertical {
     aspect-ratio: 4/3 !important;
   }
 
-  /* Les images 4/5 restent 4/5 */
-  .portfolio-image-vertical {
-    aspect-ratio: 4/5 !important;
-  }
-
-  /* Logos clients plus grands sur mobile */
   .client-logo {
-    height: 32px !important;
+    height: 28px !important;
   }
 
-  /* Avatars témoignages légèrement plus petits */
   .testimonial-avatar {
-    width: 48px !important;
-    height: 48px !important;
+    width: 44px !important;
+    height: 44px !important;
+  }
+}
+
+/* ── MOBILE M : 390px (iPhone 15, 16) ── */
+@media (min-width: 390px) and (max-width: 411px) {
+  .container {
+    padding: 0 20px;
   }
 
-  /* Assurer qu'aucune image ne dépasse la largeur d'écran */
-  img, video {
-    max-width: 100vw !important;
-    height: auto;
+  h1 {
+    font-size: clamp(26px, 7vw, 34px) !important;
+  }
+}
+
+/* ── ANDROID M : 412px (Samsung Galaxy S24, Pixel 9) ── */
+@media (min-width: 412px) and (max-width: 429px) {
+  .container {
+    padding: 0 22px;
   }
 
-  /* Prévenir le scroll horizontal */
-  body, html {
-    overflow-x: hidden !important;
-    max-width: 100vw !important;
+  h1 {
+    font-size: clamp(28px, 6.5vw, 36px) !important;
+  }
+}
+
+/* ── MOBILE L : 430px (iPhone 15 Plus, 16 Plus) ── */
+@media (min-width: 430px) and (max-width: 459px) {
+  .container {
+    padding: 0 22px;
   }
 
-  /* Portfolio mobile spécifique */
+  h1 {
+    font-size: clamp(28px, 6.5vw, 36px) !important;
+  }
+}
+
+/* ── MOBILE XL : 460px (iPhone 16 Pro Max) ── */
+@media (min-width: 460px) and (max-width: 479px) {
+  .container {
+    padding: 0 24px;
+  }
+
+  h1 {
+    font-size: clamp(30px, 6vw, 38px) !important;
+  }
+}
+
+/* ── GRAND MOBILE / ANDROID L : 480px-767px ── */
+@media (min-width: 480px) and (max-width: 767px) {
+  .container {
+    padding: 0 24px;
+  }
+
+  h1 {
+    font-size: clamp(30px, 6vw, 38px) !important;
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(4, 1fr) !important;
+  }
+
+  .some-2col {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+
+/* Support écrans pliables (Galaxy Z Fold 6) */
+@media (min-width: 768px) and (max-width: 900px) {
+  .foldable-layout {
+    /* Traiter comme tablette portrait */
+    padding: 0 48px;
+  }
+}
+
+/* ── TABLETTE PORTRAIT : 768px-1023px ── */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .container {
+    padding: 0 48px;
+    max-width: none;
+  }
+
+  h1 {
+    font-size: clamp(36px, 5vw, 48px) !important;
+  }
+
+  .grid-tablet-2 {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+
   .portfolio-grid {
-    overflow-x: hidden !important;
-    max-width: 100% !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+
+  .nav-visible {
+    display: block !important;
+  }
+}
+
+/* ── TABLETTE PAYSAGE : 1024px-1279px ── */
+@media (min-width: 1024px) and (max-width: 1279px) {
+  .container {
+    padding: 0 64px;
+    max-width: none;
+  }
+
+  h1 {
+    font-size: clamp(44px, 4vw, 56px) !important;
+  }
+
+  .grid-tablet-3 {
+    grid-template-columns: repeat(3, 1fr) !important;
+  }
+
+  .portfolio-grid {
+    grid-template-columns: repeat(3, 1fr) !important;
+  }
+
+  .layout-alternate {
+    display: grid !important;
+  }
+}
+
+/* ── TABLETTE XL : 1366px+ (dans range desktop) ── */
+
+/* ── DESKTOP S/M : 1280px-1511px ── */
+@media (min-width: 1280px) and (max-width: 1511px) {
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 40px;
+  }
+
+  h1 {
+    font-size: clamp(52px, 3.5vw, 64px) !important;
+  }
+
+  .portfolio-grid {
+    grid-template-columns: repeat(3, 1fr) !important;
+  }
+}
+
+/* ── DESKTOP L : 1512px-1919px (MacBook Pro 16") ── */
+@media (min-width: 1512px) and (max-width: 1919px) {
+  .container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 40px;
+  }
+
+  h1 {
+    font-size: clamp(60px, 4vw, 72px) !important;
+  }
+
+  .portfolio-grid {
+    grid-template-columns: repeat(4, 1fr) !important;
+  }
+}
+
+/* ── DESKTOP XL : 1920px-2559px ── */
+@media (min-width: 1920px) and (max-width: 2559px) {
+  .container {
+    max-width: 1600px;
+    margin: 0 auto;
+    padding: 0 60px;
+  }
+
+  h1 {
+    font-size: clamp(70px, 4vw, 80px) !important;
+  }
+
+  .portfolio-grid {
+    grid-template-columns: repeat(4, 1fr) !important;
+  }
+}
+
+/* ── iMac / 4K : 2560px+ ── */
+@media (min-width: 2560px) {
+  .container {
+    max-width: 1800px;
+    margin: 0 auto;
+    padding: 0 80px;
+  }
+
+  h1 {
+    font-size: clamp(80px, 3vw, 88px) !important;
+  }
+
+  .portfolio-grid {
+    grid-template-columns: repeat(4, 1fr) !important;
+  }
+
+  /* Éviter étirement excessif */
+  .max-content {
+    max-width: 1800px !important;
+    margin: 0 auto;
   }
 }
 

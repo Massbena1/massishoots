@@ -27,7 +27,7 @@ export default function Testimonials() {
 
   return (
     <section id="temoignages" style={{ padding: "140px 0", background: "transparent" }}>
-      <div style={{ maxWidth: 1280, margin: "0 auto", padding: "0 24px" }}>
+      <div className="container" style={{ maxWidth: 1280, margin: "0 auto" }}>
 
         {/* Header */}
         <motion.div
@@ -49,7 +49,7 @@ export default function Testimonials() {
         </motion.div>
 
         {/* 2x2 Grid */}
-        <div className="testimonials-grid" style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: 20 }}>
+        <div className="testimonials-grid grid-mobile-1 grid-tablet-2" style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: 20 }}>
           {testimonials.map((item, i) => (
             <motion.div
               key={item.id}

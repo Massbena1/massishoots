@@ -12,7 +12,7 @@ export default function About() {
 
   return (
     <section id="apropos" ref={ref} style={{ padding: "140px 0", background: "transparent" }}>
-      <div style={{ maxWidth: 1280, margin: "0 auto", padding: "0 24px", display: "grid", gridTemplateColumns: "1fr 1fr", gap: 64, alignItems: "center" }} className="about-grid">
+      <div className="container about-grid" style={{ maxWidth: 1280, margin: "0 auto", display: "grid", gridTemplateColumns: "1fr 1fr", gap: 64, alignItems: "center" }}>
 
         <motion.div
           initial={{ opacity: 0, x: -40 }}

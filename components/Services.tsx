@@ -35,7 +35,7 @@ export default function Services() {
 
   return (
     <section id="services" style={{ padding: "140px 0", background: "transparent" }}>
-      <div style={{ maxWidth: 1280, margin: "0 auto", padding: "0 24px" }}>
+      <div className="container" style={{ maxWidth: 1280, margin: "0 auto" }}>
 
         <div style={{ display: "grid", gridTemplateColumns: "320px 1fr", gap: 64, alignItems: "center" }} className="services-layout">
           <motion.div ref={ref} initial={{ opacity: 0, x: -30 }} animate={inView ? { opacity: 1, x: 0 } : {}} transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}>

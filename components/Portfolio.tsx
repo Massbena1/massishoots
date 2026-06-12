@@ -200,7 +200,7 @@ export default function Portfolio() {
 
   return (
     <section data-sr id="portfolio" style={{ padding: "140px 0", background: "#0a0a0a" }}>
-      <div style={{ maxWidth: 1280, margin: "0 auto", padding: "0 24px" }}>
+      <div className="container" style={{ maxWidth: 1280, margin: "0 auto" }}>
 
         <motion.div
           ref={ref}
@@ -286,7 +286,7 @@ export default function Portfolio() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.4 }}
-            className="portfolio-grid"
+            className="portfolio-grid grid-mobile-1 grid-tablet-2 grid-tablet-3"
             style={{
               display: "grid",
               gridTemplateColumns: "repeat(4, 1fr)",

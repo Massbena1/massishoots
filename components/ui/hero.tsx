@@ -43,8 +43,12 @@ export default function ShaderHero() {
       </svg>
 
 
-      {/* Main content — bottom left */}
-      <main className="absolute bottom-8 left-8 z-20 max-w-2xl">
+      {/* Main content — responsive positioning */}
+      <main className="absolute bottom-4 left-4 right-4 z-20 max-w-2xl safe-area-top" style={{
+        bottom: "clamp(16px, 4vh, 32px)",
+        left: "clamp(16px, 4vw, 32px)",
+        right: "clamp(16px, 4vw, 32px)"
+      }}>
         <div className="text-left">
           {/* Spots disponibles badge */}
           <motion.div
@@ -135,7 +139,7 @@ export default function ShaderHero() {
 
           {/* CTAs */}
           <motion.div
-            className="flex items-center gap-4 flex-wrap"
+            className="flex items-center gap-4 flex-wrap cta-buttons"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 1.0 }}

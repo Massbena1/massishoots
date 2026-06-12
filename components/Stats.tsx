@@ -52,7 +52,7 @@ export default function Stats() {
 
   return (
     <section data-sr style={{ padding: "100px 0" }}>
-      <div ref={ref} style={{ maxWidth: 1280, margin: "0 auto", padding: "0 24px" }}>
+      <div ref={ref} className="container" style={{ maxWidth: 1280, margin: "0 auto" }}>
         <div style={{
           display: "grid", gridTemplateColumns: "repeat(4, 1fr)",
           background: "rgba(255,255,255,0.03)",
