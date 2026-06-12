@@ -304,7 +304,7 @@ export default function Portfolio() {
                     gridColumn: item.wide ? "span 2" : "span 1",
                     borderRadius: 20,
                     overflow: "hidden",
-                    aspectRatio: item.videoSrc ? "9/16" : item.wide ? "16/9" : "3/4",
+                    minHeight: item.videoSrc ? "400px" : item.wide ? "300px" : "350px",
                     border: "1px solid rgba(255,255,255,0.07)",
                     position: "relative",
                     cursor: "pointer",
