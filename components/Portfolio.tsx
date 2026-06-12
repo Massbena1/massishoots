@@ -286,10 +286,9 @@ export default function Portfolio() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.4 }}
-            className="portfolio-grid grid-mobile-1 grid-tablet-2 grid-tablet-3"
+            className="portfolio-grid"
             style={{
               display: "grid",
-              gridTemplateColumns: "repeat(4, 1fr)",
               gridAutoFlow: "dense",
               gap: "clamp(8px, 1.2vw, 20px)",
             }}
@@ -572,31 +571,35 @@ export default function Portfolio() {
       </AnimatePresence>
 
       <style>{`
-        /* Desktop - 4 colonnes par défaut */
+        /* MOBILE FIRST - 1 colonne par défaut */
         .portfolio-grid {
-          grid-template-columns: repeat(4, 1fr);
+          grid-template-columns: 1fr;
           overflow-x: hidden;
           width: 100%;
-        }
-
-        /* Desktop large 1024px+ - 3 colonnes */
-        @media (min-width: 1024px) {
-          .portfolio-grid { grid-template-columns: repeat(3, 1fr) !important; }
+          gap: 12px;
+          padding: 0 16px;
         }
 
         /* Tablette 768px+ - 2 colonnes */
-        @media (max-width: 1023px) and (min-width: 769px) {
-          .portfolio-grid { grid-template-columns: repeat(2, 1fr) !important; }
+        @media (min-width: 768px) {
+          .portfolio-grid {
+            grid-template-columns: repeat(2, 1fr) !important;
+            padding: 0 24px !important;
+            gap: 16px !important;
+          }
         }
 
-        /* Mobile max-width: 768px - 1 colonne */
-        @media (max-width: 768px) {
+        /* Desktop 1024px+ - 3 colonnes */
+        @media (min-width: 1024px) {
           .portfolio-grid {
-            grid-template-columns: 1fr !important;
-            gap: 12px !important;
-            padding: 0 16px !important;
-            overflow-x: hidden !important;
+            grid-template-columns: repeat(3, 1fr) !important;
+            padding: 0 !important;
+            gap: clamp(16px, 1.2vw, 20px) !important;
           }
+        }
+
+        /* Mobile - Styles spécifiques */
+        @media (max-width: 767px) {
           .portfolio-item {
             border-radius: 12px !important;
             aspect-ratio: 3/4 !important;
@@ -620,12 +623,13 @@ export default function Portfolio() {
 
           /* Titres responsive sur mobile */
           .portfolio-title {
-            font-size: clamp(14px, 4vw, 20px) !important;
+            font-size: clamp(14px, 4vw, 18px) !important;
+            line-height: 1.3 !important;
             display: -webkit-box !important;
             -webkit-line-clamp: 2 !important;
             -webkit-box-orient: vertical !important;
             overflow: hidden !important;
-            line-height: 1.3 !important;
+            word-break: break-word !important;
           }
 
           /* Catégorie sur mobile */
