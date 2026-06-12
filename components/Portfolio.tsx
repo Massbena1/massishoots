@@ -366,11 +366,11 @@ export default function Portfolio() {
                     justifyContent: "flex-end",
                     padding: 20,
                   }}>
-                    <span className="font-dm" style={{ fontSize: 10, color: "#c4cdd6", letterSpacing: "0.2em", textTransform: "uppercase", marginBottom: 6 }}>
+                    <span className="font-dm portfolio-category" style={{ fontSize: 10, color: "#c4cdd6", letterSpacing: "0.2em", textTransform: "uppercase", marginBottom: 6 }}>
                       {item.sub} · {altText}
                     </span>
                     <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-                      <span className="font-bebas" style={{ fontSize: 22, color: "#fff", letterSpacing: "0.05em" }}>
+                      <span className="font-bebas portfolio-title" style={{ fontSize: 22, color: "#fff", letterSpacing: "0.05em" }}>
                         {altText}
                       </span>
                       <span className="font-dm" style={{ fontSize: 11, color: "#c4cdd6", letterSpacing: "0.1em" }}>
@@ -572,13 +572,75 @@ export default function Portfolio() {
       </AnimatePresence>
 
       <style>{`
-        @media (max-width: 1024px) { .portfolio-grid { grid-template-columns: repeat(2, 1fr) !important; } }
-        @media (max-width: 640px)  {
-          .portfolio-grid { grid-template-columns: repeat(2, 1fr) !important; gap: 6px !important; }
-          .portfolio-item { border-radius: 12px !important; aspect-ratio: 4/5 !important; }
-          .portfolio-item-wide { grid-column: span 2 !important; aspect-ratio: 16/9 !important; }
+        /* Desktop - 4 colonnes par défaut */
+        .portfolio-grid {
+          grid-template-columns: repeat(4, 1fr);
+          overflow-x: hidden;
+          width: 100%;
         }
+
+        /* Desktop large 1024px+ - 3 colonnes */
+        @media (min-width: 1024px) {
+          .portfolio-grid { grid-template-columns: repeat(3, 1fr) !important; }
+        }
+
+        /* Tablette 768px+ - 2 colonnes */
+        @media (max-width: 1023px) and (min-width: 769px) {
+          .portfolio-grid { grid-template-columns: repeat(2, 1fr) !important; }
+        }
+
+        /* Mobile max-width: 768px - 1 colonne */
+        @media (max-width: 768px) {
+          .portfolio-grid {
+            grid-template-columns: 1fr !important;
+            gap: 12px !important;
+            padding: 0 16px !important;
+            overflow-x: hidden !important;
+          }
+          .portfolio-item {
+            border-radius: 12px !important;
+            aspect-ratio: 3/4 !important;
+            min-height: 280px !important;
+          }
+          .portfolio-item-wide {
+            grid-column: span 1 !important;
+            aspect-ratio: 4/3 !important;
+          }
+
+          /* Texte overlay sur mobile */
+          .hover-overlay {
+            opacity: 1 !important;
+            background: linear-gradient(
+              to top,
+              rgba(0,0,0,0.92) 0%,
+              rgba(0,0,0,0.5) 50%,
+              rgba(0,0,0,0.1) 100%
+            ) !important;
+          }
+
+          /* Titres responsive sur mobile */
+          .portfolio-title {
+            font-size: clamp(14px, 4vw, 20px) !important;
+            display: -webkit-box !important;
+            -webkit-line-clamp: 2 !important;
+            -webkit-box-orient: vertical !important;
+            overflow: hidden !important;
+            line-height: 1.3 !important;
+          }
+
+          /* Catégorie sur mobile */
+          .portfolio-category {
+            white-space: nowrap !important;
+            overflow: hidden !important;
+            text-overflow: ellipsis !important;
+            max-width: 100% !important;
+          }
+        }
+
         @media (hover: none) { .hover-overlay { opacity: 1 !important; } }
+
+        /* Prévention scroll horizontal global */
+        body, html { overflow-x: hidden !important; max-width: 100vw !important; }
       `}</style>
     </section>
   );
