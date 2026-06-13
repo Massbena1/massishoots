@@ -629,11 +629,13 @@ export default function ChatBot() {
         .chatbot-window::-webkit-scrollbar { width: 0; }
         @media (max-width: 480px) {
           .chatbot-window {
-            width: 100vw !important;
-            right: 0 !important;
+            width: calc(100vw - 16px) !important;
+            right: 8px !important;
+            left: 8px !important;
             bottom: 80px !important;
             height: 60vh !important;
             border-radius: 12px 12px 0 0 !important;
+            max-width: 100vw !important;
           }
         }
       `}</style>

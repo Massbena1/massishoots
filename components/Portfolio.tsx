@@ -289,7 +289,6 @@ export default function Portfolio() {
             className="portfolio-grid grid-mobile-1 grid-tablet-2 grid-tablet-3"
             style={{
               display: "grid",
-              gridTemplateColumns: "repeat(4, 1fr)",
               gridAutoFlow: "dense",
               gap: "clamp(8px, 1.2vw, 20px)",
             }}
