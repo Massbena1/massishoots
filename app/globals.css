@@ -94,11 +94,31 @@ img {
   --k4: 3840px;
 }
 
-/* UNIVERSELLES pour tous appareils - ANTI SCROLL HORIZONTAL */
+/* UNIVERSELLES pour tous appareils - ANTI SCROLL HORIZONTAL + ZOOM */
 html, body {
   overflow-x: hidden !important;
   max-width: 100vw !important;
   position: relative !important;
+  touch-action: pan-y !important;
+  user-select: none !important;
+}
+
+/* DÉSACTIVER ZOOM/PINCH sur tout */
+* {
+  touch-action: manipulation !important;
+  -webkit-user-select: none !important;
+  -webkit-touch-callout: none !important;
+}
+
+/* Permettre sélection sur text inputs */
+input, textarea {
+  -webkit-user-select: text !important;
+  user-select: text !important;
+}
+
+/* BLOQUER ZOOM sur arrière-plans */
+*:before, *:after {
+  touch-action: none !important;
 }
 
 img, video {

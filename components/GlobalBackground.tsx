@@ -25,6 +25,11 @@ export default function GlobalBackground() {
       width: "100vw", height: "100vh",
       zIndex: 0,
       pointerEvents: "none",
+      touchAction: "none",
+      userSelect: "none",
+      WebkitUserSelect: "none",
+      WebkitTouchCallout: "none",
+      overflow: "hidden",
     }}>
 
       {/* ── Dark : #0a0a0a + #16161a ── */}
@@ -35,6 +40,12 @@ export default function GlobalBackground() {
       }}>
         <MeshGradient
           className="absolute inset-0 w-full h-full"
+          style={{
+            touchAction: "none",
+            userSelect: "none",
+            WebkitUserSelect: "none",
+            pointerEvents: "none",
+          }}
           colors={["#0a0a0a", "#16161a", "#0f0f12", "#0a0a0a", "#16161a"]}
           speed={0.18}
         />
@@ -48,6 +59,12 @@ export default function GlobalBackground() {
       }}>
         <MeshGradient
           className="absolute inset-0 w-full h-full"
+          style={{
+            touchAction: "none",
+            userSelect: "none",
+            WebkitUserSelect: "none",
+            pointerEvents: "none",
+          }}
           colors={["#f2f0ec", "#e8e4de", "#ede9e4", "#f5f2ee", "#e0dcd5"]}
           speed={0.18}
         />

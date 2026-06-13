@@ -29,6 +29,7 @@ export const metadata: Metadata = {
   title: "Massishoots | Photographe & Vidéaste Premium — Montréal",
   description:
     "Massi Bena, photographe et vidéaste freelance premium à Montréal. Personal branding, corporate B2B, mariages & événements.",
+  viewport: "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
