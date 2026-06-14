@@ -98,7 +98,7 @@ export default function SeoLocalLayout(p: SeoLocalLayoutProps) {
       <main style={{ background: "#000", minHeight: "100vh" }}>
 
         {/* ── HERO ──────────────────────────────────────────────────── */}
-        <section style={{ position: "relative", padding: "160px 24px 110px", overflow: "hidden" }}>
+        <section className="hero-padding seo-hero-section" style={{ position: "relative", padding: "160px 24px 110px", overflow: "hidden" }}>
           {/* Background image subtle */}
           <div style={{ position: "absolute", inset: 0, zIndex: 0 }}>
             <Image src={p.heroImage} alt="" fill sizes="100vw" style={{ objectFit: "cover", opacity: 0.08, filter: "saturate(0.6)" }} priority fetchPriority="high" />

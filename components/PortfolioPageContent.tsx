@@ -263,7 +263,7 @@ export default function PortfolioPageContent() {
     <main style={{ background: "#000", minHeight: "100vh" }}>
 
       {/* ── SECTION 1 : HERO ─────────────────────────────────── */}
-      <section style={{ padding: "160px 24px 100px", textAlign: "center" }}>
+      <section className="hero-padding" style={{ padding: "160px 24px 100px", textAlign: "center" }}>
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
           <span className="font-dm" style={{ display: "inline-block", fontSize: 10, letterSpacing: "0.25em", textTransform: "uppercase", color: "#C9A84C", border: "1px solid rgba(201,168,76,0.25)", padding: "5px 18px", borderRadius: 9999, background: "rgba(201,168,76,0.05)", marginBottom: 36 }}>
             Studio Premium · Montréal
@@ -304,14 +304,14 @@ export default function PortfolioPageContent() {
                   initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: "-60px" }}
                   transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-                  style={{ display: "grid", gridTemplateColumns: reversed ? "40% 60%" : "60% 40%", minHeight: 420, borderRadius: 16, overflow: "hidden", border: "0.5px solid rgba(201,168,76,0.15)" }}
+                  style={{ display: "grid", gridTemplateColumns: reversed ? "40% 60%" : "60% 40%", minHeight: 420, borderRadius: 16, overflow: "hidden", border: "0.5px solid rgba(201,168,76,0.15)", direction: reversed ? "rtl" : "ltr" }}
                   className="featured-block"
                 >
                   {/* Image (conditionally first or second) */}
                   {!reversed && <FeaturedImage p={p} onClick={() => openFeaturedLightbox(p.gridFilter)} />}
 
                   {/* Texte */}
-                  <div style={{ background: "#0f0f0f", padding: "52px 44px", display: "flex", flexDirection: "column", justifyContent: "center", position: "relative", overflow: "hidden", order: reversed ? -1 : 0 }}>
+                  <div className="featured-text" style={{ background: "#0f0f0f", padding: "52px 44px", display: "flex", flexDirection: "column", justifyContent: "center", position: "relative", overflow: "hidden", direction: "ltr", order: reversed ? -1 : 0 }}>
                     {/* Numéro en arrière-plan */}
                     <span style={{ position: "absolute", top: "50%", right: reversed ? "auto" : -20, left: reversed ? -20 : "auto", transform: "translateY(-50%)", fontFamily: "var(--font-bebas-neue)", fontSize: 160, color: "rgba(201,168,76,0.06)", lineHeight: 1, userSelect: "none", pointerEvents: "none" }}>
                       {p.num}

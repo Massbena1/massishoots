@@ -116,10 +116,7 @@ input, textarea {
   user-select: text !important;
 }
 
-/* BLOQUER ZOOM sur arrière-plans */
-*:before, *:after {
-  touch-action: none !important;
-}
+/* Ne pas bloquer scroll sur pseudo-éléments — cassait le scroll iOS */
 
 img, video {
   max-width: 100% !important;
@@ -148,6 +145,105 @@ img, video {
   .custom-cursor-enabled {
     cursor: none;
   }
+}
+
+/* ══════════════════════════════════════════════════════
+   MOBILE GLOBAL — tous écrans ≤ 767px
+   ══════════════════════════════════════════════════════ */
+@media (max-width: 767px) {
+
+  /* ── Hero padding : réduit pour ne pas étouffer le contenu ── */
+  .hero-padding { padding-top: 100px !important; padding-bottom: 60px !important; }
+
+  /* ── Grilles Services (service-block alterne 60/40) ── */
+  .service-block {
+    grid-template-columns: 1fr !important;
+    direction: ltr !important;
+    min-height: unset !important;
+  }
+  .service-block > * { order: unset !important; }
+  .service-block-img { min-height: 240px !important; aspect-ratio: 16/9 !important; }
+
+  /* ── Portfolio featured projects (60/40) ── */
+  .featured-block {
+    grid-template-columns: 1fr !important;
+    direction: ltr !important;
+    min-height: unset !important;
+  }
+  .featured-block > * { order: unset !important; }
+
+  /* ── Masonry portfolio grid ── */
+  .masonry-grid {
+    grid-template-columns: 1fr !important;
+    grid-auto-rows: auto !important;
+  }
+
+  /* ── Page Merci — 3 cartes → 1 colonne ── */
+  .merci-cards {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* ── SEO pages grids ── */
+  .seo-services-grid { grid-template-columns: 1fr !important; }
+  .seo-args-grid { grid-template-columns: 1fr !important; }
+  .seo-testimonials-grid { grid-template-columns: 1fr !important; }
+
+  /* ── Galleries grid ── */
+  .galleries-grid { grid-template-columns: 1fr !important; }
+
+  /* ── Process 4 étapes → 2 colonnes ── */
+  .process-grid { grid-template-columns: repeat(2, 1fr) !important; gap: 28px !important; }
+
+  /* ── Différenciateurs 3 → 1 colonne ── */
+  .diff-grid { grid-template-columns: 1fr !important; }
+
+  /* ── Stats grid ── */
+  .stats-grid { grid-template-columns: repeat(2, 1fr) !important; }
+
+  /* ── CTA buttons → colonne ── */
+  .cta-buttons {
+    flex-direction: column !important;
+    gap: 12px !important;
+    width: 100% !important;
+  }
+  .cta-buttons > * {
+    width: 100% !important;
+    justify-content: center !important;
+    text-align: center !important;
+  }
+
+  /* ── Testimonials grid → 1 col ── */
+  .testimonials-grid { grid-template-columns: 1fr !important; }
+
+  /* ── Hero video cover ── */
+  .hero-media { min-height: 100svh; }
+
+  /* ── Portfolio grid ── */
+  .portfolio-grid { grid-template-columns: 1fr !important; }
+
+  /* ── Featured block text — padding réduit ── */
+  .featured-text { padding: 32px 24px !important; }
+
+  /* ── Service block image min-height ── */
+  .service-block-img { min-height: 260px !important; }
+
+  /* ── SeoLocalLayout hero ── */
+  .seo-hero-section { padding-top: 100px !important; padding-bottom: 60px !important; }
+
+  /* ── Galleries page hero ── */
+  .galleries-hero { padding: 100px 20px 48px !important; }
+
+  /* ── Boutons pleine largeur sur mobile ── */
+  .btn-full-mobile {
+    width: 100% !important;
+    justify-content: center !important;
+  }
+
+  /* ── Réduire gap sections ── */
+  .section-gap-mobile { padding-top: 60px !important; padding-bottom: 60px !important; }
+
+  /* ── Texte: padding interne cards ── */
+  .card-padding-mobile { padding: 22px 20px !important; }
 }
 
 /* ── MOBILE S : 375px (iPhone SE 3e gen) ── */

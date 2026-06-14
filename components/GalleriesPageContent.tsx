@@ -170,7 +170,7 @@ export default function GalleriesPageContent({ galleries }: { galleries: PublicG
     <main style={{ background: "#000", minHeight: "100vh" }}>
 
       {/* ── HERO ─────────────────────────────────────────────── */}
-      <section style={{ padding: "160px 24px 80px", textAlign: "center" }}>
+      <section className="hero-padding galleries-hero" style={{ padding: "160px 24px 80px", textAlign: "center" }}>
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
           <span className="font-dm" style={{ display: "inline-block", fontSize: 10, letterSpacing: "0.25em", textTransform: "uppercase", color: "#C9A84C", border: "1px solid rgba(201,168,76,0.25)", padding: "5px 18px", borderRadius: 9999, background: "rgba(201,168,76,0.05)", marginBottom: 36 }}>
             ✦ Vos souvenirs vous attendent

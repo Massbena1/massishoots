@@ -102,10 +102,10 @@ function ServiceBlock({ s, idx }: { s: typeof SERVICES[0]; idx: number }) {
         border: "1px solid rgba(255,255,255,0.07)",
         direction: reversed ? "rtl" : "ltr",
       }}
-      className="service-block"
+      className="service-block service-block-root"
     >
       {/* Image */}
-      <div style={{ position: "relative", minHeight: 420, direction: "ltr" }}>
+      <div className="service-block-img" style={{ position: "relative", minHeight: 420, direction: "ltr" }}>
         <Image
           src={s.image}
           alt={s.title}
@@ -167,7 +167,7 @@ export default function ServicesPageContent() {
     <main style={{ background: "#000", minHeight: "100vh" }}>
 
       {/* ── SECTION 1 : HERO ─────────────────────────────────── */}
-      <section ref={heroRef} style={{ padding: "160px 24px 100px", textAlign: "center", position: "relative", overflow: "hidden" }}>
+      <section ref={heroRef} className="hero-padding" style={{ padding: "160px 24px 100px", textAlign: "center", position: "relative", overflow: "hidden" }}>
         <div style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%,-50%)", width: 700, height: 500, background: "radial-gradient(ellipse, rgba(201,168,76,0.06) 0%, transparent 70%)", pointerEvents: "none" }} />
         <div style={{ maxWidth: 760, margin: "0 auto", position: "relative", zIndex: 1 }}>
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>

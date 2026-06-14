@@ -80,7 +80,7 @@ export default function MerciPage() {
       <main style={{ background: "#000", minHeight: "100vh" }}>
 
         {/* ── SECTION 1 — CONFIRMATION ──────────────────────── */}
-        <section style={{ padding: "160px 24px 100px", textAlign: "center" }}>
+        <section className="hero-padding" style={{ padding: "160px 24px 100px", textAlign: "center" }}>
           <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}>
 
             {/* Icône ✦ pulse */}
