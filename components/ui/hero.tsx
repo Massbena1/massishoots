@@ -186,7 +186,7 @@ export default function ShaderHero() {
             height: "100%",
             objectFit: "cover",
             objectPosition: "center top",
-            filter: "brightness(0.45) saturate(0.8)",
+            filter: "brightness(0.72) saturate(0.9)",
           }}
         >
           <source src="/VIDEO/hero.mp4" type="video/mp4" />
@@ -195,7 +195,7 @@ export default function ShaderHero() {
         <div style={{
           position: "absolute",
           inset: 0,
-          background: "linear-gradient(105deg, rgba(7,9,13,0.85) 0%, rgba(7,9,13,0.5) 45%, rgba(7,9,13,0.2) 100%)",
+          background: "linear-gradient(105deg, rgba(7,9,13,0.72) 0%, rgba(7,9,13,0.35) 45%, rgba(7,9,13,0.1) 100%)",
         }} />
         <div style={{
           position: "absolute",
