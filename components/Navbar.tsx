@@ -123,11 +123,8 @@ export default function Navbar() {
           }}
         >
           {/* Logo */}
-          <Link href="/" className="font-bebas" style={{
-            fontSize: 14, letterSpacing: "0.2em", color: "#fff",
-            textDecoration: "none", marginRight: 8, whiteSpace: "nowrap",
-          }}>
-            MASSISHOOTS
+          <Link href="/" style={{ textDecoration: "none", marginRight: 8, display: "flex", alignItems: "center" }}>
+            <img src="/logo.png" alt="Massishoots" style={{ height: 22, width: "auto", objectFit: "contain" }} />
           </Link>
 
           <div style={{ width: 1, height: 14, background: "rgba(255,255,255,0.1)", margin: "0 4px" }} />
