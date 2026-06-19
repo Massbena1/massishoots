@@ -214,7 +214,7 @@ export default function ShaderHero() {
             width: "100%",
             height: "100%",
             objectFit: "cover",
-            objectPosition: "center 60%",
+            objectPosition: "center 75%",
             filter: "brightness(0.72) saturate(0.9)",
           }}
         >
