@@ -137,37 +137,66 @@ export default function ShaderHero() {
             {t("desc")}
           </motion.p>
 
+          {/* Preuve sociale — logos clients */}
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.95 }}
+            style={{ marginBottom: 28 }}
+          >
+            <p className="font-dm" style={{ fontSize: 10, letterSpacing: "0.25em", textTransform: "uppercase", color: "rgba(255,255,255,0.28)", marginBottom: 12 }}>
+              Ils nous font confiance
+            </p>
+            <div style={{ display: "flex", alignItems: "center", gap: 20, flexWrap: "wrap" }}>
+              {/* Omnigo */}
+              <img src="/clients/omnigo.png" alt="Omnigo" style={{ height: 18, opacity: 0.5, filter: "brightness(0) invert(1)" }} />
+              {/* Black Swan */}
+              <img src="/clients/blackswan.svg" alt="Black Swan" style={{ height: 18, opacity: 0.5, filter: "brightness(0) invert(1)" }} />
+              {/* Tage */}
+              <img src="/clients/tage.png" alt="Tage Karting" style={{ height: 18, opacity: 0.5, filter: "brightness(0) invert(1)" }} />
+              {/* Techguys */}
+              <span className="font-dm" style={{ fontSize: 10, letterSpacing: "0.18em", fontWeight: 600, color: "rgba(255,255,255,0.4)", whiteSpace: "nowrap" }}>TECHGUYS</span>
+              {/* ESTA */}
+              <span className="font-dm" style={{ fontSize: 10, letterSpacing: "0.18em", fontWeight: 600, color: "rgba(255,255,255,0.4)", whiteSpace: "nowrap" }}>ESTA EVENT</span>
+            </div>
+          </motion.div>
+
           {/* CTAs */}
           <motion.div
-            className="flex items-center gap-4 flex-wrap cta-buttons"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 1.0 }}
           >
-            <motion.a
-              href="/portfolio"
-              className="font-dm px-10 py-4 rounded-full bg-transparent border border-white/20 text-white/80 font-medium text-sm transition-all duration-300 backdrop-blur-sm"
-              style={{ letterSpacing: "0.15em", textTransform: "uppercase", textDecoration: "none" }}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              {t("portfolio")}
-            </motion.a>
-            <motion.a
-              href="/contact"
-              className="font-dm px-10 py-4 rounded-full font-semibold text-sm"
-              style={{
-                background: "#f2f0ec",
-                color: "#0a0a0a",
-                letterSpacing: "0.12em",
-                textTransform: "uppercase",
-                textDecoration: "none",
-              }}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              {t("book")}
-            </motion.a>
+            <div className="flex items-center gap-4 flex-wrap cta-buttons">
+              <motion.a
+                href="/portfolio"
+                className="font-dm px-10 py-4 rounded-full bg-transparent border border-white/20 text-white/80 font-medium text-sm transition-all duration-300 backdrop-blur-sm"
+                style={{ letterSpacing: "0.15em", textTransform: "uppercase", textDecoration: "none" }}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                {t("portfolio")}
+              </motion.a>
+              <motion.a
+                href="/contact"
+                className="font-dm px-10 py-4 rounded-full font-semibold text-sm"
+                style={{
+                  background: "#f2f0ec",
+                  color: "#0a0a0a",
+                  letterSpacing: "0.12em",
+                  textTransform: "uppercase",
+                  textDecoration: "none",
+                }}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                {t("book")}
+              </motion.a>
+            </div>
+            {/* Trust signal */}
+            <p className="font-dm mt-4" style={{ fontSize: 12, color: "rgba(255,255,255,0.35)", letterSpacing: "0.05em" }}>
+              Réponse sous 24h &nbsp;·&nbsp; Sans engagement &nbsp;·&nbsp; 50+ marques montréalaises
+            </p>
           </motion.div>
         </div>
       </main>
