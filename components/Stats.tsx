@@ -44,9 +44,22 @@ function Counter({ value, suffix }: { value: number; suffix: string }) {
   );
 }
 
+const STATS_FALLBACK = [
+  { num: 50,  suffix: "+",  label: "Clients satisfaits",  sub: "Entrepreneurs & marques accompagnés" },
+  { num: 200, suffix: "+",  label: "Projets livrés",       sub: "Livrés avec précision cinématique" },
+  { num: 2,   suffix: "M+", label: "Audience cumulée",     sub: "Générées pour nos clients" },
+  { num: 5,   suffix: " ans", label: "D'expérience",       sub: "Photo & vidéo premium" },
+];
+
 export default function Stats() {
   const t = useTranslations();
-  const stats = t.raw("stats") as Array<{ num: number; suffix: string; label: string; sub: string }>;
+  let stats: Array<{ num: number; suffix: string; label: string; sub: string }>;
+  try {
+    const raw = t.raw("stats") as Array<{ num: number; suffix: string; label: string; sub: string }>;
+    stats = Array.isArray(raw) && raw.length > 0 && typeof raw[0].num === "number" ? raw : STATS_FALLBACK;
+  } catch {
+    stats = STATS_FALLBACK;
+  }
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
 

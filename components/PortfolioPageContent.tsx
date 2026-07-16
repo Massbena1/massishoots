@@ -472,7 +472,7 @@ export default function PortfolioPageContent() {
           .masonry-grid { grid-template-columns: repeat(2, 1fr) !important; }
           .stats-grid { grid-template-columns: repeat(2, 1fr) !important; }
         }
-        @media (max-width: 520px) {
+        @media (max-width: 767px) {
           .masonry-grid { grid-template-columns: 1fr !important; }
           .stats-grid { grid-template-columns: repeat(2, 1fr) !important; }
         }

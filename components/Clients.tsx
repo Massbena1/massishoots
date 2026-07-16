@@ -8,7 +8,7 @@ import { useTranslations } from "next-intl";
 
 const TechGuys = () => (
   <span style={{ fontSize: 11, letterSpacing: "0.15em", fontWeight: 500, color: "#fff", whiteSpace: "nowrap", fontFamily: "inherit" }}>
-    TECHGUYS CONSULTING
+    TECHGAYS
   </span>
 );
 
