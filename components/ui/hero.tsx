@@ -154,8 +154,8 @@ export default function ShaderHero() {
               <img src="/clients/blackswan.svg" alt="Black Swan" style={{ height: 18, opacity: 0.5, filter: "brightness(0) invert(1)" }} />
               {/* Tage */}
               <img src="/clients/tage.png" alt="Tage Karting" style={{ height: 18, opacity: 0.5, filter: "brightness(0) invert(1)" }} />
-              {/* Techguys */}
-              <span className="font-dm" style={{ fontSize: 10, letterSpacing: "0.18em", fontWeight: 600, color: "rgba(255,255,255,0.4)", whiteSpace: "nowrap" }}>TECHGUYS</span>
+              {/* Techgays */}
+              <span className="font-dm" style={{ fontSize: 10, letterSpacing: "0.18em", fontWeight: 600, color: "rgba(255,255,255,0.4)", whiteSpace: "nowrap" }}>TECHGAYS</span>
               {/* ESTA */}
               <span className="font-dm" style={{ fontSize: 10, letterSpacing: "0.18em", fontWeight: 600, color: "rgba(255,255,255,0.4)", whiteSpace: "nowrap" }}>ESTA EVENT</span>
             </div>
