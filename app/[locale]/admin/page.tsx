@@ -116,10 +116,30 @@ export default function AdminPage() {
   const setEdit = (key: keyof Gallery) => (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) =>
     setEditForm(f => f ? ({ ...f, [key]: key === "photos" ? Number(e.target.value) : key === "password" || key === "featured" ? (e.target as HTMLInputElement).checked : e.target.value }) : f);
 
+  const compressImage = (file: File): Promise<File> =>
+    new Promise(resolve => {
+      const img = new Image();
+      const url = URL.createObjectURL(file);
+      img.onload = () => {
+        const maxW = 1200;
+        const scale = img.width > maxW ? maxW / img.width : 1;
+        const canvas = document.createElement("canvas");
+        canvas.width = img.width * scale;
+        canvas.height = img.height * scale;
+        canvas.getContext("2d")!.drawImage(img, 0, 0, canvas.width, canvas.height);
+        canvas.toBlob(blob => {
+          URL.revokeObjectURL(url);
+          resolve(blob ? new File([blob], file.name, { type: "image/jpeg" }) : file);
+        }, "image/jpeg", 0.82);
+      };
+      img.src = url;
+    });
+
   const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>, isEdit = false) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
+    const raw = e.target.files?.[0];
+    if (!raw) return;
     setUploading(true);
+    const file = await compressImage(raw);
     const formData = new FormData();
     formData.append("file", file);
     const res = await fetch("/api/admin/upload", {
