@@ -5,13 +5,14 @@ import { motion, AnimatePresence } from "framer-motion";
 import { usePathname } from "next/navigation";
 import { useLocale, useTranslations } from "next-intl";
 import { Link, useRouter } from "@/i18n/navigation";
-import { Home, Camera, Image, DollarSign, User } from "lucide-react";
+import { Home, Camera, Image, DollarSign, User, Images } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const NAV_LINKS = [
   { key: "services",  href: "/services",  sectionId: null,        homeScroll: false, icon: Camera   },
   { key: "portfolio", href: "/portfolio", sectionId: "portfolio", homeScroll: true,  icon: Image    },
   { key: "about",     href: "/about",     sectionId: null,        homeScroll: false, icon: User     },
+  { key: "galleries", href: "/galleries", sectionId: null,        homeScroll: false, icon: Images   },
 ] as const;
 
 function easeInOutCubic(t: number): number {
