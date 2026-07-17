@@ -187,6 +187,25 @@ export default function GalleriesPageContent({ galleries }: { galleries: PublicG
       </section>
 
 
+      {/* ── GALERIES PUBLIQUES ───────────────────────────────── */}
+      {galleries.length > 0 && (
+        <section style={{ padding: "0 24px 80px" }}>
+          <div style={{ maxWidth: 1100, margin: "0 auto" }}>
+            <div style={{ marginBottom: 40 }}>
+              <span className="font-dm" style={{ fontSize: 11, letterSpacing: "0.3em", textTransform: "uppercase", color: "rgba(255,255,255,0.3)" }}>
+                — Événements récents
+              </span>
+              <h2 className="font-bebas" style={{ fontSize: "clamp(36px, 5vw, 56px)", color: "#fff", letterSpacing: "0.03em", marginTop: 10, lineHeight: 0.95 }}>
+                GALERIES DISPONIBLES
+              </h2>
+            </div>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 20 }} className="galleries-grid">
+              {galleries.map((g, i) => <GalleryCard key={g.nom + i} g={g} idx={i} />)}
+            </div>
+          </div>
+        </section>
+      )}
+
       {/* ── ACCÈS CODE PRIVÉ ─────────────────────────────────── */}
       <section style={{ padding: "20px 24px 100px", borderTop: galleries.length > 0 ? "1px solid rgba(255,255,255,0.05)" : "none" }}>
         <div style={{ maxWidth: 460, margin: "0 auto" }}>
