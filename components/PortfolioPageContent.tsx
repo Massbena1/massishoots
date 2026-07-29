@@ -228,7 +228,20 @@ export default function PortfolioPageContent({ data }: { data: PortfolioData }) 
                 </div>
               </div>
 
-              {/* Mini grille photos du même projet */}
+              {/* Vidéos branding en premier */}
+              {data.videos.filter(v => v.src.includes("facecam") || v.src.includes("brand")).length > 0 && (
+                <div style={{ marginTop: 8 }}>
+                  <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 8 }} className="reels-grid">
+                    {data.videos.filter(v => v.src.includes("facecam") || v.src.includes("brand")).map((v, vi) => (
+                      <motion.div key={v.src} initial={{ opacity: 0, scale: 0.95 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ duration: 0.4, delay: vi * 0.05 }}>
+                        <VideoCard video={v} onClick={() => setLightbox({ items: data.videos.map(x => ({ src: x.src, type: "video" as const, thumb: x.thumb })), idx: data.videos.findIndex(x => x.src === v.src) })} />
+                      </motion.div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Photos dessous */}
               {data.brand.length > 0 && (
                 <div style={{ marginTop: 8 }}>
                   <PhotoGrid photos={data.brand.slice(0, 8)} columns={4} />
