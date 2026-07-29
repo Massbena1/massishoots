@@ -153,7 +153,8 @@ function CropModal({ src, onClose, onDone }: { src: string; onClose: () => void;
       <div style={{ flex: 1, overflow: "auto", display: "flex", alignItems: "center", justifyContent: "center", padding: 24 }}>
         <ReactCrop crop={crop} onChange={c => setCrop(c)} aspect={ratio} keepSelection>
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img ref={imgRef} src={src} alt="crop" onLoad={onLoad} style={{ maxWidth: "80vw", maxHeight: "75vh", display: "block" }} crossOrigin="anonymous" />
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img ref={imgRef} src={src} alt="crop" onLoad={onLoad} style={{ maxWidth: "80vw", maxHeight: "75vh", display: "block" }} />
         </ReactCrop>
       </div>
     </div>
