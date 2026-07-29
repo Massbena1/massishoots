@@ -72,7 +72,7 @@ function scanClientFolder(slug: string) {
 
   // Build videos from Cloudflare Stream UIDs for this client
   const clientVideos = Object.entries(CF_UIDS)
-    .filter(([key]) => key.startsWith(`${slug}-facecam`))
+    .filter(([key]) => key.startsWith(`${slug.trim().toLowerCase()}-facecam`))
     .sort(([a], [b]) => a.localeCompare(b))
     .map(([, uid]) => ({
       src: cfUrl(uid),
