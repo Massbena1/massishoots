@@ -53,7 +53,7 @@ function VideoCard({ video, onClick }: { video: VideoItem; onClick: () => void }
   return (
     <div onClick={onClick} onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}
       style={{ position: "relative", aspectRatio: "9/16", overflow: "hidden", borderRadius: 10, cursor: "pointer", background: "#111" }}>
-      {video.thumb && <Image src={video.thumb} alt={video.label} fill sizes="(max-width: 768px) 50vw, 25vw" style={{ objectFit: "cover", transition: "transform 0.4s", transform: hovered ? "scale(1.04)" : "scale(1)" }} />}
+      {video.thumb && <img src={video.thumb} alt={video.label} style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", transition: "transform 0.4s", transform: hovered ? "scale(1.04)" : "scale(1)" }} />}
       <div style={{ position: "absolute", inset: 0, background: hovered ? "rgba(0,0,0,0.5)" : "rgba(0,0,0,0.2)", transition: "background 0.3s", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 8 }}>
         <span style={{ fontSize: 36, color: "#C9A84C" }}>▶</span>
         <span style={{ fontSize: 9, color: "#fff", letterSpacing: "0.15em", textTransform: "uppercase", fontFamily: "var(--font-dm-sans)", background: "rgba(0,0,0,0.5)", padding: "3px 10px", borderRadius: 9999 }}>{video.label}</span>
