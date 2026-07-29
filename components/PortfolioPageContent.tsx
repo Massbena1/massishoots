@@ -93,7 +93,7 @@ function ClientBlock({ client, idx, onVideoClick, onPhotoClick }: {
 
   return (
     <motion.div initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-60px" }} transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-      style={{ marginBottom: 100 }}>
+      style={{ marginBottom: 0 }}>
 
       {/* Header client */}
       <div style={{ display: "grid", gridTemplateColumns: reversed ? "40% 60%" : "60% 40%", minHeight: 420, borderRadius: "16px 16px 0 0", overflow: "hidden", border: "0.5px solid rgba(201,168,76,0.12)" }} className="client-header-grid">
@@ -191,6 +191,7 @@ function ClientBlock({ client, idx, onVideoClick, onPhotoClick }: {
 export default function PortfolioPageContent({ data }: { data: PortfolioData }) {
   const [activeFilter, setActiveFilter] = useState("Tout");
   const [lightbox, setLightbox] = useState<{ items: MediaFile[]; idx: number } | null>(null);
+  const [activeClient, setActiveClient] = useState(0);
   const brandingRef = useRef<HTMLElement>(null);
   const eventsRef = useRef<HTMLElement>(null);
 
@@ -251,12 +252,27 @@ export default function PortfolioPageContent({ data }: { data: PortfolioData }) 
             </p>
           </motion.div>
 
-          {data.clients.map((client, i) => (
-            <ClientBlock key={client.slug} client={client} idx={i}
-              onVideoClick={(videos, vi) => setLightbox({ items: videos.map(v => ({ src: v.src, type: "video" as const, thumb: v.thumb, isStream: v.isStream })), idx: vi })}
-              onPhotoClick={(photos, pi) => setLightbox({ items: photos.map(s => ({ src: s, type: "photo" as const })), idx: pi })}
-            />
-          ))}
+          {/* Onglets clients */}
+          {data.clients.length > 0 && (
+            <>
+              <div style={{ display: "flex", gap: 0, overflowX: "auto", scrollbarWidth: "none", marginBottom: 40, borderBottom: "1px solid rgba(255,255,255,0.08)" }} className="client-tabs">
+                {data.clients.map((c, i) => (
+                  <button key={c.slug} onClick={() => setActiveClient(i)}
+                    style={{ fontFamily: "var(--font-dm-sans)", fontSize: 13, fontWeight: 600, letterSpacing: "0.06em", padding: "14px 28px", background: "none", border: "none", borderBottom: activeClient === i ? "2px solid #C9A84C" : "2px solid transparent", color: activeClient === i ? "#C9A84C" : "rgba(255,255,255,0.35)", cursor: "pointer", whiteSpace: "nowrap", transition: "color 0.2s", flexShrink: 0, marginBottom: -1 }}>
+                    {c.client}
+                  </button>
+                ))}
+              </div>
+              <AnimatePresence mode="wait">
+                <motion.div key={activeClient} initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} transition={{ duration: 0.35 }}>
+                  <ClientBlock client={data.clients[activeClient]} idx={0}
+                    onVideoClick={(videos, vi) => setLightbox({ items: videos.map(v => ({ src: v.src, type: "video" as const, thumb: v.thumb, isStream: v.isStream })), idx: vi })}
+                    onPhotoClick={(photos, pi) => setLightbox({ items: photos.map(s => ({ src: s, type: "photo" as const })), idx: pi })}
+                  />
+                </motion.div>
+              </AnimatePresence>
+            </>
+          )}
         </div>
       </section>
 
