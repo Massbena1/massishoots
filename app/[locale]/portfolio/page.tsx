@@ -6,7 +6,7 @@ import { readdirSync, existsSync } from "fs";
 import { join } from "path";
 import { brandingClients } from "@/data/portfolio";
 
-const CF = "https://customer-k04ldcz48qdffgyl.cloudflarestream.com";
+const CF = "https://videodelivery.net";
 
 const IMG_EXT = /\.(jpg|jpeg|JPG|png|webp)$/;
 
