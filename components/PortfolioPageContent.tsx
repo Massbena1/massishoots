@@ -260,8 +260,8 @@ export default function PortfolioPageContent({ data }: { data: PortfolioData }) 
                 <div style={{ display: "flex", gap: 16, overflowX: "auto", scrollbarWidth: "none", paddingBottom: 4, cursor: "grab" }} className="client-peek-row">
                   {data.clients.map((c, i) => (
                     <button key={c.slug} onClick={() => setActiveClient(i)}
-                      style={{ flexShrink: 0, width: 160, background: "none", border: "none", cursor: "pointer", padding: 0, textAlign: "left", outline: "none" }}>
-                      <div style={{ position: "relative", width: 160, height: 200, borderRadius: 12, overflow: "hidden", border: activeClient === i ? "2px solid #C9A84C" : "2px solid transparent", transition: "border-color 0.25s", opacity: activeClient === i ? 1 : 0.45 }}>
+                      style={{ flexShrink: 0, width: 200, background: "none", border: "none", cursor: "pointer", padding: 0, textAlign: "left", outline: "none" }}>
+                      <div style={{ position: "relative", width: 200, height: 280, borderRadius: 12, overflow: "hidden", border: activeClient === i ? "2px solid #C9A84C" : "2px solid transparent", transition: "border-color 0.25s", opacity: activeClient === i ? 1 : 0.45 }}>
                         {c.media.cover
                           ? <img src={c.media.cover} alt={c.client} style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "top" }} />
                           : <div style={{ width: "100%", height: "100%", background: "#1a1a1a" }} />}
