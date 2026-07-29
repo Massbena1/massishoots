@@ -79,15 +79,39 @@ function CropModal({ src, onClose, onDone }: { src: string; onClose: () => void;
   const apply = async () => {
     if (!crop || !imgRef.current) return;
     setLoading(true);
-    setStatusMsg("Envoi au serveur…");
+    setStatusMsg("Recadrage…");
     try {
-      // On envoie les coordonnées en % — le serveur fait le crop avec sharp
-      const cropPercent = { x: crop.x ?? 0, y: crop.y ?? 0, width: crop.width ?? 100, height: crop.height ?? 100 };
-      console.log("crop envoyé:", cropPercent);
+      // fetch image as blob pour éviter les problèmes de taint CORS
+      const imgBlob = await fetch(src).then(r => r.blob());
+      const imgBitmap = await createImageBitmap(imgBlob);
+      const nw = imgBitmap.width;
+      const nh = imgBitmap.height;
+
+      const left   = Math.max(0, Math.round((crop.x / 100) * nw));
+      const top    = Math.max(0, Math.round((crop.y / 100) * nh));
+      const width  = Math.min(nw - left, Math.max(1, Math.round((crop.width / 100) * nw)));
+      const height = Math.min(nh - top,  Math.max(1, Math.round((crop.height / 100) * nh)));
+
+      if (width < 1 || height < 1) {
+        setStatusMsg("✗ Sélectionne une zone plus grande");
+        setLoading(false);
+        return;
+      }
+
+      const canvas = document.createElement("canvas");
+      canvas.width = width;
+      canvas.height = height;
+      const ctx = canvas.getContext("2d")!;
+      ctx.drawImage(imgBitmap, left, top, width, height, 0, 0, width, height);
+      imgBitmap.close();
+
+      const dataUrl = canvas.toDataURL("image/jpeg", 0.92);
+      setStatusMsg("Envoi…");
+
       const res = await fetch("/api/admin/crop", {
         method: "POST",
         headers: authHeaders(),
-        body: JSON.stringify({ imagePath: src, cropPercent }),
+        body: JSON.stringify({ imagePath: src, croppedDataUrl: dataUrl }),
       });
       const data = await res.json();
       if (data.url) {
