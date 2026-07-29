@@ -6,11 +6,11 @@ import { eventProjects, testimonials } from "@/data/portfolio";
 import type { BrandingClient } from "@/data/portfolio";
 
 /* ─── TYPES ─────────────────────────────────────────────────── */
-interface VideoItem { src: string; thumb: string; label: string; }
+interface VideoItem { src: string; thumb: string; label: string; isStream?: boolean; }
 interface ClientData extends BrandingClient {
   media: { cover: string; videos: VideoItem[]; photos: string[] };
 }
-interface MediaFile { src: string; type: "photo" | "video"; thumb?: string; }
+interface MediaFile { src: string; type: "photo" | "video"; thumb?: string; isStream?: boolean; }
 interface PortfolioData {
   clients: ClientData[];
   eventt: string[];
@@ -37,7 +37,9 @@ function Lightbox({ items, startIndex, onClose }: { items: MediaFile[]; startInd
       <motion.div key={idx} initial={{ opacity: 0, scale: 0.96 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.2 }}
         onClick={e => e.stopPropagation()} style={{ maxWidth: "88vw", maxHeight: "88vh" }}>
         {item.type === "video"
-          ? <video src={item.src} controls autoPlay style={{ maxWidth: "88vw", maxHeight: "88vh", borderRadius: 8 }} />
+          ? item.isStream
+            ? <iframe src={item.src} allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture" allowFullScreen style={{ width: "min(56vw, 360px)", height: "min(88vh, 640px)", borderRadius: 8, border: "none" }} />
+            : <video src={item.src} controls autoPlay style={{ maxWidth: "88vw", maxHeight: "88vh", borderRadius: 8 }} />
           : <img src={item.src} alt="" style={{ maxWidth: "88vw", maxHeight: "88vh", objectFit: "contain", borderRadius: 8, display: "block" }} />}
       </motion.div>
       <button onClick={e => { e.stopPropagation(); next(); }} style={{ position: "absolute", right: 16, background: "none", border: "1px solid rgba(201,168,76,0.3)", borderRadius: "50%", width: 44, height: 44, color: "#C9A84C", fontSize: 18, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", zIndex: 1 }}>→</button>
@@ -239,7 +241,7 @@ export default function PortfolioPageContent({ data }: { data: PortfolioData }) 
 
           {data.clients.map((client, i) => (
             <ClientBlock key={client.slug} client={client} idx={i}
-              onVideoClick={(videos, vi) => setLightbox({ items: videos.map(v => ({ src: v.src, type: "video" as const, thumb: v.thumb })), idx: vi })}
+              onVideoClick={(videos, vi) => setLightbox({ items: videos.map(v => ({ src: v.src, type: "video" as const, thumb: v.thumb, isStream: v.isStream })), idx: vi })}
               onPhotoClick={(photos, pi) => setLightbox({ items: photos.map(s => ({ src: s, type: "photo" as const })), idx: pi })}
             />
           ))}
