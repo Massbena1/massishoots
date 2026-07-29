@@ -12,6 +12,14 @@ const IMG_EXT = /\.(jpg|jpeg|JPG|png|webp)$/;
 
 // Cloudflare Stream UIDs — mapped by original filename
 const CF_UIDS: Record<string, string> = {
+  "andrea-facecam-1": "3c43f95647720c6ad1fe37966a414152",
+  "andrea-facecam-2": "366b95359a582484e385412eb86b5b9e",
+  "andrea-facecam-3": "bdc3ee9f89f35c1f6dc48db673adcedf",
+  "stephanie-facecam-1": "4851e3847ff9c4641554b6e5cf30a7fa",
+  "stephanie-facecam-2": "d9988064eebd3bff8b2a71cd3ee409d9",
+  "stephanie-facecam-3": "9b1d002b6177b60edd34c3d27ecd7723",
+  "stephanie-facecam-4": "77d815ef017004c0b72dd7d2a0b21155",
+  "stephanie-facecam-5": "0fcef21c0ca3660cee3ae0593178b11c",
   "laura-facecam-1": "6d9eb82bb841a02a2173c8ff15ece8e4",
   "laura-facecam-2": "4df46c15b1d58b593679cd50c62d3268",
   "laura-facecam-3": "2d73c832cd265f13accd9ff43100dd6a",
