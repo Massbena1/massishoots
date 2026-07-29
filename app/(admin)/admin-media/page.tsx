@@ -70,34 +70,53 @@ function CropModal({ src, onClose, onDone }: { src: string; onClose: () => void;
     setCrop(c);
   };
 
+  const [statusMsg, setStatusMsg] = useState("");
+
   const apply = async () => {
     if (!crop || !imgRef.current) return;
     setLoading(true);
-    const img = imgRef.current;
-    const scaleX = img.naturalWidth / img.width;
-    const scaleY = img.naturalHeight / img.height;
+    setStatusMsg("Recadrage en cours…");
+    try {
+      const img = imgRef.current;
+      const scaleX = img.naturalWidth / img.width;
+      const scaleY = img.naturalHeight / img.height;
 
-    const canvas = document.createElement("canvas");
-    const pixelCrop = {
-      x: (crop.x / 100) * img.width * scaleX,
-      y: (crop.y / 100) * img.height * scaleY,
-      width: (crop.width / 100) * img.width * scaleX,
-      height: (crop.height / 100) * img.height * scaleY,
-    };
-    canvas.width = pixelCrop.width;
-    canvas.height = pixelCrop.height;
-    const ctx = canvas.getContext("2d")!;
-    ctx.drawImage(img, pixelCrop.x, pixelCrop.y, pixelCrop.width, pixelCrop.height, 0, 0, canvas.width, canvas.height);
+      const canvas = document.createElement("canvas");
+      const pixelCrop = {
+        x: (crop.x / 100) * img.width * scaleX,
+        y: (crop.y / 100) * img.height * scaleY,
+        width: (crop.width / 100) * img.width * scaleX,
+        height: (crop.height / 100) * img.height * scaleY,
+      };
+      canvas.width = Math.round(pixelCrop.width);
+      canvas.height = Math.round(pixelCrop.height);
+      const ctx = canvas.getContext("2d")!;
+      ctx.drawImage(img, pixelCrop.x, pixelCrop.y, pixelCrop.width, pixelCrop.height, 0, 0, canvas.width, canvas.height);
 
-    const dataUrl = canvas.toDataURL("image/jpeg", 0.92);
-    const res = await fetch("/api/admin/crop", {
-      method: "POST",
-      headers: authHeaders(),
-      body: JSON.stringify({ imagePath: src, croppedDataUrl: dataUrl }),
-    });
-    const data = await res.json();
+      const dataUrl = canvas.toDataURL("image/jpeg", 0.92);
+      if (dataUrl === "data:,") {
+        setStatusMsg("✗ Erreur CORS — image non accessible");
+        setLoading(false);
+        return;
+      }
+
+      setStatusMsg("Envoi au serveur…");
+      const res = await fetch("/api/admin/crop", {
+        method: "POST",
+        headers: authHeaders(),
+        body: JSON.stringify({ imagePath: src, croppedDataUrl: dataUrl }),
+      });
+      const data = await res.json();
+      if (data.url) {
+        setStatusMsg("✓ Sauvegardé !");
+        setTimeout(() => onDone(data.url), 600);
+      } else {
+        setStatusMsg(`✗ Erreur : ${data.error ?? "inconnue"}`);
+      }
+    } catch (e) {
+      setStatusMsg(`✗ ${String(e)}`);
+    }
     setLoading(false);
-    if (data.url) onDone(data.url);
   };
 
   return (
@@ -115,9 +134,14 @@ function CropModal({ src, onClose, onDone }: { src: string; onClose: () => void;
             </button>
           ))}
         </div>
+        {statusMsg && (
+          <span style={{ fontSize: 12, color: statusMsg.startsWith("✓") ? "#4caf50" : statusMsg.startsWith("✗") ? "#f44" : "#C9A84C", whiteSpace: "nowrap" }}>
+            {statusMsg}
+          </span>
+        )}
         <button onClick={() => apply()} disabled={loading}
           style={{ padding: "8px 20px", background: "#C9A84C", color: "#000", border: "none", borderRadius: 8, fontWeight: 700, fontSize: 13, cursor: loading ? "default" : "pointer", opacity: loading ? 0.6 : 1 }}>
-          {loading ? "…" : "✓ Appliquer"}
+          {loading ? "Traitement…" : "✓ Appliquer"}
         </button>
         <button onClick={onClose}
           style={{ padding: "8px 16px", background: "transparent", color: "#aaa", border: "1px solid #333", borderRadius: 8, fontSize: 13, cursor: "pointer" }}>
