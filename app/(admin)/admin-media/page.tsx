@@ -57,8 +57,12 @@ function CropModal({ src, onClose, onDone }: { src: string; onClose: () => void;
   const [loading, setLoading] = useState(false);
 
   const onLoad = useCallback((e: React.SyntheticEvent<HTMLImageElement>) => {
-    const { width, height } = e.currentTarget;
-    const c = centerCrop(makeAspectCrop({ unit: "%", width: 80 }, ratio ?? width / height, width, height), width, height);
+    const img = e.currentTarget;
+    const w = img.width || img.naturalWidth;
+    const h = img.height || img.naturalHeight;
+    if (!w || !h) return;
+    const aspect = ratio ?? w / h;
+    const c = centerCrop(makeAspectCrop({ unit: "%", width: 80 }, aspect, w, h), w, h);
     setCrop(c);
   }, [ratio]);
 
@@ -78,13 +82,12 @@ function CropModal({ src, onClose, onDone }: { src: string; onClose: () => void;
     setStatusMsg("Envoi au serveur…");
     try {
       // On envoie les coordonnées en % — le serveur fait le crop avec sharp
+      const cropPercent = { x: crop.x ?? 0, y: crop.y ?? 0, width: crop.width ?? 100, height: crop.height ?? 100 };
+      console.log("crop envoyé:", cropPercent);
       const res = await fetch("/api/admin/crop", {
         method: "POST",
         headers: authHeaders(),
-        body: JSON.stringify({
-          imagePath: src,
-          cropPercent: { x: crop.x, y: crop.y, width: crop.width, height: crop.height },
-        }),
+        body: JSON.stringify({ imagePath: src, cropPercent }),
       });
       const data = await res.json();
       if (data.url) {

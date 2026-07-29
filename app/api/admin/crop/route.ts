@@ -22,10 +22,13 @@ export async function POST(req: NextRequest) {
     const iw = meta.width ?? 800;
     const ih = meta.height ?? 600;
 
-    const left   = Math.round((cropPercent.x / 100) * iw);
-    const top    = Math.round((cropPercent.y / 100) * ih);
-    const width  = Math.round((cropPercent.width / 100) * iw);
-    const height = Math.round((cropPercent.height / 100) * ih);
+    const left   = Math.max(0, Math.round((cropPercent.x / 100) * iw));
+    const top    = Math.max(0, Math.round((cropPercent.y / 100) * ih));
+    const width  = Math.min(iw - left, Math.max(1, Math.round((cropPercent.width / 100) * iw)));
+    const height = Math.min(ih - top,  Math.max(1, Math.round((cropPercent.height / 100) * ih)));
+
+    if (width < 1 || height < 1 || left + width > iw || top + height > ih)
+      return NextResponse.json({ error: `Coordonnées invalides: left=${left} top=${top} w=${width} h=${height} img=${iw}x${ih}` }, { status: 400 });
 
     const cropped = await sharp(fileBuffer)
       .extract({ left, top, width, height })
