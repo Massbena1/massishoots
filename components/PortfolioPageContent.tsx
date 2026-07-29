@@ -81,109 +81,109 @@ function CtaBlock({ title, btn }: { title: string; btn: string }) {
 }
 
 /* ─── BLOC CLIENT ────────────────────────────────────────────── */
-function ClientBlock({ client, idx, onVideoClick, onPhotoClick }: {
+function ClientBlock({ client, onVideoClick, onPhotoClick }: {
   client: ClientData;
   idx: number;
   onVideoClick: (videos: VideoItem[], i: number) => void;
   onPhotoClick: (photos: string[], i: number) => void;
 }) {
-  const reversed = idx % 2 === 1;
   const hasVideos = client.media.videos.length > 0;
   const hasPhotos = client.media.photos.length > 0;
 
   return (
-    <motion.div initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-60px" }} transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-      style={{ marginBottom: 0 }}>
+    <div style={{ borderRadius: 20, overflow: "hidden", border: "1px solid rgba(201,168,76,0.12)", background: "#0d0d0d" }}>
 
-      {/* Header client */}
-      <div style={{ display: "grid", gridTemplateColumns: reversed ? "40% 60%" : "60% 40%", minHeight: 420, borderRadius: "16px 16px 0 0", overflow: "hidden", border: "0.5px solid rgba(201,168,76,0.12)" }} className="client-header-grid">
+      {/* ── HERO COVER PLEIN LARGEUR ── */}
+      <div style={{ position: "relative", width: "100%", height: "clamp(320px, 50vw, 520px)", overflow: "hidden" }}>
+        {client.media.cover
+          ? <Image src={client.media.cover} alt={client.client} fill sizes="100vw" style={{ objectFit: "cover", objectPosition: "top" }} priority />
+          : <div style={{ width: "100%", height: "100%", background: "#111" }} />}
 
-        {/* Cover */}
-        <div style={{ position: "relative", overflow: "hidden", order: reversed ? 2 : 1 }}>
-          {client.media.cover ? (
-            <Image src={client.media.cover} alt={client.client} fill sizes="60vw" style={{ objectFit: "cover", objectPosition: "top" }} />
-          ) : (
-            <div style={{ width: "100%", height: "100%", background: "#1a1a1a", minHeight: 420 }} />
-          )}
-        </div>
+        {/* Gradient bas */}
+        <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(13,13,13,1) 0%, rgba(13,13,13,0.5) 35%, transparent 65%)" }} />
+        {/* Gradient droite (pour les infos) */}
+        <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to left, rgba(13,13,13,0.95) 0%, rgba(13,13,13,0.5) 40%, transparent 65%)" }} className="cover-right-gradient" />
 
-        {/* Infos + témoignage */}
-        <div style={{ background: "#0f0f0f", padding: "clamp(28px, 5vw, 52px)", display: "flex", flexDirection: "column", justifyContent: "center", order: reversed ? 1 : 2 }}>
-          <span style={{ display: "inline-block", fontFamily: "var(--font-dm-sans)", fontSize: 10, fontWeight: 700, letterSpacing: "0.15em", textTransform: "uppercase", color: "#C9A84C", border: "1px solid rgba(201,168,76,0.3)", padding: "4px 14px", borderRadius: 9999, marginBottom: 16, alignSelf: "flex-start" }}>
+        {/* Badge */}
+        <div style={{ position: "absolute", top: 20, left: 24 }}>
+          <span style={{ fontFamily: "var(--font-dm-sans)", fontSize: 9, fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", color: "#C9A84C", border: "1px solid rgba(201,168,76,0.4)", padding: "4px 14px", borderRadius: 9999, background: "rgba(0,0,0,0.4)", backdropFilter: "blur(8px)" }}>
             Personal Branding
           </span>
-          <h3 style={{ fontFamily: "var(--font-bebas-neue)", fontSize: "clamp(32px, 4vw, 52px)", color: "#fff", letterSpacing: "0.03em", lineHeight: 0.95, marginBottom: 6 }}>{client.client}</h3>
-          <p style={{ fontFamily: "var(--font-dm-sans)", fontSize: 12, color: "#C9A84C", letterSpacing: "0.08em", marginBottom: 8 }}>{client.role}</p>
+        </div>
 
+        {/* Infos en overlay bas-droite */}
+        <div style={{ position: "absolute", bottom: 28, right: 32, maxWidth: 340, textAlign: "right" }} className="cover-info-overlay">
+          <h3 style={{ fontFamily: "var(--font-bebas-neue)", fontSize: "clamp(36px, 4.5vw, 60px)", color: "#fff", letterSpacing: "0.03em", lineHeight: 0.9, marginBottom: 8 }}>{client.client}</h3>
+          <p style={{ fontFamily: "var(--font-dm-sans)", fontSize: 11, color: "#C9A84C", letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: 10 }}>{client.role}</p>
           {client.instagram && (
-            <a href={`https://instagram.com/${(client.instagram ?? "").replace("@", "")}`}
-              target="_blank" rel="noopener noreferrer"
-              style={{ display: "inline-flex", alignItems: "center", gap: 6, fontFamily: "var(--font-dm-sans)", fontSize: 11, color: "rgba(255,255,255,0.35)", textDecoration: "none", marginBottom: 16, transition: "color 0.2s" }}
+            <a href={`https://instagram.com/${client.instagram.replace("@", "")}`} target="_blank" rel="noopener noreferrer"
+              style={{ display: "inline-flex", alignItems: "center", gap: 5, fontFamily: "var(--font-dm-sans)", fontSize: 11, color: "rgba(255,255,255,0.5)", textDecoration: "none", transition: "color 0.2s" }}
               onMouseEnter={e => (e.currentTarget.style.color = "#C9A84C")}
-              onMouseLeave={e => (e.currentTarget.style.color = "rgba(255,255,255,0.35)")}>
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+              onMouseLeave={e => (e.currentTarget.style.color = "rgba(255,255,255,0.5)")}>
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
               {client.instagram}
             </a>
           )}
+        </div>
 
-          {client.description && (
-            <p style={{ fontFamily: "var(--font-dm-sans)", fontSize: 13, color: "rgba(255,255,255,0.4)", lineHeight: 1.8, marginBottom: 20 }}>{client.description}</p>
-          )}
+        {/* Description bas-gauche */}
+        {client.description && (
+          <div style={{ position: "absolute", bottom: 28, left: 28, maxWidth: "45%" }} className="cover-desc-overlay">
+            <p style={{ fontFamily: "var(--font-dm-sans)", fontSize: 12, color: "rgba(255,255,255,0.5)", lineHeight: 1.7, margin: 0 }}>{client.description}</p>
+          </div>
+        )}
+      </div>
 
-          <div style={{ display: "flex", flexWrap: "wrap", gap: 6, marginBottom: client.testimonial ? 24 : 0 }}>
+      {/* ── SERVICES + TÉMOIGNAGE ── */}
+      <div style={{ display: "grid", gridTemplateColumns: client.testimonial ? "1fr 1fr" : "1fr", gap: 0, borderTop: "1px solid rgba(255,255,255,0.04)" }} className="client-meta-grid">
+        <div style={{ padding: "20px 28px", borderRight: client.testimonial ? "1px solid rgba(255,255,255,0.04)" : "none" }}>
+          <p style={{ fontFamily: "var(--font-dm-sans)", fontSize: 9, color: "rgba(255,255,255,0.2)", letterSpacing: "0.2em", textTransform: "uppercase", marginBottom: 10 }}>Services</p>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
             {client.services.map(s => (
-              <span key={s} style={{ fontFamily: "var(--font-dm-sans)", fontSize: 10, color: "rgba(255,255,255,0.35)", border: "1px solid rgba(255,255,255,0.1)", padding: "3px 12px", borderRadius: 9999 }}>{s}</span>
+              <span key={s} style={{ fontFamily: "var(--font-dm-sans)", fontSize: 10, color: "#C9A84C", border: "1px solid rgba(201,168,76,0.25)", padding: "4px 14px", borderRadius: 9999, background: "rgba(201,168,76,0.04)" }}>{s}</span>
             ))}
           </div>
-
-          {client.testimonial && (
-            <div style={{ background: "rgba(201,168,76,0.04)", border: "0.5px solid rgba(201,168,76,0.15)", borderLeft: "2px solid #C9A84C", borderRadius: 10, padding: "16px 20px" }}>
-              <p style={{ fontFamily: "var(--font-playfair-display)", fontSize: 13, fontStyle: "italic", color: "rgba(255,255,255,0.6)", lineHeight: 1.7, marginBottom: 10 }}>"{client.testimonial.quote}"</p>
-              <div style={{ display: "flex", gap: 4, marginBottom: 8 }}>
-                {[...Array(5)].map((_, j) => <span key={j} style={{ color: "#C9A84C", fontSize: 11 }}>★</span>)}
-              </div>
-              <span style={{ fontFamily: "var(--font-bebas-neue)", fontSize: 12, color: "#C9A84C", letterSpacing: "0.1em" }}>{client.testimonial.name}</span>
-              <span style={{ fontFamily: "var(--font-dm-sans)", fontSize: 10, color: "rgba(255,255,255,0.25)", marginLeft: 8 }}>{client.testimonial.role}</span>
-            </div>
-          )}
         </div>
-      </div>
-
-      {/* Contenu média sous le header */}
-      <div style={{ background: "#0a0a0a", border: "0.5px solid rgba(201,168,76,0.08)", borderTop: "none", borderRadius: "0 0 16px 16px", padding: "24px" }}>
-
-        {/* Vidéos en avant */}
-        {hasVideos && (
-          <div style={{ marginBottom: hasPhotos ? 16 : 0 }}>
-            <p style={{ fontFamily: "var(--font-dm-sans)", fontSize: 9, color: "rgba(255,255,255,0.2)", letterSpacing: "0.2em", textTransform: "uppercase", marginBottom: 12 }}>
-              Vidéos · Face Caméra
-            </p>
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 8 }} className="client-videos-grid">
-              {client.media.videos.map((v, vi) => (
-                <VideoCard key={v.src} video={v} onClick={() => onVideoClick(client.media.videos, vi)} />
-              ))}
+        {client.testimonial && (
+          <div style={{ padding: "20px 28px" }}>
+            <div style={{ display: "flex", gap: 3, marginBottom: 8 }}>
+              {[...Array(5)].map((_, j) => <span key={j} style={{ color: "#C9A84C", fontSize: 10 }}>★</span>)}
             </div>
-          </div>
-        )}
-
-        {/* Photos secondaires */}
-        {hasPhotos && (
-          <div>
-            {hasVideos && <p style={{ fontFamily: "var(--font-dm-sans)", fontSize: 9, color: "rgba(255,255,255,0.2)", letterSpacing: "0.2em", textTransform: "uppercase", marginBottom: 12, marginTop: 8 }}>Photos</p>}
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(5, 1fr)", gap: 6 }} className="client-photos-grid">
-              {client.media.photos.map((src, pi) => (
-                <div key={src} onClick={() => onPhotoClick(client.media.photos, pi)}
-                  style={{ position: "relative", aspectRatio: "4/3", overflow: "hidden", borderRadius: 8, cursor: "pointer", background: "#111" }}>
-                  <Image src={src} alt="" fill sizes="20vw" loading="lazy" style={{ objectFit: "cover", transition: "transform 0.3s" }}
-                    onMouseOver={e => (e.currentTarget.style.transform = "scale(1.05)")}
-                    onMouseOut={e => (e.currentTarget.style.transform = "scale(1)")} />
-                </div>
-              ))}
-            </div>
+            <p style={{ fontFamily: "var(--font-playfair-display)", fontSize: 13, fontStyle: "italic", color: "rgba(255,255,255,0.55)", lineHeight: 1.7, marginBottom: 10 }}>"{client.testimonial.quote}"</p>
+            <p style={{ fontFamily: "var(--font-bebas-neue)", fontSize: 12, color: "#C9A84C", letterSpacing: "0.1em", margin: 0 }}>{client.testimonial.name}</p>
           </div>
         )}
       </div>
-    </motion.div>
+
+      {/* ── VIDÉOS FACE CAMÉRA ── */}
+      {hasVideos && (
+        <div style={{ padding: "24px 28px", borderTop: "1px solid rgba(255,255,255,0.04)" }}>
+          <p style={{ fontFamily: "var(--font-dm-sans)", fontSize: 9, color: "rgba(255,255,255,0.2)", letterSpacing: "0.2em", textTransform: "uppercase", marginBottom: 14 }}>Face Caméra</p>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 10 }} className="client-videos-grid">
+            {client.media.videos.map((v, vi) => (
+              <VideoCard key={v.src} video={v} onClick={() => onVideoClick(client.media.videos, vi)} />
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* ── PHOTOS ── */}
+      {hasPhotos && (
+        <div style={{ padding: "24px 28px", borderTop: "1px solid rgba(255,255,255,0.04)" }}>
+          <p style={{ fontFamily: "var(--font-dm-sans)", fontSize: 9, color: "rgba(255,255,255,0.2)", letterSpacing: "0.2em", textTransform: "uppercase", marginBottom: 14 }}>Photos</p>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(5, 1fr)", gap: 6 }} className="client-photos-grid">
+            {client.media.photos.map((src, pi) => (
+              <div key={src} onClick={() => onPhotoClick(client.media.photos, pi)}
+                style={{ position: "relative", aspectRatio: "3/4", overflow: "hidden", borderRadius: 8, cursor: "pointer", background: "#111" }}>
+                <Image src={src} alt="" fill sizes="20vw" loading="lazy" style={{ objectFit: "cover", objectPosition: "top", transition: "transform 0.4s" }}
+                  onMouseOver={e => (e.currentTarget.style.transform = "scale(1.06)")}
+                  onMouseOut={e => (e.currentTarget.style.transform = "scale(1)")} />
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
   );
 }
 
@@ -451,18 +451,22 @@ export default function PortfolioPageContent({ data }: { data: PortfolioData }) 
 
       <style>{`
         @media (max-width: 860px) {
-          .client-header-grid { grid-template-columns: 1fr !important; }
-          .client-header-grid > * { order: unset !important; }
-          .client-videos-grid { grid-template-columns: repeat(2, 1fr) !important; }
+          .cover-right-gradient { display: none; }
+          .cover-info-overlay { right: 20px !important; bottom: 16px !important; max-width: 60% !important; }
+          .cover-desc-overlay { display: none; }
+          .client-meta-grid { grid-template-columns: 1fr !important; }
+          .client-videos-grid { grid-template-columns: repeat(3, 1fr) !important; }
           .client-photos-grid { grid-template-columns: repeat(3, 1fr) !important; }
           .event-grid { grid-template-columns: 1fr !important; }
           .others-grid { grid-template-columns: repeat(2, 1fr) !important; }
           .testimonials-grid { grid-template-columns: 1fr !important; }
         }
         @media (max-width: 520px) {
-          .client-videos-grid { grid-template-columns: 1fr !important; }
+          .cover-info-overlay { left: 16px !important; right: 16px !important; max-width: 100% !important; text-align: left !important; }
+          .client-videos-grid { grid-template-columns: repeat(2, 1fr) !important; }
           .client-photos-grid { grid-template-columns: repeat(2, 1fr) !important; }
           .others-grid { grid-template-columns: 1fr !important; }
+          .client-peek-row button { width: 130px !important; }
         }
       `}</style>
     </main>
