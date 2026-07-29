@@ -1,8 +1,9 @@
 export interface BrandingClient {
-  slug: string;        // nom du dossier dans /public/portfolio/brand/
-  client: string;      // nom affiché
+  slug: string;
+  client: string;
   role: string;
   description: string;
+  instagram: string;
   services: string[];
   testimonial: { quote: string; name: string; role: string } | null;
 }
@@ -22,44 +23,49 @@ export const brandingClients: BrandingClient[] = [
   {
     slug: "christine",
     client: "Christine Girouard",
-    role: "Entrepreneure & Coach immobilier",
-    description: "Transformation complète de l'image Instagram d'une coach immobilière. Photos pro + vidéos face caméra pour un personal branding qui convertit.",
+    role: "Coach de courtiers immobiliers",
+    description: "Entrepreneuse | 10+ ans d'expérience | 441 M$ en transactions | 900+ clients accompagnés en immobilier.",
+    instagram: "@christinegirouard777",
     services: ["Personal Branding", "Photo", "Face Caméra"],
     testimonial: {
       quote: "Massi m'a donné une image qui me ressemble vraiment. Depuis, mes clients me reconnaissent partout. +900 abonnés et 10 contrats en 3 mois.",
       name: "Christine Girouard",
-      role: "Entrepreneure & Coach immobilier",
+      role: "Coach de courtiers immobiliers",
     },
   },
   {
     slug: "Andrea",
-    client: "Andrea",
-    role: "Entrepreneure",
-    description: "Personal branding photo & vidéo pour une entrepreneure dynamique.",
+    client: "Andrea Soueidan",
+    role: "Concierge & Events",
+    description: "Altitude Connections — Concierge, événements, mariages & Members Club Services. Canadian Choice Award Winner 2026.",
+    instagram: "@altitudeconnections_concierge",
     services: ["Personal Branding", "Face Caméra", "Photo"],
     testimonial: null,
   },
   {
     slug: "jessica",
-    client: "Jessica",
-    role: "Entrepreneuse",
-    description: "Séance photo personal branding pour renforcer sa présence en ligne.",
+    client: "Jessica Harnois",
+    role: "Sommelière & Entrepreneuse",
+    description: "Sommelière, entrepreneuse & figure publique. Fondatrice de @vinsbu et du Club de vins JH. Productions Jessica Harnois.",
+    instagram: "@jessica_harnois",
     services: ["Personal Branding", "Photo"],
     testimonial: null,
   },
   {
     slug: "laura",
-    client: "Laura",
-    role: "Entrepreneuse",
-    description: "Personal branding complet avec vidéos face caméra et photos lifestyle.",
+    client: "Laura Saad",
+    role: "Conseillère en sécurité financière",
+    description: "B.A.A. | Protections, placements & stratégies avancées. Conseillère chez iA Groupe Financier.",
+    instagram: "@_laura.saad",
     services: ["Personal Branding", "Face Caméra", "Photo"],
     testimonial: null,
   },
   {
     slug: "stephanie ",
     client: "Stéphanie",
-    role: "Entrepreneuse",
-    description: "Personal branding avec vidéos face caméra pour bâtir une audience engagée.",
+    role: "Entrepreneuse & Fondatrice",
+    description: "Fondatrice @ Quantum Lead RE — systèmes de vente, lead gen & scale. $26M+ GCI | 10 ans d'expérience ISA.",
+    instagram: "@socialitemtl",
     services: ["Personal Branding", "Face Caméra", "Photo"],
     testimonial: null,
   },
