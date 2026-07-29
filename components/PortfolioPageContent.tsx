@@ -252,25 +252,47 @@ export default function PortfolioPageContent({ data }: { data: PortfolioData }) 
             </p>
           </motion.div>
 
-          {/* Onglets clients */}
+          {/* Carousel clients */}
           {data.clients.length > 0 && (
             <>
-              <div style={{ display: "flex", gap: 0, overflowX: "auto", scrollbarWidth: "none", marginBottom: 40, borderBottom: "1px solid rgba(255,255,255,0.08)" }} className="client-tabs">
-                {data.clients.map((c, i) => (
-                  <button key={c.slug} onClick={() => setActiveClient(i)}
-                    style={{ fontFamily: "var(--font-dm-sans)", fontSize: 13, fontWeight: 600, letterSpacing: "0.06em", padding: "14px 28px", background: "none", border: "none", borderBottom: activeClient === i ? "2px solid #C9A84C" : "2px solid transparent", color: activeClient === i ? "#C9A84C" : "rgba(255,255,255,0.35)", cursor: "pointer", whiteSpace: "nowrap", transition: "color 0.2s", flexShrink: 0, marginBottom: -1 }}>
-                    {c.client}
-                  </button>
-                ))}
+              {/* Peek cards */}
+              <div style={{ position: "relative", overflow: "hidden", marginBottom: 32 }}>
+                <div style={{ display: "flex", gap: 16, overflowX: "auto", scrollbarWidth: "none", paddingBottom: 4, cursor: "grab" }} className="client-peek-row">
+                  {data.clients.map((c, i) => (
+                    <button key={c.slug} onClick={() => setActiveClient(i)}
+                      style={{ flexShrink: 0, width: 160, background: "none", border: "none", cursor: "pointer", padding: 0, textAlign: "left", outline: "none" }}>
+                      <div style={{ position: "relative", width: 160, height: 200, borderRadius: 12, overflow: "hidden", border: activeClient === i ? "2px solid #C9A84C" : "2px solid transparent", transition: "border-color 0.25s", opacity: activeClient === i ? 1 : 0.45 }}>
+                        {c.media.cover
+                          ? <img src={c.media.cover} alt={c.client} style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "top" }} />
+                          : <div style={{ width: "100%", height: "100%", background: "#1a1a1a" }} />}
+                        <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 60%)" }} />
+                        <div style={{ position: "absolute", bottom: 10, left: 12, right: 12 }}>
+                          <p style={{ fontFamily: "var(--font-bebas-neue)", fontSize: 14, color: "#fff", letterSpacing: "0.06em", margin: 0, lineHeight: 1.2 }}>{c.client}</p>
+                          {activeClient === i && <div style={{ width: 24, height: 2, background: "#C9A84C", marginTop: 4 }} />}
+                        </div>
+                      </div>
+                    </button>
+                  ))}
+                </div>
               </div>
+
+              {/* Contenu client actif */}
               <AnimatePresence mode="wait">
-                <motion.div key={activeClient} initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} transition={{ duration: 0.35 }}>
+                <motion.div key={activeClient} initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}>
                   <ClientBlock client={data.clients[activeClient]} idx={0}
                     onVideoClick={(videos, vi) => setLightbox({ items: videos.map(v => ({ src: v.src, type: "video" as const, thumb: v.thumb, isStream: v.isStream })), idx: vi })}
                     onPhotoClick={(photos, pi) => setLightbox({ items: photos.map(s => ({ src: s, type: "photo" as const })), idx: pi })}
                   />
                 </motion.div>
               </AnimatePresence>
+
+              {/* Dots navigation */}
+              <div style={{ display: "flex", gap: 8, justifyContent: "center", marginTop: 32 }}>
+                {data.clients.map((_, i) => (
+                  <button key={i} onClick={() => setActiveClient(i)}
+                    style={{ width: activeClient === i ? 24 : 6, height: 6, borderRadius: 9999, background: activeClient === i ? "#C9A84C" : "rgba(255,255,255,0.2)", border: "none", cursor: "pointer", padding: 0, transition: "all 0.3s" }} />
+                ))}
+              </div>
             </>
           )}
         </div>
