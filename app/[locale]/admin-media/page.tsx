@@ -260,7 +260,7 @@ export default function AdminMediaPage() {
 
   /* ── LOGIN ── */
   if (!authed) return (
-    <div style={{ minHeight: "100vh", background: "#0a0a0a", display: "flex", alignItems: "center", justifyContent: "center", flexDirection: "column", gap: 32 }}>
+    <div style={{ position: "fixed", inset: 0, zIndex: 9999, background: "#0a0a0a", display: "flex", alignItems: "center", justifyContent: "center", flexDirection: "column", gap: 32 }}>
       <div style={{ textAlign: "center" }}>
         <div style={{ fontFamily: "serif", fontSize: 28, fontWeight: 700, color: "#C9A84C", letterSpacing: "0.15em", marginBottom: 4 }}>MASSISHOOTS</div>
         <div style={{ color: "#555", fontSize: 12, letterSpacing: "0.2em" }}>ADMIN MEDIA</div>
@@ -287,10 +287,10 @@ export default function AdminMediaPage() {
   return (
     <>
       <meta name="robots" content="noindex" />
-      <div style={{ display: "flex", minHeight: "100vh", background: "#0a0a0a", color: "#fff" }}>
+      <div style={{ position: "fixed", inset: 0, zIndex: 9998, display: "flex", background: "#0a0a0a", color: "#fff", overflow: "hidden" }}>
 
         {/* Sidebar */}
-        <div style={{ width: 200, background: "#111", borderRight: "1px solid #1a1a1a", display: "flex", flexDirection: "column", flexShrink: 0 }}>
+        <div style={{ width: 200, background: "#111", borderRight: "1px solid #1a1a1a", display: "flex", flexDirection: "column", flexShrink: 0, height: "100vh", overflowY: "auto" }}>
           <div style={{ padding: "20px 16px 12px", borderBottom: "1px solid #1a1a1a" }}>
             <div style={{ fontFamily: "serif", fontSize: 14, color: "#C9A84C", letterSpacing: "0.1em", fontWeight: 700 }}>MASSISHOOTS</div>
             <div style={{ fontSize: 10, color: "#555", letterSpacing: "0.15em", marginTop: 2 }}>ADMIN MEDIA</div>
@@ -312,7 +312,7 @@ export default function AdminMediaPage() {
         </div>
 
         {/* Content */}
-        <div style={{ flex: 1, padding: 28, overflowY: "auto" }}>
+        <div style={{ flex: 1, padding: 28, overflowY: "auto", height: "100vh" }}>
           <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 24 }}>
             <h1 style={{ fontFamily: "serif", fontSize: 20, color: "#fff", margin: 0 }}>
               {CATEGORIES.find(c => c.key === category)?.label}
