@@ -256,24 +256,31 @@ export default function PortfolioPageContent({ data }: { data: PortfolioData }) 
           {data.clients.length > 0 && (
             <>
               {/* Peek cards */}
-              <div style={{ position: "relative", overflow: "hidden", marginBottom: 32 }}>
-                <div style={{ display: "flex", gap: 16, overflowX: "auto", scrollbarWidth: "none", paddingBottom: 4, cursor: "grab" }} className="client-peek-row">
-                  {data.clients.map((c, i) => (
+              <div style={{ display: "flex", gap: 12, overflowX: "auto", scrollbarWidth: "none", paddingBottom: 8, marginBottom: 48 }} className="client-peek-row">
+                {data.clients.map((c, i) => {
+                  const active = activeClient === i;
+                  return (
                     <button key={c.slug} onClick={() => setActiveClient(i)}
-                      style={{ flexShrink: 0, width: 200, background: "none", border: "none", cursor: "pointer", padding: 0, textAlign: "left", outline: "none" }}>
-                      <div style={{ position: "relative", width: 200, height: 280, borderRadius: 12, overflow: "hidden", border: activeClient === i ? "2px solid #C9A84C" : "2px solid transparent", transition: "border-color 0.25s", opacity: activeClient === i ? 1 : 0.45 }}>
+                      style={{ flexShrink: 0, width: active ? 220 : 160, background: "none", border: "none", cursor: "pointer", padding: 0, outline: "none", transition: "width 0.4s ease" }}>
+                      <div style={{ position: "relative", width: "100%", height: active ? 300 : 220, borderRadius: 14, overflow: "hidden", transition: "height 0.4s ease, box-shadow 0.3s", boxShadow: active ? "0 0 0 2px #C9A84C, 0 20px 60px rgba(201,168,76,0.15)" : "0 0 0 1px rgba(255,255,255,0.06)" }}>
                         {c.media.cover
-                          ? <img src={c.media.cover} alt={c.client} style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "top" }} />
+                          ? <img src={c.media.cover} alt={c.client} style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "top", transition: "transform 0.5s", transform: active ? "scale(1.03)" : "scale(1)", filter: active ? "none" : "brightness(0.5) saturate(0.6)" }} />
                           : <div style={{ width: "100%", height: "100%", background: "#1a1a1a" }} />}
-                        <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 60%)" }} />
-                        <div style={{ position: "absolute", bottom: 10, left: 12, right: 12 }}>
-                          <p style={{ fontFamily: "var(--font-bebas-neue)", fontSize: 14, color: "#fff", letterSpacing: "0.06em", margin: 0, lineHeight: 1.2 }}>{c.client}</p>
-                          {activeClient === i && <div style={{ width: 24, height: 2, background: "#C9A84C", marginTop: 4 }} />}
+                        <div style={{ position: "absolute", inset: 0, background: active ? "linear-gradient(to top, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.1) 55%, transparent 100%)" : "linear-gradient(to top, rgba(0,0,0,0.5) 0%, transparent 60%)" }} />
+                        <div style={{ position: "absolute", bottom: 14, left: 14, right: 14 }}>
+                          {active && <p style={{ fontFamily: "var(--font-dm-sans)", fontSize: 9, color: "#C9A84C", letterSpacing: "0.18em", textTransform: "uppercase", margin: "0 0 4px" }}>{c.role}</p>}
+                          <p style={{ fontFamily: "var(--font-bebas-neue)", fontSize: active ? 18 : 13, color: "#fff", letterSpacing: "0.06em", margin: 0, lineHeight: 1.1, transition: "font-size 0.3s" }}>{c.client}</p>
+                          {active && <div style={{ width: 28, height: 2, background: "#C9A84C", marginTop: 8, borderRadius: 2 }} />}
                         </div>
+                        {active && (
+                          <div style={{ position: "absolute", top: 12, right: 12, background: "rgba(201,168,76,0.15)", border: "1px solid rgba(201,168,76,0.4)", borderRadius: 9999, padding: "2px 10px" }}>
+                            <span style={{ fontFamily: "var(--font-dm-sans)", fontSize: 9, color: "#C9A84C", letterSpacing: "0.12em", textTransform: "uppercase" }}>Sélectionné</span>
+                          </div>
+                        )}
                       </div>
                     </button>
-                  ))}
-                </div>
+                  );
+                })}
               </div>
 
               {/* Contenu client actif */}
@@ -286,11 +293,11 @@ export default function PortfolioPageContent({ data }: { data: PortfolioData }) 
                 </motion.div>
               </AnimatePresence>
 
-              {/* Dots navigation */}
-              <div style={{ display: "flex", gap: 8, justifyContent: "center", marginTop: 32 }}>
+              {/* Dots */}
+              <div style={{ display: "flex", gap: 8, justifyContent: "center", marginTop: 40 }}>
                 {data.clients.map((_, i) => (
                   <button key={i} onClick={() => setActiveClient(i)}
-                    style={{ width: activeClient === i ? 24 : 6, height: 6, borderRadius: 9999, background: activeClient === i ? "#C9A84C" : "rgba(255,255,255,0.2)", border: "none", cursor: "pointer", padding: 0, transition: "all 0.3s" }} />
+                    style={{ width: activeClient === i ? 28 : 6, height: 6, borderRadius: 9999, background: activeClient === i ? "#C9A84C" : "rgba(255,255,255,0.15)", border: "none", cursor: "pointer", padding: 0, transition: "all 0.35s" }} />
                 ))}
               </div>
             </>
