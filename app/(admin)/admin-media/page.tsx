@@ -75,43 +75,23 @@ function CropModal({ src, onClose, onDone }: { src: string; onClose: () => void;
   const apply = async () => {
     if (!crop || !imgRef.current) return;
     setLoading(true);
-    setStatusMsg("Recadrage en cours…");
+    setStatusMsg("Envoi au serveur…");
     try {
-      const img = imgRef.current;
-      const scaleX = img.naturalWidth / img.width;
-      const scaleY = img.naturalHeight / img.height;
-
-      const canvas = document.createElement("canvas");
-      const pixelCrop = {
-        x: (crop.x / 100) * img.width * scaleX,
-        y: (crop.y / 100) * img.height * scaleY,
-        width: (crop.width / 100) * img.width * scaleX,
-        height: (crop.height / 100) * img.height * scaleY,
-      };
-      canvas.width = Math.round(pixelCrop.width);
-      canvas.height = Math.round(pixelCrop.height);
-      const ctx = canvas.getContext("2d")!;
-      ctx.drawImage(img, pixelCrop.x, pixelCrop.y, pixelCrop.width, pixelCrop.height, 0, 0, canvas.width, canvas.height);
-
-      const dataUrl = canvas.toDataURL("image/jpeg", 0.92);
-      if (dataUrl === "data:,") {
-        setStatusMsg("✗ Erreur CORS — image non accessible");
-        setLoading(false);
-        return;
-      }
-
-      setStatusMsg("Envoi au serveur…");
+      // On envoie les coordonnées en % — le serveur fait le crop avec sharp
       const res = await fetch("/api/admin/crop", {
         method: "POST",
         headers: authHeaders(),
-        body: JSON.stringify({ imagePath: src, croppedDataUrl: dataUrl }),
+        body: JSON.stringify({
+          imagePath: src,
+          cropPercent: { x: crop.x, y: crop.y, width: crop.width, height: crop.height },
+        }),
       });
       const data = await res.json();
       if (data.url) {
         setStatusMsg("✓ Sauvegardé !");
         setTimeout(() => onDone(data.url), 600);
       } else {
-        setStatusMsg(`✗ Erreur : ${data.error ?? "inconnue"}`);
+        setStatusMsg(`✗ ${data.error ?? "Erreur inconnue"}`);
       }
     } catch (e) {
       setStatusMsg(`✗ ${String(e)}`);

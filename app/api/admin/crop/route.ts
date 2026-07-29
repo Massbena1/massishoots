@@ -1,25 +1,41 @@
 import { NextRequest, NextResponse } from "next/server";
 import { put } from "@vercel/blob";
 import { kv } from "@vercel/kv";
+import sharp from "sharp";
+import { join } from "path";
+import { existsSync, readFileSync } from "fs";
 
 export async function POST(req: NextRequest) {
   if (req.headers.get("x-admin-key") !== "massiAdmin2026")
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
   try {
-    const { imagePath, croppedDataUrl } = await req.json();
+    const { imagePath, cropPercent } = await req.json();
+    // cropPercent: { x, y, width, height } in % of image dimensions
 
-    // Convert base64 data URL to buffer
-    const base64 = croppedDataUrl.replace(/^data:image\/\w+;base64,/, "");
-    const buffer = Buffer.from(base64, "base64");
+    const abs = join(process.cwd(), "public", imagePath);
+    if (!existsSync(abs))
+      return NextResponse.json({ error: `File not found: ${abs}` }, { status: 404 });
 
-    const filename = `crops/${imagePath.replace(/\//g, "_")}_${Date.now()}.jpg`;
-    const blob = await put(filename, buffer, {
-      access: "public",
-      contentType: "image/jpeg",
-    });
+    const fileBuffer = readFileSync(abs);
+    const meta = await sharp(fileBuffer).metadata();
+    const iw = meta.width ?? 800;
+    const ih = meta.height ?? 600;
 
-    // Save crop mapping in KV
+    const left   = Math.round((cropPercent.x / 100) * iw);
+    const top    = Math.round((cropPercent.y / 100) * ih);
+    const width  = Math.round((cropPercent.width / 100) * iw);
+    const height = Math.round((cropPercent.height / 100) * ih);
+
+    const cropped = await sharp(fileBuffer)
+      .extract({ left, top, width, height })
+      .jpeg({ quality: 92 })
+      .toBuffer();
+
+    const filename = `crops/${Date.now()}_${imagePath.replace(/\//g, "_")}.jpg`;
+    const blob = await put(filename, cropped, { access: "public", contentType: "image/jpeg" });
+
+    // Save in KV config
     const KEY = "media-config";
     const config = ((await kv.get(KEY)) ?? { covers: {}, crops: {}, thumbnails: {} }) as Record<string, Record<string, string>>;
     if (!config.crops) config.crops = {};
