@@ -252,65 +252,40 @@ export default function PortfolioPageContent({ data }: { data: PortfolioData }) 
             </p>
           </motion.div>
 
-          {/* Carousel clients */}
-          {data.clients.length > 0 && (() => {
-            const prev = () => setActiveClient(i => (i - 1 + data.clients.length) % data.clients.length);
-            const next = () => setActiveClient(i => (i + 1) % data.clients.length);
-            const c = data.clients[activeClient];
-            const arrowStyle = (disabled: boolean): React.CSSProperties => ({
-              width: 48, height: 48, borderRadius: "50%", border: "1px solid rgba(201,168,76,0.35)", background: "rgba(0,0,0,0.6)", backdropFilter: "blur(8px)", color: "#C9A84C", fontSize: 18, cursor: disabled ? "default" : "pointer", display: "flex", alignItems: "center", justifyContent: "center", transition: "all 0.2s", opacity: disabled ? 0.25 : 1, flexShrink: 0,
-            });
-            return (
-              <>
-                {/* Barre nav : flèches + nom + compteur + dots */}
-                <div style={{ display: "flex", alignItems: "center", gap: 16, marginBottom: 28 }}>
-                  <button onClick={prev} style={arrowStyle(false)}
-                    onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = "#C9A84C"; (e.currentTarget as HTMLElement).style.color = "#000"; }}
-                    onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = "rgba(0,0,0,0.6)"; (e.currentTarget as HTMLElement).style.color = "#C9A84C"; }}>
-                    ←
+          {/* Cartes clients */}
+          {data.clients.length > 0 && (
+            <>
+              {/* Rangée de cartes */}
+              <div style={{ display: "flex", gap: 12, marginBottom: 36, overflowX: "auto", paddingBottom: 4, scrollbarWidth: "none" }} className="client-cards-row">
+                {data.clients.map((cl, i) => (
+                  <button key={i} onClick={() => setActiveClient(i)}
+                    style={{ flexShrink: 0, position: "relative", width: 160, height: 200, borderRadius: 14, overflow: "hidden", cursor: "pointer", border: activeClient === i ? "2px solid #C9A84C" : "2px solid transparent", transition: "border-color 0.25s", padding: 0, background: "#111" }}>
+                    {cl.media.cover && (
+                      <img src={cl.media.cover} alt={cl.client} style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "top", transition: "transform 0.4s", transform: activeClient === i ? "scale(1.05)" : "scale(1)" }} />
+                    )}
+                    <div style={{ position: "absolute", inset: 0, background: activeClient === i ? "linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.2) 60%, transparent 100%)" : "linear-gradient(to top, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.35) 60%, transparent 100%)", transition: "background 0.3s" }} />
+                    <div style={{ position: "absolute", bottom: 14, left: 14, right: 14, textAlign: "left" }}>
+                      <p style={{ fontFamily: "var(--font-bebas-neue)", fontSize: 18, color: "#fff", letterSpacing: "0.04em", margin: 0, lineHeight: 1.1 }}>{cl.client}</p>
+                      <p style={{ fontFamily: "var(--font-dm-sans)", fontSize: 9, color: activeClient === i ? "#C9A84C" : "rgba(255,255,255,0.4)", letterSpacing: "0.08em", margin: "4px 0 0", textTransform: "uppercase" }}>{cl.role}</p>
+                    </div>
+                    {activeClient === i && (
+                      <div style={{ position: "absolute", top: 10, right: 10, width: 8, height: 8, borderRadius: "50%", background: "#C9A84C" }} />
+                    )}
                   </button>
+                ))}
+              </div>
 
-                  <div style={{ flex: 1 }}>
-                    <AnimatePresence mode="wait">
-                      <motion.div key={activeClient} initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -6 }} transition={{ duration: 0.2 }}>
-                        <p style={{ fontFamily: "var(--font-bebas-neue)", fontSize: "clamp(22px, 3vw, 32px)", color: "#fff", letterSpacing: "0.04em", margin: 0, lineHeight: 1 }}>{c.client}</p>
-                        <p style={{ fontFamily: "var(--font-dm-sans)", fontSize: 11, color: "#C9A84C", letterSpacing: "0.1em", margin: "4px 0 0" }}>{c.role}</p>
-                      </motion.div>
-                    </AnimatePresence>
-                  </div>
-
-                  {/* Dots */}
-                  <div style={{ display: "flex", gap: 6, alignItems: "center" }}>
-                    {data.clients.map((_, i) => (
-                      <button key={i} onClick={() => setActiveClient(i)}
-                        style={{ width: activeClient === i ? 24 : 6, height: 6, borderRadius: 9999, background: activeClient === i ? "#C9A84C" : "rgba(255,255,255,0.15)", border: "none", cursor: "pointer", padding: 0, transition: "all 0.3s" }} />
-                    ))}
-                  </div>
-
-                  {/* Compteur */}
-                  <span style={{ fontFamily: "var(--font-dm-sans)", fontSize: 11, color: "rgba(255,255,255,0.25)", flexShrink: 0 }}>
-                    {String(activeClient + 1).padStart(2, "0")} / {String(data.clients.length).padStart(2, "0")}
-                  </span>
-
-                  <button onClick={next} style={arrowStyle(false)}
-                    onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = "#C9A84C"; (e.currentTarget as HTMLElement).style.color = "#000"; }}
-                    onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = "rgba(0,0,0,0.6)"; (e.currentTarget as HTMLElement).style.color = "#C9A84C"; }}>
-                    →
-                  </button>
-                </div>
-
-                {/* Contenu client actif */}
-                <AnimatePresence mode="wait">
-                  <motion.div key={activeClient} initial={{ opacity: 0, x: 40 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -30 }} transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}>
-                    <ClientBlock client={data.clients[activeClient]} idx={0}
-                      onVideoClick={(videos, vi) => setLightbox({ items: videos.map(v => ({ src: v.src, type: "video" as const, thumb: v.thumb, isStream: v.isStream })), idx: vi })}
-                      onPhotoClick={(photos, pi) => setLightbox({ items: photos.map(s => ({ src: s, type: "photo" as const })), idx: pi })}
-                    />
-                  </motion.div>
-                </AnimatePresence>
-              </>
-            );
-          })()}
+              {/* Contenu client actif */}
+              <AnimatePresence mode="wait">
+                <motion.div key={activeClient} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}>
+                  <ClientBlock client={data.clients[activeClient]} idx={0}
+                    onVideoClick={(videos, vi) => setLightbox({ items: videos.map(v => ({ src: v.src, type: "video" as const, thumb: v.thumb, isStream: v.isStream })), idx: vi })}
+                    onPhotoClick={(photos, pi) => setLightbox({ items: photos.map(s => ({ src: s, type: "photo" as const })), idx: pi })}
+                  />
+                </motion.div>
+              </AnimatePresence>
+            </>
+          )}
         </div>
       </section>
 
@@ -475,7 +450,7 @@ export default function PortfolioPageContent({ data }: { data: PortfolioData }) 
           .client-videos-grid { grid-template-columns: repeat(2, 1fr) !important; }
           .client-photos-grid { grid-template-columns: repeat(2, 1fr) !important; }
           .others-grid { grid-template-columns: 1fr !important; }
-          .client-peek-row button { width: 130px !important; }
+          .client-cards-row button { width: 130px !important; height: 170px !important; }
         }
       `}</style>
     </main>
