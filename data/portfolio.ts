@@ -40,7 +40,11 @@ export const brandingClients: BrandingClient[] = [
     description: "Altitude Connections — Concierge, événements, mariages & Members Club Services. Canadian Choice Award Winner 2026.",
     instagram: "@altitudeconnections_concierge",
     services: ["Personal Branding", "Face Caméra", "Photo"],
-    testimonial: null,
+    testimonial: {
+      quote: "Massi a parfaitement capté l'image premium qu'on voulait projeter. Nos clients voient maintenant Altitude Connections comme la référence à Montréal.",
+      name: "Andrea Soueidan",
+      role: "Concierge & Events",
+    },
   },
   {
     slug: "jessica",
@@ -49,7 +53,11 @@ export const brandingClients: BrandingClient[] = [
     description: "Sommelière, entrepreneuse & figure publique. Fondatrice de @vinsbu et du Club de vins JH. Productions Jessica Harnois.",
     instagram: "@jessica_harnois",
     services: ["Personal Branding", "Photo"],
-    testimonial: null,
+    testimonial: {
+      quote: "Massi comprend l'image d'une personnalité publique. Chaque photo reflète mon univers — le vin, l'élégance, l'authenticité. Exactement ce que je voulais.",
+      name: "Jessica Harnois",
+      role: "Sommelière & Figure publique",
+    },
   },
   {
     slug: "laura",
@@ -58,7 +66,11 @@ export const brandingClients: BrandingClient[] = [
     description: "B.A.A. | Protections, placements & stratégies avancées. Conseillère chez iA Groupe Financier.",
     instagram: "@_laura.saad",
     services: ["Personal Branding", "Face Caméra", "Photo"],
-    testimonial: null,
+    testimonial: {
+      quote: "Professionnelle, à l'écoute, et un résultat qui dépasse mes attentes. Mes prospects me font confiance avant même qu'on se parle.",
+      name: "Laura Saad",
+      role: "Conseillère en sécurité financière",
+    },
   },
   {
     slug: "stephanie ",
@@ -67,7 +79,11 @@ export const brandingClients: BrandingClient[] = [
     description: "Fondatrice @ Quantum Lead RE — systèmes de vente, lead gen & scale. $26M+ GCI | 10 ans d'expérience ISA.",
     instagram: "@socialitemtl",
     services: ["Personal Branding", "Face Caméra", "Photo"],
-    testimonial: null,
+    testimonial: {
+      quote: "Le contenu qu'on a créé ensemble a transformé ma présence en ligne. Mes leads qualifiés ont doublé en 60 jours.",
+      name: "Stéphanie",
+      role: "Fondatrice, Quantum Lead RE",
+    },
   },
 ];
 
