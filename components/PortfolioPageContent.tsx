@@ -174,7 +174,7 @@ function ClientBlock({ client, onVideoClick, onPhotoClick }: {
           <div style={{ display: "grid", gridTemplateColumns: "repeat(5, 1fr)", gap: 6 }} className="client-photos-grid">
             {client.media.photos.map((src, pi) => (
               <div key={src} onClick={() => onPhotoClick(client.media.photos, pi)}
-                style={{ position: "relative", aspectRatio: "3/4", overflow: "hidden", borderRadius: 8, cursor: "pointer", background: "#111" }}>
+                style={{ position: "relative", aspectRatio: "2/3", overflow: "hidden", borderRadius: 8, cursor: "pointer", background: "#111" }}>
                 <Image src={src} alt="" fill sizes="20vw" loading="lazy" style={{ objectFit: "cover", objectPosition: "top", transition: "transform 0.4s" }}
                   onMouseOver={e => (e.currentTarget.style.transform = "scale(1.06)")}
                   onMouseOut={e => (e.currentTarget.style.transform = "scale(1)")} />
@@ -371,8 +371,8 @@ export default function PortfolioPageContent({ data }: { data: PortfolioData }) 
                 style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 8 }} className="others-grid">
                 {filtered.map((p, i) => (
                   <div key={p.src} onClick={() => setLightbox({ items: filtered.map(x => ({ src: x.src, type: "photo" as const })), idx: i })}
-                    style={{ position: "relative", aspectRatio: "4/3", overflow: "hidden", borderRadius: 8, cursor: "pointer", background: "#111" }}>
-                    <Image src={p.src} alt="" fill sizes="33vw" loading="lazy" style={{ objectFit: "cover", transition: "transform 0.4s" }}
+                    style={{ position: "relative", aspectRatio: "2/3", overflow: "hidden", borderRadius: 8, cursor: "pointer", background: "#111" }}>
+                    <Image src={p.src} alt="" fill sizes="33vw" loading="lazy" style={{ objectFit: "cover", objectPosition: "top", transition: "transform 0.4s" }}
                       onMouseOver={e => (e.currentTarget.style.transform = "scale(1.05)")}
                       onMouseOut={e => (e.currentTarget.style.transform = "scale(1)")} />
                   </div>
