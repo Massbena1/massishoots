@@ -318,8 +318,8 @@ export default function PortfolioPageContent({ data }: { data: PortfolioData }) 
                   <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 6 }}>
                     {data.eventt.slice(0, 6).map((src, i) => (
                       <div key={src} onClick={() => setLightbox({ items: data.eventt.map(s => ({ src: s, type: "photo" as const })), idx: i })}
-                        style={{ position: "relative", aspectRatio: "4/3", overflow: "hidden", borderRadius: 6, cursor: "pointer", background: "#111" }}>
-                        <Image src={src} alt="" fill sizes="20vw" style={{ objectFit: "cover" }} />
+                        style={{ position: "relative", aspectRatio: "2/3", overflow: "hidden", borderRadius: 6, cursor: "pointer", background: "#111" }}>
+                        <Image src={src} alt="" fill sizes="20vw" style={{ objectFit: "cover", objectPosition: "center 20%" }} />
                       </div>
                     ))}
                   </div>
