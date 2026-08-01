@@ -53,7 +53,7 @@ export default function Navbar() {
 
   useEffect(() => {
     if (!isHome) { setActiveSection(null); return; }
-    const ids = NAV_LINKS.map(l => l.sectionId).filter(Boolean) as string[];
+    const ids = NAV_LINKS.map(l => l.sectionId).filter((id): id is string => Boolean(id));
     const observers: IntersectionObserver[] = [];
     ids.forEach(id => {
       const el = document.getElementById(id);
