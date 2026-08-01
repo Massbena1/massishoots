@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Analytics } from "@vercel/analytics/next";
 import { NextIntlClientProvider, hasLocale } from "next-intl";
 import { getMessages, getTranslations } from "next-intl/server";
 import { notFound } from "next/navigation";
@@ -84,6 +85,7 @@ export default async function LocaleLayout({
             <GradientMenu />
           </div>
           <PageTransition>{children}</PageTransition>
+          <Analytics />
         </NextIntlClientProvider>
       </body>
     </html>
