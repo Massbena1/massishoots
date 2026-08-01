@@ -10,7 +10,7 @@ import { cn } from "@/lib/utils";
 
 const NAV_LINKS = [
   { key: "services",  href: "/services",  sectionId: null,        homeScroll: false, icon: Camera   },
-  { key: "portfolio", href: "/portfolio", sectionId: "portfolio", homeScroll: true,  icon: Image    },
+  { key: "portfolio", href: "/portfolio", sectionId: null,        homeScroll: false, icon: Image    },
   { key: "about",     href: "/about",     sectionId: null,        homeScroll: false, icon: User     },
   { key: "galleries", href: "/galleries", sectionId: null,        homeScroll: false, icon: Images   },
 ] as const;
