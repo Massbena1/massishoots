@@ -334,10 +334,10 @@ export default function PortfolioPageContent({ data }: { data: PortfolioData }) 
                       </div>
                     ))}
                   </div>
-                  {ev.aftermovie && (
+                  {ev.aftermovieUid && (
                     <div style={{ position: "relative", aspectRatio: "16/9", borderRadius: 10, overflow: "hidden", cursor: "pointer" }}
-                      onClick={() => setLightbox({ items: [{ src: ev.aftermovie!, type: "video" }], idx: 0 })}>
-                      <video src={ev.aftermovie} muted style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                      onClick={() => setLightbox({ items: [{ src: `https://videodelivery.net/${ev.aftermovieUid}/iframe`, type: "video", isStream: true }], idx: 0 })}>
+                      <img src={`https://videodelivery.net/${ev.aftermovieUid}/thumbnails/thumbnail.jpg?time=1s&height=400`} alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
                       <div style={{ position: "absolute", inset: 0, background: "rgba(0,0,0,0.4)", display: "flex", alignItems: "center", justifyContent: "center" }}>
                         <span style={{ fontSize: 40, color: "#C9A84C" }}>▶</span>
                       </div>

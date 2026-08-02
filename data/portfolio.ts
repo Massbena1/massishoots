@@ -15,6 +15,7 @@ export interface EventProject {
   description: string;
   cover: string;
   aftermovie: string | null;
+  aftermovieUid?: string;
   deliverables: string[];
 }
 
@@ -94,7 +95,8 @@ export const eventProjects: EventProject[] = [
     slug: "evenement-corporate",
     description: "Gala de 1 000 personnes — 350 photos retouchées livrées en moins de 24h. Vidéo highlight 60 sec pour les réseaux sociaux.",
     cover: "/portfolio/eventt/1.jpg",
-    aftermovie: "/portfolio/videos/event-1.mp4",
+    aftermovie: null,
+    aftermovieUid: "63a449c6a64ea4899e6c11b4ae03b4d0",
     deliverables: [
       "Photographie événementielle",
       "Aftermovie cinématique",
@@ -108,7 +110,8 @@ export const eventProjects: EventProject[] = [
     slug: "evenement-networking",
     description: "Couverture photo et vidéo complète d'un événement networking premium à Montréal.",
     cover: "/portfolio/eventt/4.jpg",
-    aftermovie: "/portfolio/videos/event-2.mp4",
+    aftermovie: null,
+    aftermovieUid: "1d620937a266de3831fa3bf62e3eb200",
     deliverables: [
       "Photographie événementielle",
       "Reels verticaux 9:16",
