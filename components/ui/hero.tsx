@@ -219,7 +219,6 @@ export default function ShaderHero() {
           }}
         >
           <source src="/VIDEO/hero.mp4" type="video/mp4" />
-          <source src="/VIDEO/hero.mov" type="video/quicktime" />
         </video>
         <div style={{
           position: "absolute",
