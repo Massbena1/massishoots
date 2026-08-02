@@ -14,6 +14,7 @@ interface Item {
   altKey: string;
   wide?: boolean;
   videoSrc?: string;
+  isStream?: boolean;
   pos?: string;
 }
 
@@ -91,25 +92,25 @@ const PHOTOS: Item[] = [
   { sub: "mariage",      src: "/portfolio/mariage/IMG_6529.JPG",            altKey: "altMariage" },
 ];
 
+const CF = "https://videodelivery.net";
+const cfUrl  = (uid: string) => `${CF}/${uid}/iframe`;
+const cfThumb = (uid: string) => `${CF}/${uid}/thumbnails/thumbnail.jpg?time=1s&height=400`;
+
 const VIDEOS: Item[] = [
-  // En avant
-  { sub: "events",       src: "/portfolio/videos/event-1.1.jpg",  videoSrc: "https://jkrbnlhfycrznxld.public.blob.vercel-storage.com/videos/event-1.1.mp4",  altKey: "altEvent" },
-  // Immobilier
-  { sub: "immobilier", src: "/immobilier/thumb.jpg", videoSrc: "https://jkrbnlhfycrznxld.public.blob.vercel-storage.com/videos/immobilier-1.mp4", altKey: "altEvents" },
-  // Events
-  { sub: "events",       src: "/portfolio/videos/event-1.jpg",    videoSrc: "https://jkrbnlhfycrznxld.public.blob.vercel-storage.com/videos/event-1.mp4",    altKey: "altEvent" },
-  { sub: "corporate",   src: "/portfolio/videos/corpo-1.jpg",    videoSrc: "https://jkrbnlhfycrznxld.public.blob.vercel-storage.com/videos/corpo-1.mp4",    altKey: "altCorpVideo" },
-  { sub: "branding",    src: "/portfolio/videos/brand-1.jpg",    videoSrc: "https://jkrbnlhfycrznxld.public.blob.vercel-storage.com/videos/brand-1.mp4",    altKey: "altBrandFilm" },
-  { sub: "professionel",src: "/portfolio/videos/facecam-1.jpg",  videoSrc: "https://jkrbnlhfycrznxld.public.blob.vercel-storage.com/videos/facecam-1.mp4",  altKey: "altProfessionel" },
-  { sub: "events",      src: "/portfolio/videos/event-2.jpg",    videoSrc: "https://jkrbnlhfycrznxld.public.blob.vercel-storage.com/videos/event-2.mp4",    altKey: "altEvent" },
-  { sub: "professionel",src: "/portfolio/videos/facecam-2.jpg",  videoSrc: "https://jkrbnlhfycrznxld.public.blob.vercel-storage.com/videos/facecam-2.mp4",  altKey: "altProfessionel" },
-  { sub: "branding",    src: "/portfolio/videos/brand-2.jpg",    videoSrc: "https://jkrbnlhfycrznxld.public.blob.vercel-storage.com/videos/brand-2.mp4",    altKey: "altBrandFilm" },
-  { sub: "professionel",src: "/portfolio/videos/facecam-3.jpg",  videoSrc: "https://jkrbnlhfycrznxld.public.blob.vercel-storage.com/videos/facecam-3.mp4",  altKey: "altProfessionel" },
-  { sub: "corporate",   src: "/portfolio/videos/corpo-2.jpg",    videoSrc: "https://jkrbnlhfycrznxld.public.blob.vercel-storage.com/videos/corpo-2.mp4",    altKey: "altCorpVideo" },
-  { sub: "professionel",src: "/portfolio/videos/facecam-4.jpg",  videoSrc: "https://jkrbnlhfycrznxld.public.blob.vercel-storage.com/videos/facecam-4.mp4",  altKey: "altProfessionel" },
-  { sub: "branding",    src: "/portfolio/videos/brand-3.jpg",    videoSrc: "https://jkrbnlhfycrznxld.public.blob.vercel-storage.com/videos/brand-3.mp4",    altKey: "altBrandFilm" },
-  { sub: "professionel",src: "/portfolio/videos/facecam-5.jpg",  videoSrc: "https://jkrbnlhfycrznxld.public.blob.vercel-storage.com/videos/facecam-5.mp4",  altKey: "altProfessionel" },
-  { sub: "professionel",src: "/portfolio/videos/facecam-6.jpg",  videoSrc: "https://jkrbnlhfycrznxld.public.blob.vercel-storage.com/videos/facecam-6.mp4",  altKey: "altProfessionel" },
+  { sub: "events",       src: cfThumb("33d605a96ed11dd86c65cd224311b9c5"), videoSrc: cfUrl("33d605a96ed11dd86c65cd224311b9c5"), altKey: "altEvent",       isStream: true },
+  { sub: "events",       src: cfThumb("423422c9fc06fd4ab1512c2cfe7363ff"), videoSrc: cfUrl("423422c9fc06fd4ab1512c2cfe7363ff"), altKey: "altEvent",       isStream: true },
+  { sub: "events",       src: cfThumb("c3763e9534f9dda9c21623e5405e3f76"), videoSrc: cfUrl("c3763e9534f9dda9c21623e5405e3f76"), altKey: "altEvent",       isStream: true },
+  { sub: "corporate",    src: cfThumb("0e03e8088bc55d14185e37a239bb708b"), videoSrc: cfUrl("0e03e8088bc55d14185e37a239bb708b"), altKey: "altCorpVideo",   isStream: true },
+  { sub: "corporate",    src: cfThumb("ccfa7b3c618bc1e453b56b84ccabddf2"), videoSrc: cfUrl("ccfa7b3c618bc1e453b56b84ccabddf2"), altKey: "altCorpVideo",   isStream: true },
+  { sub: "branding",     src: cfThumb("02a9f535b9271e28d437b6fb66bdee5b"), videoSrc: cfUrl("02a9f535b9271e28d437b6fb66bdee5b"), altKey: "altBrandFilm",   isStream: true },
+  { sub: "branding",     src: cfThumb("c0c16bda3a89ddf03e0a2a3d76310cad"), videoSrc: cfUrl("c0c16bda3a89ddf03e0a2a3d76310cad"), altKey: "altBrandFilm",   isStream: true },
+  { sub: "branding",     src: cfThumb("0e853f3e0c60d620766dc71153d0ab65"), videoSrc: cfUrl("0e853f3e0c60d620766dc71153d0ab65"), altKey: "altBrandFilm",   isStream: true },
+  { sub: "professionel", src: cfThumb("1a703ddc9bc010e47c50d76973ae186d"), videoSrc: cfUrl("1a703ddc9bc010e47c50d76973ae186d"), altKey: "altProfessionel", isStream: true },
+  { sub: "professionel", src: cfThumb("0b9170bfb757c4236c15a31e514bf7f4"), videoSrc: cfUrl("0b9170bfb757c4236c15a31e514bf7f4"), altKey: "altProfessionel", isStream: true },
+  { sub: "professionel", src: cfThumb("0d7c513506d89cdfbd7b205883ea204f"), videoSrc: cfUrl("0d7c513506d89cdfbd7b205883ea204f"), altKey: "altProfessionel", isStream: true },
+  { sub: "professionel", src: cfThumb("0f6fb704c5de599e5d9b030adbb57352"), videoSrc: cfUrl("0f6fb704c5de599e5d9b030adbb57352"), altKey: "altProfessionel", isStream: true },
+  { sub: "professionel", src: cfThumb("6b98229299ebed639830da2c7af71213"), videoSrc: cfUrl("6b98229299ebed639830da2c7af71213"), altKey: "altProfessionel", isStream: true },
+  { sub: "professionel", src: cfThumb("4f6eeb2539fce6617be55227f4786c2d"), videoSrc: cfUrl("4f6eeb2539fce6617be55227f4786c2d"), altKey: "altProfessionel", isStream: true },
 ];
 
 const PHOTO_FILTERS: { value: Sub; labelKey: string }[] = [
@@ -159,7 +160,7 @@ export default function Portfolio() {
   const [mediaType, setMediaType] = useState<MediaType>("photo");
   const [sub, setSub] = useState<Sub>("all");
   const [visibleCount, setVisibleCount] = useState(12);
-  const [activeVideo, setActiveVideo] = useState<string | null>(null);
+  const [activeVideo, setActiveVideo] = useState<{ src: string; isStream: boolean } | null>(null);
   const [activePhoto, setActivePhoto] = useState<{ src: string; index: number } | null>(null);
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
@@ -310,7 +311,7 @@ export default function Portfolio() {
                     transition: "border-color 0.4s, box-shadow 0.4s, transform 0.4s",
                   }}
                   onClick={() => {
-                    if (item.videoSrc) setActiveVideo(item.videoSrc);
+                    if (item.videoSrc) setActiveVideo({ src: item.videoSrc, isStream: !!item.isStream });
                     else setActivePhoto({ src: item.src, index: i });
                   }}
                   onMouseEnter={e => {
@@ -545,13 +546,10 @@ export default function Portfolio() {
               onClick={e => e.stopPropagation()}
               style={{ position: "relative", maxWidth: "90vw", maxHeight: "90vh", width: "100%" }}
             >
-              <video
-                src={activeVideo}
-                autoPlay
-                controls
-                playsInline
-                style={{ width: "100%", maxHeight: "90vh", borderRadius: 16, display: "block", outline: "none" }}
-              />
+              {activeVideo.isStream
+                ? <iframe src={activeVideo.src} allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture" allowFullScreen style={{ width: "min(56vw, 400px)", height: "min(90vh, 700px)", borderRadius: 16, border: "none", display: "block" }} />
+                : <video src={activeVideo.src} autoPlay controls playsInline style={{ width: "100%", maxHeight: "90vh", borderRadius: 16, display: "block", outline: "none" }} />
+              }
               <button
                 onClick={() => setActiveVideo(null)}
                 style={{
