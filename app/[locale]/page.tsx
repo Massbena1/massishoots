@@ -1,19 +1,21 @@
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import { getAlternates, getOpenGraph, getTwitter } from "@/lib/hreflang";
+import dynamic from "next/dynamic";
 import Hero from "@/components/Hero";
 import Clients from "@/components/Clients";
 import Stats from "@/components/Stats";
 import Services from "@/components/Services";
-import Portfolio from "@/components/Portfolio";
-import Process from "@/components/Process";
-import WhyUs from "@/components/WhyUs";
-import Testimonials from "@/components/Testimonials";
-import ClientResults from "@/components/ClientResults";
-import SimulateurCta from "@/components/SimulateurCta";
-import Faq from "@/components/Faq";
-import CtaFinal from "@/components/CtaFinal";
-import Footer from "@/components/Footer";
+
+const Portfolio     = dynamic(() => import("@/components/Portfolio"),      { ssr: false });
+const Process       = dynamic(() => import("@/components/Process"),        { ssr: false });
+const WhyUs         = dynamic(() => import("@/components/WhyUs"),          { ssr: false });
+const Testimonials  = dynamic(() => import("@/components/Testimonials"),   { ssr: false });
+const ClientResults = dynamic(() => import("@/components/ClientResults"),  { ssr: false });
+const SimulateurCta = dynamic(() => import("@/components/SimulateurCta"),  { ssr: false });
+const Faq           = dynamic(() => import("@/components/Faq"),            { ssr: false });
+const CtaFinal      = dynamic(() => import("@/components/CtaFinal"),       { ssr: false });
+const Footer        = dynamic(() => import("@/components/Footer"),         { ssr: false });
 
 export async function generateMetadata({
   params,

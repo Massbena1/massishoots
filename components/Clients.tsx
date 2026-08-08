@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import { InfiniteSlider } from "@/components/ui/infinite-slider";
 import { ProgressiveBlur } from "@/components/ui/progressive-blur";
 import { Sparkles } from "@/components/ui/sparkles";
 import { useTranslations } from "next-intl";
@@ -49,22 +48,13 @@ export default function Clients() {
           <span style={{ color: "rgba(255,255,255,0.85)" }}>{t("heading2")}</span>
         </div>
 
-        {/* Slider row */}
-        <div style={{ position: "relative", marginTop: 36, height: 100 }}>
-          <InfiniteSlider
-            className="flex h-full w-full items-center"
-            duration={30}
-            gap={48}
-          >
-            {logos.map((logo) => (
+        {/* Slider row — CSS marquee, zero JS */}
+        <div style={{ position: "relative", marginTop: 36, height: 100, overflow: "hidden" }}>
+          <div style={{ display: "flex", width: "max-content", animation: "marquee 30s linear infinite" }}>
+            {[...logos, ...logos].map((logo, i) => (
               <div
-                key={logo.id}
-                style={{
-                  opacity: 0.5,
-                  display: "flex",
-                  alignItems: "center",
-                  transition: "opacity 0.3s",
-                }}
+                key={i}
+                style={{ opacity: 0.5, display: "flex", alignItems: "center", paddingInline: 24, height: 100, transition: "opacity 0.3s" }}
                 onMouseEnter={e => (e.currentTarget.style.opacity = "1")}
                 onMouseLeave={e => (e.currentTarget.style.opacity = "0.5")}
               >
@@ -72,28 +62,15 @@ export default function Clients() {
                   <logo.component />
                 ) : (
                   // eslint-disable-next-line @next/next/no-img-element
-                  <img
-                    src={logo.src}
-                    alt={logo.alt}
-                    className="client-logo"
-                    style={{ filter: "brightness(0) invert(1)" }}
-                  />
+                  <img src={logo.src} alt={logo.alt} className="client-logo" style={{ filter: "brightness(0) invert(1)" }} />
                 )}
               </div>
             ))}
-          </InfiniteSlider>
-
-          <ProgressiveBlur
-            className="pointer-events-none absolute top-0 left-0 h-full w-[180px]"
-            direction="left"
-            blurIntensity={1}
-          />
-          <ProgressiveBlur
-            className="pointer-events-none absolute top-0 right-0 h-full w-[180px]"
-            direction="right"
-            blurIntensity={1}
-          />
+          </div>
+          <ProgressiveBlur className="pointer-events-none absolute top-0 left-0 h-full w-[180px]" direction="left" blurIntensity={1} />
+          <ProgressiveBlur className="pointer-events-none absolute top-0 right-0 h-full w-[180px]" direction="right" blurIntensity={1} />
         </div>
+        <style>{`@keyframes marquee { from { transform: translateX(0) } to { transform: translateX(-50%) } }`}</style>
       </div>
 
       {/* ── Sparkles arc (fidèle au modèle) ─────────────────────────────── */}

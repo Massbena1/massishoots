@@ -208,6 +208,7 @@ export default function ShaderHero() {
           muted
           loop
           playsInline
+          poster="/VIDEO/hero-poster.jpg"
           style={{
             position: "absolute",
             inset: 0,
@@ -218,7 +219,7 @@ export default function ShaderHero() {
             filter: "brightness(0.72) saturate(0.9)",
           }}
         >
-          <source src="/VIDEO/hero.mp4" type="video/mp4" />
+          <source src="/VIDEO/hero-compressed.mp4" type="video/mp4" />
         </video>
         <div style={{
           position: "absolute",
