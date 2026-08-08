@@ -7,15 +7,15 @@ import Clients from "@/components/Clients";
 import Stats from "@/components/Stats";
 import Services from "@/components/Services";
 
-const Portfolio     = dynamic(() => import("@/components/Portfolio"),      { ssr: false });
-const Process       = dynamic(() => import("@/components/Process"),        { ssr: false });
-const WhyUs         = dynamic(() => import("@/components/WhyUs"),          { ssr: false });
-const Testimonials  = dynamic(() => import("@/components/Testimonials"),   { ssr: false });
-const ClientResults = dynamic(() => import("@/components/ClientResults"),  { ssr: false });
-const SimulateurCta = dynamic(() => import("@/components/SimulateurCta"),  { ssr: false });
-const Faq           = dynamic(() => import("@/components/Faq"),            { ssr: false });
-const CtaFinal      = dynamic(() => import("@/components/CtaFinal"),       { ssr: false });
-const Footer        = dynamic(() => import("@/components/Footer"),         { ssr: false });
+const Portfolio     = dynamic(() => import("@/components/Portfolio"));
+const Process       = dynamic(() => import("@/components/Process"));
+const WhyUs         = dynamic(() => import("@/components/WhyUs"));
+const Testimonials  = dynamic(() => import("@/components/Testimonials"));
+const ClientResults = dynamic(() => import("@/components/ClientResults"));
+const SimulateurCta = dynamic(() => import("@/components/SimulateurCta"));
+const Faq           = dynamic(() => import("@/components/Faq"));
+const CtaFinal      = dynamic(() => import("@/components/CtaFinal"));
+const Footer        = dynamic(() => import("@/components/Footer"));
 
 export async function generateMetadata({
   params,
