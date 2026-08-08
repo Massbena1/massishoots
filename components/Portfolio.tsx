@@ -31,7 +31,7 @@ const PHOTOS: Item[] = [
   { sub: "branding",     src: "/portfolio/brand/1.jpg",                     altKey: "altBranding",     wide: true },
   { sub: "corporate",    src: "/portfolio/corpo/1.jpg",                     altKey: "altCorporate" },
   { sub: "events",       src: "/portfolio/eventt/2.jpg",                    altKey: "altEvents",       wide: true },
-  { sub: "professionel", src: "/portfolio/professionel/1.jpg",              altKey: "altProfessionel" },
+  { sub: "professionel", src: "/portfolio/professionel/1.JPG",              altKey: "altProfessionel" },
   { sub: "lifestyle",    src: "/portfolio/lyfestyle/1.jpg",                 altKey: "altLifestyle" },
   { sub: "branding",     src: "/portfolio/brand/2.jpg",                     altKey: "altBranding" },
   { sub: "corporate",    src: "/portfolio/corpo/2.JPG",                     altKey: "altCorporate" },

@@ -220,6 +220,7 @@ export default function ShaderHero() {
         >
           <source src="/VIDEO/hero-mobile.mp4" media="(max-width: 768px)" type="video/mp4" />
           <source src="/VIDEO/hero-desktop.mp4" type="video/mp4" />
+          <track kind="captions" src="/VIDEO/hero-captions.vtt" srcLang="fr" label="Français" default />
         </video>
         <style>{`@media (max-width: 768px) { .hero-video { display: none; } }`}</style>
         <div style={{

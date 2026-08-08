@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { usePathname } from "next/navigation";
+import NextImage from "next/image";
 import { useLocale, useTranslations } from "next-intl";
 import { Link, useRouter } from "@/i18n/navigation";
 import { Home, Camera, Image, DollarSign, User, Images } from "lucide-react";
@@ -124,7 +125,7 @@ export default function Navbar() {
         >
           {/* Logo */}
           <Link href="/" style={{ textDecoration: "none", marginRight: 8, display: "flex", alignItems: "center" }}>
-            <img src="/logo-navbar.png" alt="Massishoots" style={{ height: 18, width: "auto", objectFit: "contain" }} />
+            <NextImage src="/logo-navbar.png" alt="Massishoots" height={18} width={120} style={{ height: 18, width: "auto", objectFit: "contain" }} priority />
           </Link>
 
           <div style={{ width: 1, height: 14, background: "rgba(255,255,255,0.1)", margin: "0 4px" }} />

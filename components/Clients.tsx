@@ -42,7 +42,7 @@ export default function Clients() {
       {/* ── Header + slider ──────────────────────────────────────────────── */}
       <div style={{ margin: "0 auto", maxWidth: 700, textAlign: "center", padding: "80px 24px 36px" }}>
         <div className="font-bebas" style={{ fontSize: "clamp(22px, 3.5vw, 36px)", lineHeight: 1.2, letterSpacing: "0.02em" }}>
-          <span style={{ color: "rgba(196,205,214,0.7)" }}>{t("heading1")}</span>
+          <span style={{ color: "rgba(196,205,214,0.9)" }}>{t("heading1")}</span>
           <br />
           <span style={{ color: "rgba(255,255,255,0.85)" }}>{t("heading2")}</span>
         </div>

@@ -1,5 +1,4 @@
 "use client";
-import { useEffect } from "react";
 import { Calendar } from "lucide-react";
 
 const CALENDLY_URL = "https://calendly.com/massishot-ca/consultation-gratuite";
@@ -12,25 +11,31 @@ declare global {
   }
 }
 
+function loadCalendly(): Promise<void> {
+  return new Promise((resolve) => {
+    if (window.Calendly) { resolve(); return; }
+    if (!document.querySelector('link[href*="calendly.com"]')) {
+      const link = document.createElement("link");
+      link.rel = "stylesheet";
+      link.href = "https://assets.calendly.com/assets/external/widget.css";
+      document.head.appendChild(link);
+    }
+    if (!document.getElementById("calendly-script")) {
+      const script = document.createElement("script");
+      script.id = "calendly-script";
+      script.src = "https://assets.calendly.com/assets/external/widget.js";
+      script.async = true;
+      script.onload = () => resolve();
+      document.head.appendChild(script);
+    } else {
+      resolve();
+    }
+  });
+}
+
 export default function CalendlyButton() {
-  useEffect(() => {
-    const script = document.createElement("script");
-    script.src = "https://assets.calendly.com/assets/external/widget.js";
-    script.async = true;
-    document.head.appendChild(script);
-
-    const link = document.createElement("link");
-    link.rel = "stylesheet";
-    link.href = "https://assets.calendly.com/assets/external/widget.css";
-    document.head.appendChild(link);
-
-    return () => {
-      document.head.removeChild(script);
-      document.head.removeChild(link);
-    };
-  }, []);
-
-  const open = () => {
+  const open = async () => {
+    await loadCalendly();
     window.Calendly?.initPopupWidget({ url: CALENDLY_URL });
   };
 

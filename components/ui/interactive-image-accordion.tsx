@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Image from "next/image";
 
 export interface AccordionService {
   id: number;
@@ -51,16 +52,13 @@ function AccordionItem({
         }}
       >
         {/* Background image */}
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
+        <Image
           src={item.imageUrl}
           alt={`${item.title} — Massishoots Montréal`}
-          className="service-card-image"
+          fill
+          sizes="(max-width: 768px) 100vw, 50vw"
           style={{
-            position: "absolute",
-            inset: 0,
-            width: "100%",
-            height: "100%",
+            objectFit: "cover",
             objectPosition: item.imagePosition ?? "center",
             filter: isActive
               ? "brightness(0.35) saturate(0.5)"
@@ -204,16 +202,13 @@ function AccordionItem({
           : "1px solid rgba(255,255,255,0.07)",
       }}
     >
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
+      <Image
         src={item.imageUrl}
         alt={`${item.title} — Massishoots Montréal`}
-        className="service-card-image"
+        fill
+        sizes="(max-width: 768px) 100vw, 50vw"
         style={{
-          position: "absolute",
-          inset: 0,
-          width: "100%",
-          height: "100%",
+          objectFit: "cover",
           objectPosition: item.imagePosition ?? "center",
           filter: isActive
             ? "brightness(0.35) saturate(0.5)"

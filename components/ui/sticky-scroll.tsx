@@ -1,6 +1,7 @@
 'use client';
 import { ReactLenis } from 'lenis/react';
 import React, { forwardRef } from 'react';
+import Image from 'next/image';
 
 const leftCol = [
   { src: '/portfolio/eventt/1.jpg',      alt: 'Couverture événement corporatif Montréal — Massishoots' },
@@ -61,14 +62,16 @@ const StickyScrollGallery = forwardRef<HTMLElement>((_, ref) => {
             {/* Left col – scrolls */}
             <div className='grid gap-2 col-span-4'>
               {leftCol.map((item, i) => (
-                <figure key={i} className='w-full overflow-hidden rounded-xl' style={{ margin: 0 }}>
-                  <img
+                <figure key={i} className='w-full overflow-hidden rounded-xl relative h-96' style={{ margin: 0 }}>
+                  <Image
                     src={item.src}
                     alt={item.alt}
-                    className='transition-all duration-500 w-full h-96 object-cover hover:scale-105'
-                    style={{ display: 'block', filter: 'brightness(0.9) saturate(0.85)' }}
-                    onMouseEnter={e => { e.currentTarget.style.filter = 'brightness(1) saturate(1)'; }}
-                    onMouseLeave={e => { e.currentTarget.style.filter = 'brightness(0.9) saturate(0.85)'; }}
+                    fill
+                    sizes="(max-width: 768px) 100vw, 33vw"
+                    className='transition-all duration-500 object-cover hover:scale-105'
+                    style={{ filter: 'brightness(0.9) saturate(0.85)' }}
+                    onMouseEnter={e => { (e.target as HTMLImageElement).style.filter = 'brightness(1) saturate(1)'; }}
+                    onMouseLeave={e => { (e.target as HTMLImageElement).style.filter = 'brightness(0.9) saturate(0.85)'; }}
                   />
                 </figure>
               ))}
@@ -77,14 +80,16 @@ const StickyScrollGallery = forwardRef<HTMLElement>((_, ref) => {
             {/* Center col – sticky */}
             <div className='sticky top-0 h-screen col-span-4 gap-2 grid grid-rows-3'>
               {centerCol.map((item, i) => (
-                <figure key={i} className='w-full h-full overflow-hidden rounded-xl' style={{ margin: 0 }}>
-                  <img
+                <figure key={i} className='w-full h-full overflow-hidden rounded-xl relative' style={{ margin: 0 }}>
+                  <Image
                     src={item.src}
                     alt={item.alt}
-                    className='transition-all duration-500 h-full w-full object-cover hover:scale-105'
-                    style={{ display: 'block', filter: 'brightness(0.9) saturate(0.85)' }}
-                    onMouseEnter={e => { e.currentTarget.style.filter = 'brightness(1) saturate(1)'; }}
-                    onMouseLeave={e => { e.currentTarget.style.filter = 'brightness(0.9) saturate(0.85)'; }}
+                    fill
+                    sizes="(max-width: 768px) 100vw, 33vw"
+                    className='transition-all duration-500 object-cover hover:scale-105'
+                    style={{ filter: 'brightness(0.9) saturate(0.85)' }}
+                    onMouseEnter={e => { (e.target as HTMLImageElement).style.filter = 'brightness(1) saturate(1)'; }}
+                    onMouseLeave={e => { (e.target as HTMLImageElement).style.filter = 'brightness(0.9) saturate(0.85)'; }}
                   />
                 </figure>
               ))}
@@ -93,14 +98,16 @@ const StickyScrollGallery = forwardRef<HTMLElement>((_, ref) => {
             {/* Right col – scrolls */}
             <div className='grid gap-2 col-span-4'>
               {rightCol.map((item, i) => (
-                <figure key={i} className='w-full overflow-hidden rounded-xl' style={{ margin: 0 }}>
-                  <img
+                <figure key={i} className='w-full overflow-hidden rounded-xl relative h-96' style={{ margin: 0 }}>
+                  <Image
                     src={item.src}
                     alt={item.alt}
-                    className='transition-all duration-500 w-full h-96 object-cover hover:scale-105'
-                    style={{ display: 'block', filter: 'brightness(0.9) saturate(0.85)' }}
-                    onMouseEnter={e => { e.currentTarget.style.filter = 'brightness(1) saturate(1)'; }}
-                    onMouseLeave={e => { e.currentTarget.style.filter = 'brightness(0.9) saturate(0.85)'; }}
+                    fill
+                    sizes="(max-width: 768px) 100vw, 33vw"
+                    className='transition-all duration-500 object-cover hover:scale-105'
+                    style={{ filter: 'brightness(0.9) saturate(0.85)' }}
+                    onMouseEnter={e => { (e.target as HTMLImageElement).style.filter = 'brightness(1) saturate(1)'; }}
+                    onMouseLeave={e => { (e.target as HTMLImageElement).style.filter = 'brightness(0.9) saturate(0.85)'; }}
                   />
                 </figure>
               ))}
