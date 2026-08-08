@@ -5,7 +5,7 @@ import React, { forwardRef } from 'react';
 const leftCol = [
   { src: '/portfolio/eventt/1.jpg',      alt: 'Couverture événement corporatif Montréal — Massishoots' },
   { src: '/portfolio/corpo/3.jpg',       alt: 'Photographie corporate Montréal — Massishoots' },
-  { src: '/portfolio/mariage/3.jpg',     alt: 'Photographe mariage Montréal — Massishoots' },
+  { src: '/portfolio/brand/9.jpg',        alt: 'Photographe Montréal — Massishoots' },
   { src: '/portfolio/brand/1.jpg',       alt: 'Personal branding photo Montréal — Massishoots' },
   { src: '/portfolio/lyfestyle/1.jpg',   alt: 'Séance lifestyle Montréal — Massishoots' },
 ];
@@ -18,7 +18,7 @@ const centerCol = [
 
 const rightCol = [
   { src: '/portfolio/mariage/5.jpg',    alt: 'Photo mariage cinématique Montréal — Massishoots' },
-  { src: '/portfolio/brand/3.jpg',      alt: 'Branding photo studio Montréal — Massishoots' },
+  { src: '/portfolio/brand/6.jpg',       alt: 'Branding photo studio Montréal — Massishoots' },
   { src: '/portfolio/eventt/7.jpg',     alt: 'Photographie événement Montréal — Massishoots' },
   { src: '/portfolio/lyfestyle/3.jpg',  alt: 'Lifestyle photographe Montréal — Massishoots' },
   { src: '/portfolio/corpo/7.jpg',      alt: 'Photo corporate B2B Montréal — Massishoots' },
