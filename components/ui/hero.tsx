@@ -1,8 +1,6 @@
 "use client";
-import { PulsingBorder } from "@paper-design/shaders-react";
 import { motion } from "framer-motion";
 import { useTranslations } from "next-intl";
-import { SparklesCore } from "@/components/ui/sparkles";
 
 export default function ShaderHero() {
   const t = useTranslations("hero");
@@ -209,6 +207,7 @@ export default function ShaderHero() {
           loop
           playsInline
           poster="/VIDEO/hero-poster.jpg"
+          className="hero-video"
           style={{
             position: "absolute",
             inset: 0,
@@ -219,8 +218,10 @@ export default function ShaderHero() {
             filter: "brightness(0.72) saturate(0.9)",
           }}
         >
-          <source src="/VIDEO/hero-compressed.mp4" type="video/mp4" />
+          <source src="/VIDEO/hero-mobile.mp4" media="(max-width: 768px)" type="video/mp4" />
+          <source src="/VIDEO/hero-desktop.mp4" type="video/mp4" />
         </video>
+        <style>{`@media (max-width: 768px) { .hero-video { display: none; } }`}</style>
         <div style={{
           position: "absolute",
           inset: 0,

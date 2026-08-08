@@ -2,7 +2,6 @@
 
 import React from "react";
 import { ProgressiveBlur } from "@/components/ui/progressive-blur";
-import { Sparkles } from "@/components/ui/sparkles";
 import { useTranslations } from "next-intl";
 
 const TechGuys = () => (
@@ -73,66 +72,10 @@ export default function Clients() {
         <style>{`@keyframes marquee { from { transform: translateX(0) } to { transform: translateX(-50%) } }`}</style>
       </div>
 
-      {/* ── Sparkles arc (fidèle au modèle) ─────────────────────────────── */}
-      <div
-        style={{
-          position: "relative",
-          marginTop: -80,
-          height: 380,
-          width: "100%",
-          overflow: "hidden",
-          WebkitMaskImage: "radial-gradient(50% 50%, white, transparent)",
-          maskImage: "radial-gradient(50% 50%, white, transparent)",
-        }}
-      >
-        {/* Radial gradient glow */}
-        <div
-          style={{
-            position: "absolute",
-            inset: 0,
-            zIndex: 0,
-          }}
-        >
-          <div style={{
-            position: "absolute",
-            inset: 0,
-            background: "radial-gradient(circle at bottom center, rgba(196,205,214,0.12), transparent 70%)",
-            opacity: 0.6,
-          }} />
-        </div>
-
-        {/* Curved "stage" border — exactly like the demo */}
-        <div
-          style={{
-            position: "absolute",
-            left: "-50%",
-            top: "50%",
-            zIndex: 10,
-            width: "200%",
-            aspectRatio: "1 / 0.7",
-            borderRadius: "100%",
-            borderTop: "1px solid rgba(255,255,255,0.12)",
-            background: "rgba(7,9,13,0.85)",
-          }}
-        />
-
-        {/* Sparkles */}
-        <div
-          className="absolute inset-x-0 bottom-0 h-full w-full"
-          style={{
-            WebkitMaskImage: "radial-gradient(50% 50%, white, transparent 85%)",
-            maskImage: "radial-gradient(50% 50%, white, transparent 85%)",
-          }}
-        >
-          <Sparkles
-            density={1200}
-            size={0.9}
-            speed={0.8}
-            opacity={0.6}
-            color="#c4cdd6"
-            className="h-full w-full"
-          />
-        </div>
+      {/* ── Arc décoratif CSS pur ────────────────────────────────────────── */}
+      <div style={{ position: "relative", marginTop: -80, height: 200, width: "100%", overflow: "hidden" }}>
+        <div style={{ position: "absolute", inset: 0, background: "radial-gradient(circle at bottom center, rgba(196,205,214,0.08), transparent 70%)" }} />
+        <div style={{ position: "absolute", left: "-50%", top: "60%", zIndex: 10, width: "200%", aspectRatio: "1 / 0.7", borderRadius: "100%", borderTop: "1px solid rgba(255,255,255,0.1)", background: "rgba(7,9,13,0.85)" }} />
       </div>
 
     </div>
