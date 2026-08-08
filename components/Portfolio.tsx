@@ -28,8 +28,7 @@ const PHOTOS: Item[] = [
   { sub: "professionel", src: "/portfolio/professionel/2.jpg",              altKey: "altProfessionel" },
   { sub: "lifestyle",    src: "/portfolio/lyfestyle/4.JPG",                 altKey: "altLifestyle" },
   // ── Suite mixée ──────────────────────────────────────────────────────────
-  { sub: "branding",     src: "/portfolio/brand/1.jpg",                     altKey: "altBranding",     wide: true },
-  { sub: "corporate",    src: "/portfolio/corpo/1.jpg",                     altKey: "altCorporate" },
+  { sub: "branding",     src: "/portfolio/brand/2.JPG",                     altKey: "altBranding",     wide: true },
   { sub: "events",       src: "/portfolio/eventt/2.jpg",                    altKey: "altEvents",       wide: true },
   { sub: "professionel", src: "/portfolio/professionel/1.JPG",              altKey: "altProfessionel" },
   { sub: "lifestyle",    src: "/portfolio/lyfestyle/1.jpg",                 altKey: "altLifestyle" },
