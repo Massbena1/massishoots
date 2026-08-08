@@ -138,7 +138,7 @@ export default function Portfolio() {
   const t = useTranslations("portfolio");
   const [mediaType, setMediaType] = useState<MediaType>("photo");
   const [sub, setSub] = useState<Sub>("all");
-  const [visibleCount, setVisibleCount] = useState(12);
+  const [visibleCount, setVisibleCount] = useState(9);
   const [activeVideo, setActiveVideo] = useState<{ src: string; isStream: boolean } | null>(null);
   const [activePhoto, setActivePhoto] = useState<{ src: string; index: number } | null>(null);
   const ref = useRef(null);
@@ -170,12 +170,12 @@ export default function Portfolio() {
   const switchMedia = (type: MediaType) => {
     setMediaType(type);
     setSub("all");
-    setVisibleCount(12);
+    setVisibleCount(9);
   };
 
   const handleSetSub = (value: Sub) => {
     setSub(value);
-    setVisibleCount(12);
+    setVisibleCount(9);
   };
 
   return (
@@ -385,7 +385,7 @@ export default function Portfolio() {
             style={{ marginTop: 40, display: "flex", justifyContent: "center" }}
           >
             <button
-              onClick={() => setVisibleCount(c => c + 8)}
+              onClick={() => setVisibleCount(c => c + 9)}
               className="font-dm"
               style={{
                 display: "inline-flex",
@@ -416,7 +416,7 @@ export default function Portfolio() {
             >
               {t("showMore")}
               <span style={{ fontSize: 11, color: "rgba(196,205,214,0.5)" }}>
-                +{Math.min(8, filtered.length - visibleCount)}
+                +{Math.min(9, filtered.length - visibleCount)}
               </span>
             </button>
           </motion.div>
