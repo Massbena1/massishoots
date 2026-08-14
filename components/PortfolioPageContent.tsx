@@ -1,5 +1,5 @@
 "use client";
-import { useState, useRef, useCallback } from "react";
+import { useState, useRef, useCallback, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import { testimonials } from "@/data/portfolio";
@@ -31,21 +31,37 @@ function Lightbox({ items, startIndex, onClose }: { items: MediaFile[]; startInd
   const prev = useCallback(() => setIdx(i => (i - 1 + items.length) % items.length), [items.length]);
   const next = useCallback(() => setIdx(i => (i + 1) % items.length), [items.length]);
 
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose();
+      if (e.key === "ArrowLeft") prev();
+      if (e.key === "ArrowRight") next();
+    };
+    window.addEventListener("keydown", handler);
+    return () => window.removeEventListener("keydown", handler);
+  }, [onClose, prev, next]);
+
   return (
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
       style={{ position: "fixed", inset: 0, zIndex: 9999, background: "rgba(0,0,0,0.96)", display: "flex", alignItems: "center", justifyContent: "center" }}
       onClick={onClose}>
-      <button onClick={onClose} style={{ position: "absolute", top: 20, right: 24, background: "none", border: "none", color: "rgba(255,255,255,0.6)", fontSize: 28, cursor: "pointer", zIndex: 1 }}>✕</button>
-      <button onClick={e => { e.stopPropagation(); prev(); }} style={{ position: "absolute", left: 16, background: "none", border: "1px solid rgba(201,168,76,0.3)", borderRadius: "50%", width: 44, height: 44, color: "#C9A84C", fontSize: 18, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", zIndex: 1 }}>←</button>
+      <button onClick={e => { e.stopPropagation(); onClose(); }} style={{ position: "absolute", top: 20, right: 24, background: "none", border: "none", color: "rgba(255,255,255,0.6)", fontSize: 28, cursor: "pointer", zIndex: 10001 }}>✕</button>
+      <button onClick={e => { e.stopPropagation(); prev(); }} style={{ position: "absolute", left: 16, background: "none", border: "1px solid rgba(201,168,76,0.3)", borderRadius: "50%", width: 44, height: 44, color: "#C9A84C", fontSize: 18, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", zIndex: 10001 }}>←</button>
       <motion.div key={idx} initial={{ opacity: 0, scale: 0.96 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.2 }}
-        onClick={e => e.stopPropagation()} style={{ maxWidth: "88vw", maxHeight: "88vh" }}>
+        onClick={e => e.stopPropagation()} style={{ maxWidth: "88vw", maxHeight: "88vh", position: "relative" }}>
         {item.type === "video"
           ? item.isStream
-            ? <iframe src={item.src} allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture" allowFullScreen style={{ width: "min(56vw, 360px)", height: "min(88vh, 640px)", borderRadius: 8, border: "none" }} />
+            ? (
+              <div style={{ position: "relative" }}>
+                <iframe src={item.src} allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture" allowFullScreen style={{ width: "min(56vw, 360px)", height: "min(88vh, 640px)", borderRadius: 8, border: "none", display: "block" }} />
+                {/* Overlay transparent pour recapturer le focus après clic dans l'iframe */}
+                <div style={{ position: "absolute", inset: 0, zIndex: 10000, pointerEvents: "none" }} />
+              </div>
+            )
             : <video src={item.src} controls autoPlay style={{ maxWidth: "88vw", maxHeight: "88vh", borderRadius: 8 }} />
           : <img src={item.src} alt="" style={{ maxWidth: "88vw", maxHeight: "88vh", objectFit: "contain", borderRadius: 8, display: "block" }} />}
       </motion.div>
-      <button onClick={e => { e.stopPropagation(); next(); }} style={{ position: "absolute", right: 16, background: "none", border: "1px solid rgba(201,168,76,0.3)", borderRadius: "50%", width: 44, height: 44, color: "#C9A84C", fontSize: 18, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", zIndex: 1 }}>→</button>
+      <button onClick={e => { e.stopPropagation(); next(); }} style={{ position: "absolute", right: 16, background: "none", border: "1px solid rgba(201,168,76,0.3)", borderRadius: "50%", width: 44, height: 44, color: "#C9A84C", fontSize: 18, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", zIndex: 10001 }}>→</button>
     </motion.div>
   );
 }
