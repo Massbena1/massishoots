@@ -4,7 +4,7 @@ import PortfolioPageContent from "@/components/PortfolioPageContent";
 import type { Metadata } from "next";
 import { readdirSync, existsSync } from "fs";
 import { join } from "path";
-import { brandingClients } from "@/data/portfolio";
+import { brandingClients, eventProjects } from "@/data/portfolio";
 
 const CF = "https://videodelivery.net";
 
@@ -52,6 +52,17 @@ function cfThumb(uid: string) {
 }
 
 function scanDir(rel: string): string[] {
+  try {
+    const abs = join(process.cwd(), "public", rel);
+    return readdirSync(abs)
+      .filter(f => IMG_EXT.test(f))
+      .sort()
+      .map(f => `/${rel}/${f}`);
+  } catch { return []; }
+}
+
+function scanEventFolder(folder: string): string[] {
+  const rel = `portfolio/eventt/${folder}`;
   try {
     const abs = join(process.cwd(), "public", rel);
     return readdirSync(abs)
@@ -135,8 +146,14 @@ export default async function PortfolioPage({ params }: { params: Promise<{ loca
     .map(c => ({ ...c, media: scanClientFolder(c.slug) }))
     .filter(c => c.media.cover || c.media.photos.length > 0 || c.media.videos.length > 0);
 
+  const eventsWithPhotos = eventProjects.map(ev => ({
+    ...ev,
+    photos: ev.photoFolder ? scanEventFolder(ev.photoFolder) : [],
+  }));
+
   const data = {
     clients,
+    events: eventsWithPhotos,
     eventt: scanDir("portfolio/eventt"),
     videos: scanVideos(),
     corpo: scanDir("portfolio/corpo"),

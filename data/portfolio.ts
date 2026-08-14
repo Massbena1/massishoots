@@ -17,6 +17,8 @@ export interface EventProject {
   aftermovie: string | null;
   aftermovieUid?: string;
   deliverables: string[];
+  featured?: boolean;
+  photoFolder?: string; // sous-dossier dans /public/portfolio/eventt/
 }
 
 // Un slug vide ou client vide = non affiché publiquement
@@ -89,14 +91,17 @@ export const brandingClients: BrandingClient[] = [
 ];
 
 export const eventProjects: EventProject[] = [
+  // ── VEDETTE ────────────────────────────────────────────────────────────────
   {
     id: "01",
-    event: "Couverture Événement Corporate",
-    slug: "evenement-corporate",
-    description: "Gala de 1 000 personnes — 350 photos retouchées livrées en moins de 24h. Vidéo highlight 60 sec pour les réseaux sociaux.",
-    cover: "/portfolio/eventt/1.jpg",
+    featured: true,
+    event: "Gala Influence",
+    slug: "gala-influence",
+    description: "Couverture complète d'un gala premium — photo, vidéo et aftermovie cinématique livrés en 24h.",
+    cover: "/portfolio/eventt/gala/DSC08904.jpg",
+    photoFolder: "gala",
     aftermovie: null,
-    aftermovieUid: "63a449c6a64ea4899e6c11b4ae03b4d0",
+    aftermovieUid: "2964c3cd1fdbe5891e526055a2a9411a",
     deliverables: [
       "Photographie événementielle",
       "Aftermovie cinématique",
@@ -106,16 +111,83 @@ export const eventProjects: EventProject[] = [
   },
   {
     id: "02",
+    featured: true,
+    event: "ESTA Event",
+    slug: "esta-event",
+    description: "Couverture photo et vidéo d'un événement ESTA — ambiance, portraits et moments clés.",
+    cover: "/portfolio/eventt/esta/DSC02482.jpg",
+    photoFolder: "esta",
+    aftermovie: null,
+    aftermovieUid: "1fd3e6260746d7ad585dd8079cf9ecca",
+    deliverables: [
+      "Photographie événementielle",
+      "Aftermovie cinématique",
+      "Reels verticaux 9:16",
+      "Portraits intervenants",
+    ],
+  },
+  {
+    id: "03",
+    featured: true,
+    event: "JP — Événement Corporate",
+    slug: "jp-corporate",
+    description: "Couverture photo et vidéo d'un événement corporate — atmosphère, networking et moments forts.",
+    cover: "/portfolio/eventt/jp/DSC00085.jpg",
+    photoFolder: "jp",
+    aftermovie: null,
+    aftermovieUid: "347687580f25242c22c564d9ef61d0c5",
+    deliverables: [
+      "Photographie événementielle",
+      "Aftermovie cinématique",
+      "Reels verticaux 9:16",
+      "Contenu réseaux sociaux",
+    ],
+  },
+  {
+    id: "04",
+    featured: true,
+    event: "Ariane — Événement Privé",
+    slug: "ariane-prive",
+    description: "Couverture photo et vidéo d'un événement privé — élégance, détails et atmosphère exclusive.",
+    cover: "/portfolio/eventt/ariane/DSC08814.jpg",
+    photoFolder: "ariane",
+    aftermovie: null,
+    aftermovieUid: "341dda698d4fb60a5ccb2d2b8a69bd22",
+    deliverables: [
+      "Photographie événementielle",
+      "Aftermovie cinématique",
+      "Reels verticaux 9:16",
+      "Contenu réseaux sociaux",
+    ],
+  },
+  // ── AUTRES ─────────────────────────────────────────────────────────────────
+  {
+    id: "05",
+    featured: false,
     event: "Événement Networking",
     slug: "evenement-networking",
     description: "Couverture photo et vidéo complète d'un événement networking premium à Montréal.",
-    cover: "/portfolio/eventt/4.jpg",
+    cover: "/portfolio/eventt/2.jpg",
     aftermovie: null,
-    aftermovieUid: "1d620937a266de3831fa3bf62e3eb200",
+    aftermovieUid: "e1d4f7a4c6966b5ed494f888267fe0df",
     deliverables: [
       "Photographie événementielle",
       "Reels verticaux 9:16",
       "Portraits speakers",
+    ],
+  },
+  {
+    id: "06",
+    featured: false,
+    event: "Couverture Événement Corporate",
+    slug: "evenement-corporate",
+    description: "Gala corporate — photos retouchées et highlights vidéo livrés rapidement.",
+    cover: "/portfolio/eventt/3.jpg",
+    aftermovie: null,
+    aftermovieUid: "8108d921112c9c96888a9ea8bb82cac1",
+    deliverables: [
+      "Photographie événementielle",
+      "Aftermovie cinématique",
       "Contenu réseaux sociaux",
     ],
   },

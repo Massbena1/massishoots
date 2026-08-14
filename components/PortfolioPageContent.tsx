@@ -2,8 +2,8 @@
 import { useState, useRef, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
-import { eventProjects, testimonials } from "@/data/portfolio";
-import type { BrandingClient } from "@/data/portfolio";
+import { testimonials } from "@/data/portfolio";
+import type { BrandingClient, EventProject } from "@/data/portfolio";
 
 /* ─── TYPES ─────────────────────────────────────────────────── */
 interface VideoItem { src: string; thumb: string; label: string; isStream?: boolean; }
@@ -12,8 +12,10 @@ interface ClientData extends BrandingClient {
   media: { cover: string; videos: VideoItem[]; photos: string[] };
 }
 interface MediaFile { src: string; type: "photo" | "video"; thumb?: string; isStream?: boolean; }
+interface EventWithPhotos extends EventProject { photos: string[] }
 interface PortfolioData {
   clients: ClientData[];
+  events: EventWithPhotos[];
   eventt: string[];
   videos: VideoItem[];
   corpo: string[];
@@ -294,6 +296,8 @@ export default function PortfolioPageContent({ data }: { data: PortfolioData }) 
       {/* ── ÉVÉNEMENTS ───────────────────────────────────────── */}
       <section ref={eventsRef} style={{ padding: "100px 0", borderTop: "1px solid rgba(255,255,255,0.05)" }}>
         <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 24px" }}>
+
+          {/* En-tête */}
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }} style={{ marginBottom: 64 }}>
             <span style={{ fontFamily: "var(--font-dm-sans)", fontSize: 11, letterSpacing: "0.3em", textTransform: "uppercase", color: "rgba(255,255,255,0.3)" }}>— Spécialité #2</span>
             <h2 style={{ fontFamily: "var(--font-bebas-neue)", fontSize: "clamp(44px, 7vw, 80px)", color: "#fff", letterSpacing: "0.03em", lineHeight: 0.95, margin: "10px 0 12px" }}>COUVERTURE D'ÉVÉNEMENTS</h2>
@@ -302,51 +306,116 @@ export default function PortfolioPageContent({ data }: { data: PortfolioData }) 
             </p>
           </motion.div>
 
-          {eventProjects.filter(e => e.event).map(ev => (
-            <motion.div key={ev.id} initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-60px" }} transition={{ duration: 0.8 }}
-              style={{ marginBottom: 80 }}>
-              <div style={{ position: "relative", aspectRatio: "21/9", borderRadius: "16px 16px 0 0", overflow: "hidden" }}>
-                <Image src={ev.cover} alt={ev.event} fill sizes="100vw" style={{ objectFit: "cover" }} />
-                <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.2) 60%, transparent 100%)" }} />
-                <div style={{ position: "absolute", bottom: 28, left: 32, right: 32 }}>
-                  <span style={{ display: "inline-block", fontFamily: "var(--font-dm-sans)", fontSize: 10, color: "#C9A84C", border: "1px solid rgba(201,168,76,0.5)", padding: "3px 12px", borderRadius: 9999, marginBottom: 10, background: "rgba(0,0,0,0.4)" }}>Photo + Vidéo</span>
-                  <h3 style={{ fontFamily: "var(--font-bebas-neue)", fontSize: "clamp(28px, 5vw, 56px)", color: "#fff", letterSpacing: "0.03em", lineHeight: 0.95 }}>{ev.event}</h3>
-                </div>
-              </div>
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", background: "#0f0f0f", borderRadius: "0 0 16px 16px", border: "0.5px solid rgba(201,168,76,0.1)", borderTop: "none" }} className="event-grid">
-                <div style={{ padding: 20, borderRight: "1px solid rgba(255,255,255,0.05)" }}>
-                  <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 6 }}>
-                    {data.eventt.slice(0, 6).map((src, i) => (
-                      <div key={src} onClick={() => setLightbox({ items: data.eventt.map(s => ({ src: s, type: "photo" as const })), idx: i })}
-                        style={{ position: "relative", aspectRatio: "2/3", overflow: "hidden", borderRadius: 6, cursor: "pointer", background: "#111" }}>
-                        <Image src={src} alt="" fill sizes="20vw" style={{ objectFit: "cover", objectPosition: "center 20%" }} />
-                      </div>
-                    ))}
+          {/* ── PROJETS VEDETTE ──────────────────────────────── */}
+          {data.events.filter(e => e.featured).map((ev, evIdx) => {
+            const photos = ev.photos;
+            const allItems: MediaFile[] = photos.map(s => ({ src: s, type: "photo" as const }));
+            return (
+              <motion.div key={ev.id}
+                initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-60px" }} transition={{ duration: 0.8, delay: evIdx * 0.05 }}
+                style={{ marginBottom: 80 }}>
+
+                {/* Cover cinématique */}
+                <div style={{ position: "relative", aspectRatio: "21/9", borderRadius: "16px 16px 0 0", overflow: "hidden", cursor: "pointer" }}
+                  onClick={() => photos.length > 0 && setLightbox({ items: allItems, idx: 0 })}>
+                  <Image src={ev.cover} alt={ev.event} fill priority={evIdx === 0} sizes="100vw" style={{ objectFit: "cover", objectPosition: "center 30%" }} />
+                  <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(0,0,0,0.88) 0%, rgba(0,0,0,0.2) 55%, transparent 100%)" }} />
+                  <div style={{ position: "absolute", bottom: 28, left: 32, right: 32 }}>
+                    <span style={{ display: "inline-block", fontFamily: "var(--font-dm-sans)", fontSize: 10, color: "#C9A84C", border: "1px solid rgba(201,168,76,0.5)", padding: "3px 12px", borderRadius: 9999, marginBottom: 10, background: "rgba(0,0,0,0.4)", letterSpacing: "0.15em" }}>
+                      Photo + Vidéo · {photos.length} photos
+                    </span>
+                    <h3 style={{ fontFamily: "var(--font-bebas-neue)", fontSize: "clamp(28px, 5vw, 56px)", color: "#fff", letterSpacing: "0.03em", lineHeight: 0.95 }}>{ev.event}</h3>
                   </div>
                 </div>
-                <div style={{ padding: "32px" }}>
-                  <p style={{ fontFamily: "var(--font-dm-sans)", fontSize: 14, color: "rgba(255,255,255,0.45)", lineHeight: 1.8, marginBottom: 24 }}>{ev.description}</p>
-                  <div style={{ display: "flex", flexDirection: "column", gap: 10, marginBottom: 24 }}>
-                    {ev.deliverables.map(d => (
-                      <div key={d} style={{ display: "flex", alignItems: "center", gap: 10 }}>
-                        <span style={{ color: "#C9A84C" }}>✓</span>
-                        <span style={{ fontFamily: "var(--font-dm-sans)", fontSize: 13, color: "rgba(255,255,255,0.55)" }}>{d}</span>
-                      </div>
-                    ))}
-                  </div>
-                  {ev.aftermovieUid && (
-                    <div style={{ position: "relative", aspectRatio: "16/9", borderRadius: 10, overflow: "hidden", cursor: "pointer" }}
-                      onClick={() => setLightbox({ items: [{ src: `https://videodelivery.net/${ev.aftermovieUid}/iframe`, type: "video", isStream: true }], idx: 0 })}>
-                      <img src={`https://videodelivery.net/${ev.aftermovieUid}/thumbnails/thumbnail.jpg?time=1s&height=400`} alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
-                      <div style={{ position: "absolute", inset: 0, background: "rgba(0,0,0,0.4)", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                        <span style={{ fontSize: 40, color: "#C9A84C" }}>▶</span>
+
+                {/* Détails */}
+                <div style={{ background: "#0f0f0f", borderRadius: "0 0 16px 16px", border: "0.5px solid rgba(201,168,76,0.1)", borderTop: "none" }}>
+
+                  {/* Grille photos */}
+                  {photos.length > 0 && (
+                    <div style={{ padding: "20px 20px 0" }}>
+                      <div style={{ display: "grid", gridTemplateColumns: "repeat(6, 1fr)", gap: 6 }} className="event-photos-grid">
+                        {photos.slice(0, 6).map((src, i) => (
+                          <div key={src} onClick={() => setLightbox({ items: allItems, idx: i })}
+                            style={{ position: "relative", aspectRatio: "2/3", overflow: "hidden", borderRadius: 6, cursor: "pointer", background: "#111" }}>
+                            <Image src={src} alt="" fill sizes="15vw" style={{ objectFit: "cover", objectPosition: "center 20%" }} />
+                            {i === 5 && photos.length > 6 && (
+                              <div style={{ position: "absolute", inset: 0, background: "rgba(0,0,0,0.65)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                                <span style={{ fontFamily: "var(--font-bebas-neue)", fontSize: 20, color: "#fff", letterSpacing: "0.05em" }}>+{photos.length - 5}</span>
+                              </div>
+                            )}
+                          </div>
+                        ))}
                       </div>
                     </div>
                   )}
+
+                  {/* Description + livrables + aftermovie */}
+                  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 0 }} className="event-grid">
+                    <div style={{ padding: "24px 24px 28px", borderRight: "1px solid rgba(255,255,255,0.05)" }}>
+                      <p style={{ fontFamily: "var(--font-dm-sans)", fontSize: 14, color: "rgba(255,255,255,0.45)", lineHeight: 1.8, marginBottom: 20 }}>{ev.description}</p>
+                      <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+                        {ev.deliverables.map(d => (
+                          <div key={d} style={{ display: "flex", alignItems: "center", gap: 10 }}>
+                            <span style={{ color: "#C9A84C", flexShrink: 0 }}>✓</span>
+                            <span style={{ fontFamily: "var(--font-dm-sans)", fontSize: 13, color: "rgba(255,255,255,0.55)" }}>{d}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                    <div style={{ padding: "24px 24px 28px" }}>
+                      {ev.aftermovieUid ? (
+                        <div style={{ position: "relative", aspectRatio: "16/9", borderRadius: 10, overflow: "hidden", cursor: "pointer" }}
+                          onClick={() => setLightbox({ items: [{ src: `https://videodelivery.net/${ev.aftermovieUid}/iframe`, type: "video", isStream: true }], idx: 0 })}>
+                          {/* eslint-disable-next-line @next/next/no-img-element */}
+                          <img src={`https://videodelivery.net/${ev.aftermovieUid}/thumbnails/thumbnail.jpg?time=2s&height=400`} alt="Aftermovie" style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
+                          <div style={{ position: "absolute", inset: 0, background: "rgba(0,0,0,0.38)", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 8 }}>
+                            <span style={{ fontSize: 44, color: "#C9A84C" }}>▶</span>
+                            <span style={{ fontFamily: "var(--font-dm-sans)", fontSize: 10, color: "rgba(255,255,255,0.7)", letterSpacing: "0.2em", textTransform: "uppercase" }}>Aftermovie</span>
+                          </div>
+                        </div>
+                      ) : (
+                        <div style={{ height: "100%", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                          <span style={{ fontFamily: "var(--font-playfair-display)", fontStyle: "italic", fontSize: 14, color: "rgba(255,255,255,0.2)" }}>Vidéo bientôt disponible</span>
+                        </div>
+                      )}
+                    </div>
+                  </div>
                 </div>
+              </motion.div>
+            );
+          })}
+
+          {/* ── AUTRES ÉVÉNEMENTS ────────────────────────────── */}
+          {data.events.some(e => !e.featured) && (
+            <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }} style={{ marginTop: 24 }}>
+              <h3 style={{ fontFamily: "var(--font-bebas-neue)", fontSize: "clamp(28px, 4vw, 48px)", color: "rgba(255,255,255,0.55)", letterSpacing: "0.03em", lineHeight: 0.95, marginBottom: 24 }}>
+                AUTRES PROJETS
+              </h3>
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 12 }} className="others-grid">
+                {data.events.filter(e => !e.featured).map(ev => (
+                  <div key={ev.id} style={{ position: "relative", borderRadius: 12, overflow: "hidden", cursor: "pointer", background: "#111", border: "0.5px solid rgba(255,255,255,0.07)" }}
+                    onClick={() => ev.aftermovieUid && setLightbox({ items: [{ src: `https://videodelivery.net/${ev.aftermovieUid}/iframe`, type: "video", isStream: true }], idx: 0 })}>
+                    <div style={{ position: "relative", aspectRatio: "16/9" }}>
+                      <Image src={ev.cover} alt={ev.event} fill sizes="33vw" style={{ objectFit: "cover" }} />
+                      <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 60%)" }} />
+                      {ev.aftermovieUid && (
+                        <div style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%,-50%)", width: 40, height: 40, borderRadius: "50%", background: "rgba(201,168,76,0.2)", border: "1px solid rgba(201,168,76,0.5)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                          <span style={{ color: "#C9A84C", fontSize: 16 }}>▶</span>
+                        </div>
+                      )}
+                    </div>
+                    <div style={{ padding: "14px 16px 16px" }}>
+                      <p style={{ fontFamily: "var(--font-bebas-neue)", fontSize: 18, color: "#fff", letterSpacing: "0.03em", marginBottom: 4 }}>{ev.event}</p>
+                      <p style={{ fontFamily: "var(--font-dm-sans)", fontSize: 12, color: "rgba(255,255,255,0.35)", lineHeight: 1.5 }}>{ev.description}</p>
+                    </div>
+                  </div>
+                ))}
               </div>
             </motion.div>
-          ))}
+          )}
+
         </div>
       </section>
 
@@ -442,6 +511,7 @@ export default function PortfolioPageContent({ data }: { data: PortfolioData }) 
           .client-videos-grid { grid-template-columns: repeat(3, 1fr) !important; }
           .client-photos-grid { grid-template-columns: repeat(3, 1fr) !important; }
           .event-grid { grid-template-columns: 1fr !important; }
+          .event-photos-grid { grid-template-columns: repeat(3, 1fr) !important; }
           .others-grid { grid-template-columns: repeat(2, 1fr) !important; }
           .testimonials-grid { grid-template-columns: 1fr !important; }
         }
@@ -449,6 +519,7 @@ export default function PortfolioPageContent({ data }: { data: PortfolioData }) 
           .cover-info-overlay { left: 16px !important; right: 16px !important; max-width: 100% !important; text-align: left !important; }
           .client-videos-grid { grid-template-columns: repeat(2, 1fr) !important; }
           .client-photos-grid { grid-template-columns: repeat(2, 1fr) !important; }
+          .event-photos-grid { grid-template-columns: repeat(3, 1fr) !important; }
           .others-grid { grid-template-columns: 1fr !important; }
           .client-cards-row button { width: 130px !important; height: 170px !important; }
         }
